@@ -189,7 +189,6 @@ $this->breadcrumbs = array(
 				<input type="hidden" id="privateName" value="ЧП <?php echo $privateName ?>" />
 			</div>
 			<div class="clear"></div>
-			<?php //TODO Доделать функционал: js'ом меняются подписи полей, код едрпоу убирать если пользователь физическое лицо ?>
 			<?php $this->endWidget(); ?>
 		</div>
 

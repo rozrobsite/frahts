@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "vehicle_ferrymans".
+ * This is the model class for table "vehicle".
  *
- * The followings are the available columns in table 'vehicle_ferrymans':
+ * The followings are the available columns in table 'vehicle':
  * @property string $id
  * @property string $user_id
  * @property integer $make_id
@@ -14,20 +14,23 @@
  * @property integer $body_capacity
  * @property string $kind_boot
  * @property string $permission
+ * @property string $license_plate
+ * @property string $number_trailer
+ * @property string $number_semitrailer
  *
  * The followings are the available model relations:
- * @property VehicleTypes $vehicleType
- * @property Models $model
- * @property Users $user
  * @property BodyTypes $bodyType
  * @property Makes $make
+ * @property Users $user
+ * @property VehicleTypes $vehicleType
+ * @property Models $model
  */
-class VehicleFerrymans extends CActiveRecord
+class Vehicle extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return VehicleFerrymans the static model class
+	 * @return Vehicle the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -39,7 +42,7 @@ class VehicleFerrymans extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'vehicle_ferrymans';
+		return 'vehicle';
 	}
 
 	/**
@@ -50,13 +53,14 @@ class VehicleFerrymans extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, kind_boot, permission', 'required'),
+			array('bearing_capacity, body_capacity, kind_boot, permission', 'required'),
 			array('make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'length', 'max'=>11),
 			array('kind_boot, permission', 'length', 'max'=>255),
+			array('license_plate, number_trailer, number_semitrailer', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, kind_boot, permission', 'safe', 'on'=>'search'),
+			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, kind_boot, permission, license_plate, number_trailer, number_semitrailer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,11 +72,11 @@ class VehicleFerrymans extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'vehicleType' => array(self::BELONGS_TO, 'VehicleTypes', 'vehicle_type_id'),
-			'model' => array(self::BELONGS_TO, 'Models', 'model_id'),
-			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'bodyType' => array(self::BELONGS_TO, 'BodyTypes', 'body_type_id'),
 			'make' => array(self::BELONGS_TO, 'Makes', 'make_id'),
+			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
+			'vehicleType' => array(self::BELONGS_TO, 'VehicleTypes', 'vehicle_type_id'),
+			'model' => array(self::BELONGS_TO, 'Models', 'model_id'),
 		);
 	}
 
@@ -92,6 +96,9 @@ class VehicleFerrymans extends CActiveRecord
 			'body_capacity' => 'Body Capacity',
 			'kind_boot' => 'Kind Boot',
 			'permission' => 'Permission',
+			'license_plate' => 'License Plate',
+			'number_trailer' => 'Number Trailer',
+			'number_semitrailer' => 'Number Semitrailer',
 		);
 	}
 
@@ -116,6 +123,9 @@ class VehicleFerrymans extends CActiveRecord
 		$criteria->compare('body_capacity',$this->body_capacity);
 		$criteria->compare('kind_boot',$this->kind_boot,true);
 		$criteria->compare('permission',$this->permission,true);
+		$criteria->compare('license_plate',$this->license_plate,true);
+		$criteria->compare('number_trailer',$this->number_trailer,true);
+		$criteria->compare('number_semitrailer',$this->number_semitrailer,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
