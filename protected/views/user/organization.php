@@ -35,7 +35,7 @@ $this->breadcrumbs = array(
 
     <!-- Main content -->
     <div class="wrapper">
-<?php $this->renderPartial('_accessMessage') ?>
+		<?php $this->renderPartial('_accessMessage') ?>
         <!-- Tabs -->
 		<div class="fluid">
 			<?php
@@ -57,14 +57,9 @@ $this->breadcrumbs = array(
 				</div>
 				<div class="formRow">
 					<div class="grid3"><label>Форма регистрации:<span class="req">*</span></label></div>
-					<div class="grid3">
+					<div class="grid9">
 						<?php echo CHtml::activeDropDownList($model, 'type_org_id', $typeOrganizations); ?>
 						<?php echo $form->error($model, 'type_org_id', array('class' => 'error')); ?>
-					</div>
-					<div class="grid6">
-						<label style="margin-right: 5px">Скан документа:</label>
-						<?php echo $form->fileField($model, 'file1', array('class' => 'fileInput')) ?>
-						<?php echo $form->error($model, 'file1', array('class' => 'error', 'style' => 'margin-top: 6px; margin-left: 100px;')); ?>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -72,14 +67,9 @@ $this->breadcrumbs = array(
 					<div class="grid3">
 						<label>Форма налогообложения:<span class="req">*</span></label>
 					</div>
-					<div class="grid3">
+					<div class="grid9">
 						<?php echo $form->textField($model, 'form_tax') ?>
 						<?php echo $form->error($model, 'form_tax', array('class' => 'error')); ?>
-					</div>
-					<div class="grid6">
-						<label style="margin-right: 5px">Скан документа:</label>
-						<?php echo $form->fileField($model, 'file2', array('class' => 'fileInput')) ?>
-						<?php echo $form->error($model, 'file2', array('class' => 'error', 'style' => 'margin-top: 6px; margin-left: 100px;')); ?>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -100,13 +90,106 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
+					<div class="grid3">
+						<label id="private_label"
+							   style="<?php if (isset($this->user->organizations->id) && $this->user->organizations->type_org_id == Organizations::TYPE_CORPORATE): ?>display: none<?php endif; ?>">
+							Адрес регистрации:
+						</label>
+						<label id="corporate_label" 
+							   style="<?php if (isset($this->user->organizations->id) && $this->user->organizations->type_org_id == Organizations::TYPE_PRIVATE): ?>display: none<?php endif; ?>">
+							Юридический адресс:
+						</label>
+					</div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'address') ?>
+						<?php echo $form->error($model, 'address', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div id="edrpou" class="formRow" 
+					 style="<?php if (isset($this->user->organizations->id) && $this->user->organizations->type_org_id == Organizations::TYPE_PRIVATE): ?>display: none<?php endif; ?>">
+					<div class="grid3">
+						<label>Код ЕДРПОУ:</label>
+					</div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'edrpou') ?>
+						<?php echo $form->error($model, 'edrpou', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3"><label>№ счета:</label></div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'account_number') ?>
+						<?php echo $form->error($model, 'account_number', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3"><label>В каком банке:</label></div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'bank') ?>
+						<?php echo $form->error($model, 'bank', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3"><label>В каком городе:</label></div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'city') ?>
+						<?php echo $form->error($model, 'city', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3"><label>МФО:</label></div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'mfo') ?>
+						<?php echo $form->error($model, 'mfo', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3"><label>ИНН:</label></div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'inn') ?>
+						<?php echo $form->error($model, 'inn', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3">
+						<label id="private_certificate_label"
+							   style="<?php if (isset($this->user->organizations->id) && $this->user->organizations->type_org_id == Organizations::TYPE_CORPORATE): ?>display: none<?php endif; ?>">
+							№ свидетельства:
+						</label>
+						<label id="corporate_certificate_label"
+							   style="<?php if (isset($this->user->organizations->id) && $this->user->organizations->type_org_id == Organizations::TYPE_PRIVATE): ?>display: none<?php endif; ?>">
+							Свидетельство плательщика НДС:
+						</label>
+					</div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'certificate') ?>
+						<?php echo $form->error($model, 'certificate', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid3"><label>Телефоны / Факс:</label></div>
+					<div class="grid9">
+						<?php echo $form->textField($model, 'phone') ?>
+						<?php echo $form->error($model, 'phone', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
 					<?php echo CHtml::submitButton('Сохранить', array('class' => 'buttonM bBlack formSubmit')); ?>
 					<div class="clear"></div>
 				</div>
 				<input type="hidden" id="privateName" value="ЧП <?php echo $privateName ?>" />
 			</div>
 			<div class="clear"></div>
-			
+			<?php //TODO Доделать функционал: js'ом меняются подписи полей, код едрпоу убирать если пользователь физическое лицо ?>
 			<?php $this->endWidget(); ?>
 		</div>
 

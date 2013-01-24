@@ -6531,3 +6531,104 @@ Stack trace:
 REQUEST_URI=/main/register
 in C:\wamp\www\gruz.local\www\protected\controllers\MainController.php (160)
 in C:\wamp\www\gruz.local\www\index.php (13)
+2013/01/23 19:08:01 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'host5841_gruz.tbl_migration' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `tbl_migration`.
+2013/01/23 19:13:45 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizat' at line 1. The SQL statement executed was: 
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_tax;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_license;
+			.
+2013/01/23 19:13:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizat' at line 1. The SQL statement executed was: 
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_tax;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_license;
+			' in D:\NbProjects\gruz2\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\NbProjects\gruz2\framework\db\CDbMigration.php(159): CDbCommand->execute(Array)
+#1 D:\NbProjects\gruz2\protected\migrations\m130123_191029_delete_column_organizations.php(12): CDbMigration->execute('????ALTER TABLE...')
+#2 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(385): m130123_191029_delete_column_organizations->up()
+#3 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(109): MigrateCommand->migrateUp('m130123_191029_...')
+#4 [internal function]: MigrateCommand->actionUp(Array)
+#5 D:\NbProjects\gruz2\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#6 D:\NbProjects\gruz2\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\NbProjects\gruz2\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\NbProjects\gruz2\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\NbProjects\gruz2\framework\yiic.php(33): CApplication->run()
+#10 D:\NbProjects\gruz2\protected\yiic.php(7): require_once('D:\NbProjects\g...')
+#11 {main}
+---
+2013/01/23 19:14:15 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizat' at line 1. The SQL statement executed was: 
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_tax;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_license;
+			.
+2013/01/23 19:14:15 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizat' at line 1. The SQL statement executed was: 
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_registration;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_form_tax;
+			ALTER TABLE {{organizations}} DROP COLUMN scan_license;
+			' in D:\NbProjects\gruz2\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\NbProjects\gruz2\framework\db\CDbMigration.php(159): CDbCommand->execute(Array)
+#1 D:\NbProjects\gruz2\protected\migrations\m130123_191029_delete_column_organizations.php(12): CDbMigration->execute('????ALTER TABLE...')
+#2 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(385): m130123_191029_delete_column_organizations->up()
+#3 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(109): MigrateCommand->migrateUp('m130123_191029_...')
+#4 [internal function]: MigrateCommand->actionUp(Array)
+#5 D:\NbProjects\gruz2\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#6 D:\NbProjects\gruz2\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\NbProjects\gruz2\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\NbProjects\gruz2\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\NbProjects\gruz2\framework\yiic.php(33): CApplication->run()
+#10 D:\NbProjects\gruz2\protected\yiic.php(7): require_once('D:\NbProjects\g...')
+#11 {main}
+---
+2013/01/23 19:43:11 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+				  
+				INSERT INTO `' at line 5. The SQL statement executed was: 
+				CREATE TABLE IF NOT EXISTS `file_types` (
+					`id` bigint(20) NOT NULL,
+					`title` varchar(255) NOT NULL,
+					PRIMARY KEY (`id`),
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+				  
+				INSERT INTO `file_types` (`id`, `title`) VALUES
+					(1, "Форма регистрации"),
+					(2, "Форма налогообложения"),
+					(3, "Лицензия"),
+					(4, "Разное"),
+				 ;
+			.
+2013/01/23 19:43:31 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+				  
+				INSERT INTO `' at line 5. The SQL statement executed was: 
+				CREATE TABLE IF NOT EXISTS `file_types` (
+					`id` bigint(20) NOT NULL,
+					`title` varchar(255) NOT NULL,
+					PRIMARY KEY (`id`),
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+				  
+				INSERT INTO `file_types` (`id`, `title`) VALUES
+					(1, "Форма регистрации"),
+					(2, "Форма налогообложения"),
+					(3, "Лицензия"),
+					(4, "Разное")
+				 ;
+			.
+2013/01/23 19:43:59 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
+				  
+				INSERT INTO `file_types` (`id`' at line 5. The SQL statement executed was: 
+				CREATE TABLE IF NOT EXISTS `file_types` (
+					`id` bigint(20) NOT NULL,
+					`title` varchar(255) NOT NULL,
+					PRIMARY KEY (`id`),
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
+				  
+				INSERT INTO `file_types` (`id`, `title`) VALUES
+					(1, "Форма регистрации"),
+					(2, "Форма налогообложения"),
+					(3, "Лицензия"),
+					(4, "Разное")
+				 ;
+			.

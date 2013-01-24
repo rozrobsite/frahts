@@ -4,15 +4,23 @@ var formOrganization = {
 			var type_org_id = $('#Organizations_type_org_id').val();
         
 			if(type_org_id == 1){
-				$('#Organizations_name_org').val($('#privateName').val());
+				$('#edrpou').hide();
+				$('#private_label').show();
+				$('#private_certificate_label').show();
+				$('#corporate_label').hide();
+				$('#corporate_certificate_label').hide();
 			} else {
-				$('#Organizations_name_org').val('');
+				$('#edrpou').show();
+				$('#corporate_label').show();
+				$('#corporate_certificate_label').show();
+				$('#private_label').hide();
+				$('#private_certificate_label').hide();
 			}
 		});
 	}
 };
 
 $(document).ready(function(){
-//	formOrganization.init();
-//	$('#Organizations_type_org_id').change();
+	formOrganization.init();
+	$('#Organizations_type_org_id').change();
 });

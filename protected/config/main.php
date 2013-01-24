@@ -93,5 +93,10 @@ return array(
 	'params' => array(
 		// this is used in contact page
 		'adminEmail' => 'support@frahts.com',
+		'files' => array(
+			'files' => '/uploads/files/',
+			'photos' => '/uploads/photos/',
+			'images' => '/uploads/images/',
+		),
 	),
 );

@@ -63,7 +63,7 @@ $this->breadcrumbs = array(
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
-							<div class="grid3"><label>Выберите Ваш вид деятельночти:<span class="req">*</span></label></div>
+							<div class="grid3"><label>Выберите Ваш вид деятельности:<span class="req">*</span></label></div>
 							<div class="grid2">
 								<?php echo CHtml::activeDropDownList($model, 'user_type_id', $userTypes, array('class' => 'user_type')); ?>
 								<?php echo $form->error($model, 'user_type_id', array('class' => 'error')); ?>

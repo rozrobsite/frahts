@@ -716,9 +716,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', end
 .redImg { background: #ba6d6d; }
 .greenImg { background: #8fae53; }
 
-.blueImg img { padding: 11px; }
-.redImg img { padding: 10px 10px; }
-.greenImg img { padding: 9px 13px;  }
+.blueImg img { padding: 9px; }
+.redImg img { padding: 6px 6px; }
+.greenImg img { padding: 10px 0px;  }
 
 
 /* === Breadcrumbs line === */

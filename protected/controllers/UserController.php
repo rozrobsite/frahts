@@ -97,19 +97,23 @@ class UserController extends FrahtController
 
 	public function actionOrganization()
 	{
-		if (isset($_POST['Organizations']))
-		{
-			$this->user->organizations = isset($this->user->organizations->id) 
+		$this->user->organizations = isset($this->user->organizations->id) 
 					? $this->user->organizations
 					: new Organizations();
+		
+		if (isset($_POST['Organizations']))
+		{
 			$this->user->organizations->attributes = $_POST['Organizations'];
 			$this->user->organizations->user_id = $this->user->id;
+			$this->user->organizations->edrpou = $this->user->organizations->type_org_id == Organizations::TYPE_PRIVATE
+					? null
+					: $_POST['Organizations']['edrpou'];
 			
-			if (isset($_POST['ajax']) && $_POST['ajax'] === 'organizations-form')
-			{
-				echo CActiveForm::validate($this->user->organizations);
-				Yii::app()->end();
-			}
+//			if (isset($_POST['ajax']) && $_POST['ajax'] === 'organizations-form')
+//			{
+//				echo CActiveForm::validate($this->user->organizations);
+//				Yii::app()->end();
+//			}
 
 			if ($this->user->organizations->validate())
 			{
@@ -128,13 +132,6 @@ class UserController extends FrahtController
 				}
 				else if ($this->user->organizations->save())
 				{
-					$this->user->organizations->file1 = CUploadedFile::getInstance($this->user->organizations, 'file1');
-					$this->user->organizations->file1->saveAs(Yii::getPathOfAlias('webroot') . '/uploads/' . $this->user->id . 'FN.' . $this->user->organizations->file1->getExtensionName());
-					unset($this->user->organizations->file1);
-					$this->user->organizations->file2 = CUploadedFile::getInstance($this->user->organizations, 'file2');
-					$this->user->organizations->file2->saveAs(Yii::getPathOfAlias('webroot') . '/uploads/' . $this->user->id . 'FT.' . $this->user->organizations->file2->getExtensionName());
-					unset($this->user->organizations->file2);
-					
 					Yii::app()->user->setFlash('user_action_success',
 							'Ваши данные успешно сохранены.');
 				}
@@ -156,7 +153,7 @@ class UserController extends FrahtController
 			: '';
 		
 		$this->render('organization', array(
-			'model' => isset($this->user->organizations->id) ? $this->user->organizations : new Organizations(),
+			'model' => $this->user->organizations,
 			'typeOrganizations' => $listTypeOrganizations,
 			'privateName' => $privateName,
 		));
