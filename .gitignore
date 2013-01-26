@@ -1,3 +1,6 @@
 assets/*
 nbproject/*
 uploads/*
+protected/runtime/*
+protected/config/console.php
+protected/config/test.php

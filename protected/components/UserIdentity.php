@@ -8,7 +8,7 @@
 class UserIdentity extends CUserIdentity
 {
 	private $_id;
-	private $_code;
+	public $code;
 	private $_enabled;
 
 	/**

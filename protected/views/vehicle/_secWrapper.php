@@ -12,50 +12,23 @@
 	<!-- Tabs container -->
 	<div id="tab-container" class="tab-container">
 		<ul class="iconsLine ic3 etabs">
+			<li><a href="#vehicle" title="Личный транспорта" class="tipN" original-title="Личный транспорт"><span class="icos-truck"></span></a></li>
+			<li><a href="#vehicle_disabled" title="Личный транспорт не учавствующий в поиске" class="tipN" original-title="Личный транспорт не учавствующий в поиске"><span class="icos-truck"></span></a></li>
 			<li><a href="#user_profile" title="Настройки пользователя" class="tipN" original-title="Настройки пользователя"><span class="icos-user"></span></a></li>
-			<li><a href="#user_items" title="Настройки транспорта / груза" class="tipN" original-title="Настройки транспорта / груза"><span class="icos-truck"></span></a></li>
-			<li><a href="#user_files" title="Файлы" class="tipN" original-title="Файлы"><span class="icos-files"></span></a></li>
 		</ul>
 
 		<div class="divider"><span></span></div>
 
 		<div id="user_profile">
 			<ul class="subNav">
-				<li><a href="/user/" title="" <?php if (isset($selectProfile)): ?>class="this"<?php endif; ?>><span class="icos-admin2"></span>Личные настройки</a></li>
-				<li><a href="/user/organization" title="" <?php if (isset($selectOrganization)): ?>class="this"<?php endif; ?>><span class="icos-users"></span>Организация</a></li>
-				<?php if (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == 3): ?>
-					<li><a href="/vehicle" title="" <?php if (isset($selectFreighter)): ?>class="this"<?php endif; ?>><span class="icos-truck"></span>Транспорт</a></li>
-					<li><a href="/user/shipper" title="" <?php if (isset($selectShipper)): ?>class="this"<?php endif; ?>><span class="icos-trolly"></span>Груз</a></li>
-				<?php elseif(isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == 2): ?>
-					<li><a href="/user/shipper" title="" <?php if (isset($selectShipper)): ?>class="this"<?php endif; ?>><span class="icos-trolly"></span>Груз</a></li>
-				<?php elseif(isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == 1): ?>
-					<li><a href="/vehicle" title="" <?php if (isset($selectFreighter)): ?>class="this"<?php endif; ?>><span class="icos-truck"></span>Транспорт</a></li>
-				<?php endif; ?>
+				<li><a href="/user/" title=""><span class="icos-admin2"></span>Личные настройки</a></li>
+				<li><a href="/user/organization" title=""><span class="icos-users"></span>Организация</a></li>
+				<li><a href="/vehicle" title="" class="this"><span class="icos-truck"></span>Транспорт</a></li>
 			</ul>
 		</div>
 
-		<div id="user_items">
+		<div id="vehicle">
 			<ul class="userList">
-				<li>
-					<a href="#" title="">
-						<span class="contactName">
-							<strong>Eugene Kopyov <span>(5)</span></strong>
-							<i>web &amp; ui designer</i>
-						</span>
-						<span class="status_away"></span>
-						<span class="clear"></span>
-					</a>
-				</li>
-				<li>
-					<a href="#" title="">
-						<span class="contactName">
-							<strong>Lucy Wilkinson <span>(12)</span></strong>
-							<i>Team leader</i>
-						</span>
-						<span class="status_off"></span>
-						<span class="clear"></span>
-					</a>
-				</li>
 				<li>
 					<a href="#" title="">
 						<span class="contactName">
@@ -98,14 +71,20 @@
 				</li>
 			</ul>
 		</div>
-
-		<div id="user_files">
-			<div class="widget">
-				<div class="whead">
-					<h6><span class="icon-tree-view"></span>Simple jQuery file tree</h6>
-					<div class="clear"></div>
-				</div>
-			</div>
+		
+		<div id="vehicle_disabled">
+			<ul class="userList">
+				<li>
+					<a href="#" title="">
+						<span class="contactName">
+							<strong>Lucy Wilkinson <span>(12)</span></strong>
+							<i>Team leader</i>
+						</span>
+						<span class="status_off"></span>
+						<span class="clear"></span>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 
