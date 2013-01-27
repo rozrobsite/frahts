@@ -64,6 +64,14 @@ $this->breadcrumbs = array(
 		<?php echo $form->textField($model,'verifyCode', array('placeholder' => 'Веедите код с картинки')); ?>
 		<?php echo $form->error($model,'verifyCode', array('class' => 'error')); ?>
 	</div>
+	<div class="logControl register" style="width: 600px;margin-left: 39px;margin-top: 10px;">
+		<div class="memory">
+			<?php echo $form->checkBox($model,'agree', array('class'=>'check')); ?>
+			<label>Я согласен с <a id="term_modal_open">Условиями Пользовательского соглашения и Политики конфиденциальности</a></label>
+			<?php echo $form->error($model,'agree', array('class' => 'error', 'style' => 'text-align:left')); ?>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<div class="logControl">
 		<?php echo CHtml::submitButton('Зарегистрироваться', array('class' => 'buttonM bBlue', 'style' => 'margin-right:70px;')); ?>
@@ -72,5 +80,6 @@ $this->breadcrumbs = array(
 	<?php $this->endWidget(); ?>
 
 </div>
+<?php $this->renderPartial('/blocks/popups/term', array('term' => $term)) ?>
 <?php endif; ?>
 <!-- Registration wrapper ends -->

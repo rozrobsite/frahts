@@ -23,15 +23,13 @@ class UserController extends FrahtController
 		$listRegions = array();
 		if (isset($this->user->profiles->region_id))
 		{
-			$regions = Region::model()->findAll(array('order' => 'name_ru'));
-			$listRegions = CHtml::listData($regions, 'id', 'name_ru');
+			$listRegions = CHtml::listData($this->user->profiles->country->regions, 'id', 'name_ru');
 		}
 
 		$listCities = array();
 		if (isset($this->user->profiles->city_id))
 		{
-			$cities = City::model()->findAll(array('order' => 'name_ru'));
-			$listCities = CHtml::listData($cities, 'id', 'name_ru');
+			$listCities = CHtml::listData($this->user->profiles->region->cities, 'id', 'name_ru');
 		}
 
 		$this->render('index',

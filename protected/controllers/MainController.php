@@ -209,8 +209,10 @@ class MainController extends Controller
 				}
 			}
 		}
+		
+		
 		// display the login form
-		$this->render('register', array('model' => $model));
+		$this->render('register', array('model' => $model, 'term' => Terms::model()->findByPk(1)));
 	}
 
 	/**

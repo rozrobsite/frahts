@@ -702,8 +702,8 @@ $(function() {
 	];
 
 	var opts = {
-		's1': {decimals:2},
-		's2': {stepping: 0.25},
+		's1': {decimals:0, min:0},
+		's2': {stepping: 0.5, min:0},
 		's3': {currency: '$'},
 		's4': {},
 		's5': {
@@ -727,9 +727,11 @@ $(function() {
 		$("#"+n).spinner(opts[n]);
 
 	$("button").click(function(e){
-		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
-		if (ns != null)
-			$('#'+ns[1]).spinner( (ns[2] == 'create') ? opts[ns[1]] : ns[2]);
+//		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
+//		
+//		if (ns != null){
+//			$('#'+ns[1]).spinner( (ns[2] == 'create') ? opts[ns[1]] : ns[2]);
+//		}
 	});
 	
 
@@ -813,19 +815,19 @@ $(function() {
 	
 	//===== Modal =====//
 	
-    $('#dialog-modal').dialog({
+    $('#term-modal').dialog({
 		autoOpen: false, 
-		width: 400,
-		modal: true,
+		width: 800,
+		modal: false,
 		buttons: {
-				"Yep!": function() {
+				"Закрыть": function() {
 					$( this ).dialog( "close" );
 				}
 			}
 		});
 		
-    $('#modal_open').click(function () {
-        $('#dialog-modal').dialog('open');
+    $('#term_modal_open').click(function () {
+        $('#term-modal').dialog('open');
         return false;
     });
 	

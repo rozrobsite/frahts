@@ -34,7 +34,7 @@
 
 	<!-- Main nav -->
 	<ul class="nav">
-		<?php if (isset($this->user->is_access_search) && $this->user->is_access_search): ?>
+		<?php if (isset($this->is_access_search) && $this->is_access_search): ?>
 			<li><a href="index.html" title="Поиск транспорта для грузоперевозок" class="tipW" original-title="Поиск транспорта для грузоперевозок"><img src="/images/icons/mainnav/transport4.png" alt="Поиск транспорта для грузоперевозок" /><span>Транспорт</span></a></li>
 		<?php endif; ?>
 		<li><a href="/user/feedback" title="Свяжитесь с нами если у Вас есть вопросы или предложения" original-title="Свяжитесь с нами если у Вас есть вопросы или предложения" class="tipW <?php if(isset($userFeedback) && $userFeedback): ?>active<?php endif; ?>"><img src="/images/icons/mainnav/contacts2.png" alt="" /><span>Обратная связь</span></a></li>

@@ -10,13 +10,13 @@
  * @property integer $vehicle_type_id
  * @property integer $model_id
  * @property integer $body_type_id
- * @property integer $bearing_capacity
+ * @property float $bearing_capacity
  * @property integer $body_capacity
- * @property string $kind_boot
- * @property string $permission
  * @property string $license_plate
  * @property string $number_trailer
  * @property string $number_semitrailer
+ * @property integer $is_deleted
+ * @property integer $is_verification
  *
  * The followings are the available model relations:
  * @property BodyTypes $bodyType
@@ -24,6 +24,8 @@
  * @property Users $user
  * @property VehicleTypes $vehicleType
  * @property Models $model
+ * @property string $permissions
+ * @property string $shipments
  */
 class Vehicle extends CActiveRecord
 {
@@ -53,14 +55,15 @@ class Vehicle extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('bearing_capacity, body_capacity, kind_boot, permission', 'required'),
-			array('make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity', 'numerical', 'integerOnly'=>true),
+			array('make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate', 'required'),
+			array('make_id, vehicle_type_id, model_id, body_type_id, body_capacity', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'length', 'max'=>11),
-			array('kind_boot, permission', 'length', 'max'=>255),
+			array('bearing_capacity', 'numerical', 'min'=>0.5),
+			array('body_capacity', 'numerical', 'min'=>1),
 			array('license_plate, number_trailer, number_semitrailer', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, kind_boot, permission, license_plate, number_trailer, number_semitrailer', 'safe', 'on'=>'search'),
+			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate, number_trailer, number_semitrailer, is_deleted, is_verification', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,18 +90,18 @@ class Vehicle extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
-			'make_id' => 'Make',
-			'vehicle_type_id' => 'Vehicle Type',
-			'model_id' => 'Model',
-			'body_type_id' => 'Body Type',
-			'bearing_capacity' => 'Bearing Capacity',
-			'body_capacity' => 'Body Capacity',
-			'kind_boot' => 'Kind Boot',
-			'permission' => 'Permission',
-			'license_plate' => 'License Plate',
-			'number_trailer' => 'Number Trailer',
-			'number_semitrailer' => 'Number Semitrailer',
+			'user_id' => 'Пользователь',
+			'make_id' => 'Марка',
+			'vehicle_type_id' => 'Тип транспорта',
+			'model_id' => 'Модель',
+			'body_type_id' => 'Тип кузова',
+			'bearing_capacity' => 'Грузоподъемность',
+			'body_capacity' => 'Объем кузова',
+			'license_plate' => 'Номер транспорта',
+			'number_trailer' => 'Номер прицепа',
+			'number_semitrailer' => 'Номер полуприцепа',
+			'is_deleted' => 'Удалено из поиска',
+			'is_verification' => 'Проверено',
 		);
 	}
 
@@ -121,14 +124,28 @@ class Vehicle extends CActiveRecord
 		$criteria->compare('body_type_id',$this->body_type_id);
 		$criteria->compare('bearing_capacity',$this->bearing_capacity);
 		$criteria->compare('body_capacity',$this->body_capacity);
-		$criteria->compare('kind_boot',$this->kind_boot,true);
-		$criteria->compare('permission',$this->permission,true);
 		$criteria->compare('license_plate',$this->license_plate,true);
 		$criteria->compare('number_trailer',$this->number_trailer,true);
 		$criteria->compare('number_semitrailer',$this->number_semitrailer,true);
+		$criteria->compare('is_deleted',$this->is_deleted);
+		$criteria->compare('is_verification',$this->is_verification);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function findAllByDeleted($user_id, $is_deleted = true)
+	{
+		$condition = $is_deleted ? 'is_deleted = 1' : 'is_deleted = 0';
+		$condition .= ' AND user_id = ' . $user_id;
+		
+		return $this->findAll($condition);
+	}
+	
+	public function deleteFromSearch($is_deleted)
+	{
+		$this->is_deleted = $is_deleted ? 1 : 0;
+		return $this->update(array('is_deleted'));
 	}
 }

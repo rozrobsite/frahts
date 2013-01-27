@@ -6632,3 +6632,91 @@ Stack trace:
 					(4, "Разное")
 				 ;
 			.
+2013/01/24 20:40:19 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vehicle_ferrymans TO vehicle' at line 1. The SQL statement executed was: 
+				RENAME vehicle_ferrymans TO vehicle ;
+			.
+2013/01/24 20:40:19 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vehicle_ferrymans TO vehicle' at line 1. The SQL statement executed was: 
+				RENAME vehicle_ferrymans TO vehicle ;
+			' in D:\NbProjects\gruz2\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\NbProjects\gruz2\framework\db\CDbMigration.php(159): CDbCommand->execute(Array)
+#1 D:\NbProjects\gruz2\protected\migrations\m130124_203411_change_vehicle_ferrymans_to_vehicle.php(10): CDbMigration->execute('?????RENAME veh...')
+#2 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(385): m130124_203411_change_vehicle_ferrymans_to_vehicle->up()
+#3 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(109): MigrateCommand->migrateUp('m130124_203411_...')
+#4 [internal function]: MigrateCommand->actionUp(Array)
+#5 D:\NbProjects\gruz2\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#6 D:\NbProjects\gruz2\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\NbProjects\gruz2\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\NbProjects\gruz2\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\NbProjects\gruz2\framework\yiic.php(33): CApplication->run()
+#10 D:\NbProjects\gruz2\protected\yiic.php(7): require_once('D:\NbProjects\g...')
+#11 {main}
+---
+2013/01/26 14:35:43 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1' at line 6. The SQL statement executed was: 
+				CREATE TABLE IF NOT EXISTS `permissions` (
+					`id` tinyint(4) NOT NULL AUTO_INCREMENT,
+					`name_ru` varchar(255) NOT NULL,
+					`name_ua` varchar(255) NOT NULL,
+					PRIMARY KEY (`id`),
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+			.
+2013/01/27 18:23:30 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-ua term_ua' at line 1. The SQL statement executed was: 
+				ALTER TABLE terms change term-ua term_ua;
+			.
+2013/01/27 18:23:30 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-ua term_ua' at line 1. The SQL statement executed was: 
+				ALTER TABLE terms change term-ua term_ua;
+			' in D:\NbProjects\gruz2\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\NbProjects\gruz2\framework\db\CDbMigration.php(159): CDbCommand->execute(Array)
+#1 D:\NbProjects\gruz2\protected\migrations\m130127_182159_alter_term_rename_column.php(10): CDbMigration->execute('?????ALTER TABL...')
+#2 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(385): m130127_182159_alter_term_rename_column->up()
+#3 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(109): MigrateCommand->migrateUp('m130127_182159_...')
+#4 [internal function]: MigrateCommand->actionUp(Array)
+#5 D:\NbProjects\gruz2\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#6 D:\NbProjects\gruz2\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\NbProjects\gruz2\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\NbProjects\gruz2\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\NbProjects\gruz2\framework\yiic.php(33): CApplication->run()
+#10 D:\NbProjects\gruz2\protected\yiic.php(7): require_once('D:\NbProjects\g...')
+#11 {main}
+---
+2013/01/27 18:24:01 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP COLUMN term-ua' at line 1. The SQL statement executed was: 
+				ALTER TABLE DROP COLUMN term-ua;
+			.
+2013/01/27 18:24:01 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP COLUMN term-ua' at line 1. The SQL statement executed was: 
+				ALTER TABLE DROP COLUMN term-ua;
+			' in D:\NbProjects\gruz2\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\NbProjects\gruz2\framework\db\CDbMigration.php(159): CDbCommand->execute(Array)
+#1 D:\NbProjects\gruz2\protected\migrations\m130127_182159_alter_term_rename_column.php(10): CDbMigration->execute('?????ALTER TABL...')
+#2 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(385): m130127_182159_alter_term_rename_column->up()
+#3 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(109): MigrateCommand->migrateUp('m130127_182159_...')
+#4 [internal function]: MigrateCommand->actionUp(Array)
+#5 D:\NbProjects\gruz2\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#6 D:\NbProjects\gruz2\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\NbProjects\gruz2\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\NbProjects\gruz2\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\NbProjects\gruz2\framework\yiic.php(33): CApplication->run()
+#10 D:\NbProjects\gruz2\protected\yiic.php(7): require_once('D:\NbProjects\g...')
+#11 {main}
+---
+2013/01/27 18:24:39 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-ua' at line 1. The SQL statement executed was: 
+				ALTER TABLE terms DROP COLUMN term-ua;
+			.
+2013/01/27 18:24:39 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-ua' at line 1. The SQL statement executed was: 
+				ALTER TABLE terms DROP COLUMN term-ua;
+			' in D:\NbProjects\gruz2\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\NbProjects\gruz2\framework\db\CDbMigration.php(159): CDbCommand->execute(Array)
+#1 D:\NbProjects\gruz2\protected\migrations\m130127_182159_alter_term_rename_column.php(10): CDbMigration->execute('?????ALTER TABL...')
+#2 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(385): m130127_182159_alter_term_rename_column->up()
+#3 D:\NbProjects\gruz2\framework\cli\commands\MigrateCommand.php(109): MigrateCommand->migrateUp('m130127_182159_...')
+#4 [internal function]: MigrateCommand->actionUp(Array)
+#5 D:\NbProjects\gruz2\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#6 D:\NbProjects\gruz2\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\NbProjects\gruz2\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\NbProjects\gruz2\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\NbProjects\gruz2\framework\yiic.php(33): CApplication->run()
+#10 D:\NbProjects\gruz2\protected\yiic.php(7): require_once('D:\NbProjects\g...')
+#11 {main}
+---

@@ -40,6 +40,7 @@ class Users extends CActiveRecord
 	public $oldPassword;
 	public $newPassword;
 	public $newPasswordRepeat;
+	public $agree;
 	
 	private $_identity;
 
@@ -79,7 +80,7 @@ class Users extends CActiveRecord
 			array('password_repeat', 'compare', 'compareAttribute'=>'password', 'on'=>self::SCENARIO_REGISTER),
 			array('password_repeat, email', 'required', 'on'=>self::SCENARIO_REGISTER),
 			array('password_repeat', 'length', 'min'=>6, 'max'=>30),
-//			array('rememberMe', 'boolean'),
+			array('agree', 'mustCheck', 'on'=>self::SCENARIO_REGISTER),
 //			array('enabled', 'boolean'),
 			array('verifyCode', 'captcha', 'on'=>self::SCENARIO_REGISTER),
 			array('email', 'forgot', 'on' => self::SCENARIO_CHANGE_EMAIL),
@@ -106,7 +107,7 @@ class Users extends CActiveRecord
 		return array(
 			'organizations' => array(self::HAS_ONE, 'Organizations', 'user_id'),
 			'profiles' => array(self::HAS_ONE, 'Profiles', 'user_id'),
-			'vehicle' => array(self::HAS_MANY, 'Vehicle', 'user_id'),
+			'vehicles' => array(self::HAS_MANY, 'Vehicle', 'user_id'),
 		);
 	}
 
@@ -132,6 +133,7 @@ class Users extends CActiveRecord
 			'oldPassword' => '"Текущий пароль"',
 			'newPassword' => '"Новый пароль"',
 			'newPasswordRepeat' => '"Повторите новый пароль"',
+			'agree' => 'Я согласен с <a id="term_modal_open">Условиями Пользовательского соглашения и Политики конфиденциальности</a>'
 		);
 	}
 
@@ -210,6 +212,15 @@ class Users extends CActiveRecord
 			if(!$this->find('email = "' . Yii::app()->user->email . '" AND password = "' . md5($this->oldPassword) . '"'))
 				$this->addError('oldPassword', 'Вы неправильно ввели текущий пароль.');
 		}
+	}
+	
+	public function mustCheck($attribute, $params)
+	{
+//		if (!$this->hasErrors())
+//		{
+			if(!$this->agree)
+				$this->addError('agree', 'Вы должны согласиться с условиями пользовательского соглашения.');
+//		}
 	}
 	
 	/**
