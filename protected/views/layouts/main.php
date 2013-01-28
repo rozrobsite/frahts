@@ -83,6 +83,8 @@
 						<ul class="userNav">
 							<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>
 							<li><a href="/user" title="Настройки пользователя" class="profile tipN" original-title="Настройки пользователя"></a></li>
+							<li><a href="/user" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
+							<li><a href="/user" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
 							<li><a href="/main/logout" title="Выход" class="logout tipN" original-title="Выход"></a></li>
 						</ul>
 					<?php endif; ?>

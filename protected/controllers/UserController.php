@@ -66,6 +66,7 @@ class UserController extends FrahtController
 			{
 				if ($this->user->profiles->id)
 				{
+					$this->user->profiles->updated_at = time();
 					if ($this->user->profiles->update())
 					{
 						Yii::app()->user->setFlash('user_action_success',
@@ -77,15 +78,19 @@ class UserController extends FrahtController
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
-				else if ($this->user->profiles->save())
+				else 
 				{
-					Yii::app()->user->setFlash('user_action_success',
-							'Ваши данные успешно сохранены.');
-				}
-				else
-				{
-					Yii::app()->user->setFlash('user_action_error',
-							'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
+					$this->user->profiles->created_at = time();
+					if ($this->user->profiles->save())
+					{
+						Yii::app()->user->setFlash('user_action_success',
+								'Ваши данные успешно сохранены.');
+					}
+					else
+					{
+						Yii::app()->user->setFlash('user_action_error',
+								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
+					}
 				}
 			}
 		}

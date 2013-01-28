@@ -19,6 +19,8 @@
  * @property string $icq
  * @property integer $rating
  * @property integer $user_type_id
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * The followings are the available model relations:
  * @property City $city
@@ -56,7 +58,7 @@ class Profiles extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('last_name, first_name, middle_name, mobile, country_id, region_id, city_id, address, user_type_id', 'required'),
-			array('user_type_id, country_id, region_id, city_id', 'numerical', 'integerOnly'=>true),
+			array('user_type_id, country_id, region_id, city_id, created_at, updated_at', 'numerical', 'integerOnly'=>true),
 			array('user_id, country_id, region_id, city_id', 'length', 'max'=>11),
 			array('last_name, middle_name', 'length', 'max'=>64),
 			array('first_name, icq', 'length', 'max'=>32),
@@ -107,6 +109,8 @@ class Profiles extends CActiveRecord
 			'icq' => 'Icq',
 			'rating' => 'Рейтинг',
 			'user_type_id' => 'Вид деятельности',
+			'created_at' => 'Дата регистрации',
+			'updated_at' => 'Дата обновления',
 		);
 	}
 
@@ -141,4 +145,5 @@ class Profiles extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
 }

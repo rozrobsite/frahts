@@ -62,10 +62,30 @@ $this->breadcrumbs = array(
 							<div class="grid3"><h5>Вид деятельности</h5></div>
 							<div class="clear"></div>
 						</div>
+						<?php if (!$model->user_type_id): ?>
 						<div class="formRow">
-							<div class="grid3"><label>Выберите Ваш вид деятельности:<span class="req">*</span></label></div>
+							<div class="grid12">
+								<label style="color: #A64949; font-weight: bold;">
+									ВНИМАНИЕ! Вы можете выбрать Ваш вид деятельности только один раз и больше не сможете внести изменения.
+									Пожалуйста, будьте внимательны при выборе!
+								</label>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<?php endif; ?>
+						<div class="formRow">
+							<div class="grid3">
+								<label>
+									<?php if (!$model->user_type_id): ?>
+									Выберите Ваш вид деятельности:
+									<span class="req">*</span>
+									<?php else: ?>
+									 Вы зарегистрированы как
+									<?php endif; ?>
+								</label>
+							</div>
 							<div class="grid2">
-								<?php echo CHtml::activeDropDownList($model, 'user_type_id', $userTypes, array('class' => 'user_type')); ?>
+								<?php echo CHtml::activeDropDownList($model, 'user_type_id', $userTypes, array('class' => 'user_type', 'disabled' => $model->user_type_id ? 'disabled' : '')); ?>
 								<?php echo $form->error($model, 'user_type_id', array('class' => 'error')); ?>
 							</div>
 							<div class="grid7">
@@ -201,7 +221,7 @@ $this->breadcrumbs = array(
 								));
 						?>
 						<div class="formRow">
-							<div class="grid3"><h5>Изменение электронного адреса (e-mail)</h5></div>
+							<div class="grid12"><h5>Изменение электронного адреса (e-mail)</h5></div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">

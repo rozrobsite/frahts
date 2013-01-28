@@ -189,6 +189,8 @@ ul.userNav li a { display: block; height: 28px; width: 28px; }
 ul.userNav li a.screen { background: url(/images/icons/usernav/screen.png) no-repeat 9px 9px; }
 ul.userNav li a.settings { background: url(/images/icons/usernav/settings.png) no-repeat 9px 9px; }
 ul.userNav li a.profile { background: url(/images/icons/usernav/profile.png) no-repeat 9px 9px;  }
+ul.userNav li a.box { background: url(/images/icons/usernav/box.png) no-repeat 9px 9px;  }
+ul.userNav li a.truck { background: url(/images/icons/usernav/truck.png) no-repeat 9px 9px;  }
 ul.userNav li a.messages { background: url(/images/icons/usernav/messages.png) no-repeat 9px 10px;  }
 ul.userNav li a.logout { background: url(/images/icons/usernav/logout.png) no-repeat 9px 9px; }
 ul.userNav li a.search { background: url(/images/icons/usernav/search.png) no-repeat 9px 9px; }
@@ -240,6 +242,8 @@ ul.userNav li a.sidebar { background: url(/images/icons/usernav/sidebar.png) no-
 .leftUser li a.sProfile { background: url(/images/icons/usernav/profile.png) no-repeat 12px 12px; }
 .leftUser li a.sMessages { background: url(/images/icons/usernav/messages.png) no-repeat 12px 13px; }
 .leftUser li a.sSettings { background: url(/images/icons/usernav/settings.png) no-repeat 12px 12px; }
+.leftUser li a.sBox { background: url(/images/icons/usernav/box.png) no-repeat 12px 12px; }
+.leftUser li a.sTruck { background: url(/images/icons/usernav/truck.png) no-repeat 12px 12px; }
 .leftUser li a.sLogout { background: url(/images/icons/usernav/logout.png) no-repeat 12px 12px; }
 .leftUser li a.sFiles { background: url(/images/icons/usernav/files.png) no-repeat 12px 12px; }
 

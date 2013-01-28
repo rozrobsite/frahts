@@ -8,6 +8,10 @@
 		</span>
 		<ul class="leftUser">
 			<li><a href="/user" title="Личные настройки" class="sProfile">Настройки пользователя</a></li>
+			<?php if ($this->user->vehicles): ?>
+				<li><a href="/vehicle/new" title="Личный транспорт пользователя" class="sTruck">Мой транспорт</a></li>
+				<li><a href="/vehicle/new" title="Личный груз пользователя" class="sBox">Мои грузы</a></li>
+			<?php endif; ?>
 			<li><a href="#" title="Сообщения" class="sMessages">Сообщения</a></li>
 			<li><a href="/user" title="Файлы" class="sFiles">Файлы</a></li>
 			<li><a href="/main/logout" title="Выход" class="sLogout">Выход</a></li>

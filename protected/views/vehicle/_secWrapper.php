@@ -4,7 +4,7 @@
 			<div class="balInfo">Баланс:<span><?php echo Yii::app()->dateFormatter->format('dd.MMM.yyyy', time()); ?></span></div>
 			<div class="balAmount">
 				<span class="balBars"><!--5,10,15,20,18,16,14,20,15,16,12,10--></span>
-				<span class="tipN" original-title="Специальная единица сайта"><?php echo Yii::app()->user->balance ?> фрахтов</span>
+				<span class="tipN" original-title="Специальная единица сайта"><?php echo $this->user->balance ?> фрахтов</span>
 			</div>
 		</div>
 	</div>

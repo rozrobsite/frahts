@@ -55,7 +55,7 @@ class Vehicle extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate', 'required'),
+			array('make_id, vehicle_type_id, body_type_id, bearing_capacity, body_capacity, license_plate', 'required'),
 			array('make_id, vehicle_type_id, model_id, body_type_id, body_capacity', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'length', 'max'=>11),
 			array('bearing_capacity', 'numerical', 'min'=>0.5),
