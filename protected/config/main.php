@@ -17,7 +17,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'ext.mail.YiiMailMessage',
-//		'ext.*',
+//		'ext.eajaxupload.EAjaxUpload',
 	),
 	'modules' => array(
 		// uncomment the following to enable the Gii tool

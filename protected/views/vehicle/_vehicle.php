@@ -264,7 +264,7 @@ echo CHtml::activeDropDownList($model, 'body_type_id', $bodyTypes,
 											'waitingForResponse' => 'Обработка...'
 										),
 										'callbacks' => array(
-										'onComplete' => 'js:function(id, fileName, responseJSON){
+											'onComplete' => 'js:function(id, fileName, responseJSON){
 																if (responseJSON.success)
 																{
 																	$(".lightbox").fancybox({
@@ -279,18 +279,9 @@ echo CHtml::activeDropDownList($model, 'body_type_id', $bodyTypes,
 																	$("#uploadPhoto").append(
 																			 "<input name=\"Photos[]\" type=\"hidden\" value=\"" + responseJSON.filename + "\" data-filename=\"" + responseJSON.filename + "\" class=\"delClass\"/>"
 																		);
-																	/*$.ajax({
-																		url: "/gallery/backend/category/renderPhoto",
-																		cache: false,
-																		type: "POST",
-																		data: {fileName: responseJSON.filename},
-																		success: function(data)
-																		{
-																			$(data).prependTo("#photos");
-																		}
-																	});*/
 																}
-															}'),
+															}'
+										),
 									)
 								)
 						);
