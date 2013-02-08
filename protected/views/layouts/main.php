@@ -5,12 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <title><?php echo $this->pageTitle ?></title>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/agile-uploader.css" rel="stylesheet" type="text/css" />
 		<!--[if IE]> <link href="/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <script type="text/javascript" src="/js/plugins/forms/ui.spinner.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.mousewheel.js"></script>
 		
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
+<!--		<script type="text/javascript" src="/js/agile-uploader/jquery.flash.min.js"></script>
+		<script type="text/javascript" src="/js/agile-uploader/agile-uploader-3.0.js"></script>-->
 
 		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.js"></script>
@@ -81,10 +84,16 @@
 						<a href="/main/register" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Регистрация</a>
 					<?php else: ?>
 						<ul class="userNav">
-							<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>
-							<li><a href="/user" title="Настройки пользователя" class="profile tipN" original-title="Настройки пользователя"></a></li>
-							<li><a href="/user" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
-							<li><a href="/user" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
+							<?php if ($this->user->vehicles): ?>
+								<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>
+							<?php endif; ?>
+								<li><a href="/user" title="Настройки пользователя" class="profile tipN" original-title="Настройки пользователя"></a></li>
+							<?php if ($this->user->vehicles && ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3 )): ?>
+								<li><a href="/vehicle/active" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
+							<?php endif; ?>
+							<?php if ($this->user->vehicles && ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3 )): ?>
+								<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
+							<?php endif; ?>
 							<li><a href="/main/logout" title="Выход" class="logout tipN" original-title="Выход"></a></li>
 						</ul>
 					<?php endif; ?>

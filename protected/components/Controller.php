@@ -21,6 +21,8 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
 	
+	public $user = null;
+	
 	protected function respondJSON($data)
 	{
 		header('Content-type: application/json');

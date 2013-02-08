@@ -91,7 +91,9 @@ $this->breadcrumbs = array(
 							<div class="grid7">
 								<label id="shipper" class="explanation" style="display: none">Вы являетесь владельцем грузов и ищете транспортное средство для его перевозки</label>
 								<label id="freighter" class="explanation" style="display: none">Вы являетесь владельцем грузового транспорта и ищете грузы для перевозки</label>
-								<label id="dispatcher" class="explanation" style="display: none">Вы являетесь владельцем грузов и транспортных средств и ищете транспортное средство или груз для перевозки</label>
+								<label id="dispatcher" class="explanation" style="display: none">
+									Вы можете предлагать заявки на перевозку грузов, подбирать транспорт соответствующий параметам ваших грузов, а также предлагать свободный транспорт для перевозки
+								</label>
 							</div>
 							<div class="clear"></div>
 						</div>

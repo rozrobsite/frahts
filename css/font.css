@@ -897,6 +897,8 @@
 .icos-truck:before { content: url(/images/icons/usual/icon-truck.png); }
 .icos-truckRed:before { content: url(/images/icons/usual/icon-truck_red.png); }
 .icos-truckGreen:before { content: url(/images/icons/usual/icon-truck_green.png); }
+.icos-truck-gold:before { content: url(/images/icons/usual/icon-truck-gold.png); }
+.icos-truck-black-gold:before { content: url(/images/icons/usual/icon-truck-black-gold.png); }
 .icos-airplane:before { content: url(/images/icons/usual/icon-airplane.png); }
 .icos-cat:before { content: url(/images/icons/usual/icon-cat.png); }
 .icos-baloons:before { content: url(/images/icons/usual/icon-baloons.png); }

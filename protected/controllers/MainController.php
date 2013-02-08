@@ -31,6 +31,10 @@ class MainController extends Controller
 	{
 		// renders the view file 'protected/views/main/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
+		
+		if (isset(Yii::app()->user->id))
+			$this->user = Users::model()->findByPk(Yii::app()->user->id);
+		
 		$this->render('index');
 	}
 

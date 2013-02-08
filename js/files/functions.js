@@ -594,10 +594,10 @@ $(function() {
 	
 		//===== Sparklines =====//
 	
-	$('.balBars').sparkline(
-	'html', {type: 'bar', barColor: '#db6464', height: '18px'}
-	 );
-	 
+//	$('.balBars').sparkline(
+//	'html', {type: 'bar', barColor: '#db6464', height: '18px'}
+//	 );
+//	 
 
 	//===== User nav dropdown =====//		
 	
@@ -703,6 +703,7 @@ $(function() {
 
 	var opts = {
 		's1': {decimals:0, min:0},
+		's6': {decimals:0, min:0, max:9},
 		's2': {stepping: 0.5, min:0},
 		's3': {currency: '$'},
 		's4': {},

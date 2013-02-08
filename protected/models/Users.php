@@ -22,17 +22,18 @@
 class Users extends CActiveRecord
 {
 	// Сценарий регистрации
-    const SCENARIO_REGISTER = 'register';
-    const SCENARIO_LOGIN = 'login';
-    const SCENARIO_FORGOT = 'forgot';
-    const SCENARIO_CHANGE_EMAIL = 'newEmail';
-    const SCENARIO_CHANGE_PASSWORD = 'newPassword';
+
+	const SCENARIO_REGISTER = 'register';
+	const SCENARIO_LOGIN = 'login';
+	const SCENARIO_FORGOT = 'forgot';
+	const SCENARIO_CHANGE_EMAIL = 'newEmail';
+	const SCENARIO_CHANGE_PASSWORD = 'newPassword';
 
 	public $rememberMe = 0;
 	// для капчи
-    public $verifyCode;
-    // для поля "повтор пароля"
-    public $password_repeat;
+	public $verifyCode;
+	// для поля "повтор пароля"
+	public $password_repeat;
 	// для изменения email
 	public $newEmail;
 	public $newEmailRepeat;
@@ -41,7 +42,6 @@ class Users extends CActiveRecord
 	public $newPassword;
 	public $newPasswordRepeat;
 	public $agree;
-	
 	private $_identity;
 
 	/**
@@ -70,27 +70,27 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email', 'required', 'on'=>self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN . ', ' . self::SCENARIO_FORGOT . ', ' . self::SCENARIO_CHANGE_EMAIL),
-			array('password', 'required', 'on'=>self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN),
+			array('email', 'required', 'on' => self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN . ', ' . self::SCENARIO_FORGOT . ', ' . self::SCENARIO_CHANGE_EMAIL),
+			array('password', 'required', 'on' => self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN),
 			array('email', 'email'),
 			array('email', 'forgot', 'on' => self::SCENARIO_FORGOT),
 			array('email', 'unique', 'on' => self::SCENARIO_REGISTER),
-			array('password', 'length', 'min'=>6, 'max'=>30, 'on'=>self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN),
+			array('password', 'length', 'min' => 6, 'max' => 30, 'on' => self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN),
 			array('password', 'authenticate', 'on' => self::SCENARIO_LOGIN),
-			array('password_repeat', 'compare', 'compareAttribute'=>'password', 'on'=>self::SCENARIO_REGISTER),
-			array('password_repeat, email', 'required', 'on'=>self::SCENARIO_REGISTER),
-			array('password_repeat', 'length', 'min'=>6, 'max'=>30),
-			array('agree', 'mustCheck', 'on'=>self::SCENARIO_REGISTER),
+			array('password_repeat', 'compare', 'compareAttribute' => 'password', 'on' => self::SCENARIO_REGISTER),
+			array('password_repeat, email', 'required', 'on' => self::SCENARIO_REGISTER),
+			array('password_repeat', 'length', 'min' => 6, 'max' => 30),
+			array('agree', 'mustCheck', 'on' => self::SCENARIO_REGISTER),
 //			array('enabled', 'boolean'),
-			array('verifyCode', 'captcha', 'on'=>self::SCENARIO_REGISTER),
+			array('verifyCode', 'captcha', 'on' => self::SCENARIO_REGISTER),
 			array('email', 'forgot', 'on' => self::SCENARIO_CHANGE_EMAIL),
 			array('newEmail, newEmailRepeat', 'required', 'on' => self::SCENARIO_CHANGE_EMAIL),
 			array('newEmail, newEmailRepeat', 'email', 'on' => self::SCENARIO_CHANGE_EMAIL),
-			array('newEmailRepeat', 'compare', 'compareAttribute'=>'newEmail', 'on' => self::SCENARIO_CHANGE_EMAIL),
-			array('oldPassword, newPassword, newPasswordRepeat', 'length', 'min'=>6, 'max'=>30, 'on'=>self::SCENARIO_CHANGE_PASSWORD),
+			array('newEmailRepeat', 'compare', 'compareAttribute' => 'newEmail', 'on' => self::SCENARIO_CHANGE_EMAIL),
+			array('oldPassword, newPassword, newPasswordRepeat', 'length', 'min' => 6, 'max' => 30, 'on' => self::SCENARIO_CHANGE_PASSWORD),
 			array('oldPassword', 'changePassword', 'on' => self::SCENARIO_CHANGE_PASSWORD),
 			array('oldPassword, newPassword, newPasswordRepeat', 'required', 'on' => self::SCENARIO_CHANGE_PASSWORD),
-			array('newPasswordRepeat', 'compare', 'compareAttribute'=>'newPassword', 'on' => self::SCENARIO_CHANGE_PASSWORD),
+			array('newPasswordRepeat', 'compare', 'compareAttribute' => 'newPassword', 'on' => self::SCENARIO_CHANGE_PASSWORD),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, email, username, password, logins, last_login, code, enabled, balance', 'safe', 'on' => 'search'),
@@ -158,7 +158,7 @@ class Users extends CActiveRecord
 					'criteria' => $criteria,
 				));
 	}
-	
+
 	// Метод, который будет вызываться до сохранения данных в БД
 //    protected function beforeSave()
 //    {
@@ -194,35 +194,33 @@ class Users extends CActiveRecord
 					$this->addError('email', 'Неправильно введены Электронный адрес или Пароль');
 		}
 	}
-	
+
 	public function forgot($attribute, $params)
 	{
 		if (!$this->hasErrors())
 		{
-			if(!$this->findByAttributes(array('email' => $this->email)))
-				$this->addError('email', 'Пользователь с таким элетронным адресом не найден.');
+			if (!$this->findByAttributes(array('email' => $this->email)))
+					$this->addError('email',
+						'Пользователь с таким элетронным адресом не найден.');
 		}
 	}
-	
-	
+
 	public function changePassword($attribute, $params)
 	{
 		if (!$this->hasErrors())
 		{
-			if(!$this->find('email = "' . Yii::app()->user->email . '" AND password = "' . md5($this->oldPassword) . '"'))
-				$this->addError('oldPassword', 'Вы неправильно ввели текущий пароль.');
+			if (!$this->find('email = "' . Yii::app()->user->email . '" AND password = "' . md5($this->oldPassword) . '"'))
+					$this->addError('oldPassword', 'Вы неправильно ввели текущий пароль.');
 		}
 	}
-	
+
 	public function mustCheck($attribute, $params)
 	{
-//		if (!$this->hasErrors())
-//		{
-			if(!$this->agree)
-				$this->addError('agree', 'Вы должны согласиться с условиями пользовательского соглашения.');
-//		}
+		if (!$this->agree)
+				$this->addError('agree',
+					'Вы должны согласиться с условиями пользовательского соглашения.');
 	}
-	
+
 	/**
 	 * Logs in the user using the given username and password in the model.
 	 * @return boolean whether login is successful
@@ -242,7 +240,7 @@ class Users extends CActiveRecord
 		}
 		else return false;
 	}
-	
+
 	public function loginByCode($code)
 	{
 		if ($this->_identity === null)

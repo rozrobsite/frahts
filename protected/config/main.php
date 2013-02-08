@@ -7,7 +7,7 @@
 return array(
 	'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
 	//Язык по умолчанию
-    'language' => 'ru',
+	'language' => 'ru',
 	//Имя приложения
 	'name' => 'Мир грузоперевозок',
 	// preloading 'log' component
@@ -17,6 +17,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'ext.mail.YiiMailMessage',
+//		'ext.*',
 	),
 	'modules' => array(
 		// uncomment the following to enable the Gii tool
@@ -76,12 +77,19 @@ return array(
 			),
 		),
 		'mail' => array(
-             'class' => 'ext.mail.YiiMail',
-             'transportType' => 'php',
-             'viewPath' => 'application.views.mail',
-             'logging' => true,
-             'dryRun' => false
-			),
+			'class' => 'ext.mail.YiiMail',
+			'transportType' => 'php',
+			'viewPath' => 'application.views.mail',
+			'logging' => true,
+			'dryRun' => false
+		),
+		'image' => array(
+			'class' => 'application.extensions.image.CImageComponent',
+			// GD or ImageMagick
+			'driver' => 'GD',
+			// ImageMagick setup path
+			'params' => array('directory' => '/imagemagick'),
+		),
 //		'clientScript' => array(
 //			'scriptMap' => array(
 //				'jquery.js' => '/js/'
@@ -95,8 +103,27 @@ return array(
 		'adminEmail' => 'support@frahts.com',
 		'files' => array(
 			'files' => '/uploads/files/',
-			'photos' => '/uploads/photos/',
+			'photos' => 'uploads/photos/',
 			'images' => '/uploads/images/',
+			'tmp' => 'uploads/tmp/'
+		),
+		// Params for image file processing
+		'images' => array(
+			'small' => array(
+				'height' => 36,
+				'width' => 37,
+			),
+			'middle' => array(
+				'height' => 80,
+				'width' => 80,
+			),
+			'big' => array(
+				'height' => 250,
+				'width' => 500,
+			),
+			'allowedExtensions' => array('jpg', 'jpeg', 'png'), // allowed file extensions
+
+			'sizeLimit' => 1 * 1024 * 1024,
 		),
 	),
 );

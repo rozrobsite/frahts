@@ -20,7 +20,7 @@ var vehicle =
 {
 	deleteSearch: function()
 	{
-		$('.vehicleDelete').each(function(e){
+		$('.vehicleDeleteSearch').each(function(e){
 			$(this).on('click', function(){
 				if (confirm('Вы действительно хотите удалить это транспортное средство из поиска?'))
 				{
@@ -29,9 +29,7 @@ var vehicle =
 					}, function(response){
 						if(response == null) return;
 
-						window.location.href = response.error == 0 
-							? '/vehicle/update/' + response.id + '#vehicle_disabled'
-							: '/vehicle/update/' + response.id;
+						window.location.reload();
 							
 					});
 				}
@@ -40,7 +38,7 @@ var vehicle =
 	},
 	returnSearch: function()
 	{
-		$('.vehicleReturn').each(function(e){
+		$('.vehicleReturnSearch').each(function(e){
 			$(this).on('click', function(){
 				if (confirm('Вы действительно хотите вернуть это транспортное средство в поиск?'))
 				{
@@ -49,13 +47,139 @@ var vehicle =
 					}, function(response){
 						if(response == null) return;
 
-						window.location.href = response.error == 0 
-							? '/vehicle/update/' + response.id
-							: '/vehicle/update/' + response.id + '#vehicle_disabled';
+						window.location.reload();
 							
 					});
 				}
 			})
+		});
+	},
+	
+	deleteBase: function()
+	{
+		if (!$('.vehicleDeleteBase').length) return;
+		
+		$('.vehicleDeleteBase').each(function(e){
+			$(this).on('click', function(){
+				if (confirm('Вы действительно хотите удалить это транспортное средство из базы? Внимание! Данные будут полностью удалены и востановлению не подлежат!'))
+				{
+					$.post('/makemodel/deletebase', {
+						id: $(this).attr('rel')
+					}, function(response){
+						if(response == null) return;
+
+						window.location.reload();
+							
+					});
+				}
+			})
+		});
+	},
+	
+	deleteManySearch: function()
+	{
+		if (!$('#vehicleDeleteSearchAction').length) return;
+		
+		$('#vehicleDeleteSearchAction').on('change', function(e){
+			if ($(this).val() != 1)
+			{
+				return;
+			}
+			
+			var checkedIds = '';
+			$('.vehicleChecked').each(function(e){
+				checkedIds += $(this).attr('checked') ? $(this).data('id') + ',' : '';
+			});
+			
+			if (checkedIds == '') return;
+			
+			$.post('/makemodel/deletemany', {
+				ids: checkedIds
+			}, function(response){
+				if(response == null) return;
+
+				window.location.reload();
+							
+			});
+		});
+	},
+	
+	returnManySearch: function()
+	{
+		if (!$('#vehicleReturnSearchAction').length) return;
+		
+		$('#vehicleReturnSearchAction').on('change', function(e){
+			if ($(this).val() != 1)
+			{
+				return;
+			}
+			
+			var checkedIds = '';
+			$('.vehicleChecked').each(function(e){
+				checkedIds += $(this).attr('checked') ? $(this).data('id') + ',' : '';
+			});
+			
+			if (checkedIds == '') return;
+			
+			$.post('/makemodel/returnmany', {
+				ids: checkedIds
+			}, function(response){
+				if(response == null) return;
+
+				window.location.reload();
+							
+			});
+		});
+	},
+	
+	adr: function()
+	{
+		$('#permission_4').on('change', function(e){
+			if ($(this).attr('checked'))
+			{
+				$('#Vehicle_adr').show();
+			}
+			else
+			{
+				$('#uniform-Vehicle_adr span').html(0);
+				$('#Vehicle_adr').val(0);
+				$('#Vehicle_adr').hide();
+			}
+		});
+	}
+};
+
+var photo = 
+{
+	deletePreviewUpload: function(object){
+		var filename = $(object).attr('rel');
+		$.post('/makemodel/deletePreviewUpload', {
+			filename: filename
+		}, function(response){
+			if(response == null) return;
+			if (response) 
+			{
+				$('.delClass[data-filename="' + filename + '"]').remove();
+			};
+		});
+	},
+	deletePhotos: function(){
+		if (!$('.deletePhoto').length) return;
+		
+		$('.deletePhoto').each(function(e){
+			$(this).on('click', function(e){
+				var id = $(this).attr('rel');
+				$.post('/makemodel/deletePhoto', {
+					id: id
+				}, function(response){
+					if(response == null) return;
+					if (response) 
+					{
+						$('.photo_' + id).remove();
+					};
+				});
+			});
+			
 		});
 	}
 }
@@ -65,4 +189,11 @@ $(document).ready(function(){
 	makes.init();
 	vehicle.deleteSearch();
 	vehicle.returnSearch();
+	vehicle.adr();
+	$('#permission_4').change();
+	vehicle.deleteManySearch();
+	vehicle.returnManySearch();
+	vehicle.deleteBase();
+	photo.deletePhotos();
+	
 });

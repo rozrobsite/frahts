@@ -17,6 +17,9 @@
  * @property string $number_semitrailer
  * @property integer $is_deleted
  * @property integer $is_verification
+ * @property integer $adr
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * The followings are the available model relations:
  * @property BodyTypes $bodyType
@@ -29,12 +32,13 @@
  */
 class Vehicle extends CActiveRecord
 {
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Vehicle the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}
@@ -56,14 +60,15 @@ class Vehicle extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('make_id, vehicle_type_id, body_type_id, bearing_capacity, body_capacity, license_plate', 'required'),
-			array('make_id, vehicle_type_id, model_id, body_type_id, body_capacity', 'numerical', 'integerOnly'=>true),
-			array('user_id', 'length', 'max'=>11),
-			array('bearing_capacity', 'numerical', 'min'=>0.5),
-			array('body_capacity', 'numerical', 'min'=>1),
-			array('license_plate, number_trailer, number_semitrailer', 'length', 'max'=>32),
+			array('make_id, vehicle_type_id, model_id, body_type_id, body_capacity', 'numerical', 'integerOnly' => true),
+			array('user_id', 'length', 'max' => 11),
+			array('bearing_capacity', 'numerical', 'min' => 0.5),
+			array('body_capacity', 'numerical', 'min' => 1),
+			array('license_plate, number_trailer, number_semitrailer', 'length', 'max' => 32),
+			array('adr', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate, number_trailer, number_semitrailer, is_deleted, is_verification', 'safe', 'on'=>'search'),
+			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate, number_trailer, number_semitrailer, is_deleted, is_verification', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -80,6 +85,7 @@ class Vehicle extends CActiveRecord
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'vehicleType' => array(self::BELONGS_TO, 'VehicleTypes', 'vehicle_type_id'),
 			'model' => array(self::BELONGS_TO, 'Models', 'model_id'),
+			'photos' => array(self::HAS_MANY, 'Photos', 'vehicle_id'),
 		);
 	}
 
@@ -102,6 +108,8 @@ class Vehicle extends CActiveRecord
 			'number_semitrailer' => 'Номер полуприцепа',
 			'is_deleted' => 'Удалено из поиска',
 			'is_verification' => 'Проверено',
+			'created_at' => 'Дата регистрации',
+			'updated_at' => 'Дата обновления',
 		);
 	}
 
@@ -114,38 +122,57 @@ class Vehicle extends CActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('make_id',$this->make_id);
-		$criteria->compare('vehicle_type_id',$this->vehicle_type_id);
-		$criteria->compare('model_id',$this->model_id);
-		$criteria->compare('body_type_id',$this->body_type_id);
-		$criteria->compare('bearing_capacity',$this->bearing_capacity);
-		$criteria->compare('body_capacity',$this->body_capacity);
-		$criteria->compare('license_plate',$this->license_plate,true);
-		$criteria->compare('number_trailer',$this->number_trailer,true);
-		$criteria->compare('number_semitrailer',$this->number_semitrailer,true);
-		$criteria->compare('is_deleted',$this->is_deleted);
-		$criteria->compare('is_verification',$this->is_verification);
+		$criteria->compare('id', $this->id, true);
+		$criteria->compare('user_id', $this->user_id, true);
+		$criteria->compare('make_id', $this->make_id);
+		$criteria->compare('vehicle_type_id', $this->vehicle_type_id);
+		$criteria->compare('model_id', $this->model_id);
+		$criteria->compare('body_type_id', $this->body_type_id);
+		$criteria->compare('bearing_capacity', $this->bearing_capacity);
+		$criteria->compare('body_capacity', $this->body_capacity);
+		$criteria->compare('license_plate', $this->license_plate, true);
+		$criteria->compare('number_trailer', $this->number_trailer, true);
+		$criteria->compare('number_semitrailer', $this->number_semitrailer, true);
+		$criteria->compare('is_deleted', $this->is_deleted);
+		$criteria->compare('is_verification', $this->is_verification);
+		$criteria->compare('created_at', $this->created_at);
+		$criteria->compare('updated_at', $this->updated_at);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+					'criteria' => $criteria,
+				));
 	}
-	
+
 	public function findAllByDeleted($user_id, $is_deleted = true)
 	{
 		$condition = $is_deleted ? 'is_deleted = 1' : 'is_deleted = 0';
 		$condition .= ' AND user_id = ' . $user_id;
-		
+
 		return $this->findAll($condition);
 	}
-	
+
 	public function deleteFromSearch($is_deleted)
 	{
 		$this->is_deleted = $is_deleted ? 1 : 0;
 		return $this->update(array('is_deleted'));
 	}
+
+	public function deleteManySearch($ids)
+	{
+		$command = Yii::app()->db->createCommand();
+		$command->update('vehicle', array(
+			'is_deleted' => 1,
+				), 'id IN (' . trim($ids, ',') . ')');
+	}
+
+	public function returnManySearch($ids)
+	{
+		$command = Yii::app()->db->createCommand();
+		$command->update('vehicle', array(
+			'is_deleted' => 0,
+				), 'id IN (' . trim($ids, ',') . ')');
+	}
+
 }

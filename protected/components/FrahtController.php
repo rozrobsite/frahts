@@ -5,7 +5,6 @@
  */
 class FrahtController extends Controller
 {
-	public $user = null;
 	public $pageName = 'Общая информация';
 	public $is_access_search = false;
 	
