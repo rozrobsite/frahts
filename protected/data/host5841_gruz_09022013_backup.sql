@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2.2
+-- version 3.5.5
 -- http://www.phpmyadmin.net
 --
--- Хост: 127.0.0.1
--- Время создания: Янв 22 2013 г., 21:28
--- Версия сервера: 5.5.27
--- Версия PHP: 5.4.7
+-- Хост: localhost
+-- Время создания: Фев 09 2013 г., 01:26
+-- Версия сервера: 5.1.66-cll
+-- Версия PHP: 5.2.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -33,7 +33,48 @@ CREATE TABLE IF NOT EXISTS `body_types` (
   `name_ua` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vehicle_type_id` (`vehicle_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+
+--
+-- Дамп данных таблицы `body_types`
+--
+
+INSERT INTO `body_types` (`id`, `vehicle_type_id`, `name_ru`, `name_ua`) VALUES
+(1, 0, 'тент', ''),
+(2, 0, 'изотерм', ''),
+(3, 0, 'цельномет.', ''),
+(4, 0, 'рефрижератор', ''),
+(5, 0, 'автовоз', ''),
+(6, 0, 'автокран', ''),
+(7, 0, 'бензовоз', ''),
+(8, 0, 'битумовоз', ''),
+(9, 0, 'бортовая', ''),
+(10, 0, 'зерновоз', ''),
+(11, 0, 'изотерм', ''),
+(12, 0, 'контейнер', ''),
+(13, 0, 'контейнеровоз', ''),
+(14, 0, 'лесовоз', ''),
+(15, 0, 'масловоз', ''),
+(16, 0, 'меблевоз', ''),
+(17, 0, 'микроавтобус', ''),
+(18, 0, 'муковоз', ''),
+(19, 0, 'негабарит', ''),
+(20, 0, 'открытая', ''),
+(21, 0, 'панелевоз', ''),
+(22, 0, 'платформа', ''),
+(23, 0, 'рефрижератор', ''),
+(24, 0, 'самосвал', ''),
+(25, 0, 'скотовоз', ''),
+(26, 0, 'спецмашина', ''),
+(27, 0, 'трал', ''),
+(28, 0, 'трубовоз', ''),
+(29, 0, 'тягач', ''),
+(30, 0, 'цельнопластик', ''),
+(31, 0, 'цементовоз', ''),
+(32, 0, 'цистерна пищ.', ''),
+(33, 0, 'цистерна хим.', ''),
+(34, 0, 'эвакуатор', ''),
+(35, 0, 'экскаватор', '');
 
 -- --------------------------------------------------------
 
@@ -11169,6 +11210,28 @@ INSERT INTO `feedback` (`id`, `subject`, `message`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `file_types`
+--
+
+CREATE TABLE IF NOT EXISTS `file_types` (
+  `id` tinyint(2) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `file_types`
+--
+
+INSERT INTO `file_types` (`id`, `title`) VALUES
+(1, 'Форма регистрации'),
+(2, 'Форма налогообложения'),
+(3, 'Лицензия'),
+(4, 'Разное');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `makes`
 --
 
@@ -11596,10 +11659,8 @@ INSERT INTO `models` (`id`, `name`, `alias`, `make_id`) VALUES
 (1433, 'Model F', '', 82),
 (1434, 'Crafter', '', 87),
 (1435, 'Transporter', 'Transp.', 87),
-(1436, 'Doublecar', '', 22),
 (1439, '706 MTS', '', 75),
 (1513, '400', '', 148),
-(1517, 'Pickup', '', 22),
 (1530, 'Telcoline', '', 81),
 (1531, 'Xenon', '', 81),
 (1533, 'GA200', '', 577),
@@ -11904,13 +11965,84 @@ CREATE TABLE IF NOT EXISTS `organizations` (
   `name_org` varchar(255) NOT NULL,
   `license` varchar(255) NOT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
-  `scan_form_registration` tinyint(1) NOT NULL DEFAULT '0',
-  `scan_form_tax` tinyint(1) NOT NULL DEFAULT '0',
-  `scan_license` tinyint(1) NOT NULL DEFAULT '0',
+  `address` varchar(128) DEFAULT NULL,
+  `account_number` varchar(64) DEFAULT NULL,
+  `edrpou` varchar(32) DEFAULT NULL,
+  `bank` varchar(32) DEFAULT NULL,
+  `city` varchar(32) DEFAULT NULL,
+  `mfo` varchar(32) DEFAULT NULL,
+  `inn` varchar(32) DEFAULT NULL,
+  `certificate` varchar(32) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `type_org_id` (`type_org_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Дамп данных таблицы `organizations`
+--
+
+INSERT INTO `organizations` (`id`, `type_org_id`, `form_tax`, `name_org`, `license`, `user_id`, `address`, `account_number`, `edrpou`, `bank`, `city`, `mfo`, `inn`, `certificate`, `phone`) VALUES
+(12, 2, 'ИНН-234', 'ЧП Иванов И. И.', 'Лицензия №568974', 27, 'ggggg', '222222', 'eeeeee', '3333333', '44444444', '55555555', '66666666', '77777777', '888888888');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `permissions`
+--
+
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `name_ru` varchar(255) NOT NULL,
+  `name_ua` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Дамп данных таблицы `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `name_ru`, `name_ua`) VALUES
+(1, 'CMR', ''),
+(2, 'TIR', ''),
+(3, 'T1', ''),
+(4, 'ADR', ''),
+(5, 'Санпаспорт', ''),
+(6, 'EKMT', '');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `photos`
+--
+
+CREATE TABLE IF NOT EXISTS `photos` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `vehicle_id` bigint(20) NOT NULL,
+  `size_small` varchar(32) DEFAULT NULL,
+  `size_middle` varchar(32) DEFAULT NULL,
+  `size_big` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vehicle_id` (`vehicle_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=101 ;
+
+--
+-- Дамп данных таблицы `photos`
+--
+
+INSERT INTO `photos` (`id`, `vehicle_id`, `size_small`, `size_middle`, `size_big`) VALUES
+(90, 6, '6_90_s_04.jpg', '6_90_m_04.jpg', '6_90_b_04.jpg'),
+(91, 6, '6_91_s_02.jpg', '6_91_m_02.jpg', '6_91_b_02.jpg'),
+(92, 6, '6_92_s_03.jpg', '6_92_m_03.jpg', '6_92_b_03.jpg'),
+(93, 6, '6_93_s_06.jpg', '6_93_m_06.jpg', '6_93_b_06.jpg'),
+(94, 6, '6_94_s_0827.jpg', '6_94_m_0827.jpg', '6_94_b_0827.jpg'),
+(95, 6, '6_95_s_0740.jpg', '6_95_m_0740.jpg', '6_95_b_0740.jpg'),
+(96, 6, '6_96_s_1063.jpg', '6_96_m_1063.jpg', '6_96_b_1063.jpg'),
+(97, 6, '6_97_s_10_l36.jpg', '6_97_m_10_l36.jpg', '6_97_b_10_l36.jpg'),
+(98, 7, '7_98_s_01.jpg', '7_98_m_01.jpg', '7_98_b_01.jpg'),
+(99, 7, '7_99_s_05.jpg', '7_99_m_05.jpg', '7_99_b_05.jpg'),
+(100, 7, '7_100_s_0946.jpg', '7_100_m_0946.jpg', '7_100_b_0946.jpg');
 
 -- --------------------------------------------------------
 
@@ -11934,6 +12066,8 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `icq` varchar(32) NOT NULL,
   `rating` int(11) NOT NULL,
   `user_type_id` tinyint(4) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
   KEY `mobile` (`mobile`),
@@ -11941,14 +12075,14 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   KEY `city_id` (`city_id`),
   KEY `region_id` (`region_id`),
   KEY `country_id` (`country_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Дамп данных таблицы `profiles`
 --
 
-INSERT INTO `profiles` (`id`, `user_id`, `last_name`, `first_name`, `middle_name`, `mobile`, `country_id`, `region_id`, `city_id`, `address`, `phone`, `skype`, `icq`, `rating`, `user_type_id`) VALUES
-(4, 27, 'Иванов', 'Иван', 'Иванович', '(555) 555-5555', 9908, 10583, 10603, 'Шевченко 320', '', '', '', 0, 2);
+INSERT INTO `profiles` (`id`, `user_id`, `last_name`, `first_name`, `middle_name`, `mobile`, `country_id`, `region_id`, `city_id`, `address`, `phone`, `skype`, `icq`, `rating`, `user_type_id`, `created_at`, `updated_at`) VALUES
+(6, 27, 'Иванов', 'Иван', 'Иванович', '(999) 999-9999', 9908, 10583, 10603, 'Шевченко 320', '423356', 'skype1', '1234567889', 0, 1, 1359410242, 1360364878);
 
 -- --------------------------------------------------------
 
@@ -12929,6 +13063,31 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `shipment`
+--
+
+CREATE TABLE IF NOT EXISTS `shipment` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `name_ru` varchar(255) NOT NULL,
+  `name_ua` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+
+--
+-- Дамп данных таблицы `shipment`
+--
+
+INSERT INTO `shipment` (`id`, `name_ru`, `name_ua`) VALUES
+(1, 'Боковая', ''),
+(2, 'Верхняя', ''),
+(3, 'Задняя', ''),
+(4, 'С полной растентовкой', ''),
+(12, 'Гидроборт', ''),
+(14, 'Со снятием стоек', '');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `status_employees`
 --
 
@@ -12950,13 +13109,57 @@ INSERT INTO `status_employees` (`id`, `name_ru`, `name_ua`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `tbl_migration`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_migration` (
+  `version` varchar(255) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `tbl_migration`
+--
+
+INSERT INTO `tbl_migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1358968081),
+('m130123_191029_delete_column_organizations', 1358968660),
+('m130123_191907_create_file_types_table', 1358969258),
+('m130123_193022_create_file_types_table', 1358970279),
+('m130123_194657_create_file_types_table', 1358970448),
+('m130123_194857_create_file_types_table', 1358970558),
+('m130123_195037_create_file_types_table', 1358970658),
+('m130123_195526_create_user_files_table', 1358970964),
+('m130123_200439_alter_organizations_add_fields', 1358971827),
+('m130123_211231_alter_organizations_add_fields', 1358976092),
+('m130124_203411_change_vehicle_ferrymans_to_vehicle', 1359060064),
+('m130124_210823_alter_vehicle_add_fields', 1359063576),
+('m130124_214126_alter_vehicle_add_fields', 1359063713),
+('m130126_125555_alter_vehicle_add_columns', 1359205071),
+('m130126_141651_alter_body_types_drop_key_insert', 1359210374),
+('m130126_143256_table_permissions', 1359210958),
+('m130126_143636_insert_permissions', 1359211281),
+('m130126_145251_create_shipment_table', 1359212231),
+('m130126_150026_create_vehicle_shipment_table', 1359212843),
+('m130126_151545_create_vehicle_shipment_table', 1359213365),
+('m130126_151656_create_vehicle_permissions_table', 1359213527),
+('m130126_152613_alter_vehicle_delete_two_fields', 1359214053),
+('m130127_153051_drop_tables', 1359300754),
+('m130127_153338_alter_vehicle_add_two_fields', 1359300960),
+('m130127_164141_alter_vehicle_change_field_type', 1359304993),
+('m130127_182159_alter_term_rename_column', 1359311101),
+('m130128_210840_alter_profiles_add_fields', 1359407427);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `terms`
 --
 
 CREATE TABLE IF NOT EXISTS `terms` (
   `id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `term_ru` text NOT NULL,
-  `term-ua` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -12964,8 +13167,8 @@ CREATE TABLE IF NOT EXISTS `terms` (
 -- Дамп данных таблицы `terms`
 --
 
-INSERT INTO `terms` (`id`, `term_ru`, `term-ua`) VALUES
-(1, '			<span style=''font-size:16px''>Общие положения</span>\r\n            <p>1. С 1 мая размещение объявлений на веб-сайте rabotenka.com.ua (далее Сайт) имеет право частное лицо старше 18 лет или юридическое лицо, действуя согласно соблюдения этих положений и условий (далее "Клиент").\r\n            </p>\r\n            <p>2. С 1 мая Все услуги бесплатны до дальнейшего уведомления.\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>1. Обязанности пользователя</span>\r\n            <p>Принимая данное Соглашение, пользователь обязуется в&nbsp;полной мере следовать данным правилам при работе с&nbsp;сайтом.</p>\r\n            <p>\r\n                <p>1.1.&nbsp;Не&nbsp;вводить в&nbsp;заблуждение других пользователей либо Администрацию Сайта.</p>\r\n                <p>1.2.&nbsp;Не&nbsp;создавать несколько учётных записей на&nbsp;сайте, если фактически они принадлежат одному и&nbsp;тому же&nbsp;работодателю\r\n                    либо частному лицу.</p>\r\n                <p>1.3.&nbsp;Не&nbsp;размещать заведомо некачественную либо фальшивую информацию.</p>\r\n                <p>1.4.&nbsp;Не&nbsp;использовать слова, набранные только заглавными буквами, если они не&nbsp;являются аббревиатурами.</p>\r\n                <p>1.5.&nbsp;Публиковать вакансии только в&nbsp;тот регион, в&nbsp;котором фактически будет работать сотрудник.</p>\r\n                <p>1.6.&nbsp;Не&nbsp;публиковать несколько одинаковых либо отличающихся лишь заголовком вакансий.</p>\r\n                <p>1.7.&nbsp;В заголовках вакансий не допускать повторений слов.</p>\r\n                <p>1.8.&nbsp;Не&nbsp;публиковать оскорбления, нецензурные высказывания, и&nbsp;другие материалы,\r\n                    которые наносят вред Сайту или третьим лицам.</p>\r\n                <p>1.9.&nbsp;Не&nbsp;размещать на&nbsp;сайте информацию, которая может относиться к&nbsp;сбору и&nbsp;хранению персональных данных\r\n                    о&nbsp;других пользователях.</p>\r\n                <p>1.10.&nbsp;Название компании публиковать без кавычек, скобок и&nbsp;других символов, начиная именно с&nbsp;названия. Далее,\r\n                    через запятую (по желанию) может быть указана форма собственности или тип деятельности. Правильно:\r\n                    <ul>\r\n                        <li>Атмосфера.\r\n                        <li>Ходак, торговый дом.\r\n                        <li>Форум, банк.\r\n                        <li>Петров П.П., ЧП.\r\n                    </ul>\r\n                    Неправильно: компания &laquo;Атмосфера&raquo;, ООО &laquo;Атмосфера&raquo;.<br/>\r\n                </p>\r\n                <p>1.11.&nbsp;Выбирать разделы исключительно в&nbsp;соответствии с&nbsp;тематикой заголовка.\r\n                    Если Вы&nbsp;хотите к&nbsp;вашей вакансии добавить дополнительную принадлежность к&nbsp;какой-то тематической категории,\r\n                </p>\r\n                <p>1.12.&nbsp;Пользователь соглашается с&nbsp;тем, что он&nbsp;несет полную ответственность за&nbsp;информацию, размещаемую им&nbsp;на&nbsp;Сайте,\r\n                    в&nbsp;том числе за&nbsp;соответствие ее&nbsp;требованиям законодательства, соблюдение авторских прав,\r\n                    санкционированное использование наименований фирм, использование логотипов, знаков для товаров и&nbsp;услуг (торговых марок),\r\n                    а&nbsp;также за&nbsp;соблюдение прав третьих лиц в&nbsp;связи с&nbsp;размещением информации на&nbsp;Сайте.\r\n                    В&nbsp;случае поступления претензий от&nbsp;третьих лиц, связанных с&nbsp;размещенной Пользователем информации,\r\n                    Пользователь обязуется самостоятельно и&nbsp;за&nbsp;свой счет урегулировать указанные претензии.\r\n                </p>\r\n                <p>1.13.&nbsp;Пользователь обязуется использовать Сайт в&nbsp;соответствии с&nbsp;данным соглашением,\r\n                    а&nbsp;также действующими и&nbsp;применимыми в&nbsp;данной области законами.\r\n                </p>\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>2. Администрация Сайта не&nbsp;несет ответственности:</span>\r\n            <p>\r\n                <p>2.1.&nbsp;За&nbsp;содержание материалов, опубликованных Пользователями.</p>\r\n                <p>2.2.&nbsp;За&nbsp;причинение вреда, ущерба и&nbsp;любых других убытков, которые могут возникнуть при использовании Сайта.</p>\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>3. Администрация Сайта оставляет за&nbsp;собой право:</h2>\r\n            <p>\r\n                <p>3.1.&nbsp;Модифицировать Сайт по&nbsp;своему усмотрению.</p>\r\n                <p>3.2.&nbsp;Изменять стоимость и&nbsp;виды услуг, сроки их&nbsp;действия.</p>\r\n                <p>3.3.&nbsp;Редактировать или удалять материалы, опубликованные Пользователем на&nbsp;Сайте, если они не&nbsp;соответствуют условиям данного\r\n                    Соглашения, наносят вред Сайту или третьим лицам, а также по своему личному усмотрению без указания причины.</p>\r\n                <p>3.4.&nbsp;Использовать для своих целей материалы, опубликованные Пользователем на&nbsp;Сайте и&nbsp;находящиеся в&nbsp;открытом доступе,\r\n                    в&nbsp;частности, для размещения материалов на&nbsp;сайтах партнеров.</p>\r\n                <p>3.5.&nbsp;Вносить изменения в&nbsp;данное Соглашение в&nbsp;одностороннем порядке. Пользователь считается уведомленным о&nbsp;изменившихся\r\n                    условиях Соглашения с&nbsp;момента опубликования измененного варианта данного Соглашения на&nbsp;Сайте по&nbsp;адресу\r\n                    <br><a href="<?= Config::getSiteUrl() ?>/Home/user_agreement">http://www.rabotenka.com.ua/Home/user_agreement</a>.</p>\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>4. Политика конфиденциальности</span>\r\n            <p>Использование Сайта означает полное и&nbsp;безусловное согласие Пользователя с&nbsp;настоящей политикой конфиденциальности\r\n                и&nbsp;указанными в&nbsp;ней целями и&nbsp;условиями обработки его персональных данных.</p>\r\n            <p>\r\n                <p>4.1.&nbsp;Пользователь Сайта, размещая свои данные на&nbsp;Сайте добровольно предоставляет свое безусловное согласие на&nbsp;обработку своих персональных данных (которые содержатся\r\n                    в&nbsp;его сообщениях и/или другой информации, собранной и/или размещаемой на&nbsp;Сайте и/или\r\n                    отправляемой другим Пользователям Сайта).</p>\r\n                <p>4.2.&nbsp;Обработка Персональных данных включает в&nbsp;себя любые действия и/или совокупность действий,\r\n                    которые связаны со&nbsp;сбором, регистрацией,\r\n                    накапливанием, хранением, адаптацией, изменением, обновлением, использованием и&nbsp;распространением (реализацией, передачей),\r\n                    удалением Персональных данных Пользователя с&nbsp;целью обеспечения работы сервисов Сайта.</p>\r\n                <p>4.3.&nbsp;Согласие Пользователя на&nbsp;обработку его персональных данных не&nbsp;требует от Администрации Сайта\r\n                    дополнительных уведомлений при передаче его персональных данных третьим лицам в&nbsp;соответствии\r\n                    с&nbsp;нормами&nbsp;ст. 21&nbsp;Закона Украины &laquo;О&nbsp;защите персональных данных&raquo;.</p>\r\n                <p>4.4.&nbsp;Принимая данное соглашение, пользователь подтверждает, что ему понятны его права, определенные Законом Украины &laquo;О&nbsp;защите\r\n                    персональных данных&raquo;, а&nbsp;также цель сбора, хранения и&nbsp;обработки его персональных данных. Пользователь также дает согласие,\r\n                    что срок обработки его персональных данных является бессрочным.</p>\r\n                <p>4.5.&nbsp;Пользователь может в&nbsp;любой момент изменить (обновить, дополнить) предоставленные им&nbsp;персональные данные или их&nbsp;часть\r\n                    воспользовавшись функцией редактирования и&nbsp;настройки доступа к&nbsp;личной информации,\r\n                    а&nbsp;также потребовать от&nbsp;Администрации Сайта полного удаления его аккаунта и&nbsp;всех персональных данных из&nbsp;базы данных Сайта.</p>\r\n                <p>4.6.&nbsp;Целью сбора, хранения и&nbsp;обработки персональных данных является предоставление пользователю персонализированных сервисов Сайта,\r\n                    в&nbsp;том числе: доступ в&nbsp;личный раздел, авторизация, напоминание пароля, публикация и&nbsp;отправка вакансий,\r\n                    таргетирование рекламных материалов, связь с&nbsp;Пользователем, в&nbsp;том числе направление уведомлений, запросов и&nbsp;информации,\r\n                    касающихся использования Сайта, оказания услуг, обработка запросов Пользователя, а&nbsp;также другие сервисы Сайта.</p>\r\n            </p>', '');
+INSERT INTO `terms` (`id`, `term_ru`) VALUES
+(1, '			<span style=''font-size:16px''>Общие положения</span>\r\n            <p>1. С 1 мая размещение объявлений на веб-сайте rabotenka.com.ua (далее Сайт) имеет право частное лицо старше 18 лет или юридическое лицо, действуя согласно соблюдения этих положений и условий (далее "Клиент").\r\n            </p>\r\n            <p>2. С 1 мая Все услуги бесплатны до дальнейшего уведомления.\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>1. Обязанности пользователя</span>\r\n            <p>Принимая данное Соглашение, пользователь обязуется в&nbsp;полной мере следовать данным правилам при работе с&nbsp;сайтом.</p>\r\n            <p>\r\n                <p>1.1.&nbsp;Не&nbsp;вводить в&nbsp;заблуждение других пользователей либо Администрацию Сайта.</p>\r\n                <p>1.2.&nbsp;Не&nbsp;создавать несколько учётных записей на&nbsp;сайте, если фактически они принадлежат одному и&nbsp;тому же&nbsp;работодателю\r\n                    либо частному лицу.</p>\r\n                <p>1.3.&nbsp;Не&nbsp;размещать заведомо некачественную либо фальшивую информацию.</p>\r\n                <p>1.4.&nbsp;Не&nbsp;использовать слова, набранные только заглавными буквами, если они не&nbsp;являются аббревиатурами.</p>\r\n                <p>1.5.&nbsp;Публиковать вакансии только в&nbsp;тот регион, в&nbsp;котором фактически будет работать сотрудник.</p>\r\n                <p>1.6.&nbsp;Не&nbsp;публиковать несколько одинаковых либо отличающихся лишь заголовком вакансий.</p>\r\n                <p>1.7.&nbsp;В заголовках вакансий не допускать повторений слов.</p>\r\n                <p>1.8.&nbsp;Не&nbsp;публиковать оскорбления, нецензурные высказывания, и&nbsp;другие материалы,\r\n                    которые наносят вред Сайту или третьим лицам.</p>\r\n                <p>1.9.&nbsp;Не&nbsp;размещать на&nbsp;сайте информацию, которая может относиться к&nbsp;сбору и&nbsp;хранению персональных данных\r\n                    о&nbsp;других пользователях.</p>\r\n                <p>1.10.&nbsp;Название компании публиковать без кавычек, скобок и&nbsp;других символов, начиная именно с&nbsp;названия. Далее,\r\n                    через запятую (по желанию) может быть указана форма собственности или тип деятельности. Правильно:\r\n                    <ul>\r\n                        <li>Атмосфера.\r\n                        <li>Ходак, торговый дом.\r\n                        <li>Форум, банк.\r\n                        <li>Петров П.П., ЧП.\r\n                    </ul>\r\n                    Неправильно: компания &laquo;Атмосфера&raquo;, ООО &laquo;Атмосфера&raquo;.<br/>\r\n                </p>\r\n                <p>1.11.&nbsp;Выбирать разделы исключительно в&nbsp;соответствии с&nbsp;тематикой заголовка.\r\n                    Если Вы&nbsp;хотите к&nbsp;вашей вакансии добавить дополнительную принадлежность к&nbsp;какой-то тематической категории,\r\n                </p>\r\n                <p>1.12.&nbsp;Пользователь соглашается с&nbsp;тем, что он&nbsp;несет полную ответственность за&nbsp;информацию, размещаемую им&nbsp;на&nbsp;Сайте,\r\n                    в&nbsp;том числе за&nbsp;соответствие ее&nbsp;требованиям законодательства, соблюдение авторских прав,\r\n                    санкционированное использование наименований фирм, использование логотипов, знаков для товаров и&nbsp;услуг (торговых марок),\r\n                    а&nbsp;также за&nbsp;соблюдение прав третьих лиц в&nbsp;связи с&nbsp;размещением информации на&nbsp;Сайте.\r\n                    В&nbsp;случае поступления претензий от&nbsp;третьих лиц, связанных с&nbsp;размещенной Пользователем информации,\r\n                    Пользователь обязуется самостоятельно и&nbsp;за&nbsp;свой счет урегулировать указанные претензии.\r\n                </p>\r\n                <p>1.13.&nbsp;Пользователь обязуется использовать Сайт в&nbsp;соответствии с&nbsp;данным соглашением,\r\n                    а&nbsp;также действующими и&nbsp;применимыми в&nbsp;данной области законами.\r\n                </p>\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>2. Администрация Сайта не&nbsp;несет ответственности:</span>\r\n            <p>\r\n                <p>2.1.&nbsp;За&nbsp;содержание материалов, опубликованных Пользователями.</p>\r\n                <p>2.2.&nbsp;За&nbsp;причинение вреда, ущерба и&nbsp;любых других убытков, которые могут возникнуть при использовании Сайта.</p>\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>3. Администрация Сайта оставляет за&nbsp;собой право:</h2>\r\n            <p>\r\n                <p>3.1.&nbsp;Модифицировать Сайт по&nbsp;своему усмотрению.</p>\r\n                <p>3.2.&nbsp;Изменять стоимость и&nbsp;виды услуг, сроки их&nbsp;действия.</p>\r\n                <p>3.3.&nbsp;Редактировать или удалять материалы, опубликованные Пользователем на&nbsp;Сайте, если они не&nbsp;соответствуют условиям данного\r\n                    Соглашения, наносят вред Сайту или третьим лицам, а также по своему личному усмотрению без указания причины.</p>\r\n                <p>3.4.&nbsp;Использовать для своих целей материалы, опубликованные Пользователем на&nbsp;Сайте и&nbsp;находящиеся в&nbsp;открытом доступе,\r\n                    в&nbsp;частности, для размещения материалов на&nbsp;сайтах партнеров.</p>\r\n                <p>3.5.&nbsp;Вносить изменения в&nbsp;данное Соглашение в&nbsp;одностороннем порядке. Пользователь считается уведомленным о&nbsp;изменившихся\r\n                    условиях Соглашения с&nbsp;момента опубликования измененного варианта данного Соглашения на&nbsp;Сайте по&nbsp;адресу\r\n                    <br><a href="<?= Config::getSiteUrl() ?>/Home/user_agreement">http://www.rabotenka.com.ua/Home/user_agreement</a>.</p>\r\n            </p>\r\n            \r\n            <span style=''font-size:14px''>4. Политика конфиденциальности</span>\r\n            <p>Использование Сайта означает полное и&nbsp;безусловное согласие Пользователя с&nbsp;настоящей политикой конфиденциальности\r\n                и&nbsp;указанными в&nbsp;ней целями и&nbsp;условиями обработки его персональных данных.</p>\r\n            <p>\r\n                <p>4.1.&nbsp;Пользователь Сайта, размещая свои данные на&nbsp;Сайте добровольно предоставляет свое безусловное согласие на&nbsp;обработку своих персональных данных (которые содержатся\r\n                    в&nbsp;его сообщениях и/или другой информации, собранной и/или размещаемой на&nbsp;Сайте и/или\r\n                    отправляемой другим Пользователям Сайта).</p>\r\n                <p>4.2.&nbsp;Обработка Персональных данных включает в&nbsp;себя любые действия и/или совокупность действий,\r\n                    которые связаны со&nbsp;сбором, регистрацией,\r\n                    накапливанием, хранением, адаптацией, изменением, обновлением, использованием и&nbsp;распространением (реализацией, передачей),\r\n                    удалением Персональных данных Пользователя с&nbsp;целью обеспечения работы сервисов Сайта.</p>\r\n                <p>4.3.&nbsp;Согласие Пользователя на&nbsp;обработку его персональных данных не&nbsp;требует от Администрации Сайта\r\n                    дополнительных уведомлений при передаче его персональных данных третьим лицам в&nbsp;соответствии\r\n                    с&nbsp;нормами&nbsp;ст. 21&nbsp;Закона Украины &laquo;О&nbsp;защите персональных данных&raquo;.</p>\r\n                <p>4.4.&nbsp;Принимая данное соглашение, пользователь подтверждает, что ему понятны его права, определенные Законом Украины &laquo;О&nbsp;защите\r\n                    персональных данных&raquo;, а&nbsp;также цель сбора, хранения и&nbsp;обработки его персональных данных. Пользователь также дает согласие,\r\n                    что срок обработки его персональных данных является бессрочным.</p>\r\n                <p>4.5.&nbsp;Пользователь может в&nbsp;любой момент изменить (обновить, дополнить) предоставленные им&nbsp;персональные данные или их&nbsp;часть\r\n                    воспользовавшись функцией редактирования и&nbsp;настройки доступа к&nbsp;личной информации,\r\n                    а&nbsp;также потребовать от&nbsp;Администрации Сайта полного удаления его аккаунта и&nbsp;всех персональных данных из&nbsp;базы данных Сайта.</p>\r\n                <p>4.6.&nbsp;Целью сбора, хранения и&nbsp;обработки персональных данных является предоставление пользователю персонализированных сервисов Сайта,\r\n                    в&nbsp;том числе: доступ в&nbsp;личный раздел, авторизация, напоминание пароля, публикация и&nbsp;отправка вакансий,\r\n                    таргетирование рекламных материалов, связь с&nbsp;Пользователем, в&nbsp;том числе направление уведомлений, запросов и&nbsp;информации,\r\n                    касающихся использования Сайта, оказания услуг, обработка запросов Пользователя, а&nbsp;также другие сервисы Сайта.</p>\r\n            </p>');
 
 -- --------------------------------------------------------
 
@@ -13007,8 +13210,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`),
-  UNIQUE KEY `code` (`code`),
-  KEY `enabled` (`enabled`)
+  KEY `enabled` (`enabled`),
+  KEY `code` (`code`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
@@ -13016,7 +13219,24 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `code`, `enabled`, `balance`) VALUES
-(27, 'imperia1991@gmail.com', 'imperia1991@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 22, 1358800301, '', 'n', 120);
+(27, 'imperia1991@gmail.com', 'imperia1991@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 35, 1360364076, '', 'n', 120);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_files`
+--
+
+CREATE TABLE IF NOT EXISTS `user_files` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `description` varchar(255) DEFAULT '',
+  `name` varchar(255) NOT NULL,
+  `file_type_id` tinyint(2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `file_type_id` (`file_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -13063,27 +13283,44 @@ INSERT INTO `user_types` (`id`, `name_ru`, `name_ua`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `vehicle_ferrymans`
+-- Структура таблицы `vehicle`
 --
 
-CREATE TABLE IF NOT EXISTS `vehicle_ferrymans` (
+CREATE TABLE IF NOT EXISTS `vehicle` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `make_id` int(4) DEFAULT NULL,
   `vehicle_type_id` tinyint(4) DEFAULT NULL,
   `model_id` int(4) DEFAULT NULL,
   `body_type_id` tinyint(4) DEFAULT NULL,
-  `bearing_capacity` int(11) NOT NULL,
+  `bearing_capacity` float DEFAULT NULL,
   `body_capacity` int(11) NOT NULL,
-  `kind_boot` varchar(255) NOT NULL,
-  `permission` varchar(255) NOT NULL,
+  `license_plate` varchar(32) DEFAULT NULL,
+  `number_trailer` varchar(32) DEFAULT NULL,
+  `number_semitrailer` varchar(32) DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_verification` tinyint(1) NOT NULL DEFAULT '1',
+  `permissions` varchar(255) DEFAULT NULL,
+  `shipments` varchar(255) DEFAULT NULL,
+  `adr` tinyint(2) NOT NULL DEFAULT '0',
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `make_id` (`make_id`),
-  UNIQUE KEY `body_type_id` (`body_type_id`),
-  UNIQUE KEY `model_id` (`model_id`),
-  UNIQUE KEY `vehicle_type_id` (`vehicle_type_id`),
+  KEY `body_type_id` (`body_type_id`),
+  KEY `make_id` (`make_id`),
+  KEY `vehicle_type_id` (`vehicle_type_id`),
+  KEY `model_id` (`model_id`),
   KEY `user_id` (`user_id`,`make_id`,`vehicle_type_id`,`model_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Дамп данных таблицы `vehicle`
+--
+
+INSERT INTO `vehicle` (`id`, `user_id`, `make_id`, `vehicle_type_id`, `model_id`, `body_type_id`, `bearing_capacity`, `body_capacity`, `license_plate`, `number_trailer`, `number_semitrailer`, `is_deleted`, `is_verification`, `permissions`, `shipments`, `adr`, `created_at`, `updated_at`) VALUES
+(2, 27, 715, 10, 1960, 8, 4.5, 8, 'СА 2345 ВО', '', '', 1, 1, '5,7', '3,14', 0, NULL, NULL),
+(6, 27, 734, 11, 2004, 20, 4.5, 4, 'СА 2345 ВО', 'ddd', 'ggg', 0, 1, '3,5', '3,10,7', 0, 1360365593, NULL),
+(7, 27, 715, 9, 1960, 21, 3.5, 7, 'СА 2345 ВA', 'fff', 'ggg', 0, 1, '3', '3', 0, 1360365630, 1360365910);
 
 -- --------------------------------------------------------
 
@@ -13112,12 +13349,6 @@ INSERT INTO `vehicle_types` (`id`, `name_ru`, `name_ua`) VALUES
 --
 
 --
--- Ограничения внешнего ключа таблицы `body_types`
---
-ALTER TABLE `body_types`
-  ADD CONSTRAINT `body_types_ibfk_1` FOREIGN KEY (`vehicle_type_id`) REFERENCES `vehicle_types` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
 -- Ограничения внешнего ключа таблицы `city`
 --
 ALTER TABLE `city`
@@ -13125,11 +13356,23 @@ ALTER TABLE `city`
   ADD CONSTRAINT `city_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Ограничения внешнего ключа таблицы `models`
+--
+ALTER TABLE `models`
+  ADD CONSTRAINT `models_ibfk_1` FOREIGN KEY (`make_id`) REFERENCES `makes` (`id`) ON DELETE NO ACTION;
+
+--
 -- Ограничения внешнего ключа таблицы `organizations`
 --
 ALTER TABLE `organizations`
   ADD CONSTRAINT `organizations_ibfk_3` FOREIGN KEY (`type_org_id`) REFERENCES `type_organizations` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `organizations_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
+-- Ограничения внешнего ключа таблицы `photos`
+--
+ALTER TABLE `photos`
+  ADD CONSTRAINT `photos_ibfk_1` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `profiles`
@@ -13161,14 +13404,14 @@ ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `vehicle_ferrymans`
+-- Ограничения внешнего ключа таблицы `vehicle`
 --
-ALTER TABLE `vehicle_ferrymans`
-  ADD CONSTRAINT `vehicle_ferrymans_ibfk_10` FOREIGN KEY (`body_type_id`) REFERENCES `body_types` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `vehicle_ferrymans_ibfk_11` FOREIGN KEY (`make_id`) REFERENCES `makes` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `vehicle_ferrymans_ibfk_7` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `vehicle_ferrymans_ibfk_8` FOREIGN KEY (`vehicle_type_id`) REFERENCES `vehicle_types` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `vehicle_ferrymans_ibfk_9` FOREIGN KEY (`model_id`) REFERENCES `models` (`id`) ON DELETE SET NULL;
+ALTER TABLE `vehicle`
+  ADD CONSTRAINT `vehicle_ibfk_10` FOREIGN KEY (`body_type_id`) REFERENCES `body_types` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `vehicle_ibfk_11` FOREIGN KEY (`make_id`) REFERENCES `makes` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `vehicle_ibfk_7` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `vehicle_ibfk_8` FOREIGN KEY (`vehicle_type_id`) REFERENCES `vehicle_types` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `vehicle_ibfk_9` FOREIGN KEY (`model_id`) REFERENCES `models` (`id`) ON DELETE SET NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
