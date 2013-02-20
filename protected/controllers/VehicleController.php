@@ -2,9 +2,6 @@
 
 class VehicleController extends FrahtController
 {
-	const MAX_UPLOAD_NUMBER = 9;
-	static $current_upload_num = 0;
-	
 	public function actionIndex()
 	{
 		$this->redirect('vehicle/active');

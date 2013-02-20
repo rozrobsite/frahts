@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'vehicle':
  * @property string $id
- * @property string $user_id
+ * @property integer $user_id
  * @property integer $make_id
  * @property integer $vehicle_type_id
  * @property integer $model_id

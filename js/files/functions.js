@@ -220,7 +220,7 @@ $(function() {
 		},
 		messages: {
 			customMessage: {
-				required: "Bazinga! This message is editable",
+				required: "Bazinga! This message is editable"
 			},
 			agree: "Please accept our policy"
 		}
@@ -267,15 +267,13 @@ $(function() {
 	
 	//===== Animate current li when closing button clicked =====//
 	
-	$(".remove").click(function() {
-		$(this).parent('li').fadeTo(200, 0.00, function(){ //fade
-			$(this).slideUp(200, function() { //slide up
-				$(this).remove(); //then remove from the DOM
-			});
-		});
-	});	
-	
-	
+//	$(".remove").click(function() {
+//		$(this).parent('li').fadeTo(200, 0.00, function(){ //fade
+//			$(this).slideUp(200, function() { //slide up
+//				$(this).remove(); //then remove from the DOM
+//			});
+//		});
+//	});	
 	
 	//===== Check all checbboxes =====//
 	
@@ -378,9 +376,7 @@ $(function() {
 
 
 	//===== Chosen plugin =====//
-		
 	$(".select").chosen(); 
-	
 	
 	//===== Autotabs. Inline data rows =====//
 
@@ -472,7 +468,6 @@ $(function() {
 		$('.breadLinks ul li').children("ul").slideUp(150);
 	});
 	
-	
 	//===== Easy tabs =====//
 	
 	$('#tab-container').easytabs({
@@ -481,7 +476,6 @@ $(function() {
 		tabActiveClass: "clicked"
 	});
 		
-	
 	//===== Tabs =====//
 		
 	$.fn.contentTabs = function(){ 
@@ -703,6 +697,10 @@ $(function() {
 
 	var opts = {
 		's1': {decimals:0, min:0},
+		'capacityFrom': {decimals:0, min:0},
+		'capacityTo': {decimals:0, min:0},
+		'weightFrom': {stepping: 0.5, min:0},
+		'weightTo': {stepping: 0.5, min:0},
 		's6': {decimals:0, min:0, max:9},
 		's2': {stepping: 0.5, min:0},
 		's3': {currency: '$'},
@@ -832,6 +830,27 @@ $(function() {
         return false;
     });
 	
+	//===== Modal =====//
+	
+//    $('#goods-modal').dialog({
+//		autoOpen: false, 
+//		width: 800,
+//		modal: true,
+//		buttons: {
+//				"Сохранить": function() {
+//					$('#goodsForm').submit();
+////					$( this ).dialog( "close" );
+//				}
+//			}
+//		});
+//		
+//    $('.goods_modal_open').click(function () {
+//        $('#goods-modal').dialog('open');
+//		
+//		$('div.ui-dialog').offset({top: ($('div.ui-dialog').offset().top + 46)});
+//        return false;
+//    });
+	
 	
 	//===== jQuery UI stuff =====//
 	
@@ -872,8 +891,10 @@ $(function() {
 			var dates = $( "#fromDate, #toDate" ).datepicker({
 				defaultDate: "+1w",
 				changeMonth: false,
-				showOtherMonths:true,
-				numberOfMonths: 3,
+				showOtherMonths: true,
+				numberOfMonths: 1,
+				firstDay: 1,
+				dateFormat: 'dd.mm.yy',
 				onSelect: function( selectedDate ) {
 					var option = this.id == "fromDate" ? "minDate" : "maxDate",
 						instance = $( this ).data( "datepicker" ),
@@ -884,7 +905,8 @@ $(function() {
 					dates.not( this ).datepicker( "option", option, date );
 				}
 			});
-		});
+		}
+	);
 	
 	
 	$( ".uSlider" ).slider(); /* Usual slider */

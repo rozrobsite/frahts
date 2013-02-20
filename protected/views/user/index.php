@@ -50,12 +50,12 @@ $this->breadcrumbs = array(
 						<?php
 						$form = $this->beginWidget('CActiveForm',
 								array(
-							'id' => 'profile-form',
-							'enableAjaxValidation' => true,
-							'clientOptions' => array(
-								'validateOnSubmit' => true,
-							),
-							'focus' => array($model, 'user_type_id'),
+									'id' => 'profile-form',
+									'enableAjaxValidation' => true,
+									'clientOptions' => array(
+										'validateOnSubmit' => true,
+									),
+									'focus' => array($model, 'user_type_id'),
 								));
 						?>
 						<div class="formRow">

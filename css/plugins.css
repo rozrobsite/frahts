@@ -115,7 +115,7 @@ div.ie6.center { left: 	expression( ( 0 + ( ignoreMe2 = document.documentElement
 div.jGrowl { position:	absolute; }
 body > div.jGrowl { position:	fixed; }
 div.jGrowl.top-left { left: 	0px; top: 0px; }
-div.jGrowl.top-right { right: 0px; top: 0px; }
+div.jGrowl.top-right { right: 0px; top: 41px; }
 div.jGrowl.bottom-left { left: 0px; bottom: 0px; }
 div.jGrowl.bottom-right { right: 0px; bottom: 0px; }
 div.jGrowl.center { top: 0px; width: 	50%; left: 25%; }
@@ -268,7 +268,7 @@ li.plupload_droptext { background: url(/images/elements/uploader/drag.png) no-re
 .chzn-container-multi .chzn-choices { border: 1px solid #ddd; margin: 0; cursor: text; overflow: hidden; height: auto !important; height: 1%; position: relative; font-size: 12px; padding: 4px; background: white; color: #656565;  }
 .chzn-container-multi .chzn-choices li { float: left; list-style: none; }
 .chzn-container-multi .chzn-choices .search-field { white-space: nowrap; margin: 0; padding: 0; }
-.chzn-container-multi .chzn-choices .search-field input { color: #666; background: transparent !important; border: 0 !important; font-family: sans-serif; font-size: 12px!important; padding: 11px 4px 10px 4px!important; margin: 0; outline: 0; box-shadow: none!important; }
+.chzn-container-multi .chzn-choices .search-field input { color: #666; background: transparent !important; border: 0 !important; font-family: sans-serif; font-size: 12px!important; padding: 0 4px 0 4px!important; margin: 0; outline: 0; box-shadow: none!important; }
 .chzn-container-multi .chzn-choices .search-field .default { color: #999; }
 .chzn-container-multi .chzn-choices .search-choice { position: relative; line-height: 16px; font-size: 11px; border: 1px solid #A5D24A; display: block; float: left; padding: 5px 24px 5px 8px; background: #CDE69C; color: #638421; margin: 4px; }
 .chzn-container-multi .chzn-choices .search-choice-focus { background: #d4d4d4; }

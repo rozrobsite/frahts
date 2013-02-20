@@ -16,6 +16,6 @@ class FrahtController extends Controller
 		
 		$this->user = Users::model()->findByPk(Yii::app()->user->id);
 		
-		$this->is_access_search = isset($this->user->profiles->id) && isset($this->user->organizations->id) && isset($this->user->vehicles);
+		$this->is_access_search = isset($this->user->profiles->id) && isset($this->user->organizations->id);
 	}
 }

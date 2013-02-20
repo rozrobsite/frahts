@@ -56,6 +56,10 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
+					<div class="grid12"><h5>Регистрационные данные о Вашей организации</h5></div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
 					<div class="grid3"><label>Форма регистрации:<span class="req">*</span></label></div>
 					<div class="grid9">
 						<?php echo CHtml::activeDropDownList($model, 'type_org_id', $typeOrganizations); ?>
@@ -87,6 +91,10 @@ $this->breadcrumbs = array(
 						<?php echo $form->textField($model, 'license') ?>
 						<?php echo $form->error($model, 'license', array('class' => 'error')); ?>
 					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid12"><h5>Ваши платежные реквизиты</h5></div>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">

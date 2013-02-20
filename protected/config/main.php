@@ -125,5 +125,8 @@ return array(
 
 			'sizeLimit' => 1 * 1024 * 1024,
 		),
+		'pages' => array(
+			'goodsCount' => 3
+		),
 	),
 );

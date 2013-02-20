@@ -8,6 +8,7 @@
 			<li><a href="#vehicle" title="Мой транспорт" class="tipN" original-title="Мой транспорт"><span class="icos-truck"></span></a></li>
 			<!--<li><a href="#vehicle_disabled" title="Личный транспорт не учавствующий в поиске" class="tipN" original-title="Личный транспорт не учавствующий в поиске"><span class="icos-truckRed"></span></a></li>-->
 			<li><a href="#user_profile" title="Настройки пользователя" class="tipN" original-title="Настройки пользователя"><span class="icos-user"></span></a></li>
+			<!--<li><a href="#soon"></a></li>-->
 		</ul>
 
 		<div class="divider"><span></span></div>

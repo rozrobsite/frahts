@@ -62,17 +62,17 @@ $this->breadcrumbs = array(
 								<td><img src="/images/elements/other/tableArrows.png" alt="" /></td>
 								<td width="50">Фото</td>
 								<td class="sortCol">
-									<!--<div>-->
+									<div>
 										Название
-										<!--<span></span>-->
-									<!--</div>-->
+										<span></span>
+									</div>
 								</td>
 								<td width="150">Тип транспорта</td>
 								<td width="140" class="sortCol">
-									<!--<div>-->
+									<div>
 										Дата регистрации
-										<!--<span></span>-->
-									<!--</div>-->
+										<span></span>
+									</div>
 								</td>
 								<td width="100">Действие</td>
 							</tr>
@@ -128,8 +128,9 @@ $this->breadcrumbs = array(
 									<td><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy', $vehicle->created_at); ?></td>
 									<td class="tableActs">
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать"><span class="iconb" data-icon="&#xe1db;"></span></a>
-										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить из поиска" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe212;"></span></a>
-										<a href="javascript:void(0)" class="tablectrl_small bRed tipS vehicleDeleteBase" title="Удалить из базы" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
+<!--										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить из поиска" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe212;"></span></a>-->
+										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить из поиска" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
+										<!--<a href="javascript:void(0)" class="tablectrl_small bRed tipS vehicleDeleteBase" title="Удалить из базы" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>-->
 									</td>
 								</tr>
 							<?php endforeach; ?>

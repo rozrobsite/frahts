@@ -341,7 +341,9 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 .ui-dialog { position: absolute; padding: 3px; width: auto; background: #808080; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
-.ui-dialog input[type=text], .ui-dialog input[type=password], .ui-dialog textarea { font-size: 11px; padding: 6px 5px; background: white; border: 1px solid #DDD; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #f4f4f4; color: #656565; width: 100%; margin: 10px auto; display: block; box-sizing: border-box; }
+/*.ui-dialog input[type=text], .ui-dialog input[type=password], .ui-dialog textarea { font-size: 11px; padding: 6px 5px; background: white; border: 1px solid #DDD; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #f4f4f4; color: #656565; width: 100%; margin: 10px auto; display: block; box-sizing: border-box; }*/
+.ui-dialog input[type=text], .ui-dialog input[type=password], .ui-dialog textarea { font-size: 11px; padding: 6px 5px; background: white; border: 1px solid #DDD; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #f4f4f4; color: #656565; width: 100%; display: block; box-sizing: border-box; }
+/*div.goods div.ui-dialog input[type=text] { margin: 0; }*/
 .ui-dialog form {  }
 .ui-dialog form label { float: left; cursor: pointer; margin-bottom: 3px; }
 .dialogSelect label { margin: 4px 15px 0 0; }

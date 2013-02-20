@@ -108,6 +108,7 @@ class Users extends CActiveRecord
 			'organizations' => array(self::HAS_ONE, 'Organizations', 'user_id'),
 			'profiles' => array(self::HAS_ONE, 'Profiles', 'user_id'),
 			'vehicles' => array(self::HAS_MANY, 'Vehicle', 'user_id'),
+			'goods' => array(self::HAS_MANY, 'Goods', 'user_id'),
 		);
 	}
 

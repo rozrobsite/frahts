@@ -79,7 +79,6 @@ class CStringValidator extends CValidator
 		$value=$object->$attribute;
 		if($this->allowEmpty && $this->isEmpty($value))
 			return;
-
 		if(function_exists('mb_strlen') && $this->encoding!==false)
 			$length=mb_strlen($value, $this->encoding ? $this->encoding : Yii::app()->charset);
 		else
