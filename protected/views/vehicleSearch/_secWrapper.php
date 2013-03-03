@@ -4,45 +4,44 @@
 
 	<!-- Tabs container -->
 	<div id="tab-container" class="tab-container">
-		<ul class="iconsLine ic2 etabs">
-			<li><a href="#vehicle" title="Мой транспорт" class="tipN" original-title="Мой транспорт"><span class="icos-truck"></span></a></li>
-			<!--<li><a href="#vehicle_disabled" title="Личный транспорт не учавствующий в поиске" class="tipN" original-title="Личный транспорт не учавствующий в поиске"><span class="icos-truckRed"></span></a></li>-->
-			<li><a href="#user_profile" title="Настройки пользователя" class="tipN" original-title="Настройки пользователя"><span class="icos-user"></span></a></li>
-			<!--<li><a href="#soon"></a></li>-->
+		<ul class="iconsLine ic1 etabs">
+			<li class="user_profile_tab"><a href="#goodsSearch" class="exp subClosed">Мой транспорт</a></li>
 		</ul>
 
 		<div class="divider"><span></span></div>
 
-		<div id="user_profile">
-			<ul class="subNav">
-				<li><a href="/user/" title=""><span class="icos-admin2"></span>Личные настройки</a></li>
-				<li><a href="/user/organization" title=""><span class="icos-users"></span>Организация</a></li>
-				<li><a href="/vehicle/active" title="" class="this"><span class="icos-truck"></span>Транспорт</a></li>
-			</ul>
-		</div>
-		
-		<div id="vehicle">
+		<div id="goodsSearch">
 			<div class="sidePad">
-				<a href="/vehicle/new" title="" class="sideB bGreen">Добавить</a>
+				<a href="/vehicle/new" title="" class="sideB bGreen">Добавить транспорт</a>
 			</div>
+			<?php if ($goods): ?>
+				<div class="divider"><span></span></div>
+				<div class="sidePad">
+					<a href="#" title="Поиск всех доступных грузов" class="sideB bSea tipS">Все грузы</a>
+				</div>
+			<?php endif; ?>
 
 			<div class="divider"><span></span></div>
-			<ul class="userList">
-				<li <?php if ($is_active == 1): ?>class="this"<?php endif; ?>>
-					<a href="/vehicle/active" title="" class="this">
-						<span class="icos-truck-black-gold"></span>
-						Учавствующие в поиске
-					</a>
-				</li>
-				<li <?php if ($is_active == 2): ?>class="this"<?php endif; ?>>
-					<a href="/vehicle/inactive" title="" class="this">
-						<span class="icos-truckRed"></span>
-						Удаленные из поиска
-					</a>
-				</li>
-			</ul>
+			<?php if ($vehicleActive): ?>
+			
+			<div class="sideUpload">
+				<ul class="filesDown">
+					<?php foreach ($vehicleActive as $vehicle): ?>
+					<li>
+						<span class="fileQueue"></span>
+						<a href="#" class="tipS" title="Нажмите на это транспортное средство чтобы найти подходящие для него грузы">
+							<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . " " . $vehicle->model->name ?>, 
+											номер: <?php echo $vehicle->license_plate ?>
+						</a>
+						<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="edit tipS" style="width: 10px;height: 9px;" original-title="Редактировать" title="Редактировать"></a>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			
+			<?php endif; ?>
 		</div>
-		
+		<div class="clear"></div>
 	</div>
 
 </div>

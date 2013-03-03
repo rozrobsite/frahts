@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.5
+-- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Хост: localhost
--- Время создания: Фев 09 2013 г., 01:26
--- Версия сервера: 5.1.66-cll
--- Версия PHP: 5.2.6
+-- Хост: 127.0.0.1
+-- Время создания: Мар 03 2013 г., 14:14
+-- Версия сервера: 5.5.27
+-- Версия PHP: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -11184,6 +11184,30 @@ INSERT INTO `country` (`id`, `name_ru`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `currency`
+--
+
+CREATE TABLE IF NOT EXISTS `currency` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_ru` varchar(32) NOT NULL,
+  `name_ua` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Дамп данных таблицы `currency`
+--
+
+INSERT INTO `currency` (`id`, `name_ru`, `name_ua`) VALUES
+(1, 'гривна', ''),
+(2, 'рубли', ''),
+(3, 'доллары', ''),
+(4, 'евро', ''),
+(5, 'у.е.', '');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `feedback`
 --
 
@@ -11228,6 +11252,66 @@ INSERT INTO `file_types` (`id`, `title`) VALUES
 (2, 'Форма налогообложения'),
 (3, 'Лицензия'),
 (4, 'Разное');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `goods`
+--
+
+CREATE TABLE IF NOT EXISTS `goods` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `date_from` int(11) DEFAULT NULL,
+  `date_to` int(11) DEFAULT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `country_id_from` int(10) unsigned DEFAULT NULL,
+  `region_id_from` int(10) unsigned DEFAULT NULL,
+  `city_id_from` int(11) unsigned DEFAULT NULL,
+  `country_id_to` int(10) unsigned DEFAULT NULL,
+  `region_id_to` int(10) unsigned DEFAULT NULL,
+  `city_id_to` int(11) unsigned DEFAULT NULL,
+  `vehicle_types` varchar(32) DEFAULT NULL,
+  `body_types` varchar(255) DEFAULT NULL,
+  `shipments` varchar(32) DEFAULT NULL,
+  `weight_from` float NOT NULL DEFAULT '0',
+  `weight_to` float NOT NULL DEFAULT '0',
+  `capacity_from` int(11) NOT NULL DEFAULT '0',
+  `capacity_to` int(11) NOT NULL DEFAULT '0',
+  `permissions` varchar(255) DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL,
+  `currency_id` int(11) DEFAULT NULL,
+  `payment_type_id` int(11) DEFAULT NULL,
+  `description` text,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `adr` tinyint(2) NOT NULL DEFAULT '0',
+  `fee` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `country_id_from` (`country_id_from`),
+  KEY `region_id_from` (`region_id_from`),
+  KEY `city_id_from` (`city_id_from`),
+  KEY `country_id_to` (`country_id_to`),
+  KEY `region_id_to` (`region_id_to`),
+  KEY `city_id_to` (`city_id_to`),
+  KEY `currency_id` (`currency_id`),
+  KEY `payment_type_id` (`payment_type_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Дамп данных таблицы `goods`
+--
+
+INSERT INTO `goods` (`id`, `user_id`, `date_from`, `date_to`, `name`, `country_id_from`, `region_id_from`, `city_id_from`, `country_id_to`, `region_id_to`, `city_id_to`, `vehicle_types`, `body_types`, `shipments`, `weight_from`, `weight_to`, `capacity_from`, `capacity_to`, `permissions`, `cost`, `currency_id`, `payment_type_id`, `description`, `created_at`, `updated_at`, `is_deleted`, `adr`, `fee`) VALUES
+(1, 28, 1359673200, 1362006000, 'Мороженное мясо из Брази', 63, 70, 71, 7716093, 7716133, 7716144, '9,11', '6,9,2', '1,2,3', 4.5, 8, 9, 15, '4,6', 1500, 1, 2, 'lhkj jnjnkj\r\n;kjklkl', 1360429626, 1361131052, 0, 0, ''),
+(2, 28, 1362006000, 1362178800, 'Автошины новые', 971, 979, 980, 401, 402, 403, '9', '5', '1,14', 4.5, 7, 6, 12, '6,5', 1200, 3, 3, 'sdsfdsf fdsfdsf', 1360429999, 1362078399, 0, 0, ''),
+(3, 28, 1361401200, 1361833200, 'Пиломатериалы', 245, 277654, 278012, 7716093, 7716133, 7716144, '9', '9,11', '1,3', 3, 7.5, 4, 9, '1,3,5', 1222, 3, 4, 'Описание <>?//\\\\||!@#$%^&*()_+', 1360439626, 1361999193, 0, 0, ''),
+(4, 28, 1362006000, 1362697200, 'Музейные артефакты', 177, 204, 205, 248, 304, 309, '9,10', '9,11,13,15', '2,12', 2, 5, 4, 9, '1,6,3', 1200, 3, 1, 'dfgdfgd', 1360429696, 1362078372, 0, 0, ''),
+(5, 28, 1359673200, 1362006000, 'Телевизоры', 177, 204, 205, 245, 246, 247, '9,10', '9', '2,12', 2, 5, 4, 10, '1,6,3', 1200, 3, 1, 'dfgdfgd', 1360429986, 1361999083, 0, 0, ''),
+(6, 28, 1361919600, 1362610800, 'Новогодние игрушки', 177, 204, 205, 245, 246, 247, '9,10', '9', '2,12', 2, 4.5, 4, 10, '4,1,6,3', 1200, 3, 1, 'dfgdfgd', 1360429699, 1362316293, 0, 4, ''),
+(7, 28, 1360623600, 1361401200, 'Автошины б/у', 81, 164, 165, 2514, 2515, 2525, '9,10', '8,11', '1,2', 3, 6, 9, 12, '1,3', 555, 4, 1, 'рпапр лоррор', 1361396568, NULL, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -11977,14 +12061,38 @@ CREATE TABLE IF NOT EXISTS `organizations` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `type_org_id` (`type_org_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Дамп данных таблицы `organizations`
 --
 
 INSERT INTO `organizations` (`id`, `type_org_id`, `form_tax`, `name_org`, `license`, `user_id`, `address`, `account_number`, `edrpou`, `bank`, `city`, `mfo`, `inn`, `certificate`, `phone`) VALUES
-(12, 2, 'ИНН-234', 'ЧП Иванов И. И.', 'Лицензия №568974', 27, 'ggggg', '222222', 'eeeeee', '3333333', '44444444', '55555555', '66666666', '77777777', '888888888');
+(12, 2, 'ИНН-234', 'ЧП Иванов И. И.', 'Лицензия №568974', 27, 'ggggg', '222222', 'eeeeee', '3333333', '44444444', '55555555', '66666666', '77777777', '888888888'),
+(13, 1, 'ФН2345678', 'ЧП Петренко П. П.', 'Лицунзия №568974', 28, 'ggggg', '222222', NULL, '3333333', '44444444', '55555555', '66666666', '77777777', '888888888');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `payment_type`
+--
+
+CREATE TABLE IF NOT EXISTS `payment_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_ru` varchar(64) NOT NULL,
+  `name_ua` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Дамп данных таблицы `payment_type`
+--
+
+INSERT INTO `payment_type` (`id`, `name_ru`, `name_ua`) VALUES
+(1, 'Наличный', ''),
+(2, 'Безналичный', ''),
+(3, 'На выгрузке', ''),
+(4, 'На загрузке', '');
 
 -- --------------------------------------------------------
 
@@ -11997,7 +12105,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `name_ru` varchar(255) NOT NULL,
   `name_ua` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Дамп данных таблицы `permissions`
@@ -12025,24 +12133,18 @@ CREATE TABLE IF NOT EXISTS `photos` (
   `size_big` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vehicle_id` (`vehicle_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=101 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
 
 --
 -- Дамп данных таблицы `photos`
 --
 
 INSERT INTO `photos` (`id`, `vehicle_id`, `size_small`, `size_middle`, `size_big`) VALUES
-(90, 6, '6_90_s_04.jpg', '6_90_m_04.jpg', '6_90_b_04.jpg'),
-(91, 6, '6_91_s_02.jpg', '6_91_m_02.jpg', '6_91_b_02.jpg'),
-(92, 6, '6_92_s_03.jpg', '6_92_m_03.jpg', '6_92_b_03.jpg'),
-(93, 6, '6_93_s_06.jpg', '6_93_m_06.jpg', '6_93_b_06.jpg'),
-(94, 6, '6_94_s_0827.jpg', '6_94_m_0827.jpg', '6_94_b_0827.jpg'),
-(95, 6, '6_95_s_0740.jpg', '6_95_m_0740.jpg', '6_95_b_0740.jpg'),
-(96, 6, '6_96_s_1063.jpg', '6_96_m_1063.jpg', '6_96_b_1063.jpg'),
-(97, 6, '6_97_s_10_l36.jpg', '6_97_m_10_l36.jpg', '6_97_b_10_l36.jpg'),
-(98, 7, '7_98_s_01.jpg', '7_98_m_01.jpg', '7_98_b_01.jpg'),
-(99, 7, '7_99_s_05.jpg', '7_99_m_05.jpg', '7_99_b_05.jpg'),
-(100, 7, '7_100_s_0946.jpg', '7_100_m_0946.jpg', '7_100_b_0946.jpg');
+(75, 2, '2_75_s_0341.jpg', '2_75_m_0341.jpg', '2_75_b_0341.jpg'),
+(76, 2, '2_76_s_0725.jpg', '2_76_m_0725.jpg', '2_76_b_0725.jpg'),
+(77, 2, '2_77_s_0444.jpg', '2_77_m_0444.jpg', '2_77_b_0444.jpg'),
+(78, 2, '2_78_s_0896.jpg', '2_78_m_0896.jpg', '2_78_b_0896.jpg'),
+(81, 1, '1_81_s_10_l31.jpg', '1_81_m_10_l31.jpg', '1_81_b_10_l31.jpg');
 
 -- --------------------------------------------------------
 
@@ -12075,14 +12177,15 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   KEY `city_id` (`city_id`),
   KEY `region_id` (`region_id`),
   KEY `country_id` (`country_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Дамп данных таблицы `profiles`
 --
 
 INSERT INTO `profiles` (`id`, `user_id`, `last_name`, `first_name`, `middle_name`, `mobile`, `country_id`, `region_id`, `city_id`, `address`, `phone`, `skype`, `icq`, `rating`, `user_type_id`, `created_at`, `updated_at`) VALUES
-(6, 27, 'Иванов', 'Иван', 'Иванович', '(999) 999-9999', 9908, 10583, 10603, 'Шевченко 320', '423356', 'skype1', '1234567889', 0, 1, 1359410242, 1360364878);
+(6, 27, 'Иванов', 'Иван', 'Иванович', '(999) 999-9999', 9908, 10583, 10603, 'Шевченко 320', '423356', 'skype1', '1234567889', 0, 1, 1359410242, NULL),
+(7, 28, 'Петренко', 'Петр', 'Петрович', '(234) 568-7452', 9908, 10455, 10457, 'пушкина 300', '1234567', 'aaaa1234', '657432890', 0, 2, 1360407557, 1361911405);
 
 -- --------------------------------------------------------
 
@@ -13212,14 +13315,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `uniq_email` (`email`),
   KEY `enabled` (`enabled`),
   KEY `code` (`code`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `code`, `enabled`, `balance`) VALUES
-(27, 'imperia1991@gmail.com', 'imperia1991@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 35, 1360364076, '', 'n', 120);
+(27, 'imperia1991@gmail.com', 'imperia1991@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 47, 1362313694, '', 'n', 120),
+(28, 'a@a.com', 'a@a.com', 'e10adc3949ba59abbe56e057f20f883e', 25, 1362313374, '', 'n', 120);
 
 -- --------------------------------------------------------
 
@@ -13311,16 +13415,16 @@ CREATE TABLE IF NOT EXISTS `vehicle` (
   KEY `vehicle_type_id` (`vehicle_type_id`),
   KEY `model_id` (`model_id`),
   KEY `user_id` (`user_id`,`make_id`,`vehicle_type_id`,`model_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Дамп данных таблицы `vehicle`
 --
 
 INSERT INTO `vehicle` (`id`, `user_id`, `make_id`, `vehicle_type_id`, `model_id`, `body_type_id`, `bearing_capacity`, `body_capacity`, `license_plate`, `number_trailer`, `number_semitrailer`, `is_deleted`, `is_verification`, `permissions`, `shipments`, `adr`, `created_at`, `updated_at`) VALUES
-(2, 27, 715, 10, 1960, 8, 4.5, 8, 'СА 2345 ВО', '', '', 1, 1, '5,7', '3,14', 0, NULL, NULL),
-(6, 27, 734, 11, 2004, 20, 4.5, 4, 'СА 2345 ВО', 'ddd', 'ggg', 0, 1, '3,5', '3,10,7', 0, 1360365593, NULL),
-(7, 27, 715, 9, 1960, 21, 3.5, 7, 'СА 2345 ВA', 'fff', 'ggg', 0, 1, '3', '3', 0, 1360365630, 1360365910);
+(1, 27, 39, 9, 543, 6, 9.5, 20, 'СА 2345 ВО', '', '', 0, 1, '4,2', '1,3', 0, 1360429626, 1362087215),
+(2, 27, 715, 10, 1960, 8, 4.5, 8, 'СА 2345 ВО', '', '', 0, 1, '5,7', '3,14', 0, 1360365481, 1360365481),
+(4, 27, 693, 11, 1722, 8, 3.5, 10, 'СА 2345 ВО', '', '', 1, 1, '3,2', '1,2', 0, 1360429658, 1360429658);
 
 -- --------------------------------------------------------
 
@@ -13354,6 +13458,20 @@ INSERT INTO `vehicle_types` (`id`, `name_ru`, `name_ua`) VALUES
 ALTER TABLE `city`
   ADD CONSTRAINT `city_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `city_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `goods`
+--
+ALTER TABLE `goods`
+  ADD CONSTRAINT `goods_ibfk_1` FOREIGN KEY (`country_id_from`) REFERENCES `country` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_2` FOREIGN KEY (`region_id_from`) REFERENCES `region` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_3` FOREIGN KEY (`city_id_from`) REFERENCES `city` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_4` FOREIGN KEY (`country_id_to`) REFERENCES `country` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_5` FOREIGN KEY (`region_id_to`) REFERENCES `region` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_6` FOREIGN KEY (`city_id_to`) REFERENCES `city` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_7` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_8` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_type` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `goods_ibfk_9` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Ограничения внешнего ключа таблицы `models`

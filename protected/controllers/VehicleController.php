@@ -2,6 +2,13 @@
 
 class VehicleController extends FrahtController
 {
+	public function __construct($id, $module = null)
+	{
+		parent::__construct($id, $module);
+		
+		if (!($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
+			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+	}
 	public function actionIndex()
 	{
 		$this->redirect('vehicle/active');
@@ -110,7 +117,7 @@ class VehicleController extends FrahtController
 		$model = Vehicle::model();
 		$this->render('_active',
 				array(
-			'activeVehicles' => $model->findAllByDeleted($this->user->id, false),
+			'activeVehicles' => $model->findAllByDeleted(false),
 		));
 	}
 
@@ -119,7 +126,7 @@ class VehicleController extends FrahtController
 		$model = Vehicle::model();
 		$this->render('_inactive',
 				array(
-			'noactiveVehicles' => $model->findAllByDeleted($this->user->id),
+			'noactiveVehicles' => $model->findAllByDeleted(),
 		));
 	}
 	

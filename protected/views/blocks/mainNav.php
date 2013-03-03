@@ -40,8 +40,11 @@
 
 	<!-- Main nav -->
 	<ul class="nav">
-		<?php if (isset($this->is_access_search) && $this->is_access_search && ($this->user->profiles->user_type_id == 2 || $this->is_access_search && $this->user->profiles->user_type_id == 3 )): ?>
-			<li><a href="/goodsSearch" title="Поиск транспорта для грузоперевозок" class="tipW" original-title="Поиск транспорта для грузоперевозок"><img src="/images/icons/mainnav/transport.png" alt="Поиск транспорта для грузоперевозок" /><span>Транспорт</span></a></li>
+		<?php if ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3 ): ?>
+			<li><a href="/goods/search" title="Поиск подходящего транспорта для перевозки груза" class="tipW" original-title="Поиск подходящего транспорта для перевозки груза"><img src="/images/icons/mainnav/transport.png" alt="Поиск транспорта для грузоперевозок" /><span>Поиск транспорта</span></a></li>
+		<?php endif; ?>
+		<?php if ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3 ): ?>
+			<li><a href="/vehicle/search" title="Поиск подходящего груза для перевозки" class="tipW" original-title="Поиск подходящего груза для перевозки"><img src="/images/icons/mainnav/transport.png" alt="Поиск транспорта для грузоперевозок" /><span>Поиск грузов</span></a></li>
 		<?php endif; ?>
 		<li><a href="/user/feedback" title="Свяжитесь с нами если у Вас есть вопросы или предложения" original-title="Свяжитесь с нами если у Вас есть вопросы или предложения" class="tipW <?php if(isset($userFeedback) && $userFeedback): ?>active<?php endif; ?>"><img src="/images/icons/mainnav/contacts2.png" alt="" /><span>Обратная связь</span></a></li>
 		<li><a href="forms.html" title=""><img src="/images/icons/mainnav/ui.png" alt="" /><span>Партнеры</span></a></li>

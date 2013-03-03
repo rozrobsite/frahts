@@ -8,7 +8,8 @@
 		else
 			$message = 'Событие завершено.';
 	
-		echo '<script type="text/javascript">$.jGrowl("' . $message . '", { life: 10000 });</script>';
+		if (!empty($message))
+			echo '<script type="text/javascript">$.jGrowl("' . $message . '", { life: 10000 });</script>';
 	?>
 	
 <?php endif; ?>

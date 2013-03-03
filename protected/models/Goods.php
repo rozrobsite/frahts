@@ -30,6 +30,8 @@
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $is_deleted
+ * @property integer $adr
+ * @property string $fee
  *
  * The followings are the available model relations:
  * @property PaymentType $paymentType
@@ -74,7 +76,8 @@ class Goods extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, cost, currency_id, payment_type_id, country_id_from, region_id_from, country_id_to, region_id_to, 
-				city_id_from, city_id_to, vehicle_types, shipments, body_types, permissions', 'required'),
+				city_id_from, city_id_to, vehicle_types, shipments, body_types', 'required'),
+			array('fee', 'checkFee'),
 			array('date_from, date_to', 'required'),
 			array('cost, currency_id, payment_type_id', 'numerical', 'integerOnly' => true),
 			array('country_id_from, region_id_from, country_id_to, region_id_to', 'length', 'max' => 10),
@@ -82,7 +85,7 @@ class Goods extends CActiveRecord
 			array('cost', 'length', 'max' => 6),
 			array('city_id_from, city_id_to', 'length', 'max' => 11),
 			array('vehicle_types, shipments', 'length', 'max' => 32),
-			array('name, body_types, permissions', 'length', 'max' => 255),
+			array('name, body_types', 'length', 'max' => 255),
 			array('name', 'length', 'max' => 25),
 			array('description', 'safe'),
 			array('description', 'length', 'max' => 1000),
@@ -91,9 +94,10 @@ class Goods extends CActiveRecord
 			array('cost', 'compare', 'compareValue' => 0, 'operator' => '>'),
 			array('weight_to', 'compare', 'compareAttribute' => 'weight_from', 'operator' => '>='),
 			array('capacity_to', 'compare', 'compareAttribute' => 'capacity_from', 'operator' => '>='),
+			array('adr', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, date_from, date_to, name, country_id_from, region_id_from, city_id_from, country_id_to, region_id_to, city_id_to, vehicle_types, body_types, shipments, weight_from, weight_to, capacity_from, capacity_to, permissions, cost, currency_id, payment_type_id, description', 'safe', 'on' => 'search'),
+			array('id, date_from, date_to, name, country_id_from, region_id_from, city_id_from, country_id_to, region_id_to, city_id_to, vehicle_types, body_types, shipments, weight_from, weight_to, capacity_from, capacity_to, permissions, cost, currency_id, payment_type_id, description, adr', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -148,6 +152,8 @@ class Goods extends CActiveRecord
 			'created_at' => '"Дата добавления"',
 			'updated_at' => '"Дата обновления"',
 			'is_deleted' => '"Удалено из поиска"',
+			'adr' => '"Допуск"',
+			'fee' => '"Комиссия"',
 		);
 	}
 
@@ -198,18 +204,12 @@ class Goods extends CActiveRecord
 		$currentTime = time();
 
 		$criteria = new CDbCriteria();
-		$criteria->condition = $is_active ? "date_to >= $currentTime" : "date_to < $currentTime";
+		$criteria->condition = $is_active 
+				? "user_id = " . Yii::app()->user->id . " AND date_to >= $currentTime" 
+				: "user_id = " . Yii::app()->user->id . " AND date_to < $currentTime";
 		$criteria->order = 'created_at DESC';
 
-		$count = $this::model()->count($criteria);
-		$pages = new CPagination($count);
-		$pages->pageSize = Yii::app()->params['pages']['goodsCount'];
-		$pages->validateCurrentPage = true;
-		$pages->applyLimit($criteria);
-
-		$models = $this->findAll($criteria);
-
-		$dataProvider = new CActiveDataProvider($this,
+		return new CActiveDataProvider($this,
 						array(
 							'criteria' => $criteria,
 							'pagination' => array(
@@ -218,13 +218,23 @@ class Goods extends CActiveRecord
 							),
 						)
 		);
-
-//		return array(
-//			'models' => $models,
-//			'pages' => $pages,
-//		);
-		
-		return $dataProvider;
+	}
+	
+	public function deleteFromSearch()
+	{
+		$command = Yii::app()->db->createCommand();
+		return $command->update('goods', array(
+			'date_to' => strtotime('-1 day'),
+				), 'id = ' . $this->id . ' AND user_id = ' . Yii::app()->user->id);
+	}
+	
+	public function checkFee($attribute, $params)
+	{
+		$user = Users::model()->findByPk(Yii::app()->user->id);
+		if ($user->profiles->user_type_id == UserTypes::DISPATCHER && empty($this->fee))
+		{
+			$this->addError('fee', 'Введите комиссию');
+		}
 	}
 
 }

@@ -74,6 +74,25 @@ var regionTo =
 	}
 };
 
+var adr = 
+{
+	init: function()
+	{
+		$('#permission_good_4').on('change', function(e){
+			if ($(this).attr('checked'))
+			{
+				$('#Goods_adr').show();
+			}
+			else
+			{
+				$('#uniform-Goods_adr span').html(0);
+				$('#Goods_adr').val(0);
+				$('#Goods_adr').hide();
+			}
+		});
+	}
+}
+
 $(document).ready(function(){
 	$('#Goods_country_id_from').change();
 	countryFrom.init();
@@ -81,6 +100,9 @@ $(document).ready(function(){
 	$('#Goods_country_id_to').change();
 	countryTo.init();
 	regionTo.init();
+	
+	adr.init();
+	$('#permission_good_4').change();
 	
 //	$("#goodsReset").click();
 	

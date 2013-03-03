@@ -13,49 +13,49 @@
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ui.datepicker-ru.js"></script>
 
-		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
+<!--		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.orderBars.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.pie.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.resize.js"></script>
-		<script type="text/javascript" src="/js/plugins/charts/jquery.sparkline.min.js"></script>
+		<script type="text/javascript" src="/js/plugins/charts/jquery.sparkline.min.js"></script>-->
 
 		<script type="text/javascript" src="/js/plugins/tables/jquery.dataTables.js"></script>
-		<script type="text/javascript" src="/js/plugins/tables/jquery.sortable.js"></script>
-		<script type="text/javascript" src="/js/plugins/tables/jquery.resizable.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/tables/jquery.sortable.js"></script>-->
+		<!--<script type="text/javascript" src="/js/plugins/tables/jquery.resizable.js"></script>-->
 
 		<script type="text/javascript" src="/js/plugins/forms/autogrowtextarea.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.uniform.js"></script>
-		<script type="text/javascript" src="/js/plugins/forms/jquery.inputlimiter.min.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.inputlimiter.min.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/forms/jquery.tagsinput.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.maskedinput.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.autotab.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.chosen.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/forms/jquery.dualListBox.js"></script>
-		<script type="text/javascript" src="/js/plugins/forms/jquery.cleditor.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.dualListBox.js"></script>-->
+		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.cleditor.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/forms/jquery.ibutton.js"></script>
-		<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine-en.js"></script>
-		<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine-en.js"></script>-->
+		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine.js"></script>-->
 
-		<script type="text/javascript" src="/js/plugins/uploader/plupload.js"></script>
+<!--		<script type="text/javascript" src="/js/plugins/uploader/plupload.js"></script>
 		<script type="text/javascript" src="/js/plugins/uploader/plupload.html4.js"></script>
 		<script type="text/javascript" src="/js/plugins/uploader/plupload.html5.js"></script>
-		<script type="text/javascript" src="/js/plugins/uploader/jquery.plupload.queue.js"></script>
+		<script type="text/javascript" src="/js/plugins/uploader/jquery.plupload.queue.js"></script>-->
 
-		<script type="text/javascript" src="/js/plugins/wizards/jquery.form.wizard.js"></script>
-		<script type="text/javascript" src="/js/plugins/wizards/jquery.validate.js"></script>
+<!--		<script type="text/javascript" src="/js/plugins/wizards/jquery.form.wizard.js"></script>
+		<script type="text/javascript" src="/js/plugins/wizards/jquery.validate.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/wizards/jquery.form.js"></script>
 
 		<script type="text/javascript" src="/js/plugins/ui/jquery.collapsible.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ui/jquery.breadcrumbs.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.breadcrumbs.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/ui/jquery.tipsy.js"></script>
-		<script type="text/javascript" src="/js/plugins/ui/jquery.progress.js"></script>
-		<script type="text/javascript" src="/js/plugins/ui/jquery.timeentry.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ui/jquery.colorpicker.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.progress.js"></script>-->
+		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.timeentry.min.js"></script>-->
+		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.colorpicker.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/ui/jquery.jgrowl.js"></script>
 		<script type="text/javascript" src="/js/plugins/ui/jquery.fancybox.js"></script>
-		<script type="text/javascript" src="/js/plugins/ui/jquery.fileTree.js"></script>
-		<script type="text/javascript" src="/js/plugins/ui/jquery.sourcerer.js"></script>
+		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.fileTree.js"></script>-->
+		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.sourcerer.js"></script>-->
 
 		<script type="text/javascript" src="/js/plugins/others/jquery.fullcalendar.js"></script>
 		<script type="text/javascript" src="/js/plugins/others/jquery.elfinder.js"></script>
@@ -86,7 +86,7 @@
 								<!--<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>-->
 								<li><a href="/user" title="Настройки пользователя" class="profile tipN" original-title="Настройки пользователя"></a></li>
 							<?php if ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3 ): ?>
-								<li><a href="/goodsSearch" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
+								<li><a href="/goods/search" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
 							<?php endif; ?>
 							<?php if ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3 ): ?>
 								<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>

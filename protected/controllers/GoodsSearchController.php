@@ -2,6 +2,14 @@
 
 class GoodsSearchController extends FrahtController
 {
+	public function __construct($id, $module = null)
+	{
+		parent::__construct($id, $module);
+		
+		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
+			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+	}
+	
 	public function actionIndex()
 	{
 //		$vehicles = Vehicle::model()->findAll(array('order' => 'created_at DESC'));
@@ -9,7 +17,7 @@ class GoodsSearchController extends FrahtController
 		$this->render('index', array(
 			'vehicles' => $vehicles,
 			'goodsActive' => Goods::model()->getActive(),
-			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
+//			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 		));
 	}
 	
@@ -34,6 +42,23 @@ class GoodsSearchController extends FrahtController
 		if ($model === null)
 			throw new CHttpException(404, 'Данный груз не найден в базе.');
 		return $model;
+	}
+	
+	public function actionDelete()
+	{
+		$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+		$model = $this->loadModel($id);
+		
+		if ($model->deleteFromSearch())
+		{
+			Yii::app()->user->setFlash('_success', 'Груз №' . $model->id . ' удален из поиска.');
+		}
+		else
+		{
+			Yii::app()->user->setFlash('_error', 'Груз №' . $model->id . ' не был удален из поиска.');
+		}
+		
+		$this->redirect('/goodsSearch/index');
 	}
 	
 	private function processForm(Goods $model)
@@ -124,7 +149,10 @@ class GoodsSearchController extends FrahtController
 		$currencies = Currency::model()->findAll(array('order' => 'name_ru'));
 		$payments = PaymentType::model()->findAll(array('order' => 'name_ru'));
 		
+		$vehicles = array();
+		
 		$this->render('_goods', array(
+			'vehicles' => $vehicles,
 			'goodsActive' => Goods::model()->getActive(),
 			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 			'vehicleTypes' => $vehicleTypes,

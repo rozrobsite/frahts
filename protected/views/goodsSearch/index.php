@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
     <!-- Secondary nav -->
     <div class="secNav">
 		<?php
-		$this->renderPartial('_secWrapper', array('goodsActive' => $goodsActive, 'goodsNoActive' => $goodsNoActive))
+		$this->renderPartial('_secWrapper', array('goodsActive' => $goodsActive, 'vehicles' => $vehicles))
 		?>
 	</div>
 </div>
@@ -37,7 +37,6 @@ $this->breadcrumbs = array(
 
     <!-- Main content -->
     <div class="wrapper">
-	<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php if (!$this->user->goods): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">
@@ -144,19 +143,4 @@ $this->breadcrumbs = array(
 		<?php endif; ?>
 	</div>
 	<!-- Content ends -->
-<?php /*$this->renderPartial('/blocks/popups/goods', array(
-			'vehicleTypes' => $vehicleTypes,
-			'countries' => $countries,
-			'regions' => $regions,
-			'cities' => $cities,
-			'bodyTypes' => $bodyTypes,
-			'shipments' => $shipments,
-			'permissions' => $permissions,
-			'shipmentsChecked' => $shipmentsChecked,
-			'permissionsChecked' => $permissionsChecked,
-			'vehicleTypesChecked' => $vehicleTypesChecked,
-			'bodyTypesChecked' => $bodyTypesChecked,
-			'currencies' => $currencies,
-			'payments' => $payments,
-			'model' => $model,
-		)) */?>
+<?php $this->renderPartial('/blocks/_notify') ?>

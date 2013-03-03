@@ -531,6 +531,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', end
 }
 .filesDown > li:first-child { padding: 8px 12px; }
 .filesDown > li:last-child { -webkit-border-bottom-right-radius: 2px; -webkit-border-bottom-left-radius: 2px; -moz-border-radius-bottomright: 2px; -moz-border-radius-bottomleft: 2px; border-bottom: none; }
+.filesDown > li:hover, filesDown > li.selected {color: #a64949;background: #fafafa;}
+.filesDown > li a {color: inherit; font-size: 11px;}
 .fileProcess { margin-top: 6px; padding: 0 6px; }
 .fileProcess > .loader { float: left; margin-top: 3px; }
 .filesDown .remove { position: absolute; right: 10px; top: 15px; display: block; width: 7px; height: 8px; cursor: pointer; background: url(/images/elements/other/removeLi.png) no-repeat; }

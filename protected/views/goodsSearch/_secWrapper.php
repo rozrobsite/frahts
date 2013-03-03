@@ -4,19 +4,23 @@
 
 	<!-- Tabs container -->
 	<div id="tab-container" class="tab-container">
-		<ul class="iconsLine ic3 etabs">
-			<li><a href="#vehicle" title="Мой транспорт" class="tipN" original-title="Мой транспорт"><span class="icos-truck"></span></a></li>
-			<!--<li><a href="#user_profile" title="Настройки пользователя" class="tipN" original-title="Настройки пользователя"><span class="icos-user"></span></a></li>-->
-			<li><a href="#soon"></a></li>
-			<li><a href="#soon"></a></li>
+		<ul class="iconsLine ic1 etabs">
+			<li class="user_profile_tab"><a href="#goodsSearch" class="exp subClosed">Мои грузы</a></li>
 		</ul>
 
 		<div class="divider"><span></span></div>
 
-		<div id="vehicle">
+		<div id="goodsSearch">
 			<div class="sidePad">
-				<a href="/goodsSearch/new" title="" class="sideB bGreen goods_modal_open">Добавить</a>
+				<a href="/goods/new" title="" class="sideB bGreen">Добавить груз</a>
+				<a href="/goods/inactive" title="" class="sideB bGold mt10">Удаленные из поиска грузы</a>
 			</div>
+			<?php if ($vehicles): ?>
+				<div class="divider"><span></span></div>
+				<div class="sidePad">
+					<a href="#" title="Вывести все транспортные средства" class="sideB bSea tipS">Все транспортные средства</a>
+				</div>
+			<?php endif; ?>
 
 			<div class="divider"><span></span></div>
 			<?php if ($goodsActive): ?>
@@ -33,12 +37,6 @@
 				'pager'=>array(
 					'class'=>'CListPager',
 					'header'=>'Страница:',
-//					'firstPageLabel'=> '<<',
-//					'prevPageLabel'=> '<',
-//					'nextPageLabel'=> '>',
-//					'lastPageLabel'=> '>>',
-//					'maxButtonCount' => 4,
-//					'cssFile'=>'/css/pager.css', // устанавливаем свой .css файл
 					'htmlOptions'=>array('class'=>'pages'),
 				),
 			)); ?>

@@ -13,6 +13,9 @@
  */
 class UserTypes extends CActiveRecord
 {
+	const FREIGHTER = 1;
+	const SHIPPER = 2;
+	const DISPATCHER = 3;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

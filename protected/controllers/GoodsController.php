@@ -1,20 +1,31 @@
 <?php
 
-class VehicleSearchController extends FrahtController
+class GoodsController extends FrahtController
 {
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
 		
-		if (!($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
+		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 	}
 	
 	public function actionIndex()
 	{
-		$this->render('index', array(
-			'vehicleActive' => Vehicle::model()->findAllByDeleted(false),
-			'goods' => array(),
+//		$this->render('index', array(
+//			'vehicles' => $vehicles,
+//			'goodsActive' => Goods::model()->getActive(),
+//			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
+//		));
+		
+		$this->render('index');
+	}
+	
+	public function actionInactive()
+	{
+		$this->render('inActive', array(
+			'goodsActive' => Goods::model()->getActive(),
+			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 		));
 	}
 

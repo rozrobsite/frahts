@@ -43,6 +43,9 @@ return array(
 			'urlFormat' => 'path',
 			'rules' => array(
 				'' => 'main/index',
+				'vehicle/search' => 'vehicleSearch',
+				'goods/search' => 'goodsSearch',
+				'goods/new' => 'goodsSearch/new',
 				'<controller:\w+>/<id:\d+>' => '<controller>/view',
 				'<controller:\w+>/code/<code:\w+>' => '<controller>/code/',
 				'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -126,7 +129,7 @@ return array(
 			'sizeLimit' => 1 * 1024 * 1024,
 		),
 		'pages' => array(
-			'goodsCount' => 3
+			'goodsCount' => 30
 		),
 	),
 );

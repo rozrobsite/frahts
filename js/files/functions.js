@@ -12,7 +12,7 @@ $(function() {
 	
 	//===== ShowCode plugin for <pre> tag =====//
 
-	$('.code').sourcerer('js html css php'); // Display all languages
+//	$('.code').sourcerer('js html css php'); // Display all languages
 	
 	
 	//===== Left navigation styling =====//
@@ -64,15 +64,15 @@ $(function() {
 	
 	//===== Sortable columns =====//
 	
-	$("table").tablesorter();
+//	$("table").tablesorter();
 	
 	
 	//===== Resizable columns =====//
 	
-	$("#resize, #resize2").colResizable({
-		liveDrag:true,
-		draggingClass:"dragging" 
-	});
+//	$("#resize, #resize2").colResizable({
+//		liveDrag:true,
+//		draggingClass:"dragging" 
+//	});
 	
 	
 	//===== Bootstrap functions =====//
@@ -132,104 +132,104 @@ $(function() {
 	
 	//===== Color picker =====//
 	
-	$('#cPicker').ColorPicker({
-		color: '#e62e90',
-		onShow: function (colpkr) {
-			$(colpkr).fadeIn(500);
-			return false;
-		},
-		onHide: function (colpkr) {
-			$(colpkr).fadeOut(500);
-			return false;
-		},
-		onChange: function (hsb, hex, rgb) {
-			$('#cPicker div').css('backgroundColor', '#' + hex);
-		}
-	});
-	
-	$('#flatPicker').ColorPicker({flat: true});
+//	$('#cPicker').ColorPicker({
+//		color: '#e62e90',
+//		onShow: function (colpkr) {
+//			$(colpkr).fadeIn(500);
+//			return false;
+//		},
+//		onHide: function (colpkr) {
+//			$(colpkr).fadeOut(500);
+//			return false;
+//		},
+//		onChange: function (hsb, hex, rgb) {
+//			$('#cPicker div').css('backgroundColor', '#' + hex);
+//		}
+//	});
+//	
+//	$('#flatPicker').ColorPicker({flat: true});
 
 
 	//===== Time picker =====//
 	
-	$('.timepicker').timeEntry({
-		show24Hours: true, // 24 hours format
-		showSeconds: true, // Show seconds?
-		spinnerImage: 'images/elements/ui/spinner.png', // Arrows image
-		spinnerSize: [19, 26, 0], // Image size
-		spinnerIncDecOnly: true // Only up and down arrows
-	});
+//	$('.timepicker').timeEntry({
+//		show24Hours: true, // 24 hours format
+//		showSeconds: true, // Show seconds?
+//		spinnerImage: 'images/elements/ui/spinner.png', // Arrows image
+//		spinnerSize: [19, 26, 0], // Image size
+//		spinnerIncDecOnly: true // Only up and down arrows
+//	});
 	
 
 	//===== Usual validation engine=====//
 
-	$("#usualValidate").validate({
-		rules: {
-			firstname: "required",
-			minChars: {
-				required: true,
-				minlength: 3
-			},
-			maxChars: {
-				required: true,
-				maxlength: 6
-			},
-			mini: {
-				required: true,
-				min: 3
-			},
-			maxi: {
-				required: true,
-				max: 6
-			},
-			range: {
-				required: true,
-				range: [6, 16]
-			},
-			emailField: {
-				required: true,
-				email: true
-			},
-			urlField: {
-				required: true,
-				url: true
-			},
-			dateField: {
-				required: true,
-				date: true
-			},
-			digitsOnly: {
-				required: true,
-				digits: true
-			},
-			enterPass: {
-				required: true,
-				minlength: 5
-			},
-			repeatPass: {
-				required: true,
-				minlength: 5,
-				equalTo: "#enterPass"
-			},
-			customMessage: "required",
-			topic: {
-				required: "#newsletter:checked",
-				minlength: 2
-			},
-			agree: "required"
-		},
-		messages: {
-			customMessage: {
-				required: "Bazinga! This message is editable"
-			},
-			agree: "Please accept our policy"
-		}
-	});
+//	$("#usualValidate").validate({
+//		rules: {
+//			firstname: "required",
+//			minChars: {
+//				required: true,
+//				minlength: 3
+//			},
+//			maxChars: {
+//				required: true,
+//				maxlength: 6
+//			},
+//			mini: {
+//				required: true,
+//				min: 3
+//			},
+//			maxi: {
+//				required: true,
+//				max: 6
+//			},
+//			range: {
+//				required: true,
+//				range: [6, 16]
+//			},
+//			emailField: {
+//				required: true,
+//				email: true
+//			},
+//			urlField: {
+//				required: true,
+//				url: true
+//			},
+//			dateField: {
+//				required: true,
+//				date: true
+//			},
+//			digitsOnly: {
+//				required: true,
+//				digits: true
+//			},
+//			enterPass: {
+//				required: true,
+//				minlength: 5
+//			},
+//			repeatPass: {
+//				required: true,
+//				minlength: 5,
+//				equalTo: "#enterPass"
+//			},
+//			customMessage: "required",
+//			topic: {
+//				required: "#newsletter:checked",
+//				minlength: 2
+//			},
+//			agree: "required"
+//		},
+//		messages: {
+//			customMessage: {
+//				required: "Bazinga! This message is editable"
+//			},
+//			agree: "Please accept our policy"
+//		}
+//	});
 	
 	
 	//===== Validation engine =====//
 	
-	$("#validate").validationEngine();
+//	$("#validate").validationEngine();
 
 	
 	//===== iButtons =====//
@@ -301,90 +301,90 @@ $(function() {
 
 	//===== File uploader =====//
 	
-	$("#uploader").pluploadQueue({
-		runtimes : 'html5,html4',
-		url : 'php/upload.php',
-		max_file_size : '100kb',
-		unique_names : true,
-		filters : [
-			{title : "Image files", extensions : "jpg,gif,png"}
-		]
-	});
-	
+//	$("#uploader").pluploadQueue({
+//		runtimes : 'html5,html4',
+//		url : 'php/upload.php',
+//		max_file_size : '100kb',
+//		unique_names : true,
+//		filters : [
+//			{title : "Image files", extensions : "jpg,gif,png"}
+//		]
+//	});
+//	
 	
 	//===== Wizards =====//
 	
-	$("#wizard1").formwizard({
-		formPluginEnabled: true, 
-		validationEnabled: false,
-		focusFirstInput : false,
-		disableUIStyles : true,
-	
-		formOptions :{
-			success: function(data){$("#status1").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
-			beforeSubmit: function(data){$("#w1").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			resetForm: true
-		}
-	});
-	
-	$("#wizard2").formwizard({ 
-		formPluginEnabled: true,
-		validationEnabled: true,
-		focusFirstInput : false,
-		disableUIStyles : true,
-	
-		formOptions :{
-			success: function(data){$("#status2").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
-			beforeSubmit: function(data){$("#w2").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			dataType: 'json',
-			resetForm: true
-		},
-		validationOptions : {
-			rules: {
-				bazinga: "required",
-				email: { required: true, email: true }
-			},
-			messages: {
-				bazinga: "Bazinga. This note is editable",
-				email: { required: "Please specify your email", email: "Correct format is name@domain.com" }
-			}
-		}
-	});
-	
-	$("#wizard3").formwizard({
-		formPluginEnabled: false, 
-		validationEnabled: false,
-		focusFirstInput : false,
-		disableUIStyles : true
-	});
+//	$("#wizard1").formwizard({
+//		formPluginEnabled: true, 
+//		validationEnabled: false,
+//		focusFirstInput : false,
+//		disableUIStyles : true,
+//	
+//		formOptions :{
+//			success: function(data){$("#status1").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
+//			beforeSubmit: function(data){$("#w1").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
+//			resetForm: true
+//		}
+//	});
+//	
+//	$("#wizard2").formwizard({ 
+//		formPluginEnabled: true,
+//		validationEnabled: true,
+//		focusFirstInput : false,
+//		disableUIStyles : true,
+//	
+//		formOptions :{
+//			success: function(data){$("#status2").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
+//			beforeSubmit: function(data){$("#w2").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
+//			dataType: 'json',
+//			resetForm: true
+//		},
+//		validationOptions : {
+//			rules: {
+//				bazinga: "required",
+//				email: { required: true, email: true }
+//			},
+//			messages: {
+//				bazinga: "Bazinga. This note is editable",
+//				email: { required: "Please specify your email", email: "Correct format is name@domain.com" }
+//			}
+//		}
+//	});
+//	
+//	$("#wizard3").formwizard({
+//		formPluginEnabled: false, 
+//		validationEnabled: false,
+//		focusFirstInput : false,
+//		disableUIStyles : true
+//	});
 	
 	
 	
 	//===== WYSIWYG editor =====//
 	
-	$("#editor").cleditor({
-		width:"100%", 
-		height:"250px",
-		bodyStyle: "margin: 10px; font: 12px Arial,Verdana; cursor:text",
-		useCSS:true
-	});
+//	$("#editor").cleditor({
+//		width:"100%", 
+//		height:"250px",
+//		bodyStyle: "margin: 10px; font: 12px Arial,Verdana; cursor:text",
+//		useCSS:true
+//	});
 	
 	
 	//===== Dual select boxes =====//
 	
-	$.configureBoxes();
+//	$.configureBoxes();
 
 
 	//===== Chosen plugin =====//
-	$(".select").chosen(); 
+	$(".select").chosen();
 	
 	//===== Autotabs. Inline data rows =====//
 
-	$('.onlyNums input').autotab_magic().autotab_filter('numeric');
-	$('.onlyText input').autotab_magic().autotab_filter('text');
-	$('.onlyAlpha input').autotab_magic().autotab_filter('alpha');
-	$('.onlyRegex input').autotab_magic().autotab_filter({ format: 'custom', pattern: '[^0-9\.]' });
-	$('.allUpper input').autotab_magic().autotab_filter({ format: 'alphanumeric', uppercase: true });
+//	$('.onlyNums input').autotab_magic().autotab_filter('numeric');
+//	$('.onlyText input').autotab_magic().autotab_filter('text');
+//	$('.onlyAlpha input').autotab_magic().autotab_filter('alpha');
+//	$('.onlyRegex input').autotab_magic().autotab_filter({ format: 'custom', pattern: '[^0-9\.]' });
+//	$('.allUpper input').autotab_magic().autotab_filter({ format: 'alphanumeric', uppercase: true });
 	
 	
 	//===== Masked input =====//
@@ -409,11 +409,11 @@ $(function() {
 	
 	//===== Input limiter =====//
 	
-	$('.lim').inputlimiter({
-		limit: 100,
-		boxId: 'limitingtext',
-		boxAttach: false
-	});
+//	$('.lim').inputlimiter({
+//		limit: 100,
+//		boxId: 'limitingtext',
+//		boxAttach: false
+//	});
 	
 	
 	//===== Placeholder =====//
@@ -503,8 +503,28 @@ $(function() {
 		"bJQueryUI": false,
 		"bAutoWidth": false,
 		"sPaginationType": "full_numbers",
-		"sDom": '<"H"fl>t<"F"ip>'
-	});
+		"sDom": '<"H"fl>t<"F"ip>',
+		"aaSorting": [[ 3, "desc" ]],
+		"oLanguage": {
+			"sLengthMenu": "Показать _MENU_ шт. на страницу",
+			"sInfoFiltered": "(из _MAX_ шт.)",
+			"sInfo": "Всего: _TOTAL_ шт.",
+			"sSearch": "Поиск"
+		},
+		"aoColumns": [
+			null,
+			null,
+			{
+				'bSortable': false
+			},
+			null,
+			{
+				'bSortable': false,
+				'bSearchable': false
+			}
+		]
+
+		});
 	
 
 	//===== Dynamic table toolbars =====//		
@@ -553,20 +573,22 @@ $(function() {
 		cssClose: 'subClosed',
 		speed: 200
 	});
-
-	$('.opened').collapsible({
-		defaultOpen: 'opened,toggleOpened',
-		cssOpen: 'inactive',
-		cssClose: 'normal',
-		speed: 200
-	});
 	
-	$('.closed').collapsible({
-		defaultOpen: '',
-		cssOpen: 'inactive',
-		cssClose: 'normal',
-		speed: 200
-	});
+	$('li.user_profile_tab').removeClass('clicked');
+
+//	$('.opened').collapsible({
+//		defaultOpen: 'opened,toggleOpened',
+//		cssOpen: 'inactive',
+//		cssClose: 'normal',
+//		speed: 200
+//	});
+//	
+//	$('.closed').collapsible({
+//		defaultOpen: '',
+//		cssOpen: 'inactive',
+//		cssClose: 'normal',
+//		speed: 200
+//	});
 	
 	
 	//===== Accordion =====//		
@@ -583,7 +605,7 @@ $(function() {
 
 	//===== Breadcrumbs =====//
 	
-	$('#breadcrumbs').xBreadcrumbs();
+//	$('#breadcrumbs').xBreadcrumbs();
 	
 	
 		//===== Sparklines =====//
@@ -855,17 +877,17 @@ $(function() {
 	//===== jQuery UI stuff =====//
 	
 	// default mode
-	$('#progress1').anim_progressbar();
+//	$('#progress1').anim_progressbar();
 	
 	// from second #5 till 15
 	var iNow = new Date().setTime(new Date().getTime() + 5 * 1000); // now plus 5 secs
 	var iEnd = new Date().setTime(new Date().getTime() + 15 * 1000); // now plus 15 secs
-	$('#progress2').anim_progressbar({start: iNow, finish: iEnd, interval: 1});
+//	$('#progress2').anim_progressbar({start: iNow, finish: iEnd, interval: 1});
 	
 	// Progressbar
-    $("#progress").progressbar({
-        value: 80
-    });
+//    $("#progress").progressbar({
+//        value: 80
+//    });
 	
     // Modal Link
     $('#modal_link').click(function () {
@@ -893,6 +915,7 @@ $(function() {
 				changeMonth: false,
 				showOtherMonths: true,
 				numberOfMonths: 1,
+				minDate: new Date(),
 				firstDay: 1,
 				dateFormat: 'dd.mm.yy',
 				onSelect: function( selectedDate ) {

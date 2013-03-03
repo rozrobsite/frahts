@@ -14,10 +14,8 @@ $this->breadcrumbs = array(
     <div class="secNav">
 		<?php
 		$this->renderPartial('_secWrapper', array(
-			'goodsActive' => $goodsActive, 
-			'goodsNoActive' => $goodsNoActive,
-//			'pagesActive' => $pagesActive,
-//			'pagesNoActive' => $pagesNoActive,
+			'goodsActive' => $goodsActive,
+			'vehicles' => $vehicles,
 		));
 		?>
 	</div>
@@ -45,10 +43,27 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('_accessMessage') ?>
+			<?php if ($model->id): ?>
+				<div class="widget fluid">
+					<div class="formRow">
+						<div class="grid10">
+							<label>
+								Если Ваш груз доставлен к месту назначения или Вы по какой то причине не хотите чтобы он показывался грузоперевозчикам, 
+								удалите его из поиска.<br/>
+								Также, Ваш груз автоматически будет удален из поиска если у него истекла дата доставки.
+							</label>
+						</div>
+						<div class="grid2" style="text-align: right">
+							<a href="/goodsSearch/delete/<?php echo $model->id ?>" class="buttonM bGold">Удалить из поиска</a>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			<?php endif; ?>
 			<?php
 				$form = $this->beginWidget('CActiveForm',
 						array(
-					'id' => 'goodsForm',
+					'id' => 'goodsSearchForm',
 					'enableAjaxValidation' => false,
 					'clientOptions' => array(
 						'validateOnSubmit' => true,
@@ -213,12 +228,19 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid3"><label>Разрешения:<span class="req">*</span></label></div>
+					<div class="grid3"><label>Разрешения:</label></div>
 					<div class="grid9 check">
 						<?php foreach ($permissions as $permission): ?>
-							<input type="checkbox" id="permission_<?php echo $permission->id ?>" <?php if (in_array($permission->id,
+							<input type="checkbox" id="permission_good_<?php echo $permission->id ?>" <?php if (in_array($permission->id,
 								$permissionsChecked)) echo 'checked' ?> name="Goods[permissions][<?php echo $permission->id ?>]" />
 							<label for="permission_<?php echo $permission->id ?>" class="mr20"><?php echo $permission->name_ru ?></label>
+							<?php if ($permission->id == 4) {
+									echo CHtml::activeDropDownList($model, 'adr',
+										array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
+										array('class' => 'bodyType'), array());
+									echo '<br/><br/>';
+								}
+							?>
 						<?php endforeach; ?>
 						
 						<?php echo $form->error($model, 'permissions', array('class' => 'error')); ?>
@@ -231,14 +253,14 @@ $this->breadcrumbs = array(
 						<?php echo $form->textField($model, 'cost') ?>
 						<?php echo $form->error($model, 'cost', array('class' => 'error')); ?>
 					</div>
-					<div class="grid3">
+					<div class="grid2">
 						<?php
 							echo CHtml::activeDropDownList($model, 'currency_id', $currencies,
 									array('empty' => 'Валюта'), array());
 							?>
 						<?php echo $form->error($model, 'currency_id', array('class' => 'error')); ?>
 					</div>
-					<div class="grid3">
+					<div class="grid2">
 						<?php
 							echo CHtml::activeDropDownList($model, 'payment_type_id', $payments,
 									array('empty' => 'Вид оплаты'), array());
@@ -247,6 +269,16 @@ $this->breadcrumbs = array(
 					</div>
 					<div class="clear"></div>
 				</div>
+				<?php if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+				<div class="formRow">
+					<div class="grid2"><label>Комиссия:<span class="req">*</span></label></div>
+					<div class="grid2 onlyNums">
+						<?php echo $form->textField($model, 'fee') ?>
+						<?php echo $form->error($model, 'fee', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<?php endif; ?>
 				<div class="formRow">
 					<div class="grid2"><label>Описание:</label></div>
 					<div class="grid9">
@@ -268,4 +300,5 @@ $this->breadcrumbs = array(
 			</div>
 			<?php $this->endWidget(); ?>
 	</div>
+</div>
 	<!-- Content ends -->
