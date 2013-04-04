@@ -139,6 +139,11 @@ class VehicleController extends FrahtController
 		
 		$this->respondJSON($result);
 		
+		if (file_exists(Yii::app()->params['files']['tmp']))
+		{
+			unlink(Yii::app()->params['files']['tmp']);
+		}
+		
 		Yii::app()->end();
 	}
 	

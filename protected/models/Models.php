@@ -70,9 +70,9 @@ class Models extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'name' => 'Модель',
 			'alias' => 'Alias',
-			'make_id' => 'Make',
+			'make_id' => 'Марка',
 		);
 	}
 
@@ -89,7 +89,7 @@ class Models extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('alias',$this->alias,true);
+//		$criteria->compare('alias',$this->alias,true);
 		$criteria->compare('make_id',$this->make_id);
 
 		return new CActiveDataProvider($this, array(

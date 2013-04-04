@@ -13,7 +13,7 @@
 		<div id="goods">
 			<div class="sidePad">
 				<a href="/goods/new" title="" class="sideB bGreen">Добавить груз</a>
-				<a href="/goods/search" title="" class="sideB bSea mt10">Поиск транспортна</a>
+				<a href="/goods/search" title="" class="sideB bSea mt10">Поиск транспорта</a>
 			</div>
 			<div class="divider"><span></span></div>
 		</div>

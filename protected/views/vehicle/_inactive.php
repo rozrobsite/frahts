@@ -106,7 +106,7 @@ $this->breadcrumbs = array(
 										<img src="<?php echo $image; ?>" alt="" />
 									</td>
 									<td class="textL">
-										<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . " " . $vehicle->model->name ?>, 
+										<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . (isset($vehicle->model->name) ? ' ' . $vehicle->model->name : '') ?>, 
 										номер: <?php echo $vehicle->license_plate ?>
 									</td>
 									<td class="fileInfo">

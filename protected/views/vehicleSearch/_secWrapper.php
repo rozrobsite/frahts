@@ -14,10 +14,10 @@
 			<div class="sidePad">
 				<a href="/vehicle/new" title="" class="sideB bGreen">Добавить транспорт</a>
 			</div>
-			<?php if ($goods): ?>
+			<?php if ($this->user->vehicles): ?>
 				<div class="divider"><span></span></div>
 				<div class="sidePad">
-					<a href="#" title="Поиск всех доступных грузов" class="sideB bSea tipS">Все грузы</a>
+					<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
 				</div>
 			<?php endif; ?>
 
@@ -27,13 +27,12 @@
 			<div class="sideUpload">
 				<ul class="filesDown">
 					<?php foreach ($vehicleActive as $vehicle): ?>
-					<li>
+					<li <?php if (isset($vid) && $vid == $vehicle->id): ?> class="selected" <?php endif; ?>>
 						<span class="fileQueue"></span>
-						<a href="#" class="tipS" title="Нажмите на это транспортное средство чтобы найти подходящие для него грузы">
-							<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . " " . $vehicle->model->name ?>, 
+						<a href="/vehicle/search<?php echo $filter->getUrl(isset($vehicle) ? (int) $vehicle->id : ''); ?>" class="tipS" title="Нажмите на это транспортное средство чтобы найти подходящие для него грузы">
+							<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . (isset($vehicle->model->name) ? ' ' . $vehicle->model->name : '') ?>, 
 											номер: <?php echo $vehicle->license_plate ?>
 						</a>
-						<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="edit tipS" style="width: 10px;height: 9px;" original-title="Редактировать" title="Редактировать"></a>
 					</li>
 					<?php endforeach; ?>
 				</ul>

@@ -190,7 +190,7 @@ class Users extends CActiveRecord
 	{
 		if (!$this->hasErrors())
 		{
-			$this->_identity = new UserIdentity($this->email, $this->password);
+			$this->_identity = new UserIdentity(trim($this->email), $this->password);
 			if (!$this->_identity->authenticate())
 					$this->addError('email', 'Неправильно введены Электронный адрес или Пароль');
 		}
@@ -258,5 +258,5 @@ class Users extends CActiveRecord
 		}
 		else return false;
 	}
-
+	
 }

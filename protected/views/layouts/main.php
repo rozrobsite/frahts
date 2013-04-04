@@ -68,6 +68,7 @@
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/goods.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/bootstrap.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/login.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/vehicleSearch.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/functions.js"></script>
     </head>
     <body>
@@ -75,6 +76,8 @@
 		<div id="top">
 			<div class="wrapper">
 				<a href="/" title="" class="logo main"><img src="/images/logo.png" alt="frahts.com - Мир грузоперевозок!" /></a>
+				<div class="share42init" data-url="http://www.frahts.com" data-title="Фрахты.com - Мир грузоперевозок" data-description="Сайт грузоперевозок" data-image="http://gruz2.host5841.de1.dp10.ru/images/logo.png"></div>
+				<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/share42/share42.js"></script>
 
 				<!-- Right top nav -->
 				<div class="topNav">
@@ -83,13 +86,15 @@
 						<a href="/main/register" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Регистрация</a>
 					<?php else: ?>
 						<ul class="userNav">
-								<!--<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>-->
-								<li><a href="/user" title="Настройки пользователя" class="profile tipN" original-title="Настройки пользователя"></a></li>
-							<?php if ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3 ): ?>
-								<li><a href="/goods/search" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
-							<?php endif; ?>
-							<?php if ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3 ): ?>
-								<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
+							<!--<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>-->
+							<li><a href="/user" title="Настройки пользователя" class="profile tipN" original-title="Настройки пользователя"></a></li>
+							<?php if ($this->user->profiles): ?>
+								<?php if ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3 ): ?>
+									<li><a href="/goods/search" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
+								<?php endif; ?>
+								<?php if ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3 ): ?>
+									<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
+								<?php endif; ?>
 							<?php endif; ?>
 							<li><a href="/main/logout" title="Выход" class="logout tipN" original-title="Выход"></a></li>
 						</ul>

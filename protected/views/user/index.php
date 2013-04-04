@@ -175,8 +175,8 @@ $this->breadcrumbs = array(
 						</div>
 						<div class="formRow">
 							<div class="grid3"><label>Телефон мобильный<span class="req">*</span>:</label></div>
-							<div class="grid9">
-								<?php echo $form->textField($model, 'mobile', array('class' => 'maskPhone')) ?>
+							<div class="grid9 onlyNums">
+								<?php echo $form->textField($model, 'mobile') ?>
 								<?php echo $form->error($model, 'mobile', array('class' => 'error')); ?>
 							</div>
 							<div class="clear"></div>
@@ -201,7 +201,64 @@ $this->breadcrumbs = array(
 								<?php echo $form->textField($model, 'icq') ?>
 							</div>
 							<div class="clear"></div>
-						</div> 
+						</div>
+						<div class="formRow">
+							<div class="grid3"><h5>Ваша фотография</h5></div>
+							<div class="clear"></div>
+						</div>
+						<div class="formRow">
+							<div class="grid2">
+								<?php $avatar = isset($this->user->profiles->avatar) ? Yii::app()->params['files']['avatars'] . $this->user->profiles->avatar : '/images/' . Yii::app()->params['images']['defaultAvatar']; ?>
+								<img id="userAvatar" width="72" height="70" alt="" src="<?php echo $avatar . '?r=' . rand(0, 10000) ?>">
+								<input id="uploadInputAvatar" name="Photos[avatar]" type="hidden" value=""/>
+							</div>
+							<div class="grid2">
+								<?php
+									$this->widget('ext.EAjaxUpload.EAjaxUpload',
+											array(
+												'id' => 'uploadAvatar',
+												'config' => array(
+													'action' => Yii::app()->createUrl('/user/upload'),
+													'allowedExtensions' => Yii::app()->params['images']['allowedExtensions'],
+													'sizeLimit' => Yii::app()->params['images']['sizeAvatarLimit'],
+													'multiple' => false,
+													'template' => '
+														<div class="qq-uploader">
+															<div class="qq-upload-drop-area"></span></div>
+															<div class="qq-upload-button btn" style="width: 170px;"><a href="javascript:void(0)" class="buttonL bGreyish">Загрузить фотографию</a></div>
+															<span class="qq-drop-processing"><span class="qq-drop-processing-spinner"></span></span>
+															<ul class="qq-upload-list"></ul>
+														</div>',
+													'messages' => array(
+														'typeError'    => "{file} имеет недопустимый формат. Допустимые форматы: {extensions}.",
+														'sizeError'    => "{file} имеет слишком большой объём, максимальный объём файла – {sizeLimit}.",
+														'minSizeError' => "{file} имеет слишком маленький объём, минимальный объём файла – {minSizeLimit}.",
+														'emptyError'   => "{file} пуст, пожалуйста, выберите другой файл.",
+														'noFilesError' => "Файлы для загрузки не выбраны.",
+														'onLeave'      => "В данный момент идёт загрузка файлов, если вы покинете страницу, загрузка будет отменена."
+													),
+													'text' => array(
+														'failUpload'   => 'загрузка не удалась',
+														'dragZone'     => 'Перетащите файл для загрузки',
+														'cancelButton' => 'Отмена',
+														'waitingForResponse' => 'Обработка...'
+													),
+													'callbacks' => array(
+														'onComplete' => 'js:function(id, fileName, responseJSON){
+																			if (responseJSON.success)
+																			{
+																				$("#userAvatar").attr("src","/' . Yii::app()->params['files']['tmp'] . '" + responseJSON.filename + "");
+																				$("#uploadInputAvatar").val(responseJSON.filename);
+																			}
+																		}'
+													),
+												)
+											)
+									);
+								?>
+							</div>
+							<div class="clear"></div>
+						</div>
 						<div class="formRow">
 							<?php echo CHtml::submitButton('Сохранить', array('class' => 'buttonM bBlack formSubmit'));?>
 							<div class="clear"></div>

@@ -29,7 +29,7 @@ $this->breadcrumbs = array(
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/goodsSearch">Поиск транспорта</a></li>
+                <li><a href="/goods/search">Поиск транспорта</a></li>
                 <li class="current">
 					<a title="">
 						<?php echo 'Неактивные грузы' ?>
@@ -70,7 +70,7 @@ $this->breadcrumbs = array(
 								<td><?php echo date('d.m.Y', $good->date_from) ?> - <?php echo date('d.m.Y', $good->date_to) ?></td>
 								<td class="center"><?php echo date('d.m.Y', $good->created_at) ?></td>
 								<td class="center">
-									<a href="/goodsSearch/update/<?php echo $good->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать">
+									<a href="/goods/update/<?php echo $good->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать">
 										<span class="iconb" data-icon="&#xe1db;"></span>
 									</a>
 								</td>

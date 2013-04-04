@@ -4,7 +4,7 @@
 		if (Yii::app()->user->hasFlash('_success'))
 			$message = Yii::app()->user->getFlash('_success');
 		elseif (Yii::app()->user->hasFlash('_error'))
-			$message = Yii::app()->user->getFlash('_success');
+			$message = Yii::app()->user->getFlash('_error');
 		else
 			$message = 'Событие завершено.';
 	

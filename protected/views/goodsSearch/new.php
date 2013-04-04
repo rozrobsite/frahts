@@ -26,7 +26,7 @@ $this->breadcrumbs = array(
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/goodsSearch">Поиск транспорта</a></li>
+                <li><a href="/goods/search">Поиск транспорта</a></li>
                 <li class="current">
 					<a title="">Найденные подходящие транпортные средства</a>
 				</li>

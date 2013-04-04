@@ -20,6 +20,9 @@
  * @property integer $adr
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $country_id
+ * @property integer $region_id
+ * @property integer $city_id
  *
  * The followings are the available model relations:
  * @property BodyTypes $bodyType
@@ -86,6 +89,9 @@ class Vehicle extends CActiveRecord
 			'vehicleType' => array(self::BELONGS_TO, 'VehicleTypes', 'vehicle_type_id'),
 			'model' => array(self::BELONGS_TO, 'Models', 'model_id'),
 			'photos' => array(self::HAS_MANY, 'Photos', 'vehicle_id'),
+			'countries' => array(self::BELONGS_TO, 'Country', 'country_id'),
+			'regions' => array(self::BELONGS_TO, 'Region', 'region_id'),
+			'cities' => array(self::BELONGS_TO, 'City', 'city_id'),
 		);
 	}
 
@@ -106,6 +112,9 @@ class Vehicle extends CActiveRecord
 			'license_plate' => 'Номер транспорта',
 			'number_trailer' => 'Номер прицепа',
 			'number_semitrailer' => 'Номер полуприцепа',
+			'country_id' => 'Страна',
+			'region_id' => 'Регион',
+			'city_id' => 'Населенный пункт',
 			'is_deleted' => 'Удалено из поиска',
 			'is_verification' => 'Проверено',
 			'created_at' => 'Дата регистрации',
@@ -137,6 +146,9 @@ class Vehicle extends CActiveRecord
 		$criteria->compare('number_semitrailer', $this->number_semitrailer, true);
 		$criteria->compare('is_deleted', $this->is_deleted);
 		$criteria->compare('is_verification', $this->is_verification);
+		$criteria->compare('country_id', $this->country_id);
+		$criteria->compare('region_id', $this->region_id);
+		$criteria->compare('city_id', $this->city_id);
 		$criteria->compare('created_at', $this->created_at);
 		$criteria->compare('updated_at', $this->updated_at);
 

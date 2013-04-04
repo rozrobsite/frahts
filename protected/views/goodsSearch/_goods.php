@@ -29,7 +29,7 @@ $this->breadcrumbs = array(
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/goodsSearch">Поиск транспорта</a></li>
+                <li><a href="/goods/search">Поиск транспорта</a></li>
                 <li class="current">
 					<a title="">
 						<?php echo $model->isNewRecord ? 'Регистрация нового груза' : 'Редактирование груза' ?>
@@ -54,7 +54,7 @@ $this->breadcrumbs = array(
 							</label>
 						</div>
 						<div class="grid2" style="text-align: right">
-							<a href="/goodsSearch/delete/<?php echo $model->id ?>" class="buttonM bGold">Удалить из поиска</a>
+							<a href="/goods/delete/<?php echo $model->id ?>" class="buttonM bGold">Удалить из поиска</a>
 						</div>
 						<div class="clear"></div>
 					</div>
@@ -94,6 +94,7 @@ $this->breadcrumbs = array(
 								<?php if ($model->date_to) $model->date_to = date('d.m.Y', $model->date_to); echo $form->textField($model, 'date_to', array('id' => 'toDate', 'placeholder' => 'По')) ?>
 							</li>
 						</ul>
+						<br/><br/>
 						<?php echo $form->error($model, 'date_from', array('class' => 'error')); ?>
 						<?php echo $form->error($model, 'date_to', array('class' => 'error')); ?>
 					</div>
@@ -159,7 +160,7 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid3"><label>Тип транспорта:<span class="req">*</span></label></div>
+					<div class="grid3"><label>Тип транспорта:</label></div>
 					<div class="grid9 check">
 						<?php foreach ($vehicleTypes as $type): ?>
 							<input type="checkbox" id="vehicleType_<?php echo $type->id ?>" <?php if (in_array($type->id,
@@ -193,6 +194,7 @@ $this->breadcrumbs = array(
 								$shipmentsChecked)) echo 'checked' ?> name="Goods[shipments][<?php echo $shipment->id ?>]" />
 							<label for="shipment_<?php echo $shipment->id ?>" class="mr20"><?php echo $shipment->name_ru ?></label>
 						<?php endforeach; ?>
+						<br/><br/>
 						<?php echo $form->error($model, 'shipments', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>
@@ -200,30 +202,41 @@ $this->breadcrumbs = array(
 				<div class="formRow">
 					<div class="grid2"><label>Вес груза (т.):<span class="req">*</span></label></div>
 					<div class="grid1"><label>От:</label></div>
-					<div class="grid2 goods">
+					<div class="grid1 goods">
 						<?php echo $form->textField($model, 'weight_from', array('id' => 'weightFrom', 'style' => 'margin 0;')) ?>
 						<?php echo $form->error($model, 'weight_from', array('class' => 'error')); ?>
 					</div>
-					<div class="grid1">&nbsp;</div>
 					<div class="grid1"><label>До:</label></div>
-					<div class="grid2">
+					<div class="grid1">
 						<?php echo $form->textField($model, 'weight_to', array('id' => 'weightTo')) ?>
 						<?php echo $form->error($model, 'weight_to', array('class' => 'error')); ?>
 					</div>
+					<div class="grid2">&nbsp;</div>
+					<div class="grid2"><label>Точное значение (т.):</label></div>
+					<div class="grid2">
+						<?php echo $form->textField($model, 'weight_exact_value', array('id' => 'weightExactValue', 'class' => 'goods')) ?>
+						<?php echo $form->error($model, 'weight_exact_value', array('class' => 'error')); ?>
+					</div>
+					
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
 					<div class="grid2"><label>Объем груза (м&sup3;):<span class="req">*</span></label></div>
 					<div class="grid1"><label>От:</label></div>
-					<div class="grid2 goods">
+					<div class="grid1 goods">
 						<?php echo $form->textField($model, 'capacity_from', array('id' => 'capacityFrom')) ?>
 						<?php echo $form->error($model, 'capacity_from', array('class' => 'error')); ?>
 					</div>
-					<div class="grid1">&nbsp;</div>
 					<div class="grid1"><label>До:</label></div>
-					<div class="grid2">
+					<div class="grid1">
 						<?php echo $form->textField($model, 'capacity_to', array('id' => 'capacityTo')) ?>
 						<?php echo $form->error($model, 'capacity_to', array('class' => 'error')); ?>
+					</div>
+					<div class="grid2">&nbsp;</div>
+					<div class="grid2"><label>Точное значение (м&sup3;):</label></div>
+					<div class="grid2">
+						<?php echo $form->textField($model, 'capacity_exact_value', array('id' => 'capacityExactValue')) ?>
+						<?php echo $form->error($model, 'capacity_exact_value', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>
 				</div>

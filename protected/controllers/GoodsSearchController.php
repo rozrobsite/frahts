@@ -58,7 +58,7 @@ class GoodsSearchController extends FrahtController
 			Yii::app()->user->setFlash('_error', 'Груз №' . $model->id . ' не был удален из поиска.');
 		}
 		
-		$this->redirect('/goodsSearch/index');
+		$this->redirect('/goods/search');
 	}
 	
 	private function processForm(Goods $model)
@@ -74,8 +74,7 @@ class GoodsSearchController extends FrahtController
 			$model->shipments = isset($data['shipments']) ? join(',', array_keys($data['shipments'])) : null;
 			$model->body_types = isset($data['body_types']) ? join(',', array_values($data['body_types'])) : null;
 			$model->permissions = isset($data['permissions']) ? join(',', array_keys($data['permissions'])) : null;
-			if ($model->isNewRecord) $model->created_at = time();
-			else $model->updated_at = time();
+			$model->created_at = $model->updated_at = time();
 
 			if (isset($_POST['ajax']) && $_POST['ajax'] === 'goodsForm')
 			{
@@ -91,7 +90,7 @@ class GoodsSearchController extends FrahtController
 				else
 					Yii::app()->user->setFlash('_success',
 						'Данные о грузе обновлены успешно.');
-				$this->redirect('/goodsSearch/index');
+				$this->redirect('/goods/search');
 			}
 			else
 			{
@@ -107,7 +106,7 @@ class GoodsSearchController extends FrahtController
 		$vehicleTypes = VehicleTypes::model()->findAll(array('order' => 'name_ru'));
 		$listVehicleTypes = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 
-		$countries = Country::model()->findAll(array('order' => 'name_ru'));
+		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
 		$listRegionsFrom = array();
@@ -134,7 +133,7 @@ class GoodsSearchController extends FrahtController
 			$listCitiesTo = CHtml::listData($model->regionTo->cities, 'id', 'name_ru');
 		}
 		
-		$bodyTypes = BodyTypes::model()->findAll(array('order' => 'name_ru'));
+		$bodyTypes = BodyTypes::model()->findAll(array('order' => 'order_by'));
 		$listBodyTypes = CHtml::listData($bodyTypes, 'id', 'name_ru');
 
 		$shipments = Shipment::model()->findAll(array('order' => 'name_ru'));
@@ -146,7 +145,7 @@ class GoodsSearchController extends FrahtController
 		$permissionsChecked = $model->permissions ? explode(',', $model->permissions) : array();
 		$bodyTypesChecked = $model->body_types ? explode(',', $model->body_types) : array();
 		
-		$currencies = Currency::model()->findAll(array('order' => 'name_ru'));
+		$currencies = Currency::model()->findAll(array('order' => 'id'));
 		$payments = PaymentType::model()->findAll(array('order' => 'name_ru'));
 		
 		$vehicles = array();

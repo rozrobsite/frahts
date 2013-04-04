@@ -529,9 +529,13 @@ background: -ms-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
 background: linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#eeeeee',GradientType=0 );
 }
+.filesDown span{
+	/*margin-left: 20px;*/
+	font-weight: bold;
+}
 .filesDown > li:first-child { padding: 8px 12px; }
 .filesDown > li:last-child { -webkit-border-bottom-right-radius: 2px; -webkit-border-bottom-left-radius: 2px; -moz-border-radius-bottomright: 2px; -moz-border-radius-bottomleft: 2px; border-bottom: none; }
-.filesDown > li:hover, filesDown > li.selected {color: #a64949;background: #fafafa;}
+.filesDown > li:hover, .filesDown > li.selected {color: #a64949;background: #fafafa;}
 .filesDown > li a {color: inherit; font-size: 11px;}
 .fileProcess { margin-top: 6px; padding: 0 6px; }
 .fileProcess > .loader { float: left; margin-top: 3px; }
@@ -1267,7 +1271,7 @@ html ul.tabs li.activeTab a { color: #2E6B9B; }
 
 /* ===== Spinner ===== */
 
-.ui-spinner { width: 10em; display: block; position: relative; overflow: hidden; border: 1px solid #d7d7d7; background: #fdfdfd; height: 26px; padding: 0 6px; box-shadow: 0 1px 0 #fff; -webkit-box-shadow: 0 1px 0 #fff; -moz-box-shadow: 0 1px 0 #fff; }
+.ui-spinner { width: 4em; display: block; position: relative; overflow: hidden; border: 1px solid #d7d7d7; background: #fdfdfd; height: 26px; padding: 0 6px; box-shadow: 0 1px 0 #fff; -webkit-box-shadow: 0 1px 0 #fff; -moz-box-shadow: 0 1px 0 #fff; }
 .ui-spinner-disabled { background: #F4F4F4; color: #CCC; }
 .ui-spinner input.ui-spinner-box { border: none!important; background: none!important; padding: 0!important; height: 26px; }
 .ui-spinner-up, .ui-spinner-down { width: 18px; padding: 0; margin: 0; z-index: 100; position: absolute; right: 0; cursor: pointer; border: none; }
@@ -2337,3 +2341,7 @@ table .dropdown-menu.pull-right { right: auto; left: 0; }
 }
 
 .hdn {display: none;}
+#uploadAvatar {
+	margin-top: 18px;
+}
+.share42init {float: left; margin-top: 11px; margin-left: 50px;}

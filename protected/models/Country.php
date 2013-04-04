@@ -4,8 +4,9 @@
  * This is the model class for table "country".
  *
  * The followings are the available columns in table 'country':
- * @property string $id
+ * @property integer $id
  * @property string $name_ru
+ * @property integer $order_by
  *
  * The followings are the available model relations:
  * @property City[] $cities
@@ -14,6 +15,7 @@
  */
 class Country extends CActiveRecord
 {
+	public $maxid;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -42,6 +44,8 @@ class Country extends CActiveRecord
 		return array(
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
+//			array('name_ru', 'required'),
+			array('name_ru', 'safe'),
 			array('id, name_ru', 'safe', 'on'=>'search'),
 		);
 	}
@@ -67,7 +71,8 @@ class Country extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name_ru' => 'Страна',
+			'name_ru' => 'Название',
+			'order_by' => 'Порядок вывода',
 		);
 	}
 
@@ -82,11 +87,21 @@ class Country extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('name_ru',$this->name_ru,true);
+		$criteria->compare('id',$this->id, true);
+		$criteria->compare('name_ru',$this->name_ru, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+				'pageSize'=>15,
+			),
 		));
+	}
+	
+	public function defaultScope()
+	{
+		return array(
+			'order' => 'order_by, name_ru',
+		);
 	}
 }

@@ -61,18 +61,12 @@ $this->breadcrumbs = array(
 							<tr>
 								<td><img src="/images/elements/other/tableArrows.png" alt="" /></td>
 								<td width="50">Фото</td>
-								<td class="sortCol">
-									<div>
-										Название
-										<span></span>
-									</div>
+								<td>
+									Название
 								</td>
 								<td width="150">Тип транспорта</td>
-								<td width="140" class="sortCol">
-									<div>
-										Дата регистрации
-										<span></span>
-									</div>
+								<td width="140">
+									Дата регистрации
 								</td>
 								<td width="100">Действие</td>
 							</tr>
@@ -116,7 +110,7 @@ $this->breadcrumbs = array(
 									</td>
 									<td class="textL">
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" title="">
-											<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . " " . $vehicle->model->name ?>, 
+											<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . (isset($vehicle->model->name) ?  ' ' . $vehicle->model->name : '')?>, 
 											номер: <?php echo $vehicle->license_plate ?>
 										</a>
 									</td>

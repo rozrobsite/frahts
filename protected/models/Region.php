@@ -15,6 +15,7 @@
  */
 class Region extends CActiveRecord
 {
+	public $maxid;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -43,6 +44,7 @@ class Region extends CActiveRecord
 		return array(
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
+			array('name_ru', 'safe'),
 			array('id, country_id, name_ru', 'safe', 'on'=>'search'),
 		);
 	}
@@ -68,8 +70,8 @@ class Region extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'country_id' => 'Country',
-			'name_ru' => 'Name Ru',
+			'country_id' => 'ID Страны',
+			'name_ru' => 'Название',
 		);
 	}
 
@@ -90,6 +92,9 @@ class Region extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+				'pageSize'=>15,
+			),
 		));
 	}
 }

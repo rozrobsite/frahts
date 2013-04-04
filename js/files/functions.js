@@ -380,11 +380,11 @@ $(function() {
 	
 	//===== Autotabs. Inline data rows =====//
 
-//	$('.onlyNums input').autotab_magic().autotab_filter('numeric');
-//	$('.onlyText input').autotab_magic().autotab_filter('text');
-//	$('.onlyAlpha input').autotab_magic().autotab_filter('alpha');
-//	$('.onlyRegex input').autotab_magic().autotab_filter({ format: 'custom', pattern: '[^0-9\.]' });
-//	$('.allUpper input').autotab_magic().autotab_filter({ format: 'alphanumeric', uppercase: true });
+	$('.onlyNums input').autotab_magic().autotab_filter('numeric');
+	$('.onlyText input').autotab_magic().autotab_filter('text');
+	$('.onlyAlpha input').autotab_magic().autotab_filter('alpha');
+	$('.onlyRegex input').autotab_magic().autotab_filter({ format: 'custom', pattern: '[^0-9\.]' });
+	$('.allUpper input').autotab_magic().autotab_filter({ format: 'alphanumeric', uppercase: true });
 	
 	
 	//===== Masked input =====//
@@ -576,19 +576,19 @@ $(function() {
 	
 	$('li.user_profile_tab').removeClass('clicked');
 
-//	$('.opened').collapsible({
-//		defaultOpen: 'opened,toggleOpened',
-//		cssOpen: 'inactive',
-//		cssClose: 'normal',
-//		speed: 200
-//	});
-//	
-//	$('.closed').collapsible({
-//		defaultOpen: '',
-//		cssOpen: 'inactive',
-//		cssClose: 'normal',
-//		speed: 200
-//	});
+	$('.opened').collapsible({
+		defaultOpen: 'opened,toggleOpened',
+		cssOpen: 'inactive',
+		cssClose: 'normal',
+		speed: 200
+	});
+	
+	$('.closed').collapsible({
+		defaultOpen: '',
+		cssOpen: 'inactive',
+		cssClose: 'normal',
+		speed: 200
+	});
 	
 	
 	//===== Accordion =====//		
@@ -600,8 +600,6 @@ $(function() {
 		$(this).css({color:"#2B6893"}).next("div.menu_body").slideToggle(200).siblings("div.menu_body").slideUp("slow");
 		$(this).siblings().css({color:"#404040"});
 	});
-
-
 
 	//===== Breadcrumbs =====//
 	
@@ -721,8 +719,10 @@ $(function() {
 		's1': {decimals:0, min:0},
 		'capacityFrom': {decimals:0, min:0},
 		'capacityTo': {decimals:0, min:0},
+		'capacityExactValue': {decimals:0, min:0},
 		'weightFrom': {stepping: 0.5, min:0},
 		'weightTo': {stepping: 0.5, min:0},
+		'weightExactValue': {stepping: 0.5, min:0},
 		's6': {decimals:0, min:0, max:9},
 		's2': {stepping: 0.5, min:0},
 		's3': {currency: '$'},
@@ -779,6 +779,40 @@ $(function() {
     });
 	
 	// Dialog
+    $('#locationDialog').dialog({
+        autoOpen: false,
+        width: 650,
+        buttons: {
+            "Сохранить": function () {
+                $('#locationForm').submit();
+            },
+            "Закрыть": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+	$('#locationDialog_open').click(function () {
+        $('#locationDialog').dialog('open');
+        return false;
+    });
+	
+    $('#advancedFilterDialog').dialog({
+        autoOpen: false,
+        width: 650,
+        buttons: {
+            "Применить": function () {
+                $('#advancedFilterForm').submit();
+            },
+            "Закрыть": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+	$('#advancedFilterDialog_open').click(function () {
+        $('#advancedFilterDialog').dialog('open');
+        return false;
+    });
+	
     $('#formDialog').dialog({
         autoOpen: false,
         width: 400,
@@ -902,7 +936,7 @@ $(function() {
     });
 	
 	$( ".datepicker" ).datepicker({ 
-		defaultDate: +7,
+		defaultDate: new Date(),
 		showOtherMonths:true,
 		autoSize: true,
 		appendText: '(dd-mm-yyyy)',
@@ -911,7 +945,7 @@ $(function() {
 	
 	$(function() {
 			var dates = $( "#fromDate, #toDate" ).datepicker({
-				defaultDate: "+1w",
+				defaultDate: "",
 				changeMonth: false,
 				showOtherMonths: true,
 				numberOfMonths: 1,

@@ -26,7 +26,7 @@ $this->breadcrumbs = array(
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/goodsSearch">Поиск транспорта</a></li>
+                <li><a href="/goods/search">Поиск транспорта</a></li>
                 <li class="current">
 					<a title="">Найденные подходящие транпортные средства</a>
 				</li>
@@ -45,7 +45,7 @@ $this->breadcrumbs = array(
 				<div class="formRow" style="border-top: 0">
 					<div class="grid5">&nbsp;</div>
 					<div class="grid2">
-						<a id="goods_modal_open" href="/goodsSearch/new" title="" class="sideB bGreen goods_modal_open">Добавить</a>
+						<a id="goods_modal_open" href="/goods/new" title="" class="sideB bGreen goods_modal_open">Добавить</a>
 					</div>
 					<div class="grid5">&nbsp;</div>
 				</div>

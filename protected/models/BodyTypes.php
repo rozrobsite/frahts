@@ -8,6 +8,7 @@
  * @property integer $vehicle_type_id
  * @property string $name_ru
  * @property string $name_ua
+ * @property integer $order_by
  *
  * The followings are the available model relations:
  * @property VehicleTypes $vehicleType
@@ -44,9 +45,10 @@ class BodyTypes extends CActiveRecord
 			array('vehicle_type_id, name_ru, name_ua', 'required'),
 			array('vehicle_type_id', 'numerical', 'integerOnly'=>true),
 			array('name_ru, name_ua', 'length', 'max'=>64),
+			array('order_by', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, vehicle_type_id, name_ru, name_ua', 'safe', 'on'=>'search'),
+			array('id, vehicle_type_id, name_ru, name_ua, order_by', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,6 +75,7 @@ class BodyTypes extends CActiveRecord
 			'vehicle_type_id' => 'Vehicle Type',
 			'name_ru' => 'Name Ru',
 			'name_ua' => 'Name Ua',
+			'order_by' => 'Порядок сортировки',
 		);
 	}
 
@@ -91,6 +94,7 @@ class BodyTypes extends CActiveRecord
 		$criteria->compare('vehicle_type_id',$this->vehicle_type_id);
 		$criteria->compare('name_ru',$this->name_ru,true);
 		$criteria->compare('name_ua',$this->name_ua,true);
+		$criteria->compare('order_by',$this->order_by,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

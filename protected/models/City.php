@@ -4,10 +4,12 @@
  * This is the model class for table "city".
  *
  * The followings are the available columns in table 'city':
- * @property string $id
+ * @property ineger $id
  * @property string $country_id
  * @property string $region_id
  * @property string $name_ru
+ * @property integer $latitude
+ * @property integer $longitude
  *
  * The followings are the available model relations:
  * @property Country $country
@@ -16,6 +18,7 @@
  */
 class City extends CActiveRecord
 {
+	public $maxid;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -45,9 +48,10 @@ class City extends CActiveRecord
 			array('country_id', 'length', 'max'=>11),
 			array('region_id', 'length', 'max'=>10),
 			array('name_ru', 'length', 'max'=>128),
+			array('latitude,longitude', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, country_id, region_id, name_ru', 'safe', 'on'=>'search'),
+			array('id, country_id, region_id, name_ru,latitude,longitude', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,9 +76,11 @@ class City extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'country_id' => 'Country',
-			'region_id' => 'Region',
-			'name_ru' => 'Name Ru',
+			'country_id' => 'Страна',
+			'region_id' => 'Регион',
+			'name_ru' => 'Название',
+			'latitude' => 'Широта (latitude)',
+			'longitude' => 'Долгота (longitude)',
 		);
 	}
 
@@ -96,6 +102,9 @@ class City extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+				'pageSize'=>15,
+			),
 		));
 	}
 }

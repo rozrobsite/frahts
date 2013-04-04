@@ -27,6 +27,18 @@ return array(
 			'password' => '123456',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters' => array('127.0.0.1', '::1'),
+			 'generatorPaths' => array(
+				'bootstrap.gii'
+			 ),
+		),
+		'admin' => array(
+			'layout'=>'application.modules.admin.views.layouts.main',
+			'preload' => array('bootstrap'),
+				'components' => array(
+					'bootstrap' => array(
+						'class' => 'ext.bootstrap.components.Bootstrap',
+					),
+				),
 		),
 	),
 	// application components
@@ -43,9 +55,21 @@ return array(
 			'urlFormat' => 'path',
 			'rules' => array(
 				'' => 'main/index',
+				'vehicle/search/location/*' => 'vehicleSearch/location',
+				'vehicle/search/*' => 'vehicleSearch',
 				'vehicle/search' => 'vehicleSearch',
+				'goods/update/<id:\d+>' => 'goodsSearch/update',
+				'goods/delete/<id:\d+>' => 'goodsSearch/delete',
 				'goods/search' => 'goodsSearch',
 				'goods/new' => 'goodsSearch/new',
+				'goods' => 'goodsSearch/index',
+				// Admin main page
+				'<module:(admin)>' => '<module>/default/index',
+				// Remove 'index' action from url
+				'<module:(admin)>/<controller:\w+>' => '<module>/<controller>/index',
+				// Default admin actions rules
+				'<module:(admin)>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+				'<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
 				'<controller:\w+>/<id:\d+>' => '<controller>/view',
 				'<controller:\w+>/code/<code:\w+>' => '<controller>/code/',
 				'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -105,9 +129,10 @@ return array(
 		// this is used in contact page
 		'adminEmail' => 'support@frahts.com',
 		'files' => array(
-			'files' => '/uploads/files/',
+			'files' => 'uploads/files/',
 			'photos' => 'uploads/photos/',
-			'images' => '/uploads/images/',
+			'images' => 'uploads/images/',
+			'avatars' => 'uploads/images/avatars/',
 			'tmp' => 'uploads/tmp/'
 		),
 		// Params for image file processing
@@ -124,12 +149,37 @@ return array(
 				'height' => 250,
 				'width' => 500,
 			),
+			'avatar' => array(
+				'height' => 110,
+				'width' => 108,
+			),
 			'allowedExtensions' => array('jpg', 'jpeg', 'png'), // allowed file extensions
 
 			'sizeLimit' => 1 * 1024 * 1024,
+			'sizeAvatarLimit' => 500 * 1024,
+			'defaultAvatar' => 'userLogin2.png',
 		),
 		'pages' => array(
-			'goodsCount' => 30
+			'goodsCount' => 30,
+			'searchCount' => 2,
+			'pageNumbers' => 5,
+		),
+		'radius' => array(
+			'0' => 0, 
+			'10' => 10, 
+			'20' => 20, 
+			'30' => 30, 
+			'40' => 40, 
+			'50' => 50, 
+			'60' => 60, 
+			'70' => 70, 
+			'80' => 80, 
+			'90' => 90, 
+			'100' => 100, 
+			'120' => 120, 
+			'150' => 150, 
+			'180' => 180, 
+			'200' => 200
 		),
 	),
 );

@@ -11,25 +11,27 @@ class UserController extends FrahtController
 		return array(
 		);
 	}
-	
+
 	private function userSettings()
 	{
 		$userTypes = UserTypes::model()->findAll(array('order' => 'name_ru'));
 		$listUserTypes = CHtml::listData($userTypes, 'id', 'name_ru');
 
-		$countries = Country::model()->findAll(array('order' => 'name_ru'));
+		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
 		$listRegions = array();
 		if (isset($this->user->profiles->region_id))
 		{
-			$listRegions = CHtml::listData($this->user->profiles->country->regions, 'id', 'name_ru');
+			$listRegions = CHtml::listData($this->user->profiles->country->regions, 'id',
+							'name_ru');
 		}
 
 		$listCities = array();
 		if (isset($this->user->profiles->city_id))
 		{
-			$listCities = CHtml::listData($this->user->profiles->region->cities, 'id', 'name_ru');
+			$listCities = CHtml::listData($this->user->profiles->region->cities, 'id',
+							'name_ru');
 		}
 
 		$this->render('index',
@@ -78,7 +80,7 @@ class UserController extends FrahtController
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
-				else 
+				else
 				{
 					$this->user->profiles->created_at = time();
 					if ($this->user->profiles->save())
@@ -92,6 +94,21 @@ class UserController extends FrahtController
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
+				
+				if (isset($_POST['Photos']['avatar']) && !empty($_POST['Photos']['avatar']) && isset($this->user->profiles->id) && $this->user->profiles)
+				{
+//					$photo = $_POST['Photos']['avatar'];
+					$photoPath = Yii::app()->params['files']['tmp'] . $_POST['Photos']['avatar'];
+					$image = Yii::app()->image->load($photoPath);
+
+					if (!$image) return;
+
+					$this->user->profiles->avatar = $this->user->id . '.jpg';
+					$image->resize(Yii::app()->params['images']['avatar']['width'], Yii::app()->params['images']['avatar']['height']);
+					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '.jpg');
+					
+					$this->user->profiles->save();
+				}
 			}
 		}
 
@@ -100,18 +117,16 @@ class UserController extends FrahtController
 
 	public function actionOrganization()
 	{
-		$this->user->organizations = isset($this->user->organizations->id) 
-					? $this->user->organizations
+		$this->user->organizations = isset($this->user->organizations->id) ? $this->user->organizations
 					: new Organizations();
-		
+
 		if (isset($_POST['Organizations']))
 		{
 			$this->user->organizations->attributes = $_POST['Organizations'];
 			$this->user->organizations->user_id = $this->user->id;
 			$this->user->organizations->edrpou = $this->user->organizations->type_org_id == Organizations::TYPE_PRIVATE
-					? null
-					: $_POST['Organizations']['edrpou'];
-			
+						? null : $_POST['Organizations']['edrpou'];
+
 //			if (isset($_POST['ajax']) && $_POST['ajax'] === 'organizations-form')
 //			{
 //				echo CActiveForm::validate($this->user->organizations);
@@ -148,14 +163,15 @@ class UserController extends FrahtController
 
 		$typeOrganizations = TypeOrganizations::model()->findAll(array('order' => 'name_ru'));
 		$listTypeOrganizations = CHtml::listData($typeOrganizations, 'id', 'name_ru');
-		
-		$privateName = isset($this->user->profiles->id)
-			? $this->user->profiles->last_name
-				. " " . strtoupper(mb_substr($this->user->profiles->first_name, 0, 1, 'UTF-8'))
-				. ". " . strtoupper(mb_substr($this->user->profiles->middle_name, 0, 1, 'UTF-8')) . "."
-			: '';
-		
-		$this->render('organization', array(
+
+		$privateName = isset($this->user->profiles->id) ? $this->user->profiles->last_name
+				. " " . strtoupper(mb_substr($this->user->profiles->first_name, 0, 1,
+								'UTF-8'))
+				. ". " . strtoupper(mb_substr($this->user->profiles->middle_name, 0, 1,
+								'UTF-8')) . "." : '';
+
+		$this->render('organization',
+				array(
 			'model' => $this->user->organizations,
 			'typeOrganizations' => $listTypeOrganizations,
 			'privateName' => $privateName,
@@ -240,7 +256,7 @@ class UserController extends FrahtController
 		{
 			$this->user->email = $_POST['Users']['newEmail'];
 			$this->user->username = $_POST['Users']['newEmail'];
-			
+
 			// validate user input and redirect to the previous page if valid
 			if ($this->user->validate())
 			{
@@ -271,7 +287,7 @@ class UserController extends FrahtController
 	public function actionChangePassword()
 	{
 		$model = new Users(Users::SCENARIO_CHANGE_PASSWORD);
-		
+
 		// if it is ajax validation request
 		if (isset($_POST['ajax']) && $_POST['ajax'] === 'changePassword-form')
 		{
@@ -284,7 +300,7 @@ class UserController extends FrahtController
 		{
 			$this->user->newPassword = $_POST['Users']['newPassword'];
 			$this->user->password = md5($_POST['Users']['newPassword']);
-			
+
 			// validate user input and redirect to the previous page if valid
 			if ($this->user->validate())
 			{
@@ -311,5 +327,27 @@ class UserController extends FrahtController
 
 		$this->redirect('/user');
 	}
-	
+
+	public function actionUpload()
+	{
+		Yii::import("ext.EAjaxUpload.qqFileUploader");
+
+		$uploader = new qqFileUploader(Yii::app()->params['images']['allowedExtensions'], Yii::app()->params['images']['sizeAvatarLimit']);
+		$result = $uploader->handleUpload(Yii::app()->params['files']['tmp']);
+
+		$this->respondJSON($result);
+
+//		if (file_exists(Yii::app()->params['files']['tmp'] . $result['filename']))
+//		{
+//			unlink(Yii::app()->params['files']['tmp'] . $result['filename']);
+//		}
+
+		Yii::app()->end();
+	}
+
+	private function addPhotos($path)
+	{
+		if (empty($path)) return;
+	}
+
 }
