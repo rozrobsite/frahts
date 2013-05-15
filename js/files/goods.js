@@ -8,7 +8,8 @@ var countryFrom =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.regionFrom').html(response);
+				$response = $(response).html();
+				$('select.regionFrom').html($response);
 
 				updateSelect.update($('select.regionFrom'));
 				
@@ -28,7 +29,8 @@ var regionFrom =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.cityFrom').html(response);
+				$response = $(response).html();
+				$('select.cityFrom').html($response);
 
 				updateSelect.update($('select.cityFrom'));
 			});
@@ -46,7 +48,8 @@ var countryTo =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.regionTo').html(response);
+				$response = $(response).html();
+				$('select.regionTo').html($response);
 
 				updateSelect.update($('select.regionTo'));
 				
@@ -66,7 +69,8 @@ var regionTo =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.cityTo').html(response);
+				$response = $(response).html();
+				$('select.cityTo').html($response);
 
 				updateSelect.update($('select.cityTo'));
 			});

@@ -62,7 +62,7 @@ $this->breadcrumbs = array(
 				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS" 
 				   title="Дополнительные условия для поиска"
 				   original-title="Дополнительные условия для поиска" >
-					Расширенный фильтр
+					Дополнительные настройки поиска
 				</a>
 				<?php $this->renderPartial('/blocks/popups/_advancedFilter', array(
 					'model' => $model,
@@ -111,6 +111,7 @@ $this->breadcrumbs = array(
 						<tfoot>
 							<tr>
 								<td colspan="7">
+									<?php if ($pageSettings['pages'] > 1): ?>
 									<div class="tPages">
 										<ul class="pages">
 											<?php if ($pageSettings['page'] > 1): ?>
@@ -118,8 +119,8 @@ $this->breadcrumbs = array(
 												<li class="prev"><a href="/vehicle/search<?php echo $filter->getUrl('', $pageSettings['page'] - 1); ?>" title="Предыдущая"><span class="icon-arrow-14"></span></a></li>
 											<?php endif; ?>
 											<?php 
-												$startPage = $pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] < 1 ? 1 : $pageSettings['page']; 
-												$endPage = $startPage + (int) Yii::app()->params['pages']['pageNumbers'] < $pageSettings['pages'] ? $startPage + (int) Yii::app()->params['pages']['pageNumbers'] : $pageSettings['pages']; 
+												$startPage = ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] < 0) ? 1 : ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] + 2); 
+												$endPage = $startPage + (int) Yii::app()->params['pages']['pageNumbers'] < $pageSettings['pages'] ? ($startPage + (int) Yii::app()->params['pages']['pageNumbers']) : $pageSettings['pages']; 
 											?>
 											<?php for ($pageNumber = $startPage; $pageNumber < $endPage; $pageNumber++): ?>
 												<li>
@@ -142,6 +143,7 @@ $this->breadcrumbs = array(
 											<?php endif; ?>
 										</ul>
 									</div>
+									<?php endif; ?>
 								</td>
 							</tr>
 						</tfoot>
@@ -158,15 +160,45 @@ $this->breadcrumbs = array(
 									<span>
 										<?php echo $oneVehicle->cityFrom->name_ru . ' - ' .  $oneVehicle->cityTo->name_ru?>
 									</span>
+									<br/>
+									<span>
+										<strong>&asymp;&nbsp;<?php echo ((int) FHelper::distance($oneVehicle->cityFrom->latitude, $oneVehicle->cityFrom->longitude, $oneVehicle->cityTo->latitude, $oneVehicle->cityTo->longitude) + 10) ?> км</strong>
+									</span>
 								</td>
 								<td class="fileInfo">
+									с
+									<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $oneVehicle->date_from); ?><br/>
+									по
 									<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $oneVehicle->date_to); ?>
 								</td>
 								<td class="fileInfo">
-									<a href="/goods/view/<?php echo $oneVehicle->id ?>" class="tipS" title="Перейти на страницу груза">
+									<?php /*href="/goods/view/<?php echo $oneVehicle->id ?>" class="tipS" title="Перейти на страницу груза"*/ ?>
+									<a href="javascript:void(0)">
 										<?php echo $oneVehicle->name ?><br/>
-										Вес до: <?php echo $oneVehicle->weight_to ?> т.<br/>
-										Объем до: <?php echo $oneVehicle->capacity_to ?> м&sup3;<br/>
+										<?php
+										$weight = 0;
+										if (isset($oneVehicle->weight_exact_value) && $oneVehicle->weight_exact_value)
+										{
+											$weight = $oneVehicle->weight_exact_value;
+										}
+										elseif (isset($oneVehicle->weight_to) && $oneVehicle->weight_to)
+										{
+											$weight = $oneVehicle->weight_to;
+										}
+										?>
+										Вес до: <?php echo $weight ?> т.<br/>
+										<?php
+										$capacity = 0;
+										if (isset($oneVehicle->capacity_exact_value) && $oneVehicle->capacity_exact_value)
+										{
+											$capacity = $oneVehicle->capacity_exact_value;
+										}
+										elseif (isset($oneVehicle->capacity_to) && $oneVehicle->capacity_to)
+										{
+											$capacity = $oneVehicle->capacity_to;
+										}
+										?>
+										Объем до: <?php echo $capacity ?> м&sup3;<br/>
 									</a>
 								</td>
 								<td class="fileInfo">
@@ -191,8 +223,10 @@ $this->breadcrumbs = array(
 									<?php endif; ?>
 								</td>
 								<td class="fileInfo">
-									<a href="/user/view/<?php echo $oneVehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
-										<?php echo $oneVehicle->user->organizations->name_org ?><br/>
+									<?php /*href="/user/view/<?php echo $oneVehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя"*/ ?>
+									<a href="javascript:void(0)">
+										<strong><?php echo $oneVehicle->user->profiles->userType->name_ru ?></strong><br/>
+										<?php echo $oneVehicle->user->organizations->formOrganizations->name_ru . ' ' . $oneVehicle->user->organizations->name_org ?><br/>
 										<?php echo $oneVehicle->user->profiles->last_name . ' ' . $oneVehicle->user->profiles->first_name . ' ' . $oneVehicle->user->profiles->middle_name ?>
 									</a><br/>
 									м. <?php echo $oneVehicle->user->profiles->mobile ?>

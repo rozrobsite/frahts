@@ -227,6 +227,44 @@
 							</li>
 						</ul>
 					</li>
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Новости
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/news/add">
+									Добавить новость
+								</a>
+							</li>
+							<li>
+								<a href="/admin/news/edit">
+									Редактировать новости
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Документы
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/docs/add">
+									Добавить документ
+								</a>
+							</li>
+							<li>
+								<a href="/admin/docs/edit">
+									Редактировать документы
+								</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<?php echo $content; ?>
@@ -242,7 +280,7 @@
 		<script src="/js/admin/jquery.fancybox.js"></script>-->
 		<!--<script src="/js/admin/plupload/plupload.full.js"></script>-->
 		<!--<script src="/js/admin/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>-->
-		<!--<script src="/js/admin/jquery.cleditor.min.js"></script>-->
+		<script src="/js/admin/jquery.cleditor.min.js"></script>
 		<!--<script src="/js/admin/jquery.inputmask.min.js"></script>-->
 		<!--<script src="/js/admin/jquery.tagsinput.min.js"></script>-->
 		<!--<script src="/js/admin/jquery.mousewheel.js"></script>-->

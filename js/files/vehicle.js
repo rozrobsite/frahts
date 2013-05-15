@@ -1,15 +1,39 @@
-var makes = 
+var categories =
+{
+	init: function()
+	{
+		$('#Vehicle_category_id').on('change', function(e){
+			$.post('/makemodel/categories', {
+				category_id: $('#Vehicle_category_id').val()
+			}, function(response){
+				if(response == null) return;
+
+				$response = $(response).html();
+
+				$('select.make').html($response);
+
+				updateSelect.update($('select.make'));
+
+				$('#Vehicle_make_id').change();
+			});
+		});
+	}
+}
+
+var makes =
 {
 	init: function()
 	{
 		$('#Vehicle_make_id').on('change', function(e){
 			$.post('/makemodel/model', {
+				category_id: $('#Vehicle_category_id').val(),
 				make_id: $('#Vehicle_make_id').val()
 			}, function(response){
 				if(response == null) return;
 
-				$('select.model').html(response);
-				
+				$response = $(response).html();
+				$('select.model').html($response);
+
 				updateSelect.update($('select.model'));
 			});
 		});
@@ -184,8 +208,97 @@ var photo =
 	}
 }
 
+var countryVehicleFrom = 
+{
+	init: function()
+	{
+		$('#Vehicle_country_id').on('change', function(e){
+			$.post('/location/region', {
+				country_id: $('#Vehicle_country_id').val()
+			}, function(response){
+				if(response == null) return;
+
+				$response = $(response).html();
+				$('select.regionFrom').html($response);
+
+				updateSelect.update($('select.regionFrom'));
+				
+				$('#Vehicle_region_id').change();
+			});
+		});
+	}
+};
+
+var regionVehicleFrom = 
+{
+	init: function()
+	{
+		$('#Vehicle_region_id').on('change', function(e){
+			$.post('/location/city', {
+				region_id: $('#Vehicle_region_id').val()
+			}, function(response){
+				if(response == null) return;
+
+				$response = $(response).html();
+				$('select.cityFrom').html($response);
+
+				updateSelect.update($('select.cityFrom'));
+			});
+		});
+	}
+};
+
+var countryVehicleTo = 
+{
+	init: function()
+	{
+		$('#Vehicle_country_id_to').on('change', function(e){
+			$.post('/location/region', {
+				country_id: $('#Vehicle_country_id_to').val()
+			}, function(response){
+				if(response == null) return;
+
+				$response = $(response).html();
+				$('select.regionTo').html($response);
+
+				updateSelect.update($('select.regionTo'));
+				
+				$('#Vehicle_region_id_to').change();
+			});
+		});
+	}
+};
+
+var regionVehicleTo = 
+{
+	init: function()
+	{
+		$('#Vehicle_region_id_to').on('change', function(e){
+			$.post('/location/city', {
+				region_id: $('#Vehicle_region_id_to').val()
+			}, function(response){
+				if(response == null) return;
+
+				$response = $(response).html();
+				$('select.cityTo').html($response);
+
+				updateSelect.update($('select.cityTo'));
+			});
+		});
+	}
+};
+
 $(document).ready(function(){
-	$('#Vehicle_make_id').change();
+//	$('#Vehicle_make_id').change();
+//	makes.init();
+	$('#Vehicle_country_id_from').change();
+	countryVehicleFrom.init();
+	regionVehicleFrom.init();
+	$('#Vehicle_country_id_to').change();
+	countryVehicleTo.init();
+	regionVehicleTo.init();
+	$('#Vehicle_category_id').change();
+	categories.init();
 	makes.init();
 	vehicle.deleteSearch();
 	vehicle.returnSearch();

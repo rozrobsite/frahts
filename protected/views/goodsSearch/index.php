@@ -13,7 +13,12 @@ $this->breadcrumbs = array(
     <!-- Secondary nav -->
     <div class="secNav">
 		<?php
-		$this->renderPartial('_secWrapper', array('goodsActive' => $goodsActive, 'vehicles' => $vehicles))
+		$this->renderPartial('_secWrapper', array(
+			'goodsActive' => $goodsActive,
+			'vehicles' => $vehicles,
+			'vid' => isset($filter->good->id) ? $filter->good->id : null,
+			'filter' => $filter,
+			))
 		?>
 	</div>
 </div>
@@ -51,6 +56,47 @@ $this->breadcrumbs = array(
 				</div>
 			</div>
 		<?php else: ?>
+		<?php if ($this->user->goods): ?>
+		<div class="widget fluid" style="margin-top: 10px;">
+			<div class="formRow">
+				<?php /* ?>
+				<div class="grid2">
+					<label>Обновлять каждые</label>
+				</div>
+				<div class="grid2">
+					<?php
+						echo CHtml::activeDropDownList($settings, 'autoupdate', Yii::app()->params['timer'],
+								array('id' => 'autoupdate'),
+								array());
+					?>
+				</div>
+				<div class="grid2">
+					<a id="timerButton" data-timer="<?php echo $settings->timer; ?>" href="javascript:void(0)" class="buttonS bDefault mb10 mt5">Старт</a>
+				</div>
+				<div class="grid3">
+					<div id="progress1"><span class="pbar"></span><span class="percent"></span><span class="elapsed"></span></div>
+				</div>
+				<?php */ ?>
+				<div class="grid12" style="text-align: left;">
+					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS" 
+					   title="Дополнительные условия для поиска"
+					   original-title="Дополнительные условия для поиска" >
+						Дополнительные настройки поиска
+					</a>
+					<?php $this->renderPartial('/blocks/popups/_advancedVehicleFilter', array(
+						'model' => $model,
+						'filter' => $filter, 
+						'vid' => $vid,
+						'countries' => $countries,
+						'regions' => $regions,
+						'cities' => $cities,
+						)); 
+					?>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<?php endif; ?>
 		<?php if (!$vehicles): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">
@@ -61,77 +107,122 @@ $this->breadcrumbs = array(
 			<div class="fluid">
 				<div class="widget check">
 					<div class="whead">
-						<span class="titleIcon">
-							<input type="checkbox" id="titleCheck" name="titleCheck" />
-						</span>
-						<h6>Найденные подходящие транспортные средства для Ваших грузов (1200 шт.)</h6>
+						<h6>Все доступные транспортные средства (<?php echo $pageSettings['count'] ?>)</h6>
 						<div class="clear"></div>
 					</div>
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
 						<thead>
 							<tr>
-								<td><img src="/images/elements/other/tableArrows.png" alt="" /></td>
-								<td width="50">Фото</td>
-								<td>
-									<!--<div>-->
-									Название
-									<!--<span></span>-->
-									<!--</div>-->
-								</td>
-								<td width="150">Тип транспорта</td>
-								<td width="140">
-									<!--<div>-->
-									Дата регистрации
-									<!--<span></span>-->
-									<!--</div>-->
-								</td>
-								<td width="100">Действие</td>
+								<td width="10%">Фото</td>
+								<td width="20%"><div>Название</div></td>
+								<td width="20%"><div>Расположение</div></td>
+								<td width="25%"><div>Характеристики</div></td>
+								<td width="25%">Контакты</td>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
 								<td colspan="6">
-									<div class="itemActions">
-										<label>Выполнить:</label>
-										<select id="vehicleDeleteSearchAction">
-											<option value="0">Выберите действие...</option>
-											<option value="1">Удалить из поиска</option>
-										</select>
+									<?php if ($pageSettings['pages'] > 1): ?>
+									<div class="tPages">
+										<ul class="pages">
+											<?php if ($pageSettings['page'] > 1): ?>
+												<li><a href="/goods/search<?php echo $filter->getUrl('', 1); ?>" title="На первую страницу"><span><<</span></a></li>
+												<li class="prev"><a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['page'] - 1); ?>" title="Предыдущая"><span class="icon-arrow-14"></span></a></li>
+											<?php endif; ?>
+											<?php 
+												$startPage = ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] < 0) ? 1 : ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] + 2); 
+												$endPage = $startPage + (int) Yii::app()->params['pages']['pageNumbers'] < $pageSettings['pages'] ? $startPage + (int) Yii::app()->params['pages']['pageNumbers'] : $pageSettings['pages']; 
+											?>
+											<?php for ($pageNumber = $startPage; $pageNumber < $endPage; $pageNumber++): ?>
+												<li>
+													<a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageNumber); ?>" <?php if ($pageNumber == $pageSettings['page']): ?>class="active"<?php endif; ?>>
+														<?php echo $pageNumber; ?>
+													</a>
+												</li>
+											<?php endfor; ?>
+											<?php if ($pageNumber < $pageSettings['pages']): ?>
+												<li>...</li>
+											<?php endif; ?>
+											<li>
+												<a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['pages']); ?>" <?php if ($pageSettings['page'] == $pageSettings['pages']): ?>class="active"<?php endif; ?>>
+													<?php echo $pageSettings['pages'] ?>
+												</a>
+											</li>
+											<?php if ($pageSettings['page'] < $pageSettings['pages']): ?>
+												<li class="next"><a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['page'] + 1); ?>" title="Следующая"><span class="icon-arrow-17"></span></a></li>
+												<li><a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['pages']); ?>" title="На последнюю страницу"><span>>></span></a></li>
+											<?php endif; ?>
+										</ul>
 									</div>
+									<?php endif; ?>
 								</td>
 							</tr>
 						</tfoot>
 						<tbody>
 							<?php foreach ($vehicles as $vehicle): ?>
 								<tr>
-									<td><input data-id="<?php echo $vehicle->id ?>" type="checkbox" name="checkRow" class="vehicleChecked" /></td>
 									<td>
-										<a href="/vehicle/update/<?php echo $vehicle->id ?>" title="">
-								<?php $image = isset($vehicle->photos[0])
-											? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small
-											: '/images/nophoto.jpg' ?>
+										<?php /* href="/vehicle/view/<?php echo $vehicle->id ?>" title=""*/ ?>
+										<a href="javascript:void(0)">
+											<?php $image = isset($vehicle->photos[0])
+												? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small
+												: '/images/nophoto.jpg' ?>
 											<img src="<?php echo $image; ?>" alt="" />
 										</a>
 									</td>
-									<td class="textL">
-										<a href="/vehicle/update/<?php echo $vehicle->id ?>" title="">
-											<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . " " . $vehicle->model->name ?>, 
-																				номер: <?php echo $vehicle->license_plate ?>
-										</a>
-									</td>
 									<td class="fileInfo">
+										<?php /* href="/vehicle/view/<?php echo $vehicle->id ?>" title=""*/ ?>
+										<a href="javascript:void(0)">
+											<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . " " . $vehicle->modeli->name ?>,
+																				<br/>номер: <?php echo $vehicle->license_plate ?>
+										</a><br/>
+										<strong>Добавлен:</strong><br/>
 										<span>
-											<strong><?php echo $vehicle->vehicleType->name_ru ?></strong>
+											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->updated_at); ?>&nbsp;
+											<?php echo date('H:i', $vehicle->updated_at); ?>
 										</span>
 									</td>
-									<td><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy',
-											$vehicle->created_at); ?>
+									<td class="fileInfo">
+										<?php if ($vehicle->city_id): ?>
+										<span>
+											<?php echo $vehicle->countries->name_ru . ' - ' . (!empty($vehicle->countriesTo->name_ru) ? $vehicle->countriesTo->name_ru : 'Любая'); ?>
+										</span>
+										<span>
+											<?php echo $vehicle->regions->name_ru . ' - ' . (!empty($vehicle->regionsTo->name_ru) ? $vehicle->regionsTo->name_ru : 'Любая'); ?>
+										</span>
+										<span>
+											<?php echo $vehicle->cities->name_ru . ' - ' . (!empty($vehicle->citiesTo->name_ru) ? $vehicle->citiesTo->name_ru : 'Любой'); ?>
+										</span>
+										<span>
+											<?php if ($vehicle->date_from && $vehicle->date_to): ?>
+												c <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_from); ?> по <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_to); ?>
+											<?php endif; ?>
+										</span>
+										<?php endif; ?>
 									</td>
-									<td class="tableActs">
-										<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать"><span class="iconb" data-icon="&#xe1db;"></span></a>
-		<!--										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить из поиска" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe212;"></span></a>-->
-										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить из поиска" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
-										<!--<a href="javascript:void(0)" class="tablectrl_small bRed tipS vehicleDeleteBase" title="Удалить из базы" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>-->
+									<td class="fileInfo">
+										<span><strong>Тип кузова: </strong>
+											<?php echo $vehicle->bodyType->name_ru ?>
+										</span>
+										<span><strong>Вид загрузки: </strong>
+											<?php echo $vehicle->shipmentsNames ?>
+										</span>
+										<span><strong>Грузоподъемность: </strong>
+											<?php echo $vehicle->bearing_capacity ?> т.
+										</span>
+										<span><strong>Объем кузова: </strong>
+											<?php echo $vehicle->body_capacity ?> м&sup3;
+										</span>
+									</td>
+									<td class="fileInfo">
+										<?php /* href="/user/view/<?php echo $vehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя"*/ ?>
+										<a href="javascript:void(0)">
+											<strong><?php echo $vehicle->user->profiles->userType->name_ru ?></strong><br/>
+											<?php echo $vehicle->user->organizations->formOrganizations->name_ru . ' ' . $vehicle->user->organizations->name_org ?><br/>
+											<?php echo $vehicle->user->profiles->last_name . ' ' . $vehicle->user->profiles->first_name . ' ' . $vehicle->user->profiles->middle_name ?>
+										</a><br/>
+										м. <?php echo $vehicle->user->profiles->mobile ?>
 									</td>
 								</tr>
 							<?php endforeach; ?>

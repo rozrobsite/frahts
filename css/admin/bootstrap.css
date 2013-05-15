@@ -1143,10 +1143,16 @@ input[type="checkbox"][readonly] {
 
 .control-group.error > label,
 .control-group.error .help-block,
-.control-group.error .help-inline {
+.control-group.error .help-inline,
+.box-content .errorMessage,
+.box-content .error
+{
   color: #b94a48;
 }
-
+.control-group div.error
+{
+	color: #b94a48;
+}
 .control-group.error .checkbox,
 .control-group.error .radio,
 .control-group.error input,

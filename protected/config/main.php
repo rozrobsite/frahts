@@ -55,11 +55,15 @@ return array(
 			'urlFormat' => 'path',
 			'rules' => array(
 				'' => 'main/index',
+				'vehicle/update/<id:\d+>' => 'vehicle/update',
+				'vehicle/update/<slug:[a-zA-Z0-9-]+>' => 'vehicle/update',
 				'vehicle/search/location/*' => 'vehicleSearch/location',
 				'vehicle/search/*' => 'vehicleSearch',
 				'vehicle/search' => 'vehicleSearch',
 				'goods/update/<id:\d+>' => 'goodsSearch/update',
+				'goods/update/<slug:[a-zA-Z0-9-]+>' => 'goodsSearch/update',
 				'goods/delete/<id:\d+>' => 'goodsSearch/delete',
+				'goods/search/*' => 'goodsSearch',
 				'goods/search' => 'goodsSearch',
 				'goods/new' => 'goodsSearch/new',
 				'goods' => 'goodsSearch/index',
@@ -161,7 +165,7 @@ return array(
 		),
 		'pages' => array(
 			'goodsCount' => 30,
-			'searchCount' => 2,
+			'searchCount' => 10,
 			'pageNumbers' => 5,
 		),
 		'radius' => array(
@@ -180,6 +184,16 @@ return array(
 			'150' => 150, 
 			'180' => 180, 
 			'200' => 200
+		),
+		'timer' => array(
+			'5' => '5 секунд',
+			'30' => '30 секунд',
+			'60' => '1 минуту',
+			'90' => '1 минуту 30 секунд',
+			'120' => '2 минуты',
+			'180' => '3 минуты',
+			'240' => '4 минуты',
+			'300' => '5 минут',
 		),
 	),
 );

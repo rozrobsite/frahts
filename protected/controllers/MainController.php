@@ -258,5 +258,10 @@ class MainController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	public function actionUseragreement()
+	{
+		$this->render('useragreement');
+	}
 
 }

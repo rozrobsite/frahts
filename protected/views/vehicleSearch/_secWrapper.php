@@ -30,9 +30,10 @@
 					<li <?php if (isset($vid) && $vid == $vehicle->id): ?> class="selected" <?php endif; ?>>
 						<span class="fileQueue"></span>
 						<a href="/vehicle/search<?php echo $filter->getUrl(isset($vehicle) ? (int) $vehicle->id : ''); ?>" class="tipS" title="Нажмите на это транспортное средство чтобы найти подходящие для него грузы">
-							<?php echo ucfirst($vehicle->bodyType->name_ru) . " " . $vehicle->make->name . (isset($vehicle->model->name) ? ' ' . $vehicle->model->name : '') ?>, 
+							<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . (isset($vehicle->modeli->name) ? ' ' . $vehicle->modeli->name : '') ?>,
 											номер: <?php echo $vehicle->license_plate ?>
 						</a>
+						<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="edit tipS" style="width: 10px;height: 9px;" original-title="Редактировать" title="Редактировать"></a>
 					</li>
 					<?php endforeach; ?>
 				</ul>

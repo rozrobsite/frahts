@@ -46,7 +46,8 @@ var country =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.region').html(response);
+				$response = $(response).html();
+				$('select.region').html($response);
 
 				updateSelect.update($('select.region'));
 				
@@ -66,7 +67,8 @@ var region =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.city').html(response);
+				$response = $(response).html();
+				$('select.city').html($response);
 
 				updateSelect.update($('select.city'));
 			});

@@ -34,6 +34,7 @@
  * @property integer $is_deleted
  * @property integer $adr
  * @property string $fee
+ * @property string $slug
  *
  * The followings are the available model relations:
  * @property PaymentType $paymentType
@@ -72,6 +73,18 @@ class Goods extends CActiveRecord
 		return 'goods';
 	}
 
+	public function behaviors()
+	{
+		return array(
+			'SlugBehavior' => array(
+				'class' => 'ext.aii.behaviors.SlugBehavior',
+				'sourceAttribute' => 'name',
+				'slugAttribute' => 'slug',
+				'mode' => 'translate',
+			),
+		);
+	}
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -91,7 +104,7 @@ class Goods extends CActiveRecord
 			array('city_id_from, city_id_to', 'length', 'max' => 11),
 			array('shipments', 'length', 'max' => 32),
 			array('name, body_types', 'length', 'max' => 255),
-			array('name', 'length', 'max' => 25),
+			array('name', 'length', 'max' => 30),
 			array('description', 'safe'),
 			array('description', 'length', 'max' => 1000),
 //			array('capacity_from, capacity_to', 'numerical', 'min' => 1),
@@ -152,7 +165,7 @@ class Goods extends CActiveRecord
 			'weight_exact_value' => '"Точное значение',
 			'capacity_from' => '"Объем груза "От"',
 			'capacity_to' => '"Объем груза "По"',
-			'capacity_to' => '"Точное значение"',
+			'capacity_exact_value' => '"Точное значение"',
 			'permissions' => '"Разрешения"',
 			'cost' => '"Стоимость"',
 			'currency_id' => '"Валюта"',
@@ -163,6 +176,7 @@ class Goods extends CActiveRecord
 			'is_deleted' => '"Удалено из поиска"',
 			'adr' => '"Допуск"',
 			'fee' => '"Комиссия"',
+			'slug' => '"ЧПУ"',
 		);
 	}
 
@@ -204,6 +218,7 @@ class Goods extends CActiveRecord
 		$criteria->compare('created_at', $this->created_at);
 		$criteria->compare('updated_at', $this->updated_at);
 		$criteria->compare('is_deleted', $this->is_deleted);
+		$criteria->compare('slug', $this->slug);
 
 		$criteria->order = 'created_at DESC';
 
@@ -249,12 +264,13 @@ class Goods extends CActiveRecord
 			$this->addError('fee', 'Введите комиссию');
 		}
 	}
+
 	public function checkWeight($attribute, $params)
 	{
 		if ($this->weight_exact_value == 0 && ($this->weight_from == 0 || $this->weight_to == 0))
 		{
 			$this->addError('weight_from', 'Заполните "Вес груза"');
-			
+
 			return;
 		}
 		if ($this->weight_from > $this->weight_to)
@@ -262,6 +278,7 @@ class Goods extends CActiveRecord
 			$this->addError('weight_from', 'Неверно. Вес груза "От" больше чем "До"');
 		}
 	}
+
 	public function checkCapacity($attribute, $params)
 	{
 //		if ($this->capacity_exact_value == 0 && ($this->capacity_from == 0 || $this->capacity_to == 0))
@@ -288,16 +305,17 @@ class Goods extends CActiveRecord
 		$criteria->condition = $where;
 		$criteria->limit = Yii::app()->params['pages']['searchCount'];
 		$criteria->offset = ($filter->page - 1) * Yii::app()->params['pages']['searchCount'];
-		
-		$direction = isset($filter->direction) && $filter->direction ? ' ASC' : ' DESC';
-		
-		$criteria->order = isset($filter->sort) && $filter->sort ? "t.cost $direction, t.updated_at DESC" : "t.updated_at $direction, t.cost DESC";
 
-		$vehicles = $this->findAll($criteria);
+		$direction = isset($filter->direction) && $filter->direction ? ' ASC' : ' DESC';
+
+		$criteria->order = isset($filter->sort) && $filter->sort ? "t.cost $direction, t.updated_at DESC"
+					: "t.updated_at $direction, t.cost DESC";
+
+		$goods = $this->findAll($criteria);
 		$count = $this->count($criteria);
 
 		return array(
-			'vehicles' => $vehicles,
+			'goods' => $goods,
 			'count' => $count,
 		);
 //		return $this->findAll($criteria);
@@ -308,15 +326,8 @@ class Goods extends CActiveRecord
 	{
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
-		
-		if (isset($filter->vehicle) && $filter->vehicle->id)
-		{
-			$filter->country_id = (int) $filter->vehicle->country_id;
-			$filter->region_id = (int) $filter->vehicle->region_id;
-			$filter->city_id = (int) $filter->vehicle->city_id;
-		}
-		
-		if (empty($filter->city_id))
+
+		if (!empty($filter->country_id) || !empty($filter->region_id))
 		{
 			if (!empty($filter->country_id))
 			{
@@ -328,13 +339,20 @@ class Goods extends CActiveRecord
 				$result[] = 't.region_id_from = ' . (int) $filter->region_id;
 			}
 		}
+		elseif (isset($filter->vehicle->id))
+		{
+			if (!empty($filter->vehicle->country_id))
+			{
+				$result[] = 't.country_id_from = ' . (int) $filter->vehicle->country_id;
+			}
 
-//		if (!empty($filter->city_id))
-//		{
-//			$result[] = 't.city_id_from = ' . (int) $filter->city_id;
-//		}
+			if (!empty($filter->vehicle->region_id))
+			{
+				$result[] = 't.region_id_from = ' . (int) $filter->vehicle->region_id;
+			}
+		}
 
-		if (empty($filter->city_search_id))
+		if (!empty($filter->country_search_id) || !empty($filter->region_search_id))
 		{
 			if (!empty($filter->country_search_id))
 			{
@@ -346,28 +364,47 @@ class Goods extends CActiveRecord
 				$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
 			}
 		}
+		elseif (isset($filter->vehicle->id))
+		{
+			if (!empty( $filter->vehicle->country_id_to))
+			{
+				$result[] = 't.country_id_to = ' . (int) $filter->vehicle->country_id_to;
+			}
 
-//		if (!empty($filter->city_search_id))
-//		{
-//			$result[] = 't.city_id_to = ' . (int) $filter->city_search_id;
-//		}
+			if (!empty($filter->vehicle->region_id_to))
+			{
+				$result[] = 't.region_id_to = ' . (int) $filter->vehicle->region_id_to;
+			}
+		}
+		
+		if (!empty($filter->date_from) || !empty($filter->date_to))
+		{
+			if (!empty($filter->date_from))
+			{
+				$result[] = 't.date_to >= ' . strtotime($filter->date_from);
+			}
 
-		if (!empty($filter->date_from) && !empty($filter->date_to))
-		{
-			$result[] = 't.date_to >= ' . strtotime($filter->date_from) . ' AND t.date_to <= ' . strtotime($filter->date_to);
+			if (!empty($filter->date_to))
+			{
+				$result[] = 't.date_to <= ' . strtotime($filter->date_to);
+			}
 		}
-		elseif (!empty($filter->date_from) && empty($filter->date_to))
+		elseif (isset($filter->vehicle->id))
 		{
-			$result[] = strtotime($filter->date_from) . ' <= t.date_to';
-		}
-		elseif (empty($filter->date_from) && !empty($filter->date_to))
-		{
-			$result[] = strtotime($filter->date_to) . ' >= t.date_to';
+			if (!empty($filter->vehicle->date_from))
+			{
+				$result[] = 't.date_to >= ' . $filter->vehicle->date_from;
+			}
+
+			if (!empty($filter->vehicle->date_to))
+			{
+				$result[] = 't.date_to <= ' . $filter->vehicle->date_to;
+			}
 		}
 
 		$result[] = 'date_to >= ' . time();
 
-		if (isset($filter->vehicle))
+		if (isset($filter->vehicle->id))
 		{
 			if ($filter->vehicle->permissions)
 			{
@@ -377,7 +414,7 @@ class Goods extends CActiveRecord
 				{
 					$permissions[] = 'FIND_IN_SET(' . $permission . ', t.permissions) > 0';
 				}
-				
+
 				$result[] = '(' . join(' OR ', $permissions) . ' OR t.permissions IS NULL)';
 			}
 			if ($filter->vehicle->shipments)
@@ -388,46 +425,61 @@ class Goods extends CActiveRecord
 				{
 					$shipments[] = 'FIND_IN_SET(' . $shipment . ', t.shipments) > 0';
 				}
-				
+
 				$result[] = '(' . join(' OR ', $shipments) . ')';
 			}
 			$result[] = '(FIND_IN_SET(' . $filter->vehicle->vehicle_type_id . ', t.vehicle_types) > 0  OR t.vehicle_types IS NULL)';
 			$result[] = 'FIND_IN_SET(' . $filter->vehicle->body_type_id . ', t.body_types) > 0';
-			
+
 			$result[] = '(' . $filter->vehicle->bearing_capacity . ' >= t.weight_exact_value OR ' . $filter->vehicle->bearing_capacity . ' >= t.weight_from OR ' . $filter->vehicle->bearing_capacity . ' >= t.weight_to)';
 			$result[] = '(' . $filter->vehicle->body_capacity . ' >= t.capacity_exact_value OR ' . $filter->vehicle->body_capacity . ' >= t.capacity_from OR ' . $filter->vehicle->body_capacity . ' >= t.capacity_to)';
 			if ($filter->vehicle->adr) $result[] = 'adr <= ' . $filter->vehicle->adr;
 		}
 
-//		$where = join(' AND ', $result);
-		
 		if (isset($filter->radius) && $filter->radius)
 		{
 			$inRadius = array();
-			if (isset($filter->city_id) && $filter->city_id)
+			$city_id_from = 0;
+			if (!empty($filter->city_id))
 			{
-				$city = City::model()->findByPk((int) $filter->city_id);
+				$city_id_from = (int)$filter->city_id;
+			}
+			elseif (!empty($filter->vehicle->city_id))
+			{
+				$city_id_from = (int)$filter->vehicle->city_id;
+			}
+			
+			if (!empty($city_id_from))
+			{
+				$city = City::model()->findByPk($city_id_from);
 				$inRadius[] = 't.city_id_from IN ( SELECT id 
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
 				
-//				$where .= ' OR ' . $inRadius;
 				unset($city);
 			}
 			
-			if (isset($filter->city_search_id) && $filter->city_search_id)
+			$city_id_to = 0;
+			if (!empty($filter->city_search_id))
 			{
-				$city = City::model()->findByPk((int) $filter->city_search_id);
-				$inRadius[] = 't.city_id_to IN ( SELECT id 
+				$city_id_to = (int)$filter->city_search_id;
+			}
+			elseif (!empty($filter->vehicle->city_id_to))
+			{
+				$city_id_to = (int)$filter->vehicle->city_id_to;
+			}
+			
+			if (!empty($city_id_to))
+			{
+				$city = City::model()->findByPk($city_id_to);
+				$inRadius[] = 't.city_id_from IN ( SELECT id 
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
 				
-//				$where .= ' OR ' . $inRadius;
 				unset($city);
 			}
-			
-			if (!empty($inRadius)) $result[] = '(' . join(' OR ', $inRadius) . ')';
-//			$where .= ' AND ' . join(' OR ', $inRadius) . '';
+
+			if (!empty($inRadius)) $result[] = '(' . join(' AND ', $inRadius) . ')';
 		}
-		
+
 		return join(' AND ', $result);
 	}
 

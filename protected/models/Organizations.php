@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $type_org_id
  * @property string $form_tax
+ * @property integer $form_org_id
  * @property string $name_org
  * @property string $license
  * @property string $user_id
@@ -54,8 +55,8 @@ class Organizations extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('form_tax, name_org', 'required'),
-			array('type_org_id', 'numerical', 'integerOnly'=>true),
+			array('form_tax, form_org_id, name_org', 'required'),
+			array('type_org_id, form_org_id', 'numerical', 'integerOnly'=>true),
 			array('form_tax, name_org, license, phone', 'length', 'max'=>255),
 			array('user_id', 'length', 'max'=>11),
 			array('address', 'length', 'max'=>128),
@@ -77,6 +78,7 @@ class Organizations extends CActiveRecord
 		return array(
 			'typeOrg' => array(self::BELONGS_TO, 'TypeOrganizations', 'type_org_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
+			'formOrganizations' => array(self::BELONGS_TO, 'FormOrganizations', 'form_org_id'),
 		);
 	}
 
@@ -89,6 +91,7 @@ class Organizations extends CActiveRecord
 			'id' => 'ID',
 			'type_org_id' => 'Type Org',
 			'form_tax' => 'Form Tax',
+			'form_org_id' => 'Форма организация',
 			'name_org' => 'Name Org',
 			'license' => 'License',
 			'user_id' => 'User',
@@ -118,6 +121,7 @@ class Organizations extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('type_org_id',$this->type_org_id);
 		$criteria->compare('form_tax',$this->form_tax,true);
+		$criteria->compare('form_org_id',$this->form_org_id);
 		$criteria->compare('name_org',$this->name_org,true);
 		$criteria->compare('license',$this->license,true);
 		$criteria->compare('user_id',$this->user_id,true);

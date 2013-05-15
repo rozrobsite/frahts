@@ -2,7 +2,7 @@
 /* @var $this UserController */
 /* @var $model Users */
 
-$this->pageTitle = Yii::app()->name . ' - Действия с грузами';
+$this->pageTitle = Yii::app()->name . ' - ' . ($model->isNewRecord ? 'Регистрация нового груза' : 'Редактирование груза "' . $model->name . '"');
 $this->breadcrumbs = array(
 	'Действия с грузами',
 );
@@ -42,7 +42,7 @@ $this->breadcrumbs = array(
 
     <!-- Main content -->
     <div class="wrapper">
-	<?php $this->renderPartial('_accessMessage') ?>
+	<?php $this->renderPartial('/blocks/_notify') ?>
 			<?php if ($model->id): ?>
 				<div class="widget fluid">
 					<div class="formRow">
@@ -82,8 +82,9 @@ $this->breadcrumbs = array(
 					</h6>
 					<div class="clear"></div>
 				</div>
+				<?php $this->renderPartial('/blocks/_atention'); ?>
 				<div class="formRow">
-					<div class="grid1"><label>Дата:<span class="req">*</span></label></div>
+					<div class="grid2"><label>Дата загрузки:<span class="req">*</span></label></div>
 					<div class="grid3">
 						<ul class="datesRange">
 							<li>
@@ -98,8 +99,8 @@ $this->breadcrumbs = array(
 						<?php echo $form->error($model, 'date_from', array('class' => 'error')); ?>
 						<?php echo $form->error($model, 'date_to', array('class' => 'error')); ?>
 					</div>
-					<div class="grid4"><label>Короткое название (не более 25 символов):<span class="req">*</span></label></div>
-					<div class="grid4">
+					<div class="grid4"><label>Короткое название груза (не более 30 символов):<span class="req">*</span></label></div>
+					<div class="grid3">
 						<?php echo $form->textField($model, 'name', array('maxlength' => 24)) ?>
 						<?php echo $form->error($model, 'name', array('class' => 'error')); ?>
 					</div>
@@ -284,7 +285,9 @@ $this->breadcrumbs = array(
 				</div>
 				<?php if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
 				<div class="formRow">
-					<div class="grid2"><label>Комиссия:<span class="req">*</span></label></div>
+
+					<div class="grid2"><label>Комиссия за перевозку:<span class="req">*</span></label></div>
+
 					<div class="grid2 onlyNums">
 						<?php echo $form->textField($model, 'fee') ?>
 						<?php echo $form->error($model, 'fee', array('class' => 'error')); ?>
@@ -293,8 +296,11 @@ $this->breadcrumbs = array(
 				</div>
 				<?php endif; ?>
 				<div class="formRow">
-					<div class="grid2"><label>Описание:</label></div>
-					<div class="grid9">
+
+					<div class="grid3"><label>Дополнительное описание груза:</label></div>
+
+					<div class="grid8">
+
 						<?php echo $form->textArea($model, 'description') ?>
 						<?php echo $form->error($model, 'description'); ?>
 					</div>

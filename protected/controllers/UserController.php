@@ -71,12 +71,12 @@ class UserController extends FrahtController
 					$this->user->profiles->updated_at = time();
 					if ($this->user->profiles->update())
 					{
-						Yii::app()->user->setFlash('user_action_success',
+						Yii::app()->user->setFlash('_success',
 								'Ваши данные успешно сохранены.');
 					}
 					else
 					{
-						Yii::app()->user->setFlash('user_action_error',
+						Yii::app()->user->setFlash('_error',
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
@@ -85,12 +85,12 @@ class UserController extends FrahtController
 					$this->user->profiles->created_at = time();
 					if ($this->user->profiles->save())
 					{
-						Yii::app()->user->setFlash('user_action_success',
+						Yii::app()->user->setFlash('_success',
 								'Ваши данные успешно сохранены.');
 					}
 					else
 					{
-						Yii::app()->user->setFlash('user_action_error',
+						Yii::app()->user->setFlash('_error',
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
@@ -109,6 +109,11 @@ class UserController extends FrahtController
 					
 					$this->user->profiles->save();
 				}
+			}
+			else
+			{
+				Yii::app()->user->setFlash('_error',
+								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 			}
 		}
 
@@ -139,30 +144,37 @@ class UserController extends FrahtController
 				{
 					if ($this->user->organizations->update())
 					{
-						Yii::app()->user->setFlash('user_action_success',
+						Yii::app()->user->setFlash('_success',
 								'Ваши данные успешно сохранены.');
 					}
 					else
 					{
-						Yii::app()->user->setFlash('user_action_error',
+						Yii::app()->user->setFlash('_error',
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
 				else if ($this->user->organizations->save())
 				{
-					Yii::app()->user->setFlash('user_action_success',
+					Yii::app()->user->setFlash('_success',
 							'Ваши данные успешно сохранены.');
 				}
 				else
 				{
-					Yii::app()->user->setFlash('user_action_error',
+					Yii::app()->user->setFlash('_error',
 							'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 				}
+			}
+			else
+			{
+				Yii::app()->user->setFlash('_error',
+								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 			}
 		}
 
 		$typeOrganizations = TypeOrganizations::model()->findAll(array('order' => 'name_ru'));
 		$listTypeOrganizations = CHtml::listData($typeOrganizations, 'id', 'name_ru');
+		$formOrganizations = FormOrganizations::model()->findAll(array('order' => 'name_ru'));
+		$listFormOrganizations = CHtml::listData($formOrganizations, 'id', 'name_ru');
 
 		$privateName = isset($this->user->profiles->id) ? $this->user->profiles->last_name
 				. " " . strtoupper(mb_substr($this->user->profiles->first_name, 0, 1,
@@ -174,6 +186,7 @@ class UserController extends FrahtController
 				array(
 			'model' => $this->user->organizations,
 			'typeOrganizations' => $listTypeOrganizations,
+			'formOrganizations' => $listFormOrganizations,
 			'privateName' => $privateName,
 		));
 	}
@@ -270,12 +283,12 @@ class UserController extends FrahtController
 					$message->from = Yii::app()->params['adminEmail'];
 					Yii::app()->mail->send($message);
 
-					Yii::app()->user->setFlash('user_action_success',
+					Yii::app()->user->setFlash('_success',
 							'Ваш элетронный адрес изменен успешно.');
 				}
 				else
 				{
-					Yii::app()->user->setFlash('user_action_error',
+					Yii::app()->user->setFlash('_error',
 							'Ваш элетронный адрес не был изменен. Проверьте введенные данные и попробуйте еще раз.');
 				}
 			}
@@ -314,12 +327,12 @@ class UserController extends FrahtController
 					$message->from = Yii::app()->params['adminEmail'];
 					Yii::app()->mail->send($message);
 
-					Yii::app()->user->setFlash('user_action_success',
+					Yii::app()->user->setFlash('_success',
 							'Ваш пароль изменен успешно.');
 				}
 				else
 				{
-					Yii::app()->user->setFlash('user_action_error',
+					Yii::app()->user->setFlash('_error',
 							'Ваш пароль не был изменен. Проверьте введенные данные и попробуйте еще раз.');
 				}
 			}
@@ -343,6 +356,13 @@ class UserController extends FrahtController
 //		}
 
 		Yii::app()->end();
+	}
+	
+	public function actionFaq()
+	{
+		
+
+		$this->render('faq');
 	}
 
 	private function addPhotos($path)

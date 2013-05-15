@@ -8,7 +8,8 @@ var countryLocationVehicle =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.regionLocationVehicle').html(response);
+				$response = $(response).html();
+				$('select.regionLocationVehicle').html($response);
 
 				updateSelect.update($('select.regionLocationVehicle'));
 				
@@ -28,7 +29,8 @@ var regionLocationVehicle =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.cityLocationVehicle').html(response);
+				$response = $(response).html();
+				$('select.cityLocationVehicle').html($response);
 
 				updateSelect.update($('select.cityLocationVehicle'));
 			});
@@ -46,7 +48,8 @@ var countryFilterVehicle =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.regionFilterVehicle').html(response);
+				$response = $(response).html();
+				$('select.regionFilterVehicle').html($response);
 
 				updateSelect.update($('select.regionFilterVehicle'));
 				
@@ -66,13 +69,58 @@ var regionFilterVehicle =
 			}, function(response){
 				if(response == null) return;
 
-				$('select.cityFilterVehicle').html(response);
+				$response = $(response).html();
+				$('select.cityFilterVehicle').html($response);
 
 				updateSelect.update($('select.cityFilterVehicle'));
 			});
 		});
 	}
 };
+
+var timerId;
+var autoupdate = 
+{
+	init: function()
+	{
+		$('#timerButton').on('click', function(e){
+			$.post('/settings/autoupdate', {
+				autoupdate: $('#autoupdate').val(),
+				timer: $(this).data('timer')
+			}, function(response){
+				if(response == null || response.timer == null) return;
+			
+				$('#timerButton').html(response.timer ? 'Стоп' : 'Старт');
+				
+				if (response.timer)
+				{
+//					$('#timerButton').attr('data-timer', 0);
+					timerId = setTimeout(function(){location.reload();}, parseInt($('#autoupdate').val()) * 1000);
+//					var iNow = new Date().setTime(new Date().getTime() + 5 * 1000); // now plus 5 secs
+//					var iEnd = new Date().setTime(new Date().getTime() + parseInt($('#autoupdate').val()) * 1000); // now plus 15 secs
+//					$('#progress1').anim_progressbar({start: iNow, finish: iEnd, interval: 1});
+					
+				}
+				else
+				{
+					clearTimeout(timerId);
+//					$('#timerButton').attr('data-timer', 1);
+				}
+				
+			});
+		});
+		
+		$('#timerButton').html($('#timerButton').data('timer') == 1 ? 'Стоп' : 'Старт');
+		if ($('#timerButton').data('timer') == 1)
+		{
+			timerId = setTimeout(function(){location.reload();}, parseInt($('#autoupdate').val()) * 1000);
+//			var iNow = new Date().setTime(new Date().getTime() + 5 * 1000); // now plus 5 secs
+//			var iEnd = new Date().setTime(new Date().getTime() + parseInt($('#autoupdate').val()) * 1000); // now plus 15 secs
+//			$('#progress1').anim_progressbar({start: iNow, finish: iEnd, interval: 1});
+		}
+	}
+}
+
 
 $(document).ready(function(){
 	$('#vcoid').change();
@@ -81,4 +129,6 @@ $(document).ready(function(){
 	$('#fvcoid').change();
 	countryFilterVehicle.init();
 	regionFilterVehicle.init();
+	
+//	autoupdate.init();
 });

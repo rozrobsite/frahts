@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'vehicle':
  * @property string $id
  * @property integer $user_id
+ * @property integer $category_id
  * @property integer $make_id
  * @property integer $vehicle_type_id
  * @property integer $model_id
@@ -23,9 +24,15 @@
  * @property integer $country_id
  * @property integer $region_id
  * @property integer $city_id
+ * @property integer $date_to
+ * @property integer $date_from
+ * @property integer $country_id_to
+ * @property integer $region_id_to
+ * @property integer $city_id_to
  *
  * The followings are the available model relations:
  * @property BodyTypes $bodyType
+ * @property Categories $categories
  * @property Makes $make
  * @property Users $user
  * @property VehicleTypes $vehicleType
@@ -35,6 +42,8 @@
  */
 class Vehicle extends CActiveRecord
 {
+	public $shipmentsNames;
+	public $slugMake;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -54,6 +63,17 @@ class Vehicle extends CActiveRecord
 		return 'vehicle';
 	}
 
+//	public function behaviors()
+//	{
+//		return array(
+//			'SlugBehavior' => array(
+//				'class' => 'ext.aii.behaviors.SlugBehavior',
+//				'sourceAttribute' => 'slugMake',
+//				'slugAttribute' => 'slug',
+//				'mode' => 'translate',
+//			),
+//		);
+//	}
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -62,16 +82,18 @@ class Vehicle extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('make_id, vehicle_type_id, body_type_id, bearing_capacity, body_capacity, license_plate', 'required'),
-			array('make_id, vehicle_type_id, model_id, body_type_id, body_capacity', 'numerical', 'integerOnly' => true),
+			array('category_id, make_id, vehicle_type_id, body_type_id, bearing_capacity, body_capacity, license_plate, country_id, region_id, city_id', 'required'),
+			array('date_from, date_to', 'required'),
+			array('category_id, make_id, vehicle_type_id, model_id, body_type_id, body_capacity', 'numerical', 'integerOnly' => true),
 			array('user_id', 'length', 'max' => 11),
 			array('bearing_capacity', 'numerical', 'min' => 0.5),
 			array('body_capacity', 'numerical', 'min' => 1),
 			array('license_plate, number_trailer, number_semitrailer', 'length', 'max' => 32),
+			array('country_id_to, region_id_to, city_id_to', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('adr', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate, number_trailer, number_semitrailer, is_deleted, is_verification', 'safe', 'on' => 'search'),
+			array('id, user_id, category_id, make_id, vehicle_type_id, model_id, body_type_id, bearing_capacity, body_capacity, license_plate, number_trailer, date_from, date_to, number_semitrailer, is_deleted, is_verification', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -84,14 +106,20 @@ class Vehicle extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'bodyType' => array(self::BELONGS_TO, 'BodyTypes', 'body_type_id'),
+			'categories' => array(self::BELONGS_TO, 'Categories', 'category_id'),
 			'make' => array(self::BELONGS_TO, 'Makes', 'make_id'),
+			'marka' => array(self::BELONGS_TO, 'Marka', 'make_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'vehicleType' => array(self::BELONGS_TO, 'VehicleTypes', 'vehicle_type_id'),
 			'model' => array(self::BELONGS_TO, 'Models', 'model_id'),
+			'modeli' => array(self::BELONGS_TO, 'Modeli', 'model_id'),
 			'photos' => array(self::HAS_MANY, 'Photos', 'vehicle_id'),
 			'countries' => array(self::BELONGS_TO, 'Country', 'country_id'),
 			'regions' => array(self::BELONGS_TO, 'Region', 'region_id'),
 			'cities' => array(self::BELONGS_TO, 'City', 'city_id'),
+			'countriesTo' => array(self::BELONGS_TO, 'Country', 'country_id_to'),
+			'regionsTo' => array(self::BELONGS_TO, 'Region', 'region_id_to'),
+			'citiesTo' => array(self::BELONGS_TO, 'City', 'city_id_to'),
 		);
 	}
 
@@ -103,6 +131,7 @@ class Vehicle extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'user_id' => 'Пользователь',
+			'category_id' => 'Вид транспорта',
 			'make_id' => 'Марка',
 			'vehicle_type_id' => 'Тип транспорта',
 			'model_id' => 'Модель',
@@ -115,6 +144,11 @@ class Vehicle extends CActiveRecord
 			'country_id' => 'Страна',
 			'region_id' => 'Регион',
 			'city_id' => 'Населенный пункт',
+			'date_from' => '"Дата "С"',
+			'date_to' => '"Дата "По"',
+			'country_id_to' => '"Страна прибытия"',
+			'region_id_to' => '"Регион прибытия"',
+			'city_id_to' => '"Населенный пункт прибытия"',
 			'is_deleted' => 'Удалено из поиска',
 			'is_verification' => 'Проверено',
 			'created_at' => 'Дата регистрации',
@@ -135,6 +169,7 @@ class Vehicle extends CActiveRecord
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('user_id', $this->user_id, true);
+		$criteria->compare('category_id', $this->category_id);
 		$criteria->compare('make_id', $this->make_id);
 		$criteria->compare('vehicle_type_id', $this->vehicle_type_id);
 		$criteria->compare('model_id', $this->model_id);
@@ -149,6 +184,9 @@ class Vehicle extends CActiveRecord
 		$criteria->compare('country_id', $this->country_id);
 		$criteria->compare('region_id', $this->region_id);
 		$criteria->compare('city_id', $this->city_id);
+		$criteria->compare('country_id_to', $this->country_id_to);
+		$criteria->compare('region_id_to', $this->region_id_to);
+		$criteria->compare('city_id_to', $this->city_id_to);
 		$criteria->compare('created_at', $this->created_at);
 		$criteria->compare('updated_at', $this->updated_at);
 
@@ -162,7 +200,7 @@ class Vehicle extends CActiveRecord
 		$condition = $is_deleted ? 'is_deleted = 1' : 'is_deleted = 0';
 		$condition .= ' AND user_id = ' . Yii::app()->user->id;
 
-		return $this->findAll($condition);
+		return $this->findAll($condition . ' ORDER BY created_at DESC');
 	}
 
 	public function deleteFromSearch($is_deleted)
@@ -185,6 +223,98 @@ class Vehicle extends CActiveRecord
 		$command->update('vehicle', array(
 			'is_deleted' => 0,
 				), 'id IN (' . trim($ids, ',') . ')');
+	}
+
+	public function getAll(SearchFilter $filter)
+	{
+		$where = $this->createCondition($filter);
+		$criteria = new CDbCriteria();
+
+		$criteria->select = 't.*, 
+			(SELECT GROUP_CONCAT(shipment.name_ru SEPARATOR ", ") FROM shipment WHERE FIND_IN_SET(shipment.id, t.shipments) > 0) as shipmentsNames';
+
+		$criteria->condition = $where;
+		$criteria->limit = Yii::app()->params['pages']['searchCount'];
+		$criteria->offset = ($filter->page - 1) * Yii::app()->params['pages']['searchCount'];
+
+		$direction = isset($filter->direction) && $filter->direction ? ' ASC' : ' DESC';
+
+		$criteria->order = "t.updated_at $direction";
+//		$criteria->order = isset($filter->sort) && $filter->sort ? "t.cost $direction, t.updated_at DESC"
+//					: "t.updated_at $direction, t.cost DESC";
+
+//		$goods = $this->findAll($criteria);
+//		$count = $this->count($criteria);
+
+		return array(
+			'vehicles' => $this->findAll($criteria),
+			'count' => $this->count($criteria),
+		);
+//		return $this->findAll($criteria);
+//		return $this->findAll(array('condition' => 'date_to >= ' . time(), 'order' => 'created_at DESC'));
+	}
+
+	private function createCondition($filter)
+	{
+		$result = array();
+		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
+
+		if (isset($filter->good) && $filter->good->id)
+		{
+			$result[] = 't.country_id = ' . (int) $filter->good->country_id_from;
+			$result[] = 't.region_id = ' . (int) $filter->good->region_id_from;
+
+			$city = City::model()->findByPk((int) $filter->good->city_id_from);
+			$result[] = 't.city_id IN ( SELECT id 
+				FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
+
+			if ($filter->good->permissions)
+			{
+				$permissions = array();
+				$permissionsArray = explode(',', $filter->good->permissions);
+				foreach ($permissionsArray as $permission)
+				{
+					$permissions[] = 'FIND_IN_SET(' . $permission . ', t.permissions) > 0';
+				}
+
+				$result[] = '(' . join(' OR ', $permissions) . ' OR t.permissions IS NULL)';
+			}
+			if ($filter->good->shipments)
+			{
+				$shipments = array();
+				$shipmentsArray = explode(',', $filter->good->shipments);
+				foreach ($shipmentsArray as $shipment)
+				{
+					$shipments[] = 'FIND_IN_SET(' . $shipment . ', t.shipments) > 0';
+				}
+
+				$result[] = '(' . join(' OR ', $shipments) . ')';
+			}
+			$result[] = '(FIND_IN_SET(t.vehicle_type_id, "' . $filter->good->vehicle_types . '") > 0)';
+			$result[] = '(FIND_IN_SET(t.body_type_id, "' . $filter->good->body_types . '") > 0)';
+
+			$result[] = '(' . $filter->good->weight_exact_value . '<= t.bearing_capacity OR (' . $filter->good->weight_from . ' <= t.bearing_capacity OR ' . $filter->good->weight_to . ' <= t.bearing_capacity))';
+			$result[] = '(' . $filter->good->capacity_exact_value . ' <= t.body_capacity OR (' . $filter->good->capacity_from . ' <= t.body_capacity OR ' . $filter->good->capacity_to . ' <= t.body_capacity))';
+			if ($filter->good->adr) $result[] = 'adr <= ' . $filter->good->adr;
+		}
+		else
+		{
+			if (isset($filter->country_search_id) && $filter->country_search_id)
+				$result[] = 't.country_id = ' . (int) $filter->country_search_id;
+			if (isset($filter->region_search_id) && $filter->region_search_id)
+				$result[] = 't.region_id = ' . (int) $filter->region_search_id;
+			
+			if (isset($filter->city_search_id) && $filter->city_search_id)
+			{
+				$city = City::model()->findByPk((int) $filter->city_search_id);
+				$result[] = 't.city_id IN ( SELECT id 
+					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
+			}
+		}
+
+		$result[] = 'is_deleted = 0';
+
+		return join(' AND ', $result);
 	}
 
 }

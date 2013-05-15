@@ -12,12 +12,81 @@ class GoodsSearchController extends FrahtController
 	
 	public function actionIndex()
 	{
-//		$vehicles = Vehicle::model()->findAll(array('order' => 'created_at DESC'));
-		$vehicles = array();
+		$filter = new SearchFilter();
+		$listFilterRegions = array();
+		$listFilterCities = array();
+		if (isset($_GET))
+		{
+			$filter->vid = isset($_GET['vid']) ? (int) $_GET['vid'] : null;
+			$filter->date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+			$filter->date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
+			$filter->country_id = isset($_GET['vcoid']) ? (int) $_GET['vcoid'] : null;
+			$filter->region_id = isset($_GET['vrid']) ? (int) $_GET['vrid'] : null;
+			$filter->city_id = isset($_GET['vcid']) ? (int) $_GET['vcid'] : null;
+			$filter->country_search_id = isset($_GET['fvcoid']) ? (int) $_GET['fvcoid'] : '';
+			$filter->region_search_id = isset($_GET['fvrid']) ? (int) $_GET['fvrid'] : '';
+			$filter->city_search_id = isset($_GET['fvcid']) ? (int) $_GET['fvcid'] : '';
+			$filter->radius = isset($_GET['radius']) && (int) $_GET['radius'] ? (int) $_GET['radius'] : 60;
+			$filter->sort = isset($_GET['sort']) && (int) $_GET['sort'] ? (int) $_GET['sort'] : 0;
+			$filter->direction = isset($_GET['direct']) && (int) $_GET['direct'] ? (int) $_GET['direct'] : 0;
+			$filter->page = isset($_GET['page']) && (int) $_GET['page'] ? (int) $_GET['page'] : 1;
+
+			if (isset($filter->country_search_id) && $filter->country_search_id)
+			{
+				$listFilterRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_search_id),
+								'id', 'name_ru');
+			}
+
+			if (isset($filter->region_search_id) && $filter->region_search_id)
+			{
+				$listFilterCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_search_id),
+								'id', 'name_ru');
+			}
+		}
+		
+		$filter->good = isset($_GET['vid']) ? Goods::model()->findByPk((int) $_GET['vid']) : null;
+
+		$vehicles = Vehicle::model()->getAll($filter);
+
+		$countries = Country::model()->findAll();
+		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
+
+//		$listRegions = array();
+//		if (isset($filter->good->region_id) && $filter->vehicle->region_id)
+//		{
+//			$listRegions = CHtml::listData($filter->vehicle->countries->regions, 'id', 'name_ru');
+//		}
+//
+//		$listCities = array();
+//		if (isset($filter->vehicle->city_id) && $filter->vehicle->city_id)
+//		{
+//			$listCities = CHtml::listData($filter->vehicle->regions->cities, 'id', 'name_ru');
+//		}
+
+		$pageSettings = array(
+			'count' => $vehicles['count'],
+			'page' => $filter->page,
+			'pages' => ceil(($vehicles['count'] / (int) Yii::app()->params['pages']['searchCount'])),
+			'sort' => isset($_GET['sort']) ? (int) $_GET['sort'] : SearchFilter::SORT_CREATED_AT,
+			'direct' => isset($_GET['direct']) ? (int) $_GET['direct'] : SearchFilter::DIRECTION_DESC,
+		);
+		
+		$settings = Settings::model();
+		$settings->getAutoupdate();
+
 		$this->render('index', array(
-			'vehicles' => $vehicles,
+			'vid' => $filter->vid,
+			'vehicles' => $vehicles['vehicles'],
+			'model' => $filter->good,
 			'goodsActive' => Goods::model()->getActive(),
-//			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
+			'countries' => $listCountries,
+			'regions' => $listFilterRegions,
+			'cities' => $listFilterCities,
+//			'filterRegions' => $listFilterRegions,
+//			'filterCities' => $listFilterCities,
+			'pageSettings' => $pageSettings,
+			'filter' => $filter,
+			'settings' => $settings,
 		));
 	}
 	
@@ -30,13 +99,22 @@ class GoodsSearchController extends FrahtController
 	
 	public function actionUpdate()
 	{
-		$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-		$model = $this->loadModel($id);
+//		$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+		$slug = isset($_GET['slug']) ? $_GET['slug'] : '';
+//		$model = $this->loadModel($id);
+		$model = $this->loadModel($slug);
 
 		$this->processForm($model);
 	}
 	
-	public function loadModel($id)
+	public function loadModel($slug)
+	{
+		$model = Goods::model()->find('slug = "' . $slug . '"');
+		if ($model === null)
+			throw new CHttpException(404, 'Данный груз не найден в базе.');
+		return $model;
+	}
+	public function loadModelId($id)
 	{
 		$model = Goods::model()->findByPk($id);
 		if ($model === null)
@@ -47,7 +125,7 @@ class GoodsSearchController extends FrahtController
 	public function actionDelete()
 	{
 		$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-		$model = $this->loadModel($id);
+		$model = $this->loadModelId($id);
 		
 		if ($model->deleteFromSearch())
 		{
@@ -74,7 +152,8 @@ class GoodsSearchController extends FrahtController
 			$model->shipments = isset($data['shipments']) ? join(',', array_keys($data['shipments'])) : null;
 			$model->body_types = isset($data['body_types']) ? join(',', array_values($data['body_types'])) : null;
 			$model->permissions = isset($data['permissions']) ? join(',', array_keys($data['permissions'])) : null;
-			$model->created_at = $model->updated_at = time();
+			if ($model->isNewRecord) $model->created_at = time();
+			$model->updated_at = time();
 
 			if (isset($_POST['ajax']) && $_POST['ajax'] === 'goodsForm')
 			{
@@ -110,25 +189,25 @@ class GoodsSearchController extends FrahtController
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
 		$listRegionsFrom = array();
-		if (isset($model->region_id_from) && $model->region_id_from)
+		if (isset($model->country_id_from) && $model->country_id_from)
 		{
 			$listRegionsFrom = CHtml::listData($model->countryFrom->regions, 'id', 'name_ru');
 		}
 
 		$listCitiesFrom = array();
-		if (isset($model->city_id_from) && $model->city_id_from)
+		if (isset($model->region_id_from) && $model->region_id_from)
 		{
 			$listCitiesFrom = CHtml::listData($model->regionFrom->cities, 'id', 'name_ru');
 		}
 
 		$listRegionsTo = array();
-		if (isset($model->region_id_to) && $model->region_id_to)
+		if (isset($model->country_id_to) && $model->country_id_to)
 		{
 			$listRegionsTo = CHtml::listData($model->countryTo->regions, 'id', 'name_ru');
 		}
 
 		$listCitiesTo = array();
-		if (isset($model->city_id_to) && $model->city_id_to)
+		if (isset($model->region_id_to) && $model->region_id_to)
 		{
 			$listCitiesTo = CHtml::listData($model->regionTo->cities, 'id', 'name_ru');
 		}
@@ -149,6 +228,9 @@ class GoodsSearchController extends FrahtController
 		$payments = PaymentType::model()->findAll(array('order' => 'name_ru'));
 		
 		$vehicles = array();
+		
+		if (isset($model->id) && $model->id)
+			$this->keywords = $model->name;
 		
 		$this->render('_goods', array(
 			'vehicles' => $vehicles,

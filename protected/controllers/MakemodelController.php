@@ -6,17 +6,41 @@ class MakemodelController extends Controller
 	public function actionModel()
 	{
 		$make_id = (int) Yii::app()->request->getPost('make_id');
-		$make = Makes::model()->findByPk($make_id);
+		$category_id = (int) Yii::app()->request->getPost('category_id');
+
+		$make = Marka::model()->find('marka_id = ' . (int)$make_id . ' AND cat_id = ' . (int)$category_id);
 
 		$model = new Vehicle();
 		$listModels = array();
 		if ($make_id)
 		{
-			$listModels = CHtml::listData($make->models, 'id', 'name');
+			$listModels = CHtml::listData($make->models, 'model_id', 'name');
 		}
 
 		echo CHtml::activeDropDownList($model, 'model_id', $listModels,
 				array('empty' => 'Выберите модель', 'class' => 'model'));
+
+		Yii::app()->end();
+	}
+
+	public function actionCategories()
+	{
+		$category_id = (int) Yii::app()->request->getPost('category_id');
+
+		$category = Categories::model()->findByPk((int)$category_id);
+
+		$model = new Vehicle();
+
+		$listMakes = array();
+
+		if ($category_id)
+		{
+			$listMakes = CHtml::listData($category->markas, 'marka_id', 'name');
+		}
+
+		echo CHtml::activeDropDownList($model, 'make_id', $listMakes,
+
+				array('empty' => 'Выберите марку', 'class' => 'make'));
 
 		Yii::app()->end();
 	}
@@ -31,7 +55,8 @@ class MakemodelController extends Controller
 			if ($model->deleteFromSearch(true))
 			{
 				Yii::app()->user->setFlash('vehicle_success',
-						'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->make->name . ' ' . $model->model->name . ', номер: ' . $model->license_plate . '" удалено из поиска.');
+
+						'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->marka->name . ' ' . $model->modeli->name . ', номер: ' . $model->license_plate . '" удалено из поиска.');
 
 				$this->respondJSON(array('error' => 0, 'id' => $id));
 
@@ -40,7 +65,8 @@ class MakemodelController extends Controller
 			else
 			{
 				Yii::app()->user->setFlash('vehicle_error',
-						'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->make->name . ' ' . $model->model->name . ', номер: ' . $model->license_plate . '" не было было удалено из поиска. Попробуйте еще раз.');
+
+						'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->marka->name . ' ' . $model->modeli->name . ', номер: ' . $model->license_plate . '" не было было удалено из поиска. Попробуйте еще раз.');
 
 				$this->respondJSON(array('error' => 1, 'id' => $id));
 
@@ -50,7 +76,8 @@ class MakemodelController extends Controller
 		else
 		{
 			Yii::app()->user->setFlash('vehicle_error',
-					'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->make->name . ' ' . $model->model->name . ', номер: ' . $model->license_plate . '" не было было удалено из поиска. Попробуйте еще раз.');
+
+					'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->marka->name . ' ' . $model->modeli->name . ', номер: ' . $model->license_plate . '" не было было удалено из поиска. Попробуйте еще раз.');
 
 			$this->respondJSON(array('error' => 1, 'id' => $id));
 
@@ -68,7 +95,8 @@ class MakemodelController extends Controller
 			if ($model->deleteFromSearch(false))
 			{
 				Yii::app()->user->setFlash('vehicle_success',
-						'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->make->name . ' ' . $model->model->name . ', номер: ' . $model->license_plate . '" принимает участие в поиске.');
+
+						'Транспортное средство "' . $model->bodyType->name_ru . ' ' . $model->marka->name . ' ' . $model->modeli->name . ', номер: ' . $model->license_plate . '" принимает участие в поиске.');
 
 				$this->respondJSON(array('error' => 0, 'id' => $id));
 
@@ -77,7 +105,8 @@ class MakemodelController extends Controller
 			else
 			{
 				Yii::app()->user->setFlash('vehicle_error',
-						'Не удалось вернуть транспортное "' . $model->bodyType->name_ru . ' ' . $model->make->name . ' ' . $model->model->name . ', номер: ' . $model->license_plate . '" средство для участия в поиске. Попробуйте еще раз.');
+
+						'Не удалось вернуть транспортное "' . $model->bodyType->name_ru . ' ' . $model->marka->name . ' ' . $model->modeli->name . ', номер: ' . $model->license_plate . '" средство для участия в поиске. Попробуйте еще раз.');
 
 				$this->respondJSON(array('error' => 1, 'id' => $id));
 
@@ -87,7 +116,8 @@ class MakemodelController extends Controller
 		else
 		{
 			Yii::app()->user->setFlash('vehicle_error',
-					'Не удалось вернуть транспортное "' . $model->bodyType->name_ru . ' ' . $model->make->name . ' ' . $model->model->name . ', номер: ' . $model->license_plate . '" средство для участия в поиске. Попробуйте еще раз.');
+
+					'Не удалось вернуть транспортное "' . $model->bodyType->name_ru . ' ' . $model->marka->name . ' ' . $model->modeli->name . ', номер: ' . $model->license_plate . '" средство для участия в поиске. Попробуйте еще раз.');
 
 			$this->respondJSON(array('error' => 1, 'id' => $id));
 

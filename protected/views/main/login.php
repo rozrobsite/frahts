@@ -10,6 +10,7 @@ $this->breadcrumbs = array(
 ?>
 
 <!-- Login wrapper begins -->
+
 <div class="loginWrapper">
 	<?php
 	$form = $this->beginWidget('CActiveForm',
@@ -36,6 +37,7 @@ $this->breadcrumbs = array(
 	<?php echo $form->passwordField($model,'password', array('placeholder' => 'Пароль', 'class' => 'loginPassword')); ?>
 	<?php echo $form->error($model,'password', array('class' => 'error')); ?>
 
+	<?php /*
 	<div class="logControl">
 		<div class="memory">
 			<?php echo $form->checkBox($model,'rememberMe', array('checked' => 'checked', 'class'=>'check')); ?>
@@ -43,7 +45,7 @@ $this->breadcrumbs = array(
 		</div>
 		<div class="clear"></div>
 	</div>
-	
+	*/ ?>
 	<div class="logControl">
 		<a href="/main/forgot" class="buttonM bLightBlue" style="margin-left: -52px;">Забыли пароль?</a>
 		<?php echo CHtml::submitButton('Вход', array('class' => 'buttonM bBlue')); ?>

@@ -26,24 +26,25 @@ $(document).ready(function(){
                 // looping process
                 var vInterval = setInterval(
                     function(){
-                        var iLeftMs = aOpts.finish - new Date(); // left time in MS
+//                        var iLeftMs = aOpts.finish - new Date(); // left time in MS
                         var iElapsedMs = new Date() - aOpts.start, // elapsed time in MS
-                            iDays = parseInt(iLeftMs / iDms), // elapsed days
-                            iHours = parseInt((iLeftMs - (iDays * iDms)) / iHms), // elapsed hours
-                            iMin = parseInt((iLeftMs - (iDays * iDms) - (iHours * iHms)) / iMms), // elapsed minutes
-                            iSec = parseInt((iLeftMs - (iDays * iDms) - (iMin * iMms) - (iHours * iHms)) / iCms), // elapsed seconds
+//                            iDays = parseInt(iLeftMs / iDms), // elapsed days
+//                            iHours = parseInt((iLeftMs - (iDays * iDms)) / iHms), // elapsed hours
+//                            iMin = parseInt((iLeftMs - (iDays * iDms) - (iHours * iHms)) / iMms), // elapsed minutes
+//                            iSec = parseInt((iLeftMs - (iDays * iDms) - (iMin * iMms) - (iHours * iHms)) / iCms), // elapsed seconds
                             iPerc = (iElapsedMs > 0) ? iElapsedMs / iDuration * 100 : 0; // percentages
 
                         // display current positions and progress
-                        $(vPb).children('.percent').html('<b>'+iPerc.toFixed(1)+'%</b>');
-                        $(vPb).children('.elapsed').html(iDays+' days '+iHours+'h:'+iMin+'m:'+iSec+'s</b>');
+//                        $(vPb).children('.percent').html('<b>'+iPerc.toFixed(1)+'%</b>');
+//                        $(vPb).children('.elapsed').html(iDays+' days '+iHours+'h:'+iMin+'m:'+iSec+'s</b>');
+//                        $(vPb).children('.elapsed').html(iMin+'м:'+iSec+'с</b>');
                         $(vPb).children('.pbar').children('.ui-progressbar-value').css('width', iPerc+'%');
 
                         // in case of Finish
                         if (iPerc >= 100) {
                             clearInterval(vInterval);
-                            $(vPb).children('.percent').html('<b>100%</b>');
-                            $(vPb).children('.elapsed').html('Finished');
+//                            $(vPb).children('.percent').html('<b>100%</b>');
+                            $(vPb).children('.elapsed').html('Перезагрузка');
                         }
                     } ,aOpts.interval
                 );

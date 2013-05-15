@@ -41,6 +41,14 @@ body { font-family: Arial, Helvetica, sans-serif; background: url(/images/backgr
 #content { padding-bottom: 60px; position: relative; margin-left: 327px; padding-top: 49px; }
 
 .wrapper { margin: 0 30px; }
+.wrapper .mainpicture
+{
+	background: url(/images/main-picture3.png) no-repeat;
+	background-position:center;
+	float:left;
+	width: 60%;
+	height: 600px;
+}
 
 .clear { clear: both; display: block; }
 .mfix { margin: 0 2px!important; }
@@ -176,7 +184,64 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', end
 .topNav { float: right; position: relative; }
 .topSearch input[type=submit], .userSearch input[type=submit] { background: url(/images/sprites/sprite.png); }
 
+#footer {
+	background: url(/images/backgrounds/top.jpg) repeat-x 0 0;
+	height: 26px;
+	line-height: 26px;
+	color: #fff;
+	display: block;
+	width: 100%;
+	position: absolute;
+	z-index: 10000;
+	border-bottom: 1px solid #1c1c1c;
+	bottom: 0;
+	text-align: center;
+}
+#footer .topNav {float:none;}
 
+.allrights {
+	margin-left: 50px;
+	color:#fff;
+	margin: 12px 0 0 50px;
+	float: left;
+}
+
+/*=== Title page text ===*/
+.title-text{
+	font-family: Comic Sans MS;
+	color:#876446;
+}
+.title-text{
+	margin-top: 10px;
+}
+.title-text .footer-text{
+	font-size: 24px;
+	font-weight: bold;
+	position: relative;
+	bottom: -88%;
+}
+.leftBlock {
+	float:left;
+	width: 20%;
+	height: 600px;
+	line-height: 22px;
+	font-size: 13px;
+	/*font-style: italic;*/
+	font-family: Comic Sans MS;
+	color:#876446;
+}
+.leftBlock .text1{
+	margin-top: 40px;
+}
+.leftBlock .text2{
+	margin-top: 60px;
+}
+.leftBlock .text3{
+	margin-top: 20px;
+}
+.leftBlock .text4{
+	margin-top: 60px;
+}
 /*=== User navigation ===*/
 
 #sidebar ul.userNav { display: none; }
@@ -1943,6 +2008,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', end
 /* # Login page
 ================================================== */
 
+.leftBlockLogin {
+	width: 350px; position: absolute; left: 20%; top: 20%; margin: 0; text-align: center; -moz-perspective: 800px; -webkit-perspective: 800px; perspective: 800px;
+}
+.rightBlockLogin {
+	width: 350px; position: absolute; left: 61%; top: 20%; margin: 0; text-align: center; -moz-perspective: 800px; -webkit-perspective: 800px; perspective: 800px;
+}
+.leftBlockLogin .leftBlockLoginTextTitle {
+	font-size: 20px; font-weight: bold;
+}
+.leftBlockLogin .leftBlockLoginText1,
+.rightBlockLogin .leftBlockLoginText1 {
+	font-size: 16px; font-style: italic; margin-top: 20px;
+}
+.rightBlockLogin .leftBlockLoginTextTitle2 {
+	font-size: 18px; font-weight: bold; margin-top: 20px;
+}
 .loginWrapper { width: 240px; position: absolute; left: 50%; top: 50%; margin: -124px 0 0 -120px; text-align: center; -moz-perspective: 800px; -webkit-perspective: 800px; perspective: 800px; }
 
 /* === Login hover buttons === */
@@ -2344,4 +2425,4 @@ table .dropdown-menu.pull-right { right: auto; left: 0; }
 #uploadAvatar {
 	margin-top: 18px;
 }
-.share42init {float: left; margin-top: 11px; margin-left: 50px;}
+.share42init {float: right; margin-top: 11px; margin-right: 30px;}
