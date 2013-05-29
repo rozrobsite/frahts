@@ -14,9 +14,9 @@ class VehicleSearchController extends FrahtController
 	public function actionIndex()
 	{
 		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
+
 		$filter = new SearchFilter();
-		$listFilterRegions = array();
-		$listFilterCities = array();
+
 		if (isset($_GET))
 		{
 			$filter->vid = isset($_GET['vid']) ? (int) $_GET['vid'] : null;
@@ -40,27 +40,38 @@ class VehicleSearchController extends FrahtController
 //						"id = " . $filter->vid
 //				);
 //			}
-
-			if (isset($filter->country_search_id) && $filter->country_search_id)
-			{
-				$listFilterRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_search_id),
-								'id', 'name_ru');
-			}
-
-			if (isset($filter->region_search_id) && $filter->region_search_id)
-			{
-				$listFilterCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_search_id),
-								'id', 'name_ru');
-			}
 		}
 
 		$filter->vehicle = isset($_GET['vid']) ? Vehicle::model()->findByPk((int) $_GET['vid']) : null;
+
+		if (is_object($filter->vehicle) && isset($_GET['fs']) && $_GET['fs'] == 1)
+		{
+			$filter->date_from = Yii::app()->dateFormatter->format('dd.MM.yyyy', $filter->vehicle->date_from);
+			$filter->date_to = Yii::app()->dateFormatter->format('dd.MM.yyyy', $filter->vehicle->date_to);
+
+			$filter->country_id = $filter->vehicle->country_id;
+			$filter->region_id = $filter->vehicle->region_id;
+			$filter->city_id = $filter->vehicle->city_id;
+
+			if ($filter->vehicle->country_id_to)
+			{
+				$filter->country_search_id = $filter->vehicle->country_id_to;
+			}
+			if ($filter->vehicle->region_id_to)
+			{
+				$filter->region_search_id = $filter->vehicle->region_id_to;
+			}
+			if ($filter->vehicle->city_id_to)
+			{
+				$filter->city_search_id = $filter->vehicle->city_id_to;
+			}
+		}
 
 		$goods = Goods::model()->getAll($filter);
 
 		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
-		
+
 		$listRegions = array();
 		if (isset($filter->region_id) && $filter->region_id)
 		{
@@ -73,6 +84,20 @@ class VehicleSearchController extends FrahtController
 		{
 			$listCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_id),
 								'id', 'name_ru');
+		}
+
+		$listFilterRegions = array();
+		if (isset($filter->country_search_id) && $filter->country_search_id)
+		{
+			$listFilterRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_search_id),
+							'id', 'name_ru');
+		}
+
+		$listFilterCities = array();
+		if (isset($filter->region_search_id) && $filter->region_search_id)
+		{
+			$listFilterCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_search_id),
+							'id', 'name_ru');
 		}
 //		$listRegions = array();
 //		if (isset($filter->vehicle->region_id) && $filter->vehicle->region_id)
@@ -93,10 +118,10 @@ class VehicleSearchController extends FrahtController
 			'sort' => isset($_GET['sort']) ? (int) $_GET['sort'] : SearchFilter::SORT_CREATED_AT,
 			'direct' => isset($_GET['direct']) ? (int) $_GET['direct'] : SearchFilter::DIRECTION_DESC,
 		);
-		
+
 		$settings = Settings::model();
 		$settings->getAutoupdate();
-		
+
 		$this->render('index',
 				array(
 			'vid' => $filter->vid,

@@ -1,4 +1,4 @@
-var countryLocationVehicle = 
+var countryLocationVehicle =
 {
 	init: function()
 	{
@@ -12,14 +12,14 @@ var countryLocationVehicle =
 				$('select.regionLocationVehicle').html($response);
 
 				updateSelect.update($('select.regionLocationVehicle'));
-				
+
 				$('#vrid').change();
 			});
 		});
 	}
 };
 
-var regionLocationVehicle = 
+var regionLocationVehicle =
 {
 	init: function()
 	{
@@ -38,7 +38,7 @@ var regionLocationVehicle =
 	}
 };
 
-var countryFilterVehicle = 
+var countryFilterVehicle =
 {
 	init: function()
 	{
@@ -52,14 +52,14 @@ var countryFilterVehicle =
 				$('select.regionFilterVehicle').html($response);
 
 				updateSelect.update($('select.regionFilterVehicle'));
-				
+
 				$('#fvrid').change();
 			});
 		});
 	}
 };
 
-var regionFilterVehicle = 
+var regionFilterVehicle =
 {
 	init: function()
 	{
@@ -79,7 +79,7 @@ var regionFilterVehicle =
 };
 
 var timerId;
-var autoupdate = 
+var autoupdate =
 {
 	init: function()
 	{
@@ -89,9 +89,9 @@ var autoupdate =
 				timer: $(this).data('timer')
 			}, function(response){
 				if(response == null || response.timer == null) return;
-			
+
 				$('#timerButton').html(response.timer ? 'Стоп' : 'Старт');
-				
+
 				if (response.timer)
 				{
 //					$('#timerButton').attr('data-timer', 0);
@@ -99,17 +99,17 @@ var autoupdate =
 //					var iNow = new Date().setTime(new Date().getTime() + 5 * 1000); // now plus 5 secs
 //					var iEnd = new Date().setTime(new Date().getTime() + parseInt($('#autoupdate').val()) * 1000); // now plus 15 secs
 //					$('#progress1').anim_progressbar({start: iNow, finish: iEnd, interval: 1});
-					
+
 				}
 				else
 				{
 					clearTimeout(timerId);
 //					$('#timerButton').attr('data-timer', 1);
 				}
-				
+
 			});
 		});
-		
+
 		$('#timerButton').html($('#timerButton').data('timer') == 1 ? 'Стоп' : 'Старт');
 		if ($('#timerButton').data('timer') == 1)
 		{
@@ -123,12 +123,12 @@ var autoupdate =
 
 
 $(document).ready(function(){
-	$('#vcoid').change();
+//	$('#vcoid').change();
 	countryLocationVehicle.init();
 	regionLocationVehicle.init();
-	$('#fvcoid').change();
+//	$('#fvcoid').change();
 	countryFilterVehicle.init();
 	regionFilterVehicle.init();
-	
+
 //	autoupdate.init();
 });

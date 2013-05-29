@@ -78,19 +78,19 @@ $this->breadcrumbs = array(
 				</div>
 				<?php */ ?>
 				<div class="grid12" style="text-align: left;">
-					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS" 
+					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS"
 					   title="Дополнительные условия для поиска"
 					   original-title="Дополнительные условия для поиска" >
 						Дополнительные настройки поиска
 					</a>
 					<?php $this->renderPartial('/blocks/popups/_advancedVehicleFilter', array(
 						'model' => $model,
-						'filter' => $filter, 
+						'filter' => $filter,
 						'vid' => $vid,
 						'countries' => $countries,
 						'regions' => $regions,
 						'cities' => $cities,
-						)); 
+						));
 					?>
 				</div>
 				<div class="clear"></div>
@@ -128,15 +128,15 @@ $this->breadcrumbs = array(
 										<ul class="pages">
 											<?php if ($pageSettings['page'] > 1): ?>
 												<li><a href="/goods/search<?php echo $filter->getUrl('', 1); ?>" title="На первую страницу"><span><<</span></a></li>
-												<li class="prev"><a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['page'] - 1); ?>" title="Предыдущая"><span class="icon-arrow-14"></span></a></li>
+												<li class="prev"><a href="/goods/search<?php echo $filter->getGoodsUrl('', $pageSettings['page'] - 1); ?>" title="Предыдущая"><span class="icon-arrow-14"></span></a></li>
 											<?php endif; ?>
-											<?php 
-												$startPage = ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] < 0) ? 1 : ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] + 2); 
-												$endPage = $startPage + (int) Yii::app()->params['pages']['pageNumbers'] < $pageSettings['pages'] ? $startPage + (int) Yii::app()->params['pages']['pageNumbers'] : $pageSettings['pages']; 
+											<?php
+												$startPage = ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] < 0) ? 1 : ($pageSettings['page'] - (int) Yii::app()->params['pages']['pageNumbers'] + 2);
+												$endPage = $startPage + (int) Yii::app()->params['pages']['pageNumbers'] < $pageSettings['pages'] ? $startPage + (int) Yii::app()->params['pages']['pageNumbers'] : $pageSettings['pages'];
 											?>
 											<?php for ($pageNumber = $startPage; $pageNumber < $endPage; $pageNumber++): ?>
 												<li>
-													<a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageNumber); ?>" <?php if ($pageNumber == $pageSettings['page']): ?>class="active"<?php endif; ?>>
+													<a href="/goods/search<?php echo $filter->getGoodsUrl('', $pageNumber); ?>" <?php if ($pageNumber == $pageSettings['page']): ?>class="active"<?php endif; ?>>
 														<?php echo $pageNumber; ?>
 													</a>
 												</li>
@@ -145,13 +145,13 @@ $this->breadcrumbs = array(
 												<li>...</li>
 											<?php endif; ?>
 											<li>
-												<a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['pages']); ?>" <?php if ($pageSettings['page'] == $pageSettings['pages']): ?>class="active"<?php endif; ?>>
+												<a href="/goods/search<?php echo $filter->getGoodsUrl('', $pageSettings['pages']); ?>" <?php if ($pageSettings['page'] == $pageSettings['pages']): ?>class="active"<?php endif; ?>>
 													<?php echo $pageSettings['pages'] ?>
 												</a>
 											</li>
 											<?php if ($pageSettings['page'] < $pageSettings['pages']): ?>
-												<li class="next"><a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['page'] + 1); ?>" title="Следующая"><span class="icon-arrow-17"></span></a></li>
-												<li><a href="/goods/search<?php echo $filter->getVehiclesUrl('', $pageSettings['pages']); ?>" title="На последнюю страницу"><span>>></span></a></li>
+												<li class="next"><a href="/goods/search<?php echo $filter->getGoodsUrl('', $pageSettings['page'] + 1); ?>" title="Следующая"><span class="icon-arrow-17"></span></a></li>
+												<li><a href="/goods/search<?php echo $filter->getGoodsUrl('', $pageSettings['pages']); ?>" title="На последнюю страницу"><span>>></span></a></li>
 											<?php endif; ?>
 										</ul>
 									</div>
