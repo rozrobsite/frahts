@@ -25,6 +25,18 @@ class Docs extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+//	public function behaviors()
+//	{
+//		return array(
+//			'SlugBehavior' => array(
+//				'class' => 'ext.aii.behaviors.SlugBehavior',
+//				'sourceAttribute' => 'title',
+//				'slugAttribute' => 'slug',
+//				'mode' => SlugBehavior::MODE_TRANSLIT,
+//			),
+//		);
+//	}
 
 	/**
 	 * @return string the associated database table name
@@ -42,9 +54,10 @@ class Docs extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('docs_type_id, created_at, title, text, slug', 'required'),
+			array('docs_type_id, created_at, title, text', 'required'),
 			array('docs_type_id, created_at', 'numerical', 'integerOnly'=>true),
-			array('title, slug', 'length', 'max'=>255),
+			array('title', 'length', 'max'=>255),
+			array('slug', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, docs_type_id, created_at, title, text, slug', 'safe', 'on'=>'search'),
@@ -70,11 +83,11 @@ class Docs extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'docs_type_id' => 'Docs Type',
-			'created_at' => 'Created At',
-			'title' => 'Title',
-			'text' => 'Text',
-			'slug' => 'Slug',
+			'docs_type_id' => '"Тип документа"',
+			'created_at' => '"Дата добавления"',
+			'title' => '"Название документа"',
+			'text' => '"Текст"',
+			'slug' => '"Slug"',
 		);
 	}
 
@@ -95,6 +108,8 @@ class Docs extends CActiveRecord
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('text',$this->text,true);
 		$criteria->compare('slug',$this->slug,true);
+		
+		$criteria->order = 'created_at DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

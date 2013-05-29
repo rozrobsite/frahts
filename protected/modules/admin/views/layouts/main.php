@@ -263,6 +263,11 @@
 									Редактировать документы
 								</a>
 							</li>
+							<li>
+								<a href="/admin/docs/list">
+									Список документов
+								</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -280,7 +285,7 @@
 		<script src="/js/admin/jquery.fancybox.js"></script>-->
 		<!--<script src="/js/admin/plupload/plupload.full.js"></script>-->
 		<!--<script src="/js/admin/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>-->
-		<script src="/js/admin/jquery.cleditor.min.js"></script>
+		<!--<script src="/js/admin/jquery.cleditor.min.js"></script>-->
 		<!--<script src="/js/admin/jquery.inputmask.min.js"></script>-->
 		<!--<script src="/js/admin/jquery.tagsinput.min.js"></script>-->
 		<!--<script src="/js/admin/jquery.mousewheel.js"></script>-->

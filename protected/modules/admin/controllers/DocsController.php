@@ -3,6 +3,15 @@
 class DocsController extends AdminController
 {
 
+	public function actions()
+	{
+		return array(
+			'fileUpload' => 'ext.redactor.actions.FileUpload',
+			'imageUpload' => 'ext.redactor.actions.ImageUpload',
+			'imageList' => 'ext.redactor.actions.ImageList',
+		);
+	}
+
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
@@ -10,7 +19,7 @@ class DocsController extends AdminController
 
 	public function actionIndex()
 	{
-		$this->redirect('edit');
+		$this->redirect('/admin/docs/list');
 	}
 
 	public function actionAdd()
@@ -21,33 +30,47 @@ class DocsController extends AdminController
 	public function actionEdit()
 	{
 		$id = isset($_GET['id']) ? $_GET['id'] : '';
-
-		$model = News::model()->findByPk($id);
+		$model = Docs::model()->findByPk($id);
 
 		if (!$model) throw new CHttpException(404, 'Данная новость не найдена.');
 
 		$this->processForm($model);
 	}
 
+	public function actionList()
+	{
+		$docTypes = DocsType::model()->findAll();
+		$listDocTypes = CHtml::listData($docTypes, 'id', 'name_ru');
+		
+		$this->render('list',
+				array(
+			'model' => new Docs(),
+			'docTypes' => $listDocTypes,
+		));
+	}
+
 	public function processForm($model = null)
 	{
 		$model = $model == null ? new Docs() : $model;
-		
+
 		$docTypes = DocsType::model()->findAll();
 		$listDocTypes = CHtml::listData($docTypes, 'id', 'name_ru');
 
 		if (isset($_POST['Docs']))
 		{
-			echo "<pre>";
-			print_r($_POST);
-			echo "</pre>";exit;
 			$model->attributes = $_POST['Docs'];
+			$model->created_at = time();
 
 			if ($model->save())
 			{
 				Yii::app()->user->setFlash('_success', 'Документ добавлен в базу.');
 
-				$this->redirect('/docs/list/');
+				$stringHelper = new StringHelper();
+				$model->slug = $stringHelper->convertToSlug($model->title . ' ' . $model->id);
+				$model->update();
+				unset($stringHelper);
+
+				$this->redirect('/admin/docs/list/');
 			}
 			else
 			{
@@ -56,7 +79,8 @@ class DocsController extends AdminController
 			}
 		}
 
-		$this->render('_docs', array(
+		$this->render('_docs',
+				array(
 			'model' => $model,
 			'docTypes' => $listDocTypes,
 		));
