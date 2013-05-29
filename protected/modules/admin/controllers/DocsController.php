@@ -42,16 +42,20 @@ class DocsController extends AdminController
 		$docTypes = DocsType::model()->findAll();
 		$listDocTypes = CHtml::listData($docTypes, 'id', 'name_ru');
 		
+		$docs = new Docs('search');
+		if (isset($_GET['Docs']))
+			$docs->attributes = $_GET['Docs'];
+		
 		$this->render('list',
 				array(
-			'model' => new Docs(),
+			'model' => $docs,
 			'docTypes' => $listDocTypes,
 		));
 	}
 
 	public function processForm($model = null)
 	{
-		$model = $model == null ? new Docs() : $model;
+		$model = $model == null ? new Docs('search') : $model;
 
 		$docTypes = DocsType::model()->findAll();
 		$listDocTypes = CHtml::listData($docTypes, 'id', 'name_ru');
@@ -59,7 +63,8 @@ class DocsController extends AdminController
 		if (isset($_POST['Docs']))
 		{
 			$model->attributes = $_POST['Docs'];
-			$model->created_at = time();
+			if ($model->isNewRecord)
+				$model->created_at = time();
 
 			if ($model->save())
 			{
@@ -84,6 +89,18 @@ class DocsController extends AdminController
 			'model' => $model,
 			'docTypes' => $listDocTypes,
 		));
+	}
+	
+	
+	public function actionDelete()
+	{
+		if (isset($_GET['id']))
+		{
+			if (!empty($_GET['id']))
+			{
+				Docs::model()->deleteByPk((int) $_GET['id']);
+			}
+		}
 	}
 
 }

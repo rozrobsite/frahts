@@ -259,11 +259,6 @@
 								</a>
 							</li>
 							<li>
-								<a href="/admin/docs/edit">
-									Редактировать документы
-								</a>
-							</li>
-							<li>
 								<a href="/admin/docs/list">
 									Список документов
 								</a>

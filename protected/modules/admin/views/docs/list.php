@@ -19,7 +19,7 @@ $this->adminBreadcrumbs=array(
 							'id' => 'docs-list',
 							'type'=>'striped bordered',
 							'dataProvider'=>$model->search(),
-//									'filter' => $country,
+							'filter' => $model,
 							'template'=>'{summary}{items}{pager}',
 							'enablePagination' => true,
 							'pager'=>array(
@@ -38,19 +38,14 @@ $this->adminBreadcrumbs=array(
 							'columns'=>array(
 								array(
 									'name' => 'id',
+									'sortable'=>true,
 									'htmlOptions' => array(
 										'style' => 'text-align: center',
 									),
 								),
 								array(
-									'class' => 'bootstrap.widgets.TbEditableColumn',
 									'name' => 'title',
 									'sortable'=>true,
-									'editable' => array(
-										'url' => $this->createUrl('/admin/docs/titleedit'),
-										'placement' => 'right',
-//												'inputclass' => 'span3'
-									),
 									'htmlOptions' => array(
 										'style' => 'text-align: center',
 									),
@@ -58,22 +53,21 @@ $this->adminBreadcrumbs=array(
 								array(
 									'name' => 'created_at',
 									'sortable'=>true,
+									'filter' => false,
 									'value' => function($data, $row) {
-										return date('d.m.Y', $data->created_at);
+										return date('d.m.Y H:i:s', $data->created_at);
 									},
 									'htmlOptions' => array(
 										'style' => 'text-align: center',
 									),
 								),
 								array(
-									'class' => 'bootstrap.widgets.TbEditableColumn',
-									'name' => 'slug',
+									'name' => 'docs_type_id',
 									'sortable'=>true,
-									'editable' => array(
-										'url' => $this->createUrl('/admin/docs/slugedit'),
-										'placement' => 'right',
-//												'inputclass' => 'span3'
-									),
+									'filter' => false,
+									'value' => function($data, $row) {
+										return $data->docsType->name_ru;
+									},
 									'htmlOptions' => array(
 										'style' => 'text-align: center',
 									),
