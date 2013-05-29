@@ -1,5 +1,5 @@
 <div class="secWrapper">
-	
+
 	<?php $this->renderPartial('/blocks/secTop') ?>
 
 	<!-- Tabs container -->
@@ -23,13 +23,13 @@
 
 			<div class="divider"><span></span></div>
 			<?php if ($vehicleActive): ?>
-			
+
 			<div class="sideUpload">
 				<ul class="filesDown">
 					<?php foreach ($vehicleActive as $vehicle): ?>
 					<li <?php if (isset($vid) && $vid == $vehicle->id): ?> class="selected" <?php endif; ?>>
 						<span class="fileQueue"></span>
-						<a href="/vehicle/search<?php echo $filter->getUrl(isset($vehicle) ? (int) $vehicle->id : ''); ?>" class="tipS" title="Нажмите на это транспортное средство чтобы найти подходящие для него грузы">
+						<a href="/vehicle/search?vid=<?php echo $vehicle->id ?>&fs=1" class="tipS" title="Нажмите на это транспортное средство чтобы найти подходящие для него грузы">
 							<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . (isset($vehicle->modeli->name) ? ' ' . $vehicle->modeli->name : '') ?>,
 											номер: <?php echo $vehicle->license_plate ?>
 						</a>
@@ -38,7 +38,7 @@
 					<?php endforeach; ?>
 				</ul>
 			</div>
-			
+
 			<?php endif; ?>
 		</div>
 		<div class="clear"></div>

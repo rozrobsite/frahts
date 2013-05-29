@@ -93,7 +93,7 @@ class Goods extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, cost, currency_id, payment_type_id, country_id_from, region_id_from, country_id_to, region_id_to, 
+			array('name, cost, currency_id, payment_type_id, country_id_from, region_id_from, country_id_to, region_id_to,
 				city_id_from, city_id_to, shipments, body_types', 'required'),
 			array('fee', 'checkFee'),
 			array('date_from, date_to', 'required'),
@@ -284,7 +284,7 @@ class Goods extends CActiveRecord
 //		if ($this->capacity_exact_value == 0 && ($this->capacity_from == 0 || $this->capacity_to == 0))
 //		{
 //			$this->addError('capacity_from', 'Заполните "Объем груза"');
-//			
+//
 //			return;
 //		}
 		if ($this->capacity_from > $this->capacity_to)
@@ -298,8 +298,8 @@ class Goods extends CActiveRecord
 		$where = $this->createCondition($filter);
 		$criteria = new CDbCriteria();
 
-		$criteria->select = 't.*, 
-			(SELECT GROUP_CONCAT(body_types.name_ru SEPARATOR ", ") FROM body_types WHERE FIND_IN_SET(body_types.id, t.body_types) > 0) as bodyTypeNames, 
+		$criteria->select = 't.*,
+			(SELECT GROUP_CONCAT(body_types.name_ru SEPARATOR ", ") FROM body_types WHERE FIND_IN_SET(body_types.id, t.body_types) > 0) as bodyTypeNames,
 			(SELECT GROUP_CONCAT(shipment.name_ru SEPARATOR ", ") FROM shipment WHERE FIND_IN_SET(shipment.id, t.shipments) > 0) as shipmentsNames';
 
 		$criteria->condition = $where;
@@ -327,79 +327,34 @@ class Goods extends CActiveRecord
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
-		if (!empty($filter->country_id) || !empty($filter->region_id))
+		if (!empty($filter->country_id))
 		{
-			if (!empty($filter->country_id))
-			{
-				$result[] = 't.country_id_from = ' . (int) $filter->country_id;
-			}
-
-			if (!empty($filter->region_id))
-			{
-				$result[] = 't.region_id_from = ' . (int) $filter->region_id;
-			}
-		}
-		elseif (isset($filter->vehicle->id))
-		{
-			if (!empty($filter->vehicle->country_id))
-			{
-				$result[] = 't.country_id_from = ' . (int) $filter->vehicle->country_id;
-			}
-
-			if (!empty($filter->vehicle->region_id))
-			{
-				$result[] = 't.region_id_from = ' . (int) $filter->vehicle->region_id;
-			}
+			$result[] = 't.country_id_from = ' . (int) $filter->country_id;
 		}
 
-		if (!empty($filter->country_search_id) || !empty($filter->region_search_id))
+		if (!empty($filter->region_id))
 		{
-			if (!empty($filter->country_search_id))
-			{
-				$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
-			}
-
-			if (!empty($filter->region_search_id))
-			{
-				$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
-			}
+			$result[] = 't.region_id_from = ' . (int) $filter->country_id;
 		}
-		elseif (isset($filter->vehicle->id))
-		{
-			if (!empty( $filter->vehicle->country_id_to))
-			{
-				$result[] = 't.country_id_to = ' . (int) $filter->vehicle->country_id_to;
-			}
 
-			if (!empty($filter->vehicle->region_id_to))
-			{
-				$result[] = 't.region_id_to = ' . (int) $filter->vehicle->region_id_to;
-			}
+		if (!empty($filter->country_search_id))
+		{
+			$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
 		}
-		
-		if (!empty($filter->date_from) || !empty($filter->date_to))
-		{
-			if (!empty($filter->date_from))
-			{
-				$result[] = 't.date_to >= ' . strtotime($filter->date_from);
-			}
 
-			if (!empty($filter->date_to))
-			{
-				$result[] = 't.date_to <= ' . strtotime($filter->date_to);
-			}
+		if (!empty($filter->region_search_id))
+		{
+			$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
 		}
-		elseif (isset($filter->vehicle->id))
-		{
-			if (!empty($filter->vehicle->date_from))
-			{
-				$result[] = 't.date_to >= ' . $filter->vehicle->date_from;
-			}
 
-			if (!empty($filter->vehicle->date_to))
-			{
-				$result[] = 't.date_to <= ' . $filter->vehicle->date_to;
-			}
+		if (!empty($filter->date_from))
+		{
+			$result[] = 't.date_to >= ' . strtotime($filter->date_from);
+		}
+
+		if (!empty($filter->date_to))
+		{
+			$result[] = 't.date_to <= ' . strtotime($filter->date_to);
 		}
 
 		$result[] = 'date_to >= ' . time();
@@ -443,37 +398,23 @@ class Goods extends CActiveRecord
 			if (!empty($filter->city_id))
 			{
 				$city_id_from = (int)$filter->city_id;
-			}
-			elseif (!empty($filter->vehicle->city_id))
-			{
-				$city_id_from = (int)$filter->vehicle->city_id;
-			}
-			
-			if (!empty($city_id_from))
-			{
+
 				$city = City::model()->findByPk($city_id_from);
-				$inRadius[] = 't.city_id_from IN ( SELECT id 
+				$inRadius[] = 't.city_id_from IN ( SELECT id
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
-				
+
 				unset($city);
 			}
-			
+
 			$city_id_to = 0;
 			if (!empty($filter->city_search_id))
 			{
 				$city_id_to = (int)$filter->city_search_id;
-			}
-			elseif (!empty($filter->vehicle->city_id_to))
-			{
-				$city_id_to = (int)$filter->vehicle->city_id_to;
-			}
-			
-			if (!empty($city_id_to))
-			{
+
 				$city = City::model()->findByPk($city_id_to);
-				$inRadius[] = 't.city_id_from IN ( SELECT id 
+				$inRadius[] = 't.city_id_from IN ( SELECT id
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
-				
+
 				unset($city);
 			}
 

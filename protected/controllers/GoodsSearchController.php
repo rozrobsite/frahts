@@ -5,16 +5,17 @@ class GoodsSearchController extends FrahtController
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
-		
+
 		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 	}
-	
+
 	public function actionIndex()
 	{
 		$filter = new SearchFilter();
 		$listFilterRegions = array();
 		$listFilterCities = array();
+		
 		if (isset($_GET))
 		{
 			$filter->vid = isset($_GET['vid']) ? (int) $_GET['vid'] : null;
@@ -43,7 +44,7 @@ class GoodsSearchController extends FrahtController
 								'id', 'name_ru');
 			}
 		}
-		
+
 		$filter->good = isset($_GET['vid']) ? Goods::model()->findByPk((int) $_GET['vid']) : null;
 
 		$vehicles = Vehicle::model()->getAll($filter);
@@ -70,7 +71,7 @@ class GoodsSearchController extends FrahtController
 			'sort' => isset($_GET['sort']) ? (int) $_GET['sort'] : SearchFilter::SORT_CREATED_AT,
 			'direct' => isset($_GET['direct']) ? (int) $_GET['direct'] : SearchFilter::DIRECTION_DESC,
 		);
-		
+
 		$settings = Settings::model();
 		$settings->getAutoupdate();
 
@@ -89,14 +90,14 @@ class GoodsSearchController extends FrahtController
 			'settings' => $settings,
 		));
 	}
-	
+
 	public function actionNew()
 	{
 		$model = new Goods();
-		
+
 		$this->processForm($model);
 	}
-	
+
 	public function actionUpdate()
 	{
 //		$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
@@ -106,7 +107,7 @@ class GoodsSearchController extends FrahtController
 
 		$this->processForm($model);
 	}
-	
+
 	public function loadModel($slug)
 	{
 		$model = Goods::model()->find('slug = "' . $slug . '"');
@@ -121,12 +122,12 @@ class GoodsSearchController extends FrahtController
 			throw new CHttpException(404, 'Данный груз не найден в базе.');
 		return $model;
 	}
-	
+
 	public function actionDelete()
 	{
 		$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 		$model = $this->loadModelId($id);
-		
+
 		if ($model->deleteFromSearch())
 		{
 			Yii::app()->user->setFlash('_success', 'Груз №' . $model->id . ' удален из поиска.');
@@ -135,10 +136,10 @@ class GoodsSearchController extends FrahtController
 		{
 			Yii::app()->user->setFlash('_error', 'Груз №' . $model->id . ' не был удален из поиска.');
 		}
-		
+
 		$this->redirect('/goods/search');
 	}
-	
+
 	private function processForm(Goods $model)
 	{
 		if (isset($_POST['Goods']))
@@ -160,7 +161,7 @@ class GoodsSearchController extends FrahtController
 				echo CActiveForm::validate(array($model), null, false);
 				Yii::app()->end();
 			}
-			
+
 			if ($model->save())
 			{
 				if ($model->isNewRecord)
@@ -181,7 +182,7 @@ class GoodsSearchController extends FrahtController
 						'Допущены ошибки при сохранении груза.');
 			}
 		}
-		
+
 		$vehicleTypes = VehicleTypes::model()->findAll(array('order' => 'name_ru'));
 		$listVehicleTypes = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 
@@ -211,7 +212,7 @@ class GoodsSearchController extends FrahtController
 		{
 			$listCitiesTo = CHtml::listData($model->regionTo->cities, 'id', 'name_ru');
 		}
-		
+
 		$bodyTypes = BodyTypes::model()->findAll(array('order' => 'order_by'));
 		$listBodyTypes = CHtml::listData($bodyTypes, 'id', 'name_ru');
 
@@ -223,15 +224,15 @@ class GoodsSearchController extends FrahtController
 		$shipmentsChecked = $model->shipments ? explode(',', $model->shipments) : array();
 		$permissionsChecked = $model->permissions ? explode(',', $model->permissions) : array();
 		$bodyTypesChecked = $model->body_types ? explode(',', $model->body_types) : array();
-		
+
 		$currencies = Currency::model()->findAll(array('order' => 'id'));
 		$payments = PaymentType::model()->findAll(array('order' => 'name_ru'));
-		
+
 		$vehicles = array();
-		
+
 		if (isset($model->id) && $model->id)
 			$this->keywords = $model->name;
-		
+
 		$this->render('_goods', array(
 			'vehicles' => $vehicles,
 			'goodsActive' => Goods::model()->getActive(),
