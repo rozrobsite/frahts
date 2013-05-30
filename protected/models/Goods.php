@@ -327,35 +327,19 @@ class Goods extends CActiveRecord
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
-		if (!empty($filter->country_id))
-		{
-			$result[] = 't.country_id_from = ' . (int) $filter->country_id;
-		}
-
-		if (!empty($filter->region_id))
-		{
-			$result[] = 't.region_id_from = ' . (int) $filter->country_id;
-		}
-
-		if (!empty($filter->country_search_id))
-		{
-			$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
-		}
-
-		if (!empty($filter->region_search_id))
-		{
-			$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
-		}
+		$date_from = $date_to = time();
 
 		if (!empty($filter->date_from))
 		{
-			$result[] = 't.date_to >= ' . strtotime($filter->date_from);
+			$date_from = strtotime($filter->date_from);
 		}
 
 		if (!empty($filter->date_to))
 		{
-			$result[] = 't.date_to <= ' . strtotime($filter->date_to);
+			$date_to = strtotime($filter->date_to);
 		}
+
+		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
 
 		$result[] = 'date_to >= ' . time();
 
@@ -386,8 +370,8 @@ class Goods extends CActiveRecord
 			$result[] = '(FIND_IN_SET(' . $filter->vehicle->vehicle_type_id . ', t.vehicle_types) > 0  OR t.vehicle_types IS NULL)';
 			$result[] = 'FIND_IN_SET(' . $filter->vehicle->body_type_id . ', t.body_types) > 0';
 
-			$result[] = '(' . $filter->vehicle->bearing_capacity . ' >= t.weight_exact_value OR ' . $filter->vehicle->bearing_capacity . ' >= t.weight_from OR ' . $filter->vehicle->bearing_capacity . ' >= t.weight_to)';
-			$result[] = '(' . $filter->vehicle->body_capacity . ' >= t.capacity_exact_value OR ' . $filter->vehicle->body_capacity . ' >= t.capacity_from OR ' . $filter->vehicle->body_capacity . ' >= t.capacity_to)';
+			$result[] = '(' . $filter->vehicle->bearing_capacity . ' >= t.weight_exact_value OR (t.weight_exact_value = 0 AND (' . $filter->vehicle->bearing_capacity . ' >= t.weight_from OR ' . $filter->vehicle->bearing_capacity . ' >= t.weight_to)))';
+			$result[] = '(' . $filter->vehicle->body_capacity . ' >= t.capacity_exact_value OR (t.capacity_exact_value = 0 AND (' . $filter->vehicle->body_capacity . ' >= t.capacity_from OR ' . $filter->vehicle->body_capacity . ' >= t.capacity_to)))';
 			if ($filter->vehicle->adr) $result[] = 'adr <= ' . $filter->vehicle->adr;
 		}
 
@@ -412,7 +396,7 @@ class Goods extends CActiveRecord
 				$city_id_to = (int)$filter->city_search_id;
 
 				$city = City::model()->findByPk($city_id_to);
-				$inRadius[] = 't.city_id_from IN ( SELECT id
+				$inRadius[] = 't.city_id_to IN ( SELECT id
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
 
 				unset($city);
