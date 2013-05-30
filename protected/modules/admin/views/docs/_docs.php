@@ -1,9 +1,15 @@
 <?php
 /* @var $this DefaultController */
-
-$this->adminBreadcrumbs = array(
-	'/admin/docs' => 'Редактирование документов',
-);
+if (isset($model->id))
+	$this->adminBreadcrumbs = array(
+		'/admin/docs' . $model->slug => 'Список документов',
+		'/admin/docs/edit/' . $model->slug => 'Редактирование документа',
+	);
+else
+	$this->adminBreadcrumbs = array(
+		'/admin/docs' . $model->slug => 'Список документов',
+		'/admin/docs/add' => 'Добавление документа',
+	);
 ?>
 <div class="container-fluid">
 	<div class="content">
@@ -19,7 +25,7 @@ $this->adminBreadcrumbs = array(
 						$form = $this->beginWidget('CActiveForm',
 								array(
 									'id' => 'docs-add',
-									'action' => '/admin/docs/add',
+									'action' => (isset($model->id) ? '/admin/docs/edit/' . $model->id : '/admin/docs/add'),
 									'htmlOptions' => array('class' => 'form-horizontal'),
 								));
 						?>
@@ -46,7 +52,25 @@ $this->adminBreadcrumbs = array(
 							</div>
 							<div class="box-content box-nomargin" style="min-height: 400px;">
 								<!--<textarea name="a" class='span12 cleditor'></textarea>-->
-								<?php echo $form->textArea($model, 'text', array('class' => 'span12 cleditor')) ?>
+								<?php
+								$this->widget('ext.tinymce.TinyMce', array(
+									'model' => $model,
+									'attribute' => 'text',
+									// Optional config
+									'compressorRoute' => '/admin/tinyMce/compressor',
+//									'spellcheckerUrl' => array('/admin/tinyMce/spellchecker'),
+									// or use yandex spell: http://api.yandex.ru/speller/doc/dg/tasks/how-to-spellcheck-tinymce.xml
+									'spellcheckerUrl' => 'http://speller.yandex.net/services/tinyspell',
+									'fileManager' => array(
+										'class' => 'ext.elFinder.TinyMceElFinder',
+										'connectorRoute'=>'/admin/elfinder/connector',
+									),
+									'htmlOptions' => array(
+										'rows' => 6,
+//										'cols' => 60,
+									),
+								));
+								?>
 								<?php echo $form->error($model, 'text'); ?>
 							</div>
 						</div>

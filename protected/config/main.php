@@ -70,9 +70,10 @@ return array(
 				// Admin main page
 				'<module:(admin)>' => '<module>/default/index',
 				// Remove 'index' action from url
-				'<module:(admin)>/<controller:\w+>' => '<module>/<controller>/index',
 				// Default admin actions rules
+				'<module:(admin)>/<controller:\w+>' => '<module>/<controller>/index',
 				'<module:(admin)>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+//				'<module:\w+>/<controller:\w+>/<action:\w+>/<slug:[a-zA-Z0-9-]+>' => '<module>/<controller>/<action>',
 				'<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
 				'<controller:\w+>/<id:\d+>' => '<controller>/view',
 				'<controller:\w+>/code/<code:\w+>' => '<controller>/code/',
