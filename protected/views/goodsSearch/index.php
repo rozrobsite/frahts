@@ -90,6 +90,9 @@ $this->breadcrumbs = array(
 						'countries' => $countries,
 						'regions' => $regions,
 						'cities' => $cities,
+						'filterCountries' => $countries,
+						'filterRegions' => $filterRegions,
+						'filterCities' => $filterCities,
 						));
 					?>
 				</div>

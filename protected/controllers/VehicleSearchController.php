@@ -73,14 +73,14 @@ class VehicleSearchController extends FrahtController
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
 		$listRegions = array();
-		if (isset($filter->region_id) && $filter->region_id)
+		if (isset($filter->country_id) && $filter->country_id)
 		{
 			$listRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_id),
 								'id', 'name_ru');
 		}
 
 		$listCities = array();
-		if (isset($filter->city_id) && $filter->city_id)
+		if (isset($filter->region_id) && $filter->region_id)
 		{
 			$listCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_id),
 								'id', 'name_ru');
@@ -99,17 +99,6 @@ class VehicleSearchController extends FrahtController
 			$listFilterCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_search_id),
 							'id', 'name_ru');
 		}
-//		$listRegions = array();
-//		if (isset($filter->vehicle->region_id) && $filter->vehicle->region_id)
-//		{
-//			$listRegions = CHtml::listData($filter->vehicle->countries->regions, 'id', 'name_ru');
-//		}
-//
-//		$listCities = array();
-//		if (isset($filter->vehicle->city_id) && $filter->vehicle->city_id)
-//		{
-//			$listCities = CHtml::listData($filter->vehicle->regions->cities, 'id', 'name_ru');
-//		}
 
 		$pageSettings = array(
 			'count' => $goods['count'],
@@ -120,7 +109,7 @@ class VehicleSearchController extends FrahtController
 		);
 
 		$settings = Settings::model();
-		$settings->getAutoupdate();
+//		$settings->getAutoupdate();
 
 		$this->render('index',
 				array(

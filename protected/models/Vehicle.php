@@ -230,7 +230,7 @@ class Vehicle extends CActiveRecord
 		$where = $this->createCondition($filter);
 		$criteria = new CDbCriteria();
 
-		$criteria->select = 't.*, 
+		$criteria->select = 't.*,
 			(SELECT GROUP_CONCAT(shipment.name_ru SEPARATOR ", ") FROM shipment WHERE FIND_IN_SET(shipment.id, t.shipments) > 0) as shipmentsNames';
 
 		$criteria->condition = $where;
@@ -259,15 +259,44 @@ class Vehicle extends CActiveRecord
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
-		if (isset($filter->good) && $filter->good->id)
+		if (!empty($filter->country_id))
 		{
-			$result[] = 't.country_id = ' . (int) $filter->good->country_id_from;
-			$result[] = 't.region_id = ' . (int) $filter->good->region_id_from;
+			$result[] = 't.country_id = ' . (int) $filter->country_id;
+		}
 
-			$city = City::model()->findByPk((int) $filter->good->city_id_from);
-			$result[] = 't.city_id IN ( SELECT id 
-				FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
+		if (!empty($filter->region_id))
+		{
+			$result[] = 't.region_id = ' . (int) $filter->region_id;
+		}
 
+		if (!empty($filter->country_search_id))
+		{
+			$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
+		}
+
+		if (!empty($filter->region_search_id))
+		{
+			$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
+		}
+
+		$date_from = $date_to = time();
+
+		if (!empty($filter->date_from))
+		{
+			$date_from = strtotime($filter->date_from);
+		}
+
+		if (!empty($filter->date_to))
+		{
+			$date_to = strtotime($filter->date_to);
+		}
+
+		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
+
+		$result[] = 'date_to >= ' . time();
+
+		if (isset($filter->good->id))
+		{
 			if ($filter->good->permissions)
 			{
 				$permissions = array();
@@ -293,23 +322,39 @@ class Vehicle extends CActiveRecord
 			$result[] = '(FIND_IN_SET(t.vehicle_type_id, "' . $filter->good->vehicle_types . '") > 0)';
 			$result[] = '(FIND_IN_SET(t.body_type_id, "' . $filter->good->body_types . '") > 0)';
 
-			$result[] = '(' . $filter->good->weight_exact_value . '<= t.bearing_capacity OR (' . $filter->good->weight_from . ' <= t.bearing_capacity OR ' . $filter->good->weight_to . ' <= t.bearing_capacity))';
-			$result[] = '(' . $filter->good->capacity_exact_value . ' <= t.body_capacity OR (' . $filter->good->capacity_from . ' <= t.body_capacity OR ' . $filter->good->capacity_to . ' <= t.body_capacity))';
+			$result[] = '(' . $filter->good->weight_exact_value . '<= t.bearing_capacity OR (' . $filter->good->weight_exact_value . ' = 0 AND (' . $filter->good->weight_from . ' <= t.bearing_capacity OR ' . $filter->good->weight_to . ' <= t.bearing_capacity)))';
+			$result[] = '(' . $filter->good->capacity_exact_value . ' <= t.body_capacity OR (' . $filter->good->capacity_exact_value . ' = 0 AND (' . $filter->good->capacity_from . ' <= t.body_capacity OR ' . $filter->good->capacity_to . ' <= t.body_capacity)))';
 			if ($filter->good->adr) $result[] = 'adr <= ' . $filter->good->adr;
 		}
-		else
+
+		if (isset($filter->radius) && $filter->radius)
 		{
-			if (isset($filter->country_search_id) && $filter->country_search_id)
-				$result[] = 't.country_id = ' . (int) $filter->country_search_id;
-			if (isset($filter->region_search_id) && $filter->region_search_id)
-				$result[] = 't.region_id = ' . (int) $filter->region_search_id;
-			
-			if (isset($filter->city_search_id) && $filter->city_search_id)
+			$inRadius = array();
+			$city_id_from = 0;
+			if (!empty($filter->city_id))
 			{
-				$city = City::model()->findByPk((int) $filter->city_search_id);
-				$result[] = 't.city_id IN ( SELECT id 
+				$city_id_from = (int)$filter->city_id;
+
+				$city = City::model()->findByPk($city_id_from);
+				$inRadius[] = 't.city_id IN ( SELECT id
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
+
+				unset($city);
 			}
+
+			$city_id_to = 0;
+			if (!empty($filter->city_search_id))
+			{
+				$city_id_to = (int)$filter->city_search_id;
+
+				$city = City::model()->findByPk($city_id_to);
+				$inRadius[] = 't.city_id_to IN ( SELECT id
+					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
+
+				unset($city);
+			}
+
+			if (!empty($inRadius)) $result[] = '(' . join(' AND ', $inRadius) . ')';
 		}
 
 		$result[] = 'is_deleted = 0';

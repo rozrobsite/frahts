@@ -327,6 +327,26 @@ class Goods extends CActiveRecord
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
+		if (!empty($filter->country_id))
+		{
+			$result[] = 't.country_id_from = ' . (int) $filter->country_id;
+		}
+
+		if (!empty($filter->region_id))
+		{
+			$result[] = 't.region_id_from = ' . (int) $filter->region_id;
+		}
+
+		if (!empty($filter->country_search_id))
+		{
+			$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
+		}
+
+		if (!empty($filter->region_search_id))
+		{
+			$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
+		}
+
 		$date_from = $date_to = time();
 
 		if (!empty($filter->date_from))

@@ -15,7 +15,7 @@ class GoodsSearchController extends FrahtController
 		$filter = new SearchFilter();
 		$listFilterRegions = array();
 		$listFilterCities = array();
-		
+
 		if (isset($_GET))
 		{
 			$filter->vid = isset($_GET['vid']) ? (int) $_GET['vid'] : null;
@@ -31,38 +31,56 @@ class GoodsSearchController extends FrahtController
 			$filter->sort = isset($_GET['sort']) && (int) $_GET['sort'] ? (int) $_GET['sort'] : 0;
 			$filter->direction = isset($_GET['direct']) && (int) $_GET['direct'] ? (int) $_GET['direct'] : 0;
 			$filter->page = isset($_GET['page']) && (int) $_GET['page'] ? (int) $_GET['page'] : 1;
-
-			if (isset($filter->country_search_id) && $filter->country_search_id)
-			{
-				$listFilterRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_search_id),
-								'id', 'name_ru');
-			}
-
-			if (isset($filter->region_search_id) && $filter->region_search_id)
-			{
-				$listFilterCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_search_id),
-								'id', 'name_ru');
-			}
 		}
 
 		$filter->good = isset($_GET['vid']) ? Goods::model()->findByPk((int) $_GET['vid']) : null;
+
+		if (is_object($filter->good) && isset($_GET['fs']) && $_GET['fs'] == 1)
+		{
+			$filter->date_from = Yii::app()->dateFormatter->format('dd.MM.yyyy', $filter->good->date_from);
+			$filter->date_to = Yii::app()->dateFormatter->format('dd.MM.yyyy', $filter->good->date_to);
+
+			$filter->country_id = $filter->good->country_id_from;
+			$filter->region_id = $filter->good->region_id_from;
+			$filter->city_id = $filter->good->city_id_from;
+
+			$filter->country_search_id = $filter->good->country_id_to;
+			$filter->region_search_id = $filter->good->region_id_to;
+			$filter->city_search_id = $filter->good->city_id_to;
+		}
 
 		$vehicles = Vehicle::model()->getAll($filter);
 
 		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
-//		$listRegions = array();
-//		if (isset($filter->good->region_id) && $filter->vehicle->region_id)
-//		{
-//			$listRegions = CHtml::listData($filter->vehicle->countries->regions, 'id', 'name_ru');
-//		}
-//
-//		$listCities = array();
-//		if (isset($filter->vehicle->city_id) && $filter->vehicle->city_id)
-//		{
-//			$listCities = CHtml::listData($filter->vehicle->regions->cities, 'id', 'name_ru');
-//		}
+		$listRegions = array();
+		if (isset($filter->country_id) && $filter->country_id)
+		{
+			$listRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_id),
+								'id', 'name_ru');
+		}
+
+		$listCities = array();
+		if (isset($filter->region_id) && $filter->region_id)
+		{
+			$listCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_id),
+								'id', 'name_ru');
+		}
+
+		$listFilterRegions = array();
+		if (isset($filter->country_search_id) && $filter->country_search_id)
+		{
+			$listFilterRegions = CHtml::listData(Region::model()->findAll('country_id = ' . $filter->country_search_id),
+							'id', 'name_ru');
+		}
+
+		$listFilterCities = array();
+		if (isset($filter->region_search_id) && $filter->region_search_id)
+		{
+			$listFilterCities = CHtml::listData(City::model()->findAll('region_id = ' . $filter->region_search_id),
+							'id', 'name_ru');
+		}
 
 		$pageSettings = array(
 			'count' => $vehicles['count'],
@@ -81,10 +99,10 @@ class GoodsSearchController extends FrahtController
 			'model' => $filter->good,
 			'goodsActive' => Goods::model()->getActive(),
 			'countries' => $listCountries,
-			'regions' => $listFilterRegions,
-			'cities' => $listFilterCities,
-//			'filterRegions' => $listFilterRegions,
-//			'filterCities' => $listFilterCities,
+			'regions' => $listRegions,
+			'cities' => $listCities,
+			'filterRegions' => $listFilterRegions,
+			'filterCities' => $listFilterCities,
 			'pageSettings' => $pageSettings,
 			'filter' => $filter,
 			'settings' => $settings,

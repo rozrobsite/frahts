@@ -126,6 +126,7 @@ $(document).ready(function(){
 //	$('#vcoid').change();
 	countryLocationVehicle.init();
 	regionLocationVehicle.init();
+
 //	$('#fvcoid').change();
 	countryFilterVehicle.init();
 	regionFilterVehicle.init();
