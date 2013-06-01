@@ -4,3 +4,4 @@ uploads/*
 protected/runtime/*
 protected/config/console.php
 protected/config/test.php
+/protected/runtime/application.log

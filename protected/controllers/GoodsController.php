@@ -5,11 +5,11 @@ class GoodsController extends FrahtController
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
-		
+
 		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 	}
-	
+
 	public function actionIndex()
 	{
 //		$this->render('index', array(
@@ -17,16 +17,25 @@ class GoodsController extends FrahtController
 //			'goodsActive' => Goods::model()->getActive(),
 //			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 //		));
-		
+
 		$this->render('index');
 	}
-	
+
 	public function actionInactive()
 	{
 		$this->render('inActive', array(
 			'goodsActive' => Goods::model()->getActive(),
 			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 		));
+	}
+
+	public function actionView()
+	{
+		$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
+
+		$model = Goods::model()->find('slug = "' . $slug . '"');
+
+		
 	}
 
 	// Uncomment the following methods and override them if needed

@@ -110,12 +110,12 @@ class VehicleSearchController extends FrahtController
 
 		$settings = Settings::model();
 //		$settings->getAutoupdate();
-
+		
 		$this->render('index',
 				array(
 			'vid' => $filter->vid,
 			'vehicleActive' => Vehicle::model()->findAllByDeleted(false),
-			'vehicles' => $goods['goods'],
+			'goods' => $goods['goods'],
 			'model' => $filter->vehicle,
 			'countries' => $listCountries,
 			'regions' => $listRegions,
