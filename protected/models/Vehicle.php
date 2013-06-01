@@ -259,24 +259,31 @@ class Vehicle extends CActiveRecord
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
-		if (!empty($filter->country_id))
+
+		if (empty($filter->city_id))
 		{
-			$result[] = 't.country_id = ' . (int) $filter->country_id;
+			if (!empty($filter->country_id))
+			{
+				$result[] = 't.country_id = ' . (int) $filter->country_id;
+			}
+
+			if (!empty($filter->region_id))
+			{
+				$result[] = 't.region_id = ' . (int) $filter->region_id;
+			}
 		}
 
-		if (!empty($filter->region_id))
+		if (empty($filter->city_search_id))
 		{
-			$result[] = 't.region_id = ' . (int) $filter->region_id;
-		}
+			if (!empty($filter->country_search_id))
+			{
+				$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
+			}
 
-		if (!empty($filter->country_search_id))
-		{
-			$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
-		}
-
-		if (!empty($filter->region_search_id))
-		{
-			$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
+			if (!empty($filter->region_search_id))
+			{
+				$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
+			}
 		}
 
 		$date_from = $date_to = time();
@@ -324,7 +331,7 @@ class Vehicle extends CActiveRecord
 
 			$result[] = '(' . $filter->good->weight_exact_value . '<= t.bearing_capacity OR (' . $filter->good->weight_exact_value . ' = 0 AND (' . $filter->good->weight_from . ' <= t.bearing_capacity OR ' . $filter->good->weight_to . ' <= t.bearing_capacity)))';
 			$result[] = '(' . $filter->good->capacity_exact_value . ' <= t.body_capacity OR (' . $filter->good->capacity_exact_value . ' = 0 AND (' . $filter->good->capacity_from . ' <= t.body_capacity OR ' . $filter->good->capacity_to . ' <= t.body_capacity)))';
-			if ($filter->good->adr) $result[] = 'adr <= ' . $filter->good->adr;
+			if ($filter->good->adr) $result[] = 'adr >= ' . $filter->good->adr;
 		}
 
 		if (isset($filter->radius) && $filter->radius)
