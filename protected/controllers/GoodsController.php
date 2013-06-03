@@ -34,8 +34,20 @@ class GoodsController extends FrahtController
 		$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 		$model = Goods::model()->find('slug = "' . $slug . '"');
+		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
+		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 
-		
+		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
+		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
+
+		if (!is_object($model))
+			throw new CHttpException(404, 'Страница груза не найдена!');
+
+		$this->render('view',array(
+			'model' => $model,
+			'vehicleTypes' => join(', ', $vehicleTypesArray),
+			'bodyTypes' => join(', ', $bodyTypesArray)
+		));
 	}
 
 	// Uncomment the following methods and override them if needed

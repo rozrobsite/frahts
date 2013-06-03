@@ -2,13 +2,14 @@
 
 class VehicleSearchController extends FrahtController
 {
-
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
 
 		if (!($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 				throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+
+		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
 
 	public function actionIndex()
@@ -32,14 +33,6 @@ class VehicleSearchController extends FrahtController
 			$filter->sort = isset($_GET['sort']) && (int) $_GET['sort'] ? (int) $_GET['sort'] : 0;
 			$filter->direction = isset($_GET['direct']) && (int) $_GET['direct'] ? (int) $_GET['direct'] : 0;
 			$filter->page = isset($_GET['page']) && (int) $_GET['page'] ? (int) $_GET['page'] : 1;
-
-//			if (isset($filter->vid) && $filter->vid && $filter->country_id && $filter->region_id && $filter->city_id)
-//			{
-//				$rows = Vehicle::model()->updateAll(
-//						array('country_id' => $filter->country_id, 'region_id' => $filter->region_id, 'city_id' => $filter->city_id, 'updated_at' => time()),
-//						"id = " . $filter->vid
-//				);
-//			}
 		}
 
 		$filter->vehicle = isset($_GET['vid']) ? Vehicle::model()->findByPk((int) $_GET['vid']) : null;
@@ -110,7 +103,7 @@ class VehicleSearchController extends FrahtController
 
 		$settings = Settings::model();
 //		$settings->getAutoupdate();
-		
+
 		$this->render('index',
 				array(
 			'vid' => $filter->vid,
