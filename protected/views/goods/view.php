@@ -60,23 +60,42 @@ $this->breadcrumbs = array(
                         <span><strong>Куда:</strong> <?php echo $model->cityTo->name_ru ?>, <?php echo $model->regionTo->name_ru ?>, <?php echo $model->countryTo->name_ru ?></span>
                         <span><strong>Подходящие типы транспорта:</strong> <?php echo $vehicleTypes; ?></span>
                         <span><strong>Подходящие типы кузовов:</strong> <?php echo $bodyTypes; ?></span>
-                        <span>Zip/Postal Code</span>
-                        <span class="number">Mobile Phone: <strong class="red">+4530422244</strong></span>
-                        <span class="black">Send To: <a href="#">me@company.com</a></span>
-                        <span>Payment due by <strong>10/06/2012</strong></span>
+                        <span><strong>Подходящие виды загрузки:</strong> <?php echo $shipments; ?></span>
+                        <span>
+							<strong>Вес груза: </strong>
+							<?php if ($model->weight_from): ?>
+								от <?php echo $model->weight_from; ?> т. 
+								до <?php echo $model->weight_to; ?> т.
+							<?php else: ?>
+								<?php echo $model->weight_exact_value; ?> т.
+							<?php endif; ?>
+						</span>
+                        <span>
+							<strong>Объем груза: </strong>
+							<?php if ($model->capacity_from): ?>
+								от <?php echo $model->capacity_from; ?> м&sup3; 
+								до <?php echo $model->capacity_to; ?> м&sup3;
+							<?php else: ?>
+								<?php echo $model->capacity_exact_value; ?> м&sup3;
+							<?php endif; ?>
+						</span>
+						<span><strong>Требуемые разрешения:</strong> <?php echo $permissions; ?></span>
+						<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru . ' (' . $model->paymentType->name_ru . ')'; ?></span>
                     </div>
-
-                    <div class="floatR">
-                    <div class="inTo">
-                        <h5>Client Company Name</h5>
-                        <span>Client Address Line 1</span>
-                        <span>Address Line 2</span>
-                        <span>Town</span>
-                        <span>Region/State</span>
-                        <span>Zip/Postal Code</span>
-                        <span class="number">Mobile Phone: <strong class="red">+4530422244</strong></span>
-                        <span class="black">Email: <a href="#">client@company.com</a></span>
-                    </div>
+					<div class="inFrom" style="width:30%">
+						
+					</div>
+                    <div class="floatR" style="width:30%">
+						<div class="inTo">
+							<h5>Владелец груза</h5>
+							<span>
+								<?php echo $model->user->profiles->last_name . ' ' . $model->user->profiles->first_name . ' ' . $model->user->profiles->middle_name; ?>
+							</span>
+							<span><?php echo $model->user->profiles->userType->name_ru; ?></span>
+							<span><?php echo $model->user->organizations->name_org; ?></span>
+							<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
+							<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
+						</div>
                     </div>
                     <div class="clear"></div>
                 </div>
