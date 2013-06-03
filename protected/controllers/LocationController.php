@@ -24,6 +24,8 @@ class LocationController extends Controller
 		$region_id = (int) Yii::app()->request->getParam('region_id');
 		$region = Region::model()->findByPk($region_id);
 		
+		$region_model = Region::model();
+		
 		$model = new Profiles();
 		$listCities = array();
 		if ($region_id)
