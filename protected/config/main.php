@@ -67,6 +67,7 @@ return array(
 				'goods/search' => 'goodsSearch',
 				'goods/new' => 'goodsSearch/new',
 				'goods' => 'goodsSearch/index',
+				'docs/view/<slug:[a-zA-Z0-9-]+>' => 'docs/view',
 				// Admin main page
 				'<module:(admin)>' => '<module>/default/index',
 				// Remove 'index' action from url
