@@ -182,7 +182,7 @@ $this->breadcrumbs = array(
 										</a><br/>
 										<strong>Добавлен:</strong><br/>
 										<span>
-											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->updated_at); ?>&nbsp;
+											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $vehicle->updated_at); ?>&nbsp;
 											<?php echo date('H:i', $vehicle->updated_at); ?>
 										</span>
 									</td>

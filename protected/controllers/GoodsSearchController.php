@@ -8,6 +8,8 @@ class GoodsSearchController extends FrahtController
 
 		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+
+		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
 
 	public function actionIndex()

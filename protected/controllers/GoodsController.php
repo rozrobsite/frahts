@@ -5,11 +5,11 @@ class GoodsController extends FrahtController
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
-		
+
 		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 	}
-	
+
 	public function actionIndex()
 	{
 //		$this->render('index', array(
@@ -17,15 +17,36 @@ class GoodsController extends FrahtController
 //			'goodsActive' => Goods::model()->getActive(),
 //			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 //		));
-		
+
 		$this->render('index');
 	}
-	
+
 	public function actionInactive()
 	{
 		$this->render('inActive', array(
 			'goodsActive' => Goods::model()->getActive(),
 			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
+		));
+	}
+
+	public function actionView()
+	{
+		$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
+
+		$model = Goods::model()->find('slug = "' . $slug . '"');
+		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
+		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
+
+		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
+		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
+
+		if (!is_object($model))
+			throw new CHttpException(404, 'Страница груза не найдена!');
+
+		$this->render('view',array(
+			'model' => $model,
+			'vehicleTypes' => join(', ', $vehicleTypesArray),
+			'bodyTypes' => join(', ', $bodyTypesArray)
 		));
 	}
 
