@@ -13,6 +13,7 @@
  */
 class Permissions extends CActiveRecord
 {
+	const ADR = 4;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

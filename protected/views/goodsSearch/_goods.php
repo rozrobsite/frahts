@@ -286,7 +286,7 @@ $this->breadcrumbs = array(
 				<?php if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
 				<div class="formRow">
 
-					<div class="grid2"><label>Комиссия за перевозку:<span class="req">*</span></label></div>
+					<div class="grid3"><label>Комиссия за перевозку:<span class="req">*</span></label></div>
 
 					<div class="grid2 onlyNums">
 						<?php echo $form->textField($model, 'fee') ?>

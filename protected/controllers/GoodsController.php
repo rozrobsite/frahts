@@ -33,20 +33,32 @@ class GoodsController extends FrahtController
 	{
 		$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
-		$model = Goods::model()->find('slug = "' . $slug . '"');
+		$model = Goods::model()->find('slug = "' . $slug . '" AND is_deleted = 0 AND date_to >= ' . time());
 		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
 		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 
 		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
 		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
 
+		$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
+		$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
+
+		$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
+		$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
+		if (array_key_exists(Permissions::ADR, $permissionsArray))
+		{
+			$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+		}
+		
 		if (!is_object($model))
 			throw new CHttpException(404, 'Страница груза не найдена!');
 
 		$this->render('view',array(
 			'model' => $model,
 			'vehicleTypes' => join(', ', $vehicleTypesArray),
-			'bodyTypes' => join(', ', $bodyTypesArray)
+			'bodyTypes' => join(', ', $bodyTypesArray),
+			'shipments' => join(', ', $shipmentsArray),
+			'permissions' => join(', ', $permissionsArray),
 		));
 	}
 

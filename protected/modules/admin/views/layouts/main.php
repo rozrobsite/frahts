@@ -227,7 +227,7 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+<!--					<li>
 						<a href="#" class='light toggle-collapsed'>
 							<div class="ico"><i class="icon-th-large icon-white"></i></div>
 							Новости
@@ -245,7 +245,7 @@
 								</a>
 							</li>
 						</ul>
-					</li>
+					</li>-->
 					<li>
 						<a href="#" class='light toggle-collapsed'>
 							<div class="ico"><i class="icon-th-large icon-white"></i></div>
