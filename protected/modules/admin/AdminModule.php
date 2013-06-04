@@ -12,6 +12,7 @@ class AdminModule extends CWebModule
 			'admin.models.*',
 			'admin.components.*',
 		));
+        $this->layoutPath;
 		
 		Yii::app()->setComponents(array(
 			'bootstrap' => array('class' => 'ext.bootstrap.components.Bootstrap'),
