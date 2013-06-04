@@ -1,6 +1,6 @@
 <?php
-/* @var $this UserController */
-/* @var $model Users */
+
+Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
 
 $this->pageTitle = Yii::app()->name . ' - Данные о грузе "' . $model->name . '"';
 $this->breadcrumbs = array(
