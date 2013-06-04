@@ -17,6 +17,8 @@
         public  function actionBodyTypes(){
             echo $_REQUEST['BodyTypes'];
             $BodyTypes = new BodyTypes();
+			echo $BodyTypes;
+			echo var_dump($BodyTypes);
             if(isset($_REQUEST['BodyTypes']['name_ru'])){
                 $BodyTypes->name_ru = $_REQUEST['BodyTypes']['name_ru'];
             }
