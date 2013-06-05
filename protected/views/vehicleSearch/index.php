@@ -162,7 +162,8 @@ $this->breadcrumbs = array(
 									</span>
 									<br/>
 									<span>
-										<strong>&asymp;&nbsp;<?php echo ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10) ?> км</strong>
+										<?php $distance = ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10); ?>
+										<strong><a href="/goods/view/<?php echo $oneGood->slug ?>">&asymp;&nbsp;<?php echo $distance ?> км</a></strong>
 									</span>
 								</td>
 								<td class="fileInfo">

@@ -16,49 +16,40 @@ class PaymentTypeController extends AdminController{
     }
 
     public  function actionPaymentType(){
-        echo $_REQUEST['PaymentType'];
-        $PaymentType = new PaymentType();
+        $paymentType = new PaymentType();
+		
         if(isset($_REQUEST['PaymentType']['name_ru'])){
-            $PaymentType->name_ru = $_REQUEST['PaymentType']['name_ru'];
+            $paymentType->name_ru = $_REQUEST['PaymentType']['name_ru'];
         }
+		
         $this->render('PaymentType',array(
-            'PaymentType' => $PaymentType,
+            'PaymentType' => $paymentType,
         ));
     }
     public function actionAdd(){
-        echo var_dump($_POST);
-        echo var_dump($_REQUEST);
-//            echo var_dump($_POST['PaymentType']['id']);
-//            echo var_dump($_POST['PaymentType']['name_ru']);
-//            echo var_dump($_POST['PaymentType']['vehicle_type_id']);
-//            echo var_dump($_POST['PaymentType']['name_ua]']);
-//            echo var_dump($_POST['PaymentType']['order_by']);
         if(isset($_POST['PaymentType'])){
             if(!empty($_POST['PaymentType']['name_ru'])){
-                $PaymentType = new PaymentType();
+                $paymentType = new PaymentType();
 
-                $PaymentType->name_ru = $_POST['PaymentType']['name_ru'];
+                $paymentType->name_ru = $_POST['PaymentType']['name_ru'];
 
                 // PaymentType::model()->insert($_POST['PaymentType']['name_ru']);
-                $PaymentType->insert();
-                unset($PaymentType);
+                $paymentType->insert();
+                unset($paymentType);
             }
         }
 
-        $PaymentType = new PaymentType();
+        $paymentType = new PaymentType();
         if(isset($_REQUEST['PaymentType']['name_ru'])){
 
-            $PaymentType->name_ru = $_REQUEST['PaymentType']['name_ru'];
+            $paymentType->name_ru = $_REQUEST['PaymentType']['name_ru'];
 
         }
         $this->render('PaymentType',array(
-            'PaymentType' => $PaymentType,
+            'PaymentType' => $paymentType,
         ));
     }
     public  function actionEditPaymentType(){
-        echo $_POST['name_ru'];
-        echo $_POST['pk'];
-        echo $_POST['value'];
         if (isset($_POST['name_ru']) && isset($_POST['pk']) && isset($_POST['value']))
         {
             PaymentType::model()->updateByPk((int) $_POST['pk'],
@@ -66,23 +57,21 @@ class PaymentTypeController extends AdminController{
         }
     }
     public  function actionEdit(){
-        echo "<pre>";
-        echo $_GET['id'];
-        echo $_GET['PaymentType'];
-        echo "</pre>";
-
         $id = isset($_GET['id']) ? $_GET['id'] : '';
+		
         $model = PaymentType::model()->findByPk($id);
-        if (!$model) throw new CHttpException(404, 'Данная новость не найдена.');
-        $this->processForm($model);
+        
+		if (!$model) throw new CHttpException(404, 'Данная новость не найдена.');
+        
+		$this->processForm($model);
     }
     public function processForm($model = null)
     {
         //$model = $model == null ? new PaymentType('search') : $model;
         $model = $model == null ? new PaymentType() : $model;
 
-        $PaymentType = PaymentType::model()->findAll();
-        $listBodyTypes = CHtml::listData($PaymentType, 'id', 'name_ru');
+        $paymentType = PaymentType::model()->findAll();
+        $listBodyTypes = CHtml::listData($paymentType, 'id', 'name_ru');
 
         if (isset($_POST['PaymentType']))
         {
@@ -107,17 +96,17 @@ class PaymentTypeController extends AdminController{
                     'Ошибки при добавлении документа в базу. Проверьте введенные данные и попробуйте еще раз.');
             }
         }
-        $PaymentType = new PaymentType();
+        $paymentType = new PaymentType();
         if(isset($_GET['PaymentType']['name_ru'])){
 
-            $PaymentType->name_ru = $_GET['PaymentType']['name_ru'];
+            $paymentType->name_ru = $_GET['PaymentType']['name_ru'];
 
         }
 
         $this->render('_PaymentType',
             array(
                 // 'model' => $model,
-                'PaymentType' => $PaymentType,
+                'PaymentType' => $paymentType,
             ));
     }
     public  function actionDelete(){
