@@ -5,9 +5,9 @@
 		<title>Фрахты.com - Административная панель</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-
+		
 		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-
+		
 <!--		<link rel="stylesheet" href="/css/admin/bootstrap.css">
 		<link rel="stylesheet" href="/css/admin/bootstrap-responsive.css">-->
 		<link rel="stylesheet" href="/css/admin/jquery.fancybox.css">
@@ -109,7 +109,7 @@
 						<ul class="dropdown-menu pull-right custom custom-dark">
 							<li class='custom'>
 								<div class="title">
-									Pending order #1
+									Pending order #1 
 									<span>Jul 22, 2012 by <a href="#" class='pover' data-title="Hover me" data-content="User information comes here">Hover me</a></span>
 								</div>
 								<div class="action">
@@ -246,82 +246,54 @@
 							</li>
 						</ul>
 					</li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                            Типы кузова
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/bodytypes">
-                                    Добавить тип кузова
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/bodytypes/bodytypes">
-                                    Список типов кузовов
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                            Выбор валюты
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/currency">
-                                    Добавить валюту
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/currency/currency">
-                                    Список всех валют
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                                 Тип оплаты
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/paymenttype">
-                                    Добавить тип оплаты
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/paymenttype/paymenttype">
-                                    Список всех типов оплаты
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                                 АЗС
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/azs">
-                                    Торговые марки
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+						<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Типы кузовов
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+						
+							<li>
+								<a href="/admin/BodyTypes">
+									Список типов кузовов
+								</a>
+							</li>
+						</ul>
+					</li>
+						<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Валюты
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/Currency">
+									Список валют
+								</a>
+							</li>							
+						</ul>
+					</li>
+						<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Оплата
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/PaymentType">
+									Список типов оплат
+								</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<?php echo $content; ?>
 		</div>
-
+		
 <!--		<script src="/js/admin/less.js"></script>
 		<script src="/js/admin/bootstrap.min.js"></script>
 		<script src="/js/admin/jquery.peity.js"></script>
