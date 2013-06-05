@@ -246,63 +246,49 @@
 							</li>
 						</ul>
 					</li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                            Типы кузова
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/bodytypes">
-                                    Добавить тип кузова
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/bodytypes/bodytypes">
-                                    Список типов кузовов
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                            Выбор валюты
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/currency">
-                                    Добавить валюту
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/currency/currency">
-                                    Список всех валют
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class='light toggle-collapsed'>
-                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
-                                 Тип оплаты
-                            <img src="/images/admin/toggle-subnav-down.png" alt="">
-                        </a>
-                        <ul class='collapsed-nav closed'>
-                            <li>
-                                <a href="/admin/paymenttype">
-                                    Добавить тип оплаты
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/paymenttype/paymenttype">
-                                    Список всех типов оплаты
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+						<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Типы кузовов
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+						
+							<li>
+								<a href="/admin/BodyTypes">
+									Список типов кузовов
+								</a>
+							</li>
+						</ul>
+					</li>
+						<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Валюты
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/Currency">
+									Список валют
+								</a>
+							</li>							
+						</ul>
+					</li>
+						<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Оплата
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/PaymentType">
+									Список типов оплат
+								</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<?php echo $content; ?>

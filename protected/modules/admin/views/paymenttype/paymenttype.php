@@ -60,16 +60,12 @@ $this->adminBreadcrumbs = array(
                                         'editable' => array(
                                             'url' => $this->createUrl('/admin/PaymentType/editPaymentType'),
                                             'placement' => 'right',
-//												'inputclass' => 'span3'
                                         )
                                     ),
                                     array(
                                         'class' => 'bootstrap.widgets.TbButtonColumn',
-                                        'template' => '{update},{delete}',
-                                        'buttons' => array(
-                                            'update' => array(
-                                                'url' => 'Yii::app()->createUrl("/admin/PaymentType/edit",array("id"=>$data->id,"type"=>"PaymentType"))'
-                                            ),
+                                        'template' => '{delete}',
+                                        'buttons' => array(                                          
                                             'delete' => array(
                                                 'url'=>'Yii::app()->createUrl("/admin/PaymentType/delete", array("id"=>$data->id, "type"=>"PaymentType","name_ru"=>$data->name_ru))'
                                             ),
