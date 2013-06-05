@@ -60,16 +60,12 @@ $this->adminBreadcrumbs = array(
                                         'editable' => array(
                                             'url' => $this->createUrl('/admin/Currency/editCurrency'),
                                             'placement' => 'right',
-//												'inputclass' => 'span3'
                                         )
                                     ),
                                     array(
                                         'class' => 'bootstrap.widgets.TbButtonColumn',
-                                        'template' => '{update},{delete}',
-                                        'buttons' => array(
-                                            'update' => array(
-                                                'url' => 'Yii::app()->createUrl("/admin/Currency/edit",array("id"=>$data->id,"type"=>"Currency"))'
-                                            ),
+                                        'template' => '{delete}',
+                                        'buttons' => array(                                       
                                             'delete' => array(
                                                 'url'=>'Yii::app()->createUrl("/admin/Currency/delete", array("id"=>$data->id, "type"=>"Currency","name_ru"=>$data->name_ru))'
                                             ),

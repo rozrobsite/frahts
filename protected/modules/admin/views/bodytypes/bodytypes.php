@@ -60,16 +60,12 @@ $this->adminBreadcrumbs = array(
                                         'editable' => array(
                                             'url' => $this->createUrl('/admin/BodyTypes/editBodyTypes'),
                                             'placement' => 'right',
-//												'inputclass' => 'span3'
                                         )
                                     ),'vehicle_type_id',
                                     array(
                                         'class' => 'bootstrap.widgets.TbButtonColumn',
-                                        'template' => '{update},{delete}',
-                                        'buttons' => array(
-                                            'update' => array(
-                                                'url' => 'Yii::app()->createUrl("/admin/BodyTypes/edit",array("id"=>$data->id,"type"=>"BodyTypes"))'
-                                            ),
+                                        'template' => '{delete}',
+                                        'buttons' => array(                                       
                                             'delete' => array(
                                                 'url'=>'Yii::app()->createUrl("/admin/BodyTypes/delete", array("id"=>$data->id, "type"=>"BodyTypes","name_ru"=>$data->name_ru))'
                                             ),
