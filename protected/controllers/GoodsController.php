@@ -2,12 +2,13 @@
 
 class GoodsController extends FrahtController
 {
+
 	public function __construct($id, $module = null)
 	{
 		parent::__construct($id, $module);
 
 		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
-			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+				throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 
 		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
@@ -25,7 +26,8 @@ class GoodsController extends FrahtController
 
 	public function actionInactive()
 	{
-		$this->render('inActive', array(
+		$this->render('inActive',
+				array(
 			'goodsActive' => Goods::model()->getActive(),
 			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 		));
@@ -42,20 +44,31 @@ class GoodsController extends FrahtController
 		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
 		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
 
-		$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
-		$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
-
-		$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
-		$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
-		if (array_key_exists(Permissions::ADR, $permissionsArray))
+		$shipments = '';
+		$shipmentsArray = array();
+		if ($model->shipments)
 		{
-			$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+			$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
+			$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
+		}
+
+		$permissions = '';
+		$permissionsArray = array();
+		if ($model->permissions)
+		{
+			$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
+			$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
+			if (array_key_exists(Permissions::ADR, $permissionsArray))
+			{
+				$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+			}
 		}
 
 		if (!is_object($model))
-			throw new CHttpException(404, 'Страница груза не найдена!');
+				throw new CHttpException(404, 'Страница груза не найдена!');
 
-		$this->render('view',array(
+		$this->render('view',
+				array(
 			'model' => $model,
 			'vehicleTypes' => join(', ', $vehicleTypesArray),
 			'bodyTypes' => join(', ', $bodyTypesArray),
@@ -66,28 +79,28 @@ class GoodsController extends FrahtController
 
 	// Uncomment the following methods and override them if needed
 	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
+	  public function filters()
+	  {
+	  // return the filter configuration for this controller, e.g.:
+	  return array(
+	  'inlineFilterName',
+	  array(
+	  'class'=>'path.to.FilterClass',
+	  'propertyName'=>'propertyValue',
+	  ),
+	  );
+	  }
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+	  public function actions()
+	  {
+	  // return external action classes, e.g.:
+	  return array(
+	  'action1'=>'path.to.ActionClass',
+	  'action2'=>array(
+	  'class'=>'path.to.AnotherActionClass',
+	  'propertyName'=>'propertyValue',
+	  ),
+	  );
+	  }
+	 */
 }
