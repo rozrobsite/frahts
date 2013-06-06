@@ -227,7 +227,24 @@
 							</li>
 						</ul>
 					</li>
+					
 					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Организации
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/organization/formOrganizations">
+									Формы юридических лиц
+								</a>
+							</li>
+						</ul>
+					</li>					
+					
+					
+<!--					<li>
 						<a href="#" class='light toggle-collapsed'>
 							<div class="ico"><i class="icon-th-large icon-white"></i></div>
 							Новости
@@ -245,7 +262,7 @@
 								</a>
 							</li>
 						</ul>
-					</li>
+					</li>-->
 					<li>
 						<a href="#" class='light toggle-collapsed'>
 							<div class="ico"><i class="icon-th-large icon-white"></i></div>
