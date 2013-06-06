@@ -176,14 +176,14 @@ $this->breadcrumbs = array(
 									</td>
 									<td class="fileInfo">
 										<?php /* href="/vehicle/view/<?php echo $vehicle->id ?>" title=""*/ ?>
-										<a href="javascript:void(0)">
+										<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
 											<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . " " . $vehicle->modeli->name ?>,
 																				<br/>номер: <?php echo $vehicle->license_plate ?>
 										</a><br/>
 										<strong>Добавлен:</strong><br/>
 										<span>
-											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $vehicle->updated_at); ?>&nbsp;
-											<?php echo date('H:i', $vehicle->updated_at); ?>
+											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->updated_at); ?>&nbsp;
+											<?php echo Yii::app()->dateFormatter->format('HH:mm', $vehicle->updated_at); ?>
 										</span>
 									</td>
 									<td class="fileInfo">

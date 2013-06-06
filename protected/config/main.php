@@ -27,18 +27,18 @@ return array(
 			'password' => '123456',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters' => array('127.0.0.1', '::1'),
-			 'generatorPaths' => array(
+			'generatorPaths' => array(
 				'bootstrap.gii'
-			 ),
+			),
 		),
 		'admin' => array(
-			'layout'=>'application.modules.admin.views.layouts.main',
+			'layout' => 'application.modules.admin.views.layouts.main',
 			'preload' => array('bootstrap'),
-				'components' => array(
-					'bootstrap' => array(
-						'class' => 'ext.bootstrap.components.Bootstrap',
-					),
+			'components' => array(
+				'bootstrap' => array(
+					'class' => 'ext.bootstrap.components.Bootstrap',
 				),
+			),
 		),
 	),
 	// application components
@@ -124,6 +124,12 @@ return array(
 			'driver' => 'GD',
 			// ImageMagick setup path
 			'params' => array('directory' => '/imagemagick'),
+		),
+		'curl' => array(
+			'class' => 'application.extensions.curl.Curl',
+			'options' => array(
+				'timeout' => 0,
+			),
 		),
 //		'clientScript' => array(
 //			'scriptMap' => array(

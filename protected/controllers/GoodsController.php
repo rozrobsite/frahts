@@ -8,6 +8,8 @@ class GoodsController extends FrahtController
 
 		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
 			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+
+		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
 
 	public function actionIndex()
@@ -49,7 +51,7 @@ class GoodsController extends FrahtController
 		{
 			$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
 		}
-		
+
 		if (!is_object($model))
 			throw new CHttpException(404, 'Страница груза не найдена!');
 

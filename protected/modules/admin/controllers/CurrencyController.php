@@ -26,7 +26,7 @@
         }
         public function actionAdd(){
             if(isset($_POST['Currency'])){
-                if(!empty($_POST['Currency'2]['name_ru'])){
+                if(!empty($_POST['Currency']['name_ru'])){
                     $Currency = new Currency();
                     $Currency->name_ru = $_POST['Currency']['name_ru'];
                     $Currency->insert();
