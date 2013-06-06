@@ -1,5 +1,6 @@
 <?php
-$this->pageTitle = Yii::app()->name . ' - Данные о транспортном средстве "' . $model->name . '"';
+$this->pageTitle = Yii::app()->name . ' - Данные о транспортном средстве "' . ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name
+								. ', номер: ' . $model->license_plate . '"';
 $this->breadcrumbs = array(
 	'Данные о транспортном средстве',
 );
@@ -43,7 +44,7 @@ $this->breadcrumbs = array(
                 <div class="inHead">
                     <!--<span class="inLogo"><a href="index.html" title="invoice"><img src="images/newLogo.png" alt="logo" /></a></span>-->
                     <div class="inInfo">
-                        <span class="invoiceNum"><?php echo $model->name ?></span>
+                        <span class="invoiceNum"><?php echo ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name ?></span>
                         <i>Зарегистрирован: <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy H:m', $model->created_at); ?></i>
                     </div>
                     <div class="clear"></div>
@@ -86,13 +87,8 @@ $this->breadcrumbs = array(
 						<span><strong>Вид загрузки:</strong> <?php echo $shipments; ?></span>
 						<span><strong>Разрешения:</strong> <?php echo $permissions; ?></span>
                     </div>
-					<div class="floatR" style="width:50%;height:430px; margin:10px;">
-						<div id="map" style="width:100%;height:430px;">
-
-						</div>
-						<div>
-							<label><strong>Общая длина маршрута: </strong><span id="total_length_route"></span></label>
-						</div>
+					<div class="floatR" style="width:55%;height:430px; margin:10px;">
+						<div id="map" style="width:100%;height:430px;"></div>
 					</div>
                     <div class="inFrom" style="width:30%">
 						<h5>Владелец транспортного средства</h5>
@@ -104,74 +100,105 @@ $this->breadcrumbs = array(
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
                     </div>
-                    <div class="clear"></div>
-                </div>
-
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight">
-                    <thead>
-                        <tr>
-                            <td width="30%">Product</td>
-                            <td width="42%">Descrition</td>
-                            <td width="19%">Discount</td>
-                            <td width="9%">Total</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Concept</td>
-                            <td>Creating project concept and logic</td>
-                            <td>0</td>
-                            <td><strong>$1100</strong></td>
-                        </tr>
-                        <tr>
-                            <td>General design</td>
-                            <td>Design prototype</td>
-                            <td>0</td>
-                            <td><strong>$2000</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Front end development</td>
-                            <td>Coding and connecting front end</td>
-                            <td>0</td>
-                            <td><strong>$1600</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Database</td>
-                            <td>Creating and connecting database</td>
-                            <td>0</td>
-                            <td><strong>$890</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div>
-                    <div class="inFrom">
-                        <h5>Payment method: <i class="red">Wire transfer</i></h5>
-                        <span>Bank account #</span>
-                        <span>SWIFT code</span>
-                        <span>IBAN</span>
-                        <span>Billing address</span>
-                        <span>Name</span>
+                    <?php /*
+					<div class="inFrom" style="width:100%">
+						<h5>Дополнительное описание</h5>
+						<p>
+							<?php echo $model->description; ?>
+						</p>
                     </div>
-
-                    <div class="total">
-                        <span>Amount Due</span>
-                        <strong class="red">$00.00</strong>
-                    </div>
+					 *
+					 */?>
                     <div class="clear"></div>
                 </div>
-
-                <div class="inFooter">
-                    <div class="footnote">Thank you very much for choosing us. It was pleasure to work with you.</div>
-                    <ul class="cards">
-                        <li class="discover"><a href="#"></a></li>
-                         <li class="visa"><a href="#"></a></li>
-                         <li class="mc"><a href="#"></a></li>
-                         <li class="pp"><a href="#"></a></li>
-                         <li class="amex"><a href="#"></a></li>
-                    </ul>
-                    <div class="clear"></div>
-                </div>
+				<?php /* ?>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
+					<tr>
+						<td>
+							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+						</td>
+						<td>
+							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+						</td>
+						<td>
+							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+						</td>
+						<td>
+							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+						</td>
+					</tr>
+				</table>
+				<?php */ ?>
+				<?php if ($model->user->vehicles && count($model->user->vehicles) > 1): ?>
+					<div class="inFrom" style="width:100%">
+						<h5>Другие транспортные средства этого пользователя</h5>
+					</div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
+						<thead>
+							<tr>
+								<td width="10%">Фото</td>
+								<td width="25%">Название</td>
+								<td width="40%">Расположение</td>
+								<td width="25%">Характеристики</td>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($model->user->vehicles as $vehicle): ?>
+								<?php if (!$vehicle->is_deleted && $vehicle->id != $model->id): ?>
+									<tr>
+										<td>
+											<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
+												<?php $image = isset($vehicle->photos[0])
+													? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small
+													: '/images/nophoto.jpg' ?>
+												<img src="<?php echo $image; ?>" alt="" />
+											</a>
+										</td>
+										<td>
+											<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
+												<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . " " . $vehicle->modeli->name ?>,
+											</a><br/>
+											<strong>Добавлен:</strong><br/>
+											<span>
+												<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->updated_at); ?>&nbsp;
+												<?php echo Yii::app()->dateFormatter->format('HH:mm', $vehicle->updated_at); ?>
+											</span>
+										</td>
+										<td>
+											<?php if ($vehicle->city_id): ?>
+											<span>
+												<?php echo $vehicle->countries->name_ru . ' - ' . (!empty($vehicle->countriesTo->name_ru) ? $vehicle->countriesTo->name_ru : 'Любая'); ?>
+											</span>
+											<span>
+												<?php echo $vehicle->regions->name_ru . ' - ' . (!empty($vehicle->regionsTo->name_ru) ? $vehicle->regionsTo->name_ru : 'Любая'); ?>
+											</span>
+											<span>
+												<?php echo $vehicle->cities->name_ru . ' - ' . (!empty($vehicle->citiesTo->name_ru) ? $vehicle->citiesTo->name_ru : 'Любой'); ?>
+											</span>
+											<span>
+												<?php if ($vehicle->date_from && $vehicle->date_to): ?>
+													c <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_from); ?> по <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_to); ?>
+												<?php endif; ?>
+											</span>
+											<?php endif; ?>
+										</td>
+										<td>
+											<span><strong>Тип кузова: </strong>
+												<?php echo $vehicle->bodyType->name_ru ?>
+											</span>
+											<span><strong>Вид загрузки: </strong>
+												<?php echo $vehicle->shipmentsNames ?>
+											</span>
+											<span><strong>Объем кузова: </strong>
+												<?php echo $vehicle->body_capacity ?> м&sup3;
+											</span>
+										</td>
+									</tr>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				<?php endif; ?>
             </div>
         </div>
 	</div>

@@ -166,8 +166,7 @@ $this->breadcrumbs = array(
 							<?php foreach ($vehicles as $vehicle): ?>
 								<tr>
 									<td>
-										<?php /* href="/vehicle/view/<?php echo $vehicle->id ?>" title=""*/ ?>
-										<a href="javascript:void(0)">
+										<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
 											<?php $image = isset($vehicle->photos[0])
 												? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small
 												: '/images/nophoto.jpg' ?>
@@ -175,7 +174,6 @@ $this->breadcrumbs = array(
 										</a>
 									</td>
 									<td class="fileInfo">
-										<?php /* href="/vehicle/view/<?php echo $vehicle->id ?>" title=""*/ ?>
 										<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
 											<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . " " . $vehicle->modeli->name ?>,
 																				<br/>номер: <?php echo $vehicle->license_plate ?>

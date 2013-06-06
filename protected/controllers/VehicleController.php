@@ -202,9 +202,12 @@ class VehicleController extends FrahtController {
 		$countPhotos = Photos::model()->count('vehicle_id = ' . (int) $vehicle_id);
 		$data = array_slice($data, 0, Photos::MAX_UPLOAD_FILES - $countPhotos);
 
+		$count = 0;
 		foreach ($data as $photo) {
 			$photoPath = Yii::app()->params['files']['tmp'] . $photo;
+			echo $photoPath."<br/>";
 			$image = Yii::app()->image->load($photoPath);
+
 			if (!$image)
 				continue;
 

@@ -185,7 +185,7 @@ $this->breadcrumbs = array(
 					</tr>
 				</table>
 				<?php */ ?>
-				<?php if ($model->user->goods): ?>
+				<?php if ($model->user->goods && count($model->user->goods) > 1): ?>
 					<div class="inFrom" style="width:100%">
 						<h5>Еще доступные грузы этого пользователя</h5>
 					</div>
@@ -200,7 +200,7 @@ $this->breadcrumbs = array(
 						</thead>
 						<tbody>
 							<?php foreach($model->user->goods as $oneGood): ?>
-								<?php if (!$oneGood->is_deleted && $oneGood->date_to >= time()): ?>
+								<?php if (!$oneGood->is_deleted && $oneGood->date_to >= time() && $oneGood->id != $model->id): ?>
 									<tr>
 										<td>
 											<span>
