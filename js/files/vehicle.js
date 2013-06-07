@@ -40,7 +40,7 @@ var makes =
 	}
 };
 
-var vehicle = 
+var vehicle =
 {
 	deleteSearch: function()
 	{
@@ -54,7 +54,7 @@ var vehicle =
 						if(response == null) return;
 
 						window.location.reload();
-							
+
 					});
 				}
 			})
@@ -72,17 +72,17 @@ var vehicle =
 						if(response == null) return;
 
 						window.location.reload();
-							
+
 					});
 				}
 			})
 		});
 	},
-	
+
 	deleteBase: function()
 	{
 		if (!$('.vehicleDeleteBase').length) return;
-		
+
 		$('.vehicleDeleteBase').each(function(e){
 			$(this).on('click', function(){
 				if (confirm('Вы действительно хотите удалить это транспортное средство из базы? Внимание! Данные будут полностью удалены и востановлению не подлежат!'))
@@ -93,69 +93,69 @@ var vehicle =
 						if(response == null) return;
 
 						window.location.reload();
-							
+
 					});
 				}
 			})
 		});
 	},
-	
+
 	deleteManySearch: function()
 	{
 		if (!$('#vehicleDeleteSearchAction').length) return;
-		
+
 		$('#vehicleDeleteSearchAction').on('change', function(e){
 			if ($(this).val() != 1)
 			{
 				return;
 			}
-			
+
 			var checkedIds = '';
 			$('.vehicleChecked').each(function(e){
 				checkedIds += $(this).attr('checked') ? $(this).data('id') + ',' : '';
 			});
-			
+
 			if (checkedIds == '') return;
-			
+
 			$.post('/makemodel/deletemany', {
 				ids: checkedIds
 			}, function(response){
 				if(response == null) return;
 
 				window.location.reload();
-							
+
 			});
 		});
 	},
-	
+
 	returnManySearch: function()
 	{
 		if (!$('#vehicleReturnSearchAction').length) return;
-		
+
 		$('#vehicleReturnSearchAction').on('change', function(e){
 			if ($(this).val() != 1)
 			{
 				return;
 			}
-			
+
 			var checkedIds = '';
 			$('.vehicleChecked').each(function(e){
 				checkedIds += $(this).attr('checked') ? $(this).data('id') + ',' : '';
 			});
-			
+
 			if (checkedIds == '') return;
-			
+
 			$.post('/makemodel/returnmany', {
 				ids: checkedIds
 			}, function(response){
 				if(response == null) return;
 
 				window.location.reload();
-							
+
 			});
 		});
 	},
-	
+
 	adr: function()
 	{
 		$('#permission_4').on('change', function(e){
@@ -173,7 +173,7 @@ var vehicle =
 	}
 };
 
-var photo = 
+var photo =
 {
 	deletePreviewUpload: function(object){
 		var filename = $(object).attr('rel');
@@ -181,7 +181,7 @@ var photo =
 			filename: filename
 		}, function(response){
 			if(response == null) return;
-			if (response) 
+			if (response)
 			{
 				$('.delClass[data-filename="' + filename + '"]').remove();
 			};
@@ -189,7 +189,7 @@ var photo =
 	},
 	deletePhotos: function(){
 		if (!$('.deletePhoto').length) return;
-		
+
 		$('.deletePhoto').each(function(e){
 			$(this).on('click', function(e){
 				var id = $(this).attr('rel');
@@ -197,18 +197,18 @@ var photo =
 					id: id
 				}, function(response){
 					if(response == null) return;
-					if (response) 
+					if (response)
 					{
 						$('.photo_' + id).remove();
 					};
 				});
 			});
-			
+
 		});
 	}
 }
 
-var countryVehicleFrom = 
+var countryVehicleFrom =
 {
 	init: function()
 	{
@@ -222,14 +222,14 @@ var countryVehicleFrom =
 				$('select.regionFrom').html($response);
 
 				updateSelect.update($('select.regionFrom'));
-				
+
 				$('#Vehicle_region_id').change();
 			});
 		});
 	}
 };
 
-var regionVehicleFrom = 
+var regionVehicleFrom =
 {
 	init: function()
 	{
@@ -248,7 +248,7 @@ var regionVehicleFrom =
 	}
 };
 
-var countryVehicleTo = 
+var countryVehicleTo =
 {
 	init: function()
 	{
@@ -262,14 +262,14 @@ var countryVehicleTo =
 				$('select.regionTo').html($response);
 
 				updateSelect.update($('select.regionTo'));
-				
+
 				$('#Vehicle_region_id_to').change();
 			});
 		});
 	}
 };
 
-var regionVehicleTo = 
+var regionVehicleTo =
 {
 	init: function()
 	{
@@ -308,5 +308,23 @@ $(document).ready(function(){
 	vehicle.returnManySearch();
 	vehicle.deleteBase();
 	photo.deletePhotos();
-	
+
+	$('#carousel').infiniteCarousel({
+		transitionSpeed:300,
+		displayTime: 6000,
+		internalThumbnails: false,
+		thumbnailType: 'buttons',
+		customClass: 'myCarousel',
+		progressRingColorOpacity: '0,0,0,.9',
+		progressRingBackgroundOn: false,
+		margin: 10,
+		easeLeft: 'easeOutExpo',
+		easeRight:'easeOutQuart',
+		inView: 1,
+		advance: 1,
+		autoPilot: true,
+		prevNextInternal: true,
+		autoHideCaptions: false
+	});
+
 });

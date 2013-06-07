@@ -20,7 +20,7 @@
 		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <script type="text/javascript" src="/js/plugins/forms/ui.spinner.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.mousewheel.js"></script>
-		
+
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ui.datepicker-ru.js"></script>
 

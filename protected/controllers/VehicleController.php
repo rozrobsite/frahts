@@ -70,7 +70,7 @@ class VehicleController extends FrahtController {
 					$model->update();
 					unset($stringHelper);
 
-					$this->redirect((isset(Yii::app()->session['redirectUrl']) && !empty(Yii::app()->session['redirectUrl'])) ? Yii::app()->session['redirectUrl'] : '/vehicle/active/');
+					$this->redirect((isset(Yii::app()->session['redirectUrl']) && !empty(Yii::app()->session['redirectUrl'])) ? Yii::app()->session['redirectUrl'] : '/vehicle/active');
 				}
 				else {
 					if ($model->isNewRecord)
@@ -205,7 +205,7 @@ class VehicleController extends FrahtController {
 		$count = 0;
 		foreach ($data as $photo) {
 			$photoPath = Yii::app()->params['files']['tmp'] . $photo;
-			echo $photoPath."<br/>";
+
 			$image = Yii::app()->image->load($photoPath);
 
 			if (!$image)
@@ -214,19 +214,21 @@ class VehicleController extends FrahtController {
 			$model = new Photos();
 			$model->vehicle_id = (int) $vehicle_id;
 			if ($model->save()) {
-				$model->size_big = $vehicle_id . '_' . $model->id . '_b' . '_' . $photo;
+				$model->size_big = $vehicle_id . '_' . $model->id . '_b' . '_' . $count . '.' . $image->ext;
 				$image->resize(Yii::app()->params['images']['big']['width'], Yii::app()->params['images']['big']['height']);
-				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_b' . '_' . $photo);
+				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_b' . '_' . $count . '.' . $image->ext);
 
-				$model->size_middle = $vehicle_id . '_' . $model->id . '_m' . '_' . $photo;
+				$model->size_middle = $vehicle_id . '_' . $model->id . '_m' . '_' . $count . '.' . $image->ext;
 				$image->resize(Yii::app()->params['images']['middle']['width'], Yii::app()->params['images']['middle']['height']);
-				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_m' . '_' . $photo);
+				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_m' . '_' . $count . '.' . $image->ext);
 
-				$model->size_small = $vehicle_id . '_' . $model->id . '_s' . '_' . $photo;
+				$model->size_small = $vehicle_id . '_' . $model->id . '_s' . '_' . $count . '.' . $image->ext;
 				$image->resize(Yii::app()->params['images']['small']['width'], Yii::app()->params['images']['small']['height']);
-				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_s' . '_' . $photo);
+				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_s' . '_' . $count . '.' . $image->ext);
 
 				$model->save();
+
+				$count++;
 			}
 
 			@unlink($photoPath);
