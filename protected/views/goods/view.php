@@ -33,6 +33,7 @@
 			myMap.geoObjects.add(route);
 
 			$('#total_length_route').html(route.getHumanLength());
+			$('#total_time_route').html(route.getHumanTime());
 			// С помощью метода getWayPoints() получаем массив точек маршрута
 				// (массив транзитных точек маршрута можно получить с помощью метода getViaPoints)
 				var points = route.getWayPoints();
@@ -145,8 +146,11 @@ $this->breadcrumbs = array(
                     </div>
 					<div class="floatR" style="width:55%;height:430px; margin:10px;">
 						<div id="map" style="width:100%;height:430px;"></div>
-						<div>
+						<div style="float:left;">
 							<label><strong>Общая длина маршрута: </strong><span id="total_length_route"></span></label>
+						</div>
+						<div style="float:right;">
+							<label><strong>Срелнее время в пути: </strong><span id="total_time_route"></span></label>
 						</div>
 					</div>
                     <div class="inFrom" style="width:30%">

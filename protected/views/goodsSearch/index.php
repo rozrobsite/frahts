@@ -166,9 +166,9 @@ $this->breadcrumbs = array(
 							<?php foreach ($vehicles as $vehicle): ?>
 								<tr>
 									<td>
-										<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
+										<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства" style="display: block;">
 											<?php $image = isset($vehicle->photos[0])
-												? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small
+												? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_middle
 												: '/images/nophoto.jpg' ?>
 											<img src="<?php echo $image; ?>" alt="" />
 										</a>
