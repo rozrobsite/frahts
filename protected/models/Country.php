@@ -102,6 +102,7 @@ class Country extends CActiveRecord
 	{
 		return array(
 			'order' => 'order_by, name_ru',
+			//'order' => 'order_by,name_ua'
 		);
 	}
 }

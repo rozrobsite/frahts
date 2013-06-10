@@ -5,11 +5,11 @@
 		<title>Фрахты.com - Административная панель</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-		
+
 		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-		
-<!--		<link rel="stylesheet" href="/css/admin/bootstrap.css">
-		<link rel="stylesheet" href="/css/admin/bootstrap-responsive.css">-->
+
+		<!--		<link rel="stylesheet" href="/css/admin/bootstrap.css">
+				<link rel="stylesheet" href="/css/admin/bootstrap-responsive.css">-->
 		<link rel="stylesheet" href="/css/admin/jquery.fancybox.css">
 		<link rel="stylesheet" href="/css/admin/uniform.default.css">
 		<!--<link rel="stylesheet" href="/css/admin/bootstrap.datepicker.css">-->
@@ -109,7 +109,7 @@
 						<ul class="dropdown-menu pull-right custom custom-dark">
 							<li class='custom'>
 								<div class="title">
-									Pending order #1 
+									Pending order #1
 									<span>Jul 22, 2012 by <a href="#" class='pover' data-title="Hover me" data-content="User information comes here">Hover me</a></span>
 								</div>
 								<div class="action">
@@ -164,11 +164,11 @@
 						<a href="/admin/"><i class="icon-home icon-white"></i></a>
 					</li>
 					<?php foreach ($this->adminBreadcrumbs as $path => $breadcrumbs): ?>
-					<li>
-						<a href="<?php echo $path ?>">
-							<?php echo $breadcrumbs ?>
-						</a>
-					</li>
+						<li>
+							<a href="<?php echo $path ?>">
+								<?php echo $breadcrumbs ?>
+							</a>
+						</li>
 					<?php endforeach; ?>
 				</ul>
 
@@ -227,42 +227,6 @@
 							</li>
 						</ul>
 					</li>
-					
-					<li>
-						<a href="#" class='light toggle-collapsed'>
-							<div class="ico"><i class="icon-th-large icon-white"></i></div>
-							Организации
-							<img src="/images/admin/toggle-subnav-down.png" alt="">
-						</a>
-						<ul class='collapsed-nav closed'>
-							<li>
-								<a href="/admin/organization/formOrganizations">
-									Формы юридических лиц
-								</a>
-							</li>
-						</ul>
-					</li>					
-					
-					
-<!--					<li>
-						<a href="#" class='light toggle-collapsed'>
-							<div class="ico"><i class="icon-th-large icon-white"></i></div>
-							Новости
-							<img src="/images/admin/toggle-subnav-down.png" alt="">
-						</a>
-						<ul class='collapsed-nav closed'>
-							<li>
-								<a href="/admin/news/add">
-									Добавить новость
-								</a>
-							</li>
-							<li>
-								<a href="/admin/news/edit">
-									Редактировать новости
-								</a>
-							</li>
-						</ul>
-					</li>-->
 					<li>
 						<a href="#" class='light toggle-collapsed'>
 							<div class="ico"><i class="icon-th-large icon-white"></i></div>
@@ -282,28 +246,98 @@
 							</li>
 						</ul>
 					</li>
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Типы кузовов
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+
+							<li>
+								<a href="/admin/BodyTypes">
+									Список типов кузовов
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Валюты
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/Currency">
+									Список валют
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Оплата
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/PaymentType">
+									Список типов оплат
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Организации
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/organization/formOrganizations">
+									Формы юридических лиц
+								</a>
+							</li>
+						</ul>
+					</li>						
+                    <li>
+                        <a href="#" class='light toggle-collapsed'>
+                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
+							АЗС
+                            <img src="/images/admin/toggle-subnav-down.png" alt="">
+                        </a>
+                        <ul class='collapsed-nav closed'>
+                            <li>
+                                <a href="/admin/azs">
+                                    Торговые марки
+                                </a>
+                            </li>
+						</ul>
 				</ul>
 			</div>
 			<?php echo $content; ?>
 		</div>
-		
+
 <!--		<script src="/js/admin/less.js"></script>
-		<script src="/js/admin/bootstrap.min.js"></script>
-		<script src="/js/admin/jquery.peity.js"></script>
-		<script src="/js/admin/jquery.uniform.min.js"></script>
-		<script src="/js/admin/bootstrap.timepicker.js"></script>
-		<script src="/js/admin/bootstrap.datepicker.js"></script>
-		<script src="/js/admin/chosen.jquery.min.js"></script>
-		<script src="/js/admin/jquery.fancybox.js"></script>-->
-		<!--<script src="/js/admin/plupload/plupload.full.js"></script>-->
-		<!--<script src="/js/admin/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>-->
-		<!--<script src="/js/admin/jquery.cleditor.min.js"></script>-->
-		<!--<script src="/js/admin/jquery.inputmask.min.js"></script>-->
-		<!--<script src="/js/admin/jquery.tagsinput.min.js"></script>-->
-		<!--<script src="/js/admin/jquery.mousewheel.js"></script>-->
-		<!--<script src="/js/admin/jquery.dataTables.min.js"></script>-->
-		<!--<script src="/js/admin/jquery.dataTables.bootstrap.js"></script>-->
-		<!--<script src="/js/admin/jquery.textareaCounter.plugin.js"></script>-->
+<script src="/js/admin/bootstrap.min.js"></script>
+<script src="/js/admin/jquery.peity.js"></script>
+<script src="/js/admin/jquery.uniform.min.js"></script>
+<script src="/js/admin/bootstrap.timepicker.js"></script>
+<script src="/js/admin/bootstrap.datepicker.js"></script>
+<script src="/js/admin/chosen.jquery.min.js"></script>
+<script src="/js/admin/jquery.fancybox.js"></script>-->
+<!--<script src="/js/admin/plupload/plupload.full.js"></script>-->
+<!--<script src="/js/admin/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>-->
+<!--<script src="/js/admin/jquery.cleditor.min.js"></script>-->
+<!--<script src="/js/admin/jquery.inputmask.min.js"></script>-->
+<!--<script src="/js/admin/jquery.tagsinput.min.js"></script>-->
+<!--<script src="/js/admin/jquery.mousewheel.js"></script>-->
+<!--<script src="/js/admin/jquery.dataTables.min.js"></script>-->
+<!--<script src="/js/admin/jquery.dataTables.bootstrap.js"></script>-->
+<!--<script src="/js/admin/jquery.textareaCounter.plugin.js"></script>-->
 		<script src="/js/admin/jquery.flot.js"></script>
 		<!--<script src="/js/admin/jquery.color.js"></script>-->
 		<script src="/js/admin/jquery.flot.resize.js"></script>

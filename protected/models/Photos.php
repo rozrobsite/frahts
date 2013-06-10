@@ -13,7 +13,7 @@
 class Photos extends CActiveRecord
 {
 	const MAX_UPLOAD_FILES = 9;
-	
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -96,11 +96,11 @@ class Photos extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	
+
 	public function afterDelete()
 	{
 		parent::afterDelete();
-		
+
 		if (file_exists(Yii::app()->params['files']['photos'] . $this->size_big))
 			unlink (Yii::app()->params['files']['photos'] . $this->size_big);
 		if (file_exists(Yii::app()->params['files']['photos'] . $this->size_middle))

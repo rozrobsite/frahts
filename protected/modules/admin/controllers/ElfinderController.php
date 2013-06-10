@@ -11,7 +11,8 @@ class ElfinderController extends AdminController
 					'root' => Yii::getPathOfAlias('webroot') . '/uploads/',
 					'URL' => Yii::app()->baseUrl . '/uploads/',
 					'rootAlias' => 'Main',
-					'mimeDetect' => 'none'
+					'mimeDetect' => 'none',
+					'id' => 'none'
 				)
 			),
 		);
