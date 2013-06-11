@@ -214,6 +214,10 @@ class VehicleController extends FrahtController {
 			$model = new Photos();
 			$model->vehicle_id = (int) $vehicle_id;
 			if ($model->save()) {
+				$model->size_superbig = $vehicle_id . '_' . $model->id . '_sb' . '_' . $count . '.' . $image->ext;
+				$image->resize(Yii::app()->params['images']['superbig']['width'], Yii::app()->params['images']['superbig']['height']);
+				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_sb' . '_' . $count . '.' . $image->ext);
+
 				$model->size_big = $vehicle_id . '_' . $model->id . '_b' . '_' . $count . '.' . $image->ext;
 				$image->resize(Yii::app()->params['images']['big']['width'], Yii::app()->params['images']['big']['height']);
 				$image->save(Yii::app()->params['files']['photos'] . $vehicle_id . '_' . $model->id . '_b' . '_' . $count . '.' . $image->ext);
@@ -242,13 +246,19 @@ class VehicleController extends FrahtController {
 
 		$model = Vehicle::model()->find('slug = "' . $slug . '" AND is_deleted = 0');
 
-		$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
-		$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
+		$shipmentsArray = array();
+		if (!empty($model->shipments)) {
+			$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
+			$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
+		}
 
-		$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
-		$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
-		if (array_key_exists(Permissions::ADR, $permissionsArray)) {
-			$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+		$permissionsArray = array();
+		if (!empty($model->permissions)) {
+			$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
+			$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
+			if (array_key_exists(Permissions::ADR, $permissionsArray)) {
+				$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+			}
 		}
 
 		if (!is_object($model))
@@ -256,8 +266,8 @@ class VehicleController extends FrahtController {
 
 		$this->render('view', array(
 			'model' => $model,
-			'shipments' => join(', ', $shipmentsArray),
-			'permissions' => join(', ', $permissionsArray),
+			'shipments' => $shipmentsArray,
+			'permissions' => $permissionsArray,
 		));
 	}
 

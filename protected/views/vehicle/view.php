@@ -159,7 +159,7 @@ $this->breadcrumbs = array(
 		<div class="widget">
             <div class="invoice">
                 <div class="inHead">
-                    <!--<span class="inLogo"><a href="index.html" title="invoice"><img src="images/newLogo.png" alt="logo" /></a></span>-->
+                    <!--<a href="#" class="buttonS bBrown" style="margin-top: 15px;margin-left: 15px;">Назад</a>-->
                     <div class="inInfo">
                         <span class="invoiceNum"><?php echo ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name ?></span>
                         <i>Зарегистрирован: <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy H:m', $model->created_at); ?></i>
@@ -201,26 +201,33 @@ $this->breadcrumbs = array(
 						<?php endif; ?>
                         <span><strong>Грузоподъемность:</strong> <?php echo $model->bearing_capacity; ?> т.</span>
                         <span><strong>Объем кузова:</strong> <?php echo $model->body_capacity; ?> м&sup3;</span>
-						<span><strong>Вид загрузки:</strong> <?php echo $shipments; ?></span>
-						<span><strong>Разрешения:</strong> <?php echo $permissions; ?></span>
+						<?php if (count($shipments)): ?>
+							<span><strong>Вид загрузки:</strong> <?php echo join(', ', $shipments); ?></span>
+						<?php endif; ?>
+						<?php if (count($permissions)): ?>
+							<span><strong>Разрешения:</strong> <?php echo join(', ', $permissions); ?></span>
+						<?php endif; ?>
                     </div>
 					<div class="floatR" style="width:55%; margin:10px;">
 							<?php if (count($model->photos)): ?>
-								<ul id="carousel">
-									<li><img alt="" src="<?php echo '/' . Yii::app()->params['files']['photos'] . '/' . $model->photos[0]->size_big; ?>" /></li>
-									<?php if (count($model->photos) > 1): ?>
-										<?php for($i = 1; $i < count($model->photos); $i++): ?>
-										<li><img width="376" height="250" alt="" src="<?php echo '/' . Yii::app()->params['files']['photos'] . '/' . $model->photos[$i]->size_big; ?>" /></li>
-										<?php endfor; ?>
-									<?php endif; ?>
-								</ul>
+								<div class="body" align="center">
+									<?php for($i = 0; $i < count($model->photos); $i++): ?>
+										<a href="<?php echo '/' . Yii::app()->params['files']['photos'] . '/' . $model->photos[$i]->size_superbig; ?>" class="lightbox" rel="group">
+											<img width="80" height="80" src="<?php echo '/' . Yii::app()->params['files']['photos'] . '/' . $model->photos[$i]->size_middle; ?>" alt="<?php echo ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name ?>" />
+										</a>
+									<?php endfor; ?>
+								</div>
 							<?php endif; ?>
 							<div id="map" style="width:100%;height:300px;margin-top: 25px;"></div>
 							<div style="float:left;">
-								<label><strong>Общая длина маршрута: </strong><span id="total_length_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
+								<?php if (!empty($model->citiesTo->id)): ?>
+									<label><strong>Общая длина маршрута: </strong><span id="total_length_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
+								<?php endif; ?>
 							</div>
 							<div style="float:right;">
-								<label><strong>Срелнее время в пути: </strong><span id="total_time_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
+								<?php if (!empty($model->citiesTo->id)): ?>
+									<label><strong>Срелнее время в пути: </strong><span id="total_time_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
+								<?php endif; ?>
 							</div>
 					</div>
                     <div class="inFrom" style="width:30%">

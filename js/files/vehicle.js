@@ -309,22 +309,4 @@ $(document).ready(function(){
 	vehicle.deleteBase();
 	photo.deletePhotos();
 
-	$('#carousel').infiniteCarousel({
-		transitionSpeed:300,
-		displayTime: 6000,
-		internalThumbnails: false,
-		thumbnailType: 'buttons',
-		customClass: 'myCarousel',
-		progressRingColorOpacity: '0,0,0,.9',
-		progressRingBackgroundOn: false,
-		margin: 10,
-		easeLeft: 'easeOutExpo',
-		easeRight:'easeOutQuart',
-		inView: 1,
-		advance: 1,
-		autoPilot: true,
-		prevNextInternal: true,
-		autoHideCaptions: false
-	});
-
 });

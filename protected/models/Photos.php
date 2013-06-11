@@ -9,6 +9,7 @@
  * @property string $size_small
  * @property string $size_middle
  * @property string $size_big
+ * @property string $size_superbig
  */
 class Photos extends CActiveRecord
 {
@@ -42,10 +43,10 @@ class Photos extends CActiveRecord
 		return array(
 			array('vehicle_id', 'required'),
 			array('vehicle_id', 'length', 'max'=>20),
-			array('size_small, size_middle, size_big', 'length', 'max'=>32),
+			array('size_small, size_middle, size_big, size_superbig', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, vehicle_id, size_small, size_middle, size_big', 'safe', 'on'=>'search'),
+			array('id, vehicle_id, size_small, size_middle, size_big, size_superbig', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +73,7 @@ class Photos extends CActiveRecord
 			'size_small' => 'Size 37x36',
 			'size_middle' => 'Size 80x80',
 			'size_big' => 'Size 500x250',
+			'size_superbig' => 'Size 800x600',
 		);
 	}
 
@@ -91,6 +93,7 @@ class Photos extends CActiveRecord
 		$criteria->compare('size_small',$this->size_37x36,true);
 		$criteria->compare('size_middle',$this->size_80x80,true);
 		$criteria->compare('size_big',$this->size_500x250,true);
+		$criteria->compare('size_superbig',$this->size_800x600,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -107,5 +110,7 @@ class Photos extends CActiveRecord
 			unlink (Yii::app()->params['files']['photos'] . $this->size_middle);
 		if (file_exists(Yii::app()->params['files']['photos'] . $this->size_small))
 			unlink (Yii::app()->params['files']['photos'] . $this->size_small);
+		if (file_exists(Yii::app()->params['files']['photos'] . $this->size_superbig))
+			unlink (Yii::app()->params['files']['photos'] . $this->size_superbig);
 	}
 }

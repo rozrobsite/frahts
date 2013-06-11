@@ -163,6 +163,10 @@ return array(
 				'height' => 250,
 				'width' => 500,
 			),
+			'superbig' => array(
+				'height' => 800,
+				'width' => 600,
+			),
 			'avatar' => array(
 				'height' => 110,
 				'width' => 108,
