@@ -196,7 +196,7 @@ $this->breadcrumbs = array(
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 						<thead>
 							<tr>
-								<td width="40%">Марщрут</td>
+								<td width="40%">Маршрут</td>
 								<td width="15%">Дата доставки</td>
 								<td width="25%">Груз</td>
 								<td width="20%">Дата добавления</td>
