@@ -74,8 +74,8 @@ function init () {
 		var pointBegin = points.get(0);
 		var pointEnd = points.get(1);
 
-		pointBegin.properties.set('balloonContentBody', 'Точка отправления: <?php echo $model->cityFrom->name_ru ?>, <?php echo $model->regionFrom->name_ru ?>, <?php echo $model->countryFrom->name_ru ?>');
-		pointEnd.properties.set('balloonContentBody', 'Точка прибытия: <?php echo $model->cityTo->name_ru ?>, <?php echo $model->regionTo->name_ru ?>, <?php echo $model->countryTo->name_ru ?>');
+		pointBegin.properties.set('balloonContentBody', $('#point_sent').val());
+		pointEnd.properties.set('balloonContentBody', $('#point_arrival').val());
 
 	//				pointBegin.options.set('draggable', true);
 	//				pointEnd.options.set('draggable', true);

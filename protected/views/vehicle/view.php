@@ -245,3 +245,5 @@ $this->breadcrumbs = array(
 	</div>
 </div>
 <!-- Content ends -->
+<input id="point_sent" type="hidden" value="Текущее положение: <?php echo $model->cities->name_ru ?>, <?php echo $model->regions->name_ru ?>, <?php echo $model->countries->name_ru ?>" />
+<input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
