@@ -126,7 +126,7 @@ $this->breadcrumbs = array(
 								<?php endif; ?>
 							</div>
 					</div>
-                    <div class="inFrom" style="width:30%">
+                    <div class="inFrom" style="width:100%">
 						<h5>Владелец транспортного средства</h5>
 						<span>
 							<strong>
