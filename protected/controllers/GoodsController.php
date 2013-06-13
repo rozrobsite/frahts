@@ -77,6 +77,15 @@ class GoodsController extends FrahtController
 		));
 	}
 
+	public function actionIncidental()
+	{
+		$incidental_goods = isset($_POST['incidental_goods_json']) ? $_POST['incidental_goods_json'] : array();
+
+		echo CJavaScript::jsonEncode($incidental_goods);
+
+		Yii::app()->end();
+	}
+
 	// Uncomment the following methods and override them if needed
 	/*
 	  public function filters()
