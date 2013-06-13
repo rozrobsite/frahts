@@ -1,4 +1,4 @@
-var incidental_goods = [];
+
 
 // Как только будет загружен API и готов DOM, выполняем инициализацию
 ymaps.ready(init);
@@ -34,20 +34,17 @@ function init () {
 		var way = route.getPaths().get(0), segments = way.getSegments();
 
 		for (var i = 0; i < segments.length; i++) {
-			if (segments[i].getLength() > 60000)
+			var coordinates = segments[i].getCoordinates();
+
+			for(var k = 0; k < coordinates.length; k++)
 			{
-				var coordinates = segments[i].getCoordinates();
-				incidental_goods.push(JSON.stringify(coordinates));
-//				for(var i = 0; i < coordinates.length; i++)
-//				{
-//					for(var j = 0; j < coordinates[i].length; j += 2)
-//					{
-//						incidental_goods[i] = [coordinates[i][j], coordinates[i][j + 1]];
-//					}
-//				}
+				for(var j = 0; j < coordinates[k].length; j += 2)
+				{
+					incidental_goods += coordinates[k][j] + ',' + coordinates[k][j + 1] + ';';
+				}
+			}
 
 //				incidental_goods.push(coordinates);
-			}
 		//			if (segments[i].getLength() > 60000)
 		//				count_coordinates_60 += segments[i].getCoordinates().length;
 		//
@@ -58,6 +55,8 @@ function init () {
 		//			}
 
 		}
+
+		sendCoordinates(incidental_goods);
 		//		console.log(count_coordinates);
 		//		console.log(count_coordinates_60);
 
@@ -84,18 +83,15 @@ function init () {
 
 		});
 
-	var str = '';
-	for(var i = 0; i < incidental_goods.length; i++)
-	{
-		str += (incidental_goods[i] + ';');
-	}
-//	var incidental_goods_json = incidental_goods.join(';');
-	console.log(incidental_goods.toString());
+	return false;
+}
+
+function sendCoordinates(coordinates)
+{
 	$.post('/goods/incidental', {
-		incidental_goods: str
+		good_id: good_id,
+		coordinates: coordinates
 	}, function(response){
 
 	});
-
-	return false;
 }

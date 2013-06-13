@@ -15,12 +15,6 @@ class GoodsController extends FrahtController
 
 	public function actionIndex()
 	{
-//		$this->render('index', array(
-//			'vehicles' => $vehicles,
-//			'goodsActive' => Goods::model()->getActive(),
-//			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
-//		));
-
 		$this->render('index');
 	}
 
@@ -67,6 +61,8 @@ class GoodsController extends FrahtController
 		if (!is_object($model))
 				throw new CHttpException(404, 'Страница груза не найдена!');
 
+		Yii::app()->session['good_id'] = (int) $model->id;
+
 		$this->render('view',
 				array(
 			'model' => $model,
@@ -79,9 +75,67 @@ class GoodsController extends FrahtController
 
 	public function actionIncidental()
 	{
-		$incidental_goods = isset($_POST['incidental_goods_json']) ? $_POST['incidental_goods_json'] : array();
+		$coordinatesStr = isset($_POST['coordinates']) ? $_POST['coordinates'] : array();
+		$coordinatesArrayStr = explode(';', $coordinatesStr);
 
-		echo CJavaScript::jsonEncode($incidental_goods);
+		$coordinates = array();
+		foreach ($coordinatesArrayStr as $coordinate)
+		{
+			$tmpArray = explode(',', $coordinate);
+
+			if (!isset($tmpArray[0]) || !isset($tmpArray[1]))
+				continue;
+
+			$coordinates[] = array((float) $tmpArray[0], (float) $tmpArray[0]);
+		}
+
+		$firstCoordinates = array_shift($coordinates);
+
+		if(!$firstCoordinates)
+		{
+			echo CJavaScript::jsonEncode(array('error' => 1));
+
+			Yii::app()->end();
+
+			return;
+		}
+
+		$desiredCoordinates = array($coordinates[0]);
+
+		$currentLatitude = $coordinates[0][0];
+		$currentLongitude = $coordinates[0][1];
+		$countCoordinates = count($coordinates);
+		for ($index = 1; $index < $countCoordinates; $index++)
+		{
+			$distance = FHelper::distance($currentLatitude, $currentLongitude, $coordinates[$index][0], $coordinates[$index][1]);
+			if ($distance < 60)
+				continue;
+
+			$desiredCoordinates[] = $coordinates[$index];
+			$currentLatitude = $coordinates[$index][0];
+			$currentLongitude = $coordinates[$index][1];
+		}
+
+		$desiredCoordinates[] = $coordinates[$countCoordinates - 1];
+
+		$good_id = isset(Yii::app()->session['good_id']) ? (int) Yii::app()->session['good_id'] : 0;
+		$vehicle_id = isset(Yii::app()->session['vehicle_id']) ? (int) Yii::app()->session['vehicle_id'] : 0;
+		$date_from = isset(Yii::app()->session['date_from']) ? Yii::app()->session['date_from'] : '';
+		$date_to = isset(Yii::app()->session['date_to']) ? Yii::app()->session['date_to'] : '';
+
+		if (!$good_id)
+		{
+			echo CJavaScript::jsonEncode(array('error' => 1));
+
+			Yii::app()->end();
+
+			return;
+		}
+
+		$good = Goods::model()->findByPk($good_id);
+		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates, $date_from, $date_to);
+
+		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods));
 
 		Yii::app()->end();
 	}

@@ -14,8 +14,6 @@ class VehicleSearchController extends FrahtController
 
 	public function actionIndex()
 	{
-		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
-
 		$filter = new SearchFilter();
 
 		if (isset($_GET))
@@ -103,6 +101,10 @@ class VehicleSearchController extends FrahtController
 
 		$settings = Settings::model();
 //		$settings->getAutoupdate();
+
+		Yii::app()->session['vehicle_id'] = $filter->vid ? (int) $filter->vid : 0;
+		Yii::app()->session['date_from'] = $filter->date_from;
+		Yii::app()->session['date_to'] = $filter->date_to;
 
 		$this->render('index',
 				array(

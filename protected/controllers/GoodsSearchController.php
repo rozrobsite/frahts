@@ -93,7 +93,7 @@ class GoodsSearchController extends FrahtController
 		);
 
 		$settings = Settings::model();
-		$settings->getAutoupdate();
+//		$settings->getAutoupdate();
 
 		$this->render('index', array(
 			'vid' => $filter->vid,

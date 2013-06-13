@@ -1,5 +1,7 @@
 <script type="text/javascript">
-var myMap, route;
+var myMap, route, incidental_goods = '';
+var good_id = <?php echo isset($model->id) ? $model->id : 0 ?>;
+var vehicle_id = <?php echo $vid ? $vid : 0 ?>;
 var center = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var start = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var end = [<?php echo $model->cityTo->latitude ?>, <?php echo $model->cityTo->longitude ?>];
