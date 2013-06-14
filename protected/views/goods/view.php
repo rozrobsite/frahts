@@ -101,7 +101,7 @@ $this->breadcrumbs = array(
 							<label><strong>Общая длина маршрута: </strong><span id="total_length_route"></span></label>
 						</div>
 						<div style="float:right;">
-							<label><strong>Срелнее время в пути: </strong><span id="total_time_route"></span></label>
+							<label><strong>Среднее время в пути: </strong><span id="total_time_route"></span></label>
 						</div>
 					</div>
                     <div class="inFrom" style="width:30%">

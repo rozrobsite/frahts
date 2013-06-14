@@ -199,7 +199,7 @@ return array(
 			'180' => 180,
 			'200' => 200
 		),
-		'defaultRadius' => 60,
+		'defaultRadius' => 15,
 		'timer' => array(
 			'5' => '5 секунд',
 			'30' => '30 секунд',

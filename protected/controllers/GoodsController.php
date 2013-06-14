@@ -86,7 +86,7 @@ class GoodsController extends FrahtController
 			if (!isset($tmpArray[0]) || !isset($tmpArray[1]))
 				continue;
 
-			$coordinates[] = array((float) $tmpArray[0], (float) $tmpArray[0]);
+			$coordinates[] = array((float) $tmpArray[0], (float) $tmpArray[1]);
 		}
 
 		$firstCoordinates = array_shift($coordinates);
@@ -100,7 +100,8 @@ class GoodsController extends FrahtController
 			return;
 		}
 
-		$desiredCoordinates = array($coordinates[0]);
+//		$desiredCoordinates = array($coordinates[0]);
+		$desiredCoordinates = array();
 
 		$currentLatitude = $coordinates[0][0];
 		$currentLongitude = $coordinates[0][1];
@@ -108,7 +109,7 @@ class GoodsController extends FrahtController
 		for ($index = 1; $index < $countCoordinates; $index++)
 		{
 			$distance = FHelper::distance($currentLatitude, $currentLongitude, $coordinates[$index][0], $coordinates[$index][1]);
-			if ($distance < 60)
+			if ($distance < (Yii::app()->params['defaultRadius'] * 2))
 				continue;
 
 			$desiredCoordinates[] = $coordinates[$index];
@@ -116,7 +117,7 @@ class GoodsController extends FrahtController
 			$currentLongitude = $coordinates[$index][1];
 		}
 
-		$desiredCoordinates[] = $coordinates[$countCoordinates - 1];
+//		$desiredCoordinates[] = $coordinates[$countCoordinates - 1];
 
 		$good_id = isset(Yii::app()->session['good_id']) ? (int) Yii::app()->session['good_id'] : 0;
 		$vehicle_id = isset(Yii::app()->session['vehicle_id']) ? (int) Yii::app()->session['vehicle_id'] : 0;

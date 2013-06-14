@@ -365,7 +365,7 @@ class Goods extends CActiveRecord
 			$date_to = strtotime($filter->date_to);
 		}
 
-		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
+		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' > t.date_to))';
 
 		$result[] = 'date_to >= ' . time();
 
@@ -445,10 +445,18 @@ class Goods extends CActiveRecord
 		{
 			$date_from = strtotime($date_from);
 		}
+		else
+		{
+			$date_from = time();
+		}
 
 		if (!empty($date_to))
 		{
 			$date_to = strtotime($date_to);
+		}
+		else
+		{
+			$date_to = time();
 		}
 
 		$where[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
@@ -488,43 +496,66 @@ class Goods extends CActiveRecord
 
 		$defaultRadius = (int) Yii::app()->params['defaultRadius'];
 
-		$city_id_from = (int)$this->city_id_from;
-		$city = City::model()->findByPk($city_id_from);
+//		$city_id_from = (int)$this->city_id_from;
+//		$city = City::model()->findByPk($city_id_from);
+
+//		$inRadius = array();
+//		$inRadius[] = 't.city_id_from IN ( SELECT id
+//			FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
+//
+//		unset($city);
+
+//		$city_id_to = (int)$this->city_id_to;
+//
+//		$city = City::model()->findByPk($city_id_to);
+//		$inRadius[] = 't.city_id_to IN ( SELECT id
+//			FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
+//
+//		unset($city);
 
 		$inRadius = array();
-		$inRadius[] = 't.city_id_from IN ( SELECT id
-			FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
-
-		unset($city);
-
-		$city_id_to = (int)$this->city_id_to;
-
-		$city = City::model()->findByPk($city_id_to);
-		$inRadius[] = 't.city_id_to IN ( SELECT id
-			FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
-
-		unset($city);
-
 		foreach ($desiredCoordinates as $coord)
 		{
-			$inRadius = array();
 			$inRadius[] = 't.city_id_from IN ( SELECT id
 				FROM city WHERE (6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
 		}
 
-		$where[] = '(' . join(' AND ', $inRadius) . ')';
+		$where[] = '(' . join(' OR ', $inRadius) . ')';
 
 		$criteria = new CDbCriteria();
-		$criteria->where = $where;
-		$criteria->order = "t.updated_at $direction, t.cost DESC";
+		$criteria->condition = join(' AND ', $where);
+		$criteria->order = "t.updated_at DESC, t.cost DESC";
 
 		$goods = $this->findAll($criteria);
 		$count = $this->count($criteria);
 
-		return array(
-			'coords' => $desiredCoordinates,
-			'vehicle' => $vehicle_id,
-		);
+		$result = array();
+		foreach ($goods as $good)
+		{
+			$result[] = array(
+//				'id' => $good->id,
+				'slug' => $good->slug,
+				'name' => $good->name,
+				'date_from' => Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $good->date_from),
+				'date_to' => Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $good->date_to),
+				'country_from' => $good->countryFrom->name_ru,
+				'region_from' => $good->regionFrom->name_ru,
+				'city_from' => $good->cityFrom->name_ru,
+				'country_to' => $good->countryTo->name_ru,
+				'region_to' => $good->regionTo->name_ru,
+				'city_to' => $good->cityTo->name_ru,
+				'weight_exact_value' => $good->weight_exact_value,
+				'weight_from' => $good->weight_from,
+				'weight_to' => $good->weight_to,
+				'capacity_exact_value' => $good->capacity_exact_value,
+				'capacity_from' => $good->capacity_from,
+				'capacity_to' => $good->capacity_to,
+				'lat' => $good->cityFrom->latitude,
+				'ltd' => $good->cityTo->longitude,
+			);
+		}
+
+		return $result;
 	}
 
 }

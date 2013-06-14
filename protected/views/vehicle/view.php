@@ -122,7 +122,7 @@ $this->breadcrumbs = array(
 							</div>
 							<div style="float:right;">
 								<?php if (!empty($model->citiesTo->id)): ?>
-									<label><strong>Срелнее время в пути: </strong><span id="total_time_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
+									<label><strong>Среднее время в пути: </strong><span id="total_time_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
 								<?php endif; ?>
 							</div>
 					</div>
