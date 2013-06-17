@@ -524,7 +524,7 @@ class Goods extends CActiveRecord
 
 		$criteria = new CDbCriteria();
 		$criteria->condition = join(' AND ', $where);
-		$criteria->order = "t.updated_at DESC, t.cost DESC";
+		$criteria->order = "t.updated_at DESC, t.cost DESC LIMIT 0, " . Yii::app()->params['incidients_goods'];
 
 		$goods = $this->findAll($criteria);
 		$count = $this->count($criteria);
@@ -551,7 +551,7 @@ class Goods extends CActiveRecord
 				'capacity_from' => $good->capacity_from,
 				'capacity_to' => $good->capacity_to,
 				'lat' => $good->cityFrom->latitude,
-				'ltd' => $good->cityTo->longitude,
+				'lng' => $good->cityTo->longitude,
 			);
 		}
 

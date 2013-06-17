@@ -1,5 +1,3 @@
-
-
 // Как только будет загружен API и готов DOM, выполняем инициализацию
 ymaps.ready(init);
 
@@ -43,22 +41,7 @@ function init () {
 					incidental_goods += coordinates[k][j] + ',' + coordinates[k][j + 1] + ';';
 				}
 			}
-
-//				incidental_goods.push(coordinates);
-		//			if (segments[i].getLength() > 60000)
-		//				count_coordinates_60 += segments[i].getCoordinates().length;
-		//
-		//			if (segments[i].getLength() > 140000) {
-		//				console.log(segments[i].getLength());
-		//				console.log(segments[i].getCoordinates().length);
-		//				console.log(segments[i].getCoordinates());
-		//			}
-
 		}
-
-		sendCoordinates(incidental_goods);
-		//		console.log(count_coordinates);
-		//		console.log(count_coordinates_60);
 
 		myMap.geoObjects.add(route);
 
@@ -77,6 +60,19 @@ function init () {
 		pointBegin.properties.set('balloonContentBody', $('#point_sent').val());
 		pointEnd.properties.set('balloonContentBody', $('#point_arrival').val());
 
+		var goods = sendCoordinates(incidental_goods);
+
+//		for (var good in goods)
+//		{
+//
+//			var placemark = new YMaps.Placemark(new YMaps.GeoPoint(good.lat,good.lng));
+//			placemark.name = "Москва";
+//			placemark.description = "Столица Российской Федерации";
+//
+//			// Добавляет метку на карту
+//			myMap.addOverlay(placemark);
+//		}
+
 	//				pointBegin.options.set('draggable', true);
 	//				pointEnd.options.set('draggable', true);
 	}, function (error) {
@@ -92,6 +88,39 @@ function sendCoordinates(coordinates)
 		good_id: good_id,
 		coordinates: coordinates
 	}, function(response){
+		response = $.parseJSON(response);
+		if (typeof response.error === 'undefined' || response.error > 0 || typeof response.goods === 'undefined' )
+		{
+			return;
+		}
+
+		var goods = response.goods;
+
+		for (var index in goods)
+		{
+			var placemark = new ymaps.Placemark(
+				[goods[index].lat,goods[index].lng],
+				{
+					//iconContent: goods[index].city_from,
+					balloonContent: goods[index].lat + ' ' + goods[index].lng
+				},
+				{
+					// Опции.
+					// Своё изображение иконки метки.
+					iconImageHref: '/images/truck_icon.png',
+					// Размеры метки.
+					iconImageSize: [32, 37]
+					// Смещение левого верхнего угла иконки относительно
+					// её "ножки" (точки привязки).
+//					iconImageOffset: [-3, -42]
+				}
+			);
+			placemark.name = "Москва";
+			placemark.description = "Столица Российской Федерации";
+
+			// Добавляет метку на карту
+			myMap.geoObjects.add(placemark);
+		}
 
 	});
 }
