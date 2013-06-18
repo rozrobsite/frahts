@@ -111,7 +111,7 @@ function sendCoordinates(coordinates)
 			if (good.capacity_exact_value)
 				content += '<strong>Объем:</strong> ' + good.capacity_exact_value + ' м&sup3;' + '<br/>';
 			else
-				content += '<strong>Вес:</strong> ' + good.capacity_from + ' - ' + good.capacity_TO + ' м&sup3;<br/>';
+				content += '<strong>Вес:</strong> ' + good.capacity_from + ' - ' + good.capacity_to + ' м&sup3;<br/>';
 			content += '<span style="font-style:italic">' + good.owner_name + ', моб.: <strong>' + good.mobile + '</strong><span><br/><br/>';
 			content += '<a href="/goods/view/' + good.slug + '" class="tipS" title="Перейти на страницу груза">Страница груза</a>';
 
