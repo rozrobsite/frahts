@@ -129,25 +129,14 @@ $this->breadcrumbs = array(
                     </div>
                     <div class="clear"></div>
                 </div>
-				<?php /* ?>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 					<tr>
 						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+							<a id="messageDialog_open" href="javascript:void(0)" title="Написать сообщение владельцу груза" class="sideB bSea tipS" style="width: 25%">Сообщение</a>
 						</td>
 					</tr>
 				</table>
-				<?php */ ?>
-				<?php if ($model->user->goods && count($model->user->goods) > 1): ?>
+				<?php /* if ($model->user->goods && count($model->user->goods) > 1): ?>
 					<div class="inFrom" style="width:100%">
 						<h5>Еще доступные грузы этого пользователя</h5>
 					</div>
@@ -223,11 +212,13 @@ $this->breadcrumbs = array(
 							<?php endforeach; ?>
 						</tbody>
 					</table>
-				<?php endif; ?>
+				<?php endif; */ ?>
             </div>
         </div>
 	</div>
 </div>
 <input id="point_sent" type="hidden" value="Точка отправления: <?php echo $model->cityFrom->name_ru ?>, <?php echo $model->regionFrom->name_ru ?>, <?php echo $model->countryFrom->name_ru ?>" />
 <input id="point_arrival" type="hidden" value="Точка прибытия: <?php echo $model->cityTo->name_ru ?>, <?php echo $model->regionTo->name_ru ?>, <?php echo $model->countryTo->name_ru ?>" />
+
+<?php $this->renderPartial('/blocks/popups/_message', array('model' => $model)); ?>
 <!-- Content ends -->

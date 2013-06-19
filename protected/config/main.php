@@ -142,6 +142,7 @@ return array(
 	'params' => array(
 		// this is used in contact page
 		'adminEmail' => 'support@frahts.com',
+		'siteName' => 'frahts.com',
 		'files' => array(
 			'files' => 'uploads/files/',
 			'photos' => 'uploads/photos/',
