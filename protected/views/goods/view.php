@@ -220,5 +220,5 @@ $this->breadcrumbs = array(
 <input id="point_sent" type="hidden" value="Точка отправления: <?php echo $model->cityFrom->name_ru ?>, <?php echo $model->regionFrom->name_ru ?>, <?php echo $model->countryFrom->name_ru ?>" />
 <input id="point_arrival" type="hidden" value="Точка прибытия: <?php echo $model->cityTo->name_ru ?>, <?php echo $model->regionTo->name_ru ?>, <?php echo $model->countryTo->name_ru ?>" />
 
-<?php $this->renderPartial('/blocks/popups/_message', array('model' => $model)); ?>
+<?php $this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::GOOD)); ?>
 <!-- Content ends -->

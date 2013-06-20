@@ -94,7 +94,7 @@ class UserController extends FrahtController
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
-				
+
 				if (isset($_POST['Photos']['avatar']) && !empty($_POST['Photos']['avatar']) && isset($this->user->profiles->id) && $this->user->profiles)
 				{
 //					$photo = $_POST['Photos']['avatar'];
@@ -106,7 +106,7 @@ class UserController extends FrahtController
 					$this->user->profiles->avatar = $this->user->id . '.jpg';
 					$image->resize(Yii::app()->params['images']['avatar']['width'], Yii::app()->params['images']['avatar']['height']);
 					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '.jpg');
-					
+
 					$this->user->profiles->save();
 				}
 			}
@@ -357,10 +357,10 @@ class UserController extends FrahtController
 
 		Yii::app()->end();
 	}
-	
+
 	public function actionFaq()
 	{
-		
+
 
 		$this->render('faq');
 	}
@@ -368,6 +368,16 @@ class UserController extends FrahtController
 	private function addPhotos($path)
 	{
 		if (empty($path)) return;
+	}
+
+	public function actionMessages()
+	{
+		$models = Messages::model()->findAll('receiving_user_id = ' . $this->user->id . ' AND is_deleted = 0');
+
+		if ($this->messages_count)
+			Messages::model()->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
+
+		$this->render('messages', array('models' => $models));
 	}
 
 }

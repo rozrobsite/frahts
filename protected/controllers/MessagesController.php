@@ -16,9 +16,10 @@ class MessagesController extends FrahtController {
 		$params = $_POST;
 		$message = isset($params['message']) ? trim($params['message']) : '';
 		$receiving_id = isset($params['receiving_id']) ? (int) $params['receiving_id'] : 0;
-		$good_id = isset($params['good_id']) ? (int) $params['good_id'] : 0;
+		$object_id = isset($params['object_id']) ? (int) $params['object_id'] : 0;
+		$object_type = isset($params['object_type']) ? (int) $params['object_type'] : 0;
 
-		if (!$receiving_id || !$message || !$good_id) {
+		if (!$receiving_id || !$message || !$object_id || !$object_type) {
 			echo CJavaScript::jsonEncode(array('error' => 1));
 
 			Yii::app()->end();
@@ -36,8 +37,8 @@ class MessagesController extends FrahtController {
 			Yii::app()->end();
 		}
 
-		$good = Goods::model()->findByPk($good_id);
-		if (!$this->sendEmail($model, $good))
+		$object = $object_type == Messages::GOOD ? Goods::model()->findByPk($object_id) : Vehicle::model()->findByPk($object_id);
+		if (!$this->sendEmail($model, $object))
 		{
 			echo CJavaScript::jsonEncode(array('error' => 3));
 
@@ -49,11 +50,13 @@ class MessagesController extends FrahtController {
 		Yii::app()->end();
 	}
 
-	private function sendEmail($model, $good)
+	private function sendEmail($model, $object)
 	{
 		$message = new YiiMailMessage;
-		$message->view = 'messageOwner';
-		$message->setBody(array('model' => $model, 'good' => $good), 'text/plain');
+
+
+		$message->view = get_class($object) == 'Goods' ? 'messageGoodOwner' : 'messageVehicleOwner';
+		$message->setBody(array('model' => $model, 'object' => $object), 'text/plain');
 		$message->subject = Yii::app()->params['siteName'] . ': Сообщение от пользователя';
 		$message->addTo($model->receivingUser->email);
 		$message->from = Yii::app()->params['adminEmail'];

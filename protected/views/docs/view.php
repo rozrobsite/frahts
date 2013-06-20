@@ -38,6 +38,7 @@ $this->breadcrumbs = array(
 
     <!-- Main content -->
     <div class="wrapper">
+		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<div class="fluid">
 			<div class="widget" style="margin-top: 10px;">
 					<div class="invoice">

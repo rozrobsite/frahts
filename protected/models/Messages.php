@@ -17,6 +17,8 @@
  */
 class Messages extends CActiveRecord
 {
+	const GOOD = 1;
+	const VEHICLE = 2;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

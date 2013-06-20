@@ -823,7 +823,8 @@ $(function() {
 				var thisDialog = $(this);
 				var messageText = $('#messageText').val();
 				var receiving_id = $('#messageText').data('receiving-id');
-				var good_id = $('#messageText').data('good-id');
+				var object_type = $('#messageText').data('object-type');
+				var object_id = $('#messageText').data('object-id');
 
 				if (!messageText)
 				{
@@ -835,7 +836,8 @@ $(function() {
 				$.post('/messages/send', {
 					message: messageText,
 					receiving_id: receiving_id,
-					good_id: good_id
+					object_id: object_id,
+					object_type: object_type
 				}, function(response){
 					response = $.parseJSON(response);
 
