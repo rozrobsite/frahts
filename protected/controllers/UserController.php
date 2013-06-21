@@ -107,6 +107,9 @@ class UserController extends FrahtController
 					$image->resize(Yii::app()->params['images']['avatar']['width'], Yii::app()->params['images']['avatar']['height']);
 					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '.jpg');
 
+					$image->resize(Yii::app()->params['images']['avatar']['small_width'], Yii::app()->params['images']['avatar']['small_height']);
+					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '_s.jpg');
+
 					$this->user->profiles->save();
 				}
 			}

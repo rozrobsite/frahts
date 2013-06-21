@@ -28,7 +28,7 @@ class MessagesController extends FrahtController {
 		$model = new Messages();
 		$model->author_id = $this->user->id;
 		$model->receiving_user_id = $receiving_id;
-		$model->message = $message;
+		$model->message = nl2br($message);
 		$model->created_at = time();
 
 		if (!$model->save()) {

@@ -31,6 +31,7 @@
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.resize.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.sparkline.min.js"></script>-->
 
+		<script type="text/javascript" src="/js/plugins/scrollup/jquery.scrollUp.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/tables/jquery.dataTables.js"></script>
 		<!--<script type="text/javascript" src="/js/plugins/tables/jquery.sortable.js"></script>-->
 		<!--<script type="text/javascript" src="/js/plugins/tables/jquery.resizable.js"></script>-->

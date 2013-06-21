@@ -37,89 +37,53 @@ $this->breadcrumbs = array(
 		<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 
-        <div class="widget">
-            <div class="whead">
-                <h6>Messages layout #2</h6>
-                <div class="on_off">
-                    <span class="icon-reload-CW"></span>
-                    <input type="checkbox" name="chbox" />
-                </div>
-                <div class="clear"></div>
-            </div>
-
-            <ul class="messagesTwo">
-                <li class="by_user">
-                    <a href="#" title=""><img src="images/live/face1.png" alt="" /></a>
-                    <div class="messageArea">
-                        <div class="infoRow">
-                            <span class="name"><strong>Jonathan</strong> says:</span>
-                            <span class="time">3 hours ago</span>
-                            <div class="clear"></div>
-                        </div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci.
-                        Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-                    </div>
-                    <div class="clear"></div>
-                </li>
-
-                <li class="by_me">
-                    <a href="#" title=""><img src="images/live/face2.png" alt="" /></a>
-                    <div class="messageArea">
-                        <div class="infoRow">
-                            <span class="name"><strong>Eugene</strong> says:</span>
-                            <span class="time">3 hours ago</span>
-                            <div class="clear"></div>
-                        </div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci.
-                        Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-                    </div>
-                    <div class="clear"></div>
-                </li>
-
-                <li class="by_me">
-                    <a href="#" title=""><img src="images/live/face2.png" alt="" /></a>
-                    <div class="messageArea">
-                        <div class="infoRow">
-                            <span class="name"><strong>Eugene</strong> says:</span>
-                            <span class="time">3 hours ago</span>
-                            <div class="clear"></div>
-                        </div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci.
-                        Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-                    </div>
-                    <div class="clear"></div>
-                </li>
-
-                <li class="by_user">
-                    <a href="#" title=""><img src="images/live/face1.png" alt="" /></a>
-                    <div class="messageArea">
-                        <div class="infoRow">
-                            <span class="name"><strong>Jonathan</strong> says:</span>
-                            <span class="time">3 hours ago</span>
-                            <div class="clear"></div>
-                        </div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci.
-                        Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-                    </div>
-                    <div class="clear"></div>
-                </li>
-
-                <li class="by_me">
-                    <a href="#" title=""><img src="images/live/face2.png" alt="" /></a>
-                    <div class="messageArea">
-                        <div class="infoRow">
-                            <span class="name"><strong>Eugene</strong> says:</span>
-                            <span class="time">3 hours ago</span>
-                            <div class="clear"></div>
-                        </div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci.
-                        Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-                    </div>
-                    <div class="clear"></div>
-                </li>
-            </ul>
-        </div>
-		
+		<?php if (!count($models)): ?>
+			<div class="fluid" style="text-align: center;margin-top: 50px;">
+				<label style="font-weight: bold; font-size: 16px;">
+					Пользователи пока не написали Вам ни одного сообщения.
+				</label>
+			</div>
+		<?php else: ?>
+			<div class="widget">
+				<div class="whead">
+					<h6>Сообщения от пользователей</h6>
+					<div class="clear"></div>
+				</div>
+				<ul class="messagesOne">
+					<?php $current_user_id = $models[0]->author->id; $class_by_user = 'by_user'; ?>
+					<?php foreach ($models as $model): ?>
+						<?php $divider = $model->author->id == $current_user_id ? false : true; ?>
+						<?php
+							if ($divider && $class_by_user == 'by_user')
+								$class_by_user = 'by_me';
+							elseif ($divider && $class_by_user == 'by_me')
+								$class_by_user = 'by_user';
+						?>
+						<?php if ($divider): ?>
+							<li class="divider"><span></span></li>
+						<?php endif; ?>
+						<li class="<?php echo $class_by_user ?>">
+							<a href="javascript:void(0)"
+							   title="<?php echo $model->author->profiles->fullName(); ?>">
+								<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>"
+									 alt="<?php echo $model->author->profiles->fullName(); ?>" />
+							</a>
+							<div class="messageArea">
+								<span class="aro"></span>
+								<div class="infoRow">
+									<a href="javascript:void(0)"><span class="name"><strong><?php echo $model->author->profiles->fullName(); ?></strong> написал(а):</span></a>
+									<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $model->created_at); ?></span>
+									<div class="clear"></div>
+								</div>
+								<?php echo $model->message; ?>
+							</div>
+							<div class="clear"></div>
+						</li>
+						<?php $current_user_id = $model->author->id; ?>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		<?php endif; ?>
     </div>
 </div>
 

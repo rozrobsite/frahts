@@ -143,6 +143,7 @@ return array(
 		// this is used in contact page
 		'adminEmail' => 'support@frahts.com',
 		'siteName' => 'frahts.com',
+		'imagesPath' => '/images/',
 		'files' => array(
 			'files' => 'uploads/files/',
 			'photos' => 'uploads/photos/',
@@ -171,6 +172,8 @@ return array(
 			'avatar' => array(
 				'height' => 110,
 				'width' => 108,
+				'small_height' => 37,
+				'small_width' => 36,
 			),
 			'allowedExtensions' => array('jpg', 'jpeg', 'png'), // allowed file extensions
 
