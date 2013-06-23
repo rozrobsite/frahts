@@ -13,7 +13,7 @@ class m130620_162532_add_column_to_messaages extends CDbMigration
 	public function down()
 	{
 		echo "m130620_162532_add_column_to_messaages does not support migration down.\n";
-		return false;
+		return true;
 	}
 
 	/*

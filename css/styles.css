@@ -184,7 +184,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', end
 .topNav { float: right; position: relative; }
 .topSearch input[type=submit], .userSearch input[type=submit] { background: url(/images/sprites/sprite.png); }
 
-#footer {
+/*#footer {
 	background: url(/images/backgrounds/top.jpg) repeat-x 0 0;
 	height: 26px;
 	line-height: 26px;
@@ -197,7 +197,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', end
 	bottom: 0;
 	text-align: center;
 }
-#footer .topNav {float:none;}
+#footer .topNav {float:none;}*/
 
 .allrights {
 	margin-left: 50px;

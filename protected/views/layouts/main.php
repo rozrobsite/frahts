@@ -23,6 +23,7 @@
 
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ui.datepicker-ru.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ez-pinned-footer.js"></script>
 
 <!--		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.js"></script>
@@ -81,12 +82,32 @@
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/login.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/vehicleSearch.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/functions.js"></script>
+		
+		<style>
+			#footer {
+				background-color: #000;
+				color: #fff;
+				font-size: 12px;
+				z-index: 1000;
+				text-align: center;
+			}
+		</style>
+
+		<script>
+//			$(window).load(function() {
+//				$("#footer").pinFooter();
+//			});
+//
+//			$(window).resize(function() {
+//				$("#footer").pinFooter();
+//			});
+		</script>
     </head>
     <body>
 		<!-- Top line begins -->
 		<div id="top">
 			<div class="wrapper">
-				<a href="/" title="" class="logo main"><img src="/images/logo.png" alt="frahts.com - Мир грузоперевозок!" /></a>
+				<a href="/" title="" class="logo main"><img src="/images/logo_2.png" alt="frahts.com - Мир грузоперевозок!" /></a>
 				<!-- Right top nav -->
 				<div class="topNav">
 					<?php if (Yii::app()->user->isGuest): ?>
@@ -123,10 +144,7 @@
 		?>
 
 <!--		<div id="footer">
-			<div class="wrapper">
-				<div class="topNav">
 					Все права защищены &copy; <?php echo date('Y', time()); ?>, <?php echo $_SERVER['HTTP_HOST'] ?>: Фрахты.com - Мир грузоперевозок
-				</div>
 
 				<div class="clear"></div>
 			</div>

@@ -13,6 +13,7 @@ $this->breadcrumbs = array(
 		<img src="/images/maps.png" alt="frahts.com - Мир грузоперевозок!" />
 	</div>
 </div>-->
+
 <div id="content" class="mainMaps">
 	<div class="wrapper" style="text-align: center;">
 		<div class="leftBlock">
