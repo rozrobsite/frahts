@@ -35,6 +35,8 @@ class MainController extends Controller
 		if (isset(Yii::app()->user->id))
 			$this->user = Users::model()->findByPk(Yii::app()->user->id);
 		
+		$this->mainPage = true;
+		
 		$this->render('index');
 	}
 
