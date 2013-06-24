@@ -375,7 +375,9 @@ class UserController extends FrahtController
 
 	public function actionMessages()
 	{
-		$models = Messages::model()->findAll('receiving_user_id = ' . $this->user->id . ' AND is_deleted = 0');
+		$type = isset($_GET['id']) ? (int)$_GET['id']: Messages::TYPE_LAST;
+//		$models = Messages::model()->findAll('receiving_user_id = ' . $this->user->id . ' AND is_deleted = 0');
+		$models = Messages::model()->getMessages($this->user, $type);
 
 		if ($this->messages_count)
 			Messages::model()->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);

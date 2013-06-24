@@ -19,6 +19,10 @@ class Messages extends CActiveRecord
 {
 	const GOOD = 1;
 	const VEHICLE = 2;
+	const TYPE_LAST = 1;
+	const TYPE_WEEK = 2;
+	const TYPE_MONTH = 3;
+	const TYPE_3_MONTH = 4;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -104,5 +108,40 @@ class Messages extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function getMessages($user, $type)
+	{
+		$criteria = new CDbCriteria();
+		
+		switch($type)
+		{
+			case self::TYPE_LAST:
+				$criteria->condition = 'receiving_user_id = ' . $user->id . ' AND is_deleted = 0';
+				$criteria->limit = Yii::app()->params['messages_by_page'];
+				break;
+			case self::TYPE_WEEK:
+				$criteria->condition = 'receiving_user_id = ' . $user->id . ' 
+					AND is_deleted = 0 
+					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 7 DAY)
+					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+				break;
+			case self::TYPE_MONTH:
+				$criteria->condition = 'receiving_user_id = ' . $user->id . ' 
+					AND is_deleted = 0 
+					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH)
+					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+				break;
+			case self::TYPE_3_MONTH:
+				$criteria->condition = 'receiving_user_id = ' . $user->id . ' 
+					AND is_deleted = 0 
+					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 3 MONTH)
+					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+				break;
+		}
+		
+		$criteria->order = 'created_at DESC';
+		
+		return $this->findAll($criteria);
 	}
 }

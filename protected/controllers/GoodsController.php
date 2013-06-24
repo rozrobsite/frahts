@@ -7,8 +7,8 @@ class GoodsController extends FrahtController
 	{
 		parent::__construct($id, $module);
 
-		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
-				throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+//		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
+//				throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 
 		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}

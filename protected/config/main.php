@@ -215,5 +215,6 @@ return array(
 			'300' => '5 минут',
 		),
 		'incidients_goods' => 30,
+		'messages_by_page' => 10,
 	),
 );

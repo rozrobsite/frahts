@@ -40,13 +40,27 @@ $this->breadcrumbs = array(
 		<?php if (!count($models)): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">
-					Пользователи пока не написали Вам ни одного сообщения.
+					Пользователи пока не написали Вам сообщений.
 				</label>
 			</div>
 		<?php else: ?>
 			<div class="widget">
 				<div class="whead">
 					<h6>Сообщения от пользователей</h6>
+					<div class="on_off">
+						<ul class="navi nav-pills">
+							<li class="dropdown">
+							  <a class="dropdown-toggle" data-toggle="dropdown">Показать сообщения<b class="caret"></b></a>
+							  <ul class="dropdown-menu">
+								  <li><a href="/user/messages/<?php echo Messages::TYPE_LAST ?>">Последние</a></li>
+								  <li><a href="/user/messages/<?php echo Messages::TYPE_WEEK ?>">За неделю</a></li>
+								  <li><a href="/user/messages/<?php echo Messages::TYPE_MONTH ?>">За месяц</a></li>
+								  <li><a href="/user/messages/<?php echo Messages::TYPE_3_MONTH ?>">За 3 месяца</a></li>
+							  </ul>
+							</li>
+						</ul>
+						
+					</div>
 					<div class="clear"></div>
 				</div>
 				<ul class="messagesOne">
