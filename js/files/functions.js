@@ -865,6 +865,49 @@ $(function() {
         return false;
     });
 
+	$('#message_remove_dialog').dialog({
+		autoOpen: false,
+		modal: true,
+        width: 400,
+        buttons: {
+            "Да": function () {
+				var message_id = $(this).attr('data-message-id');
+				var thisDialog = $(this);
+
+				$.post('/messages/delete', {
+					message_id: message_id
+				}, function(response){
+					response = $.parseJSON(response);
+
+					if (typeof response.error === 'undefined' || response.error > 0)
+					{
+						thisDialog.dialog("close");
+
+						$.jGrowl('Сообщение не было удалено. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+						return;
+					}
+
+					$('.message_' + message_id).remove();
+
+					thisDialog.dialog("close");
+
+					$.jGrowl('Сообщение удалено. Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				});
+                $(this).dialog("close");
+            },
+            "Нет": function () {
+                $(this).dialog("close");
+            }
+        }
+	});
+	$('.message_remove_open').on('click', function () {
+		$('#message_remove_dialog').attr('data-message-id', $(this).attr('data-message-id'));
+		$('#message_remove_dialog').dialog('open');
+
+		return false;
+    });
+
     $('#formDialog').dialog({
         autoOpen: false,
         width: 400,

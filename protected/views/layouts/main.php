@@ -27,7 +27,7 @@
 
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ui.datepicker-ru.js"></script>
-		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ez-pinned-footer.js"></script>
+		<!--<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ez-pinned-footer.js"></script>-->
 
 <!--		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.js"></script>
@@ -87,7 +87,7 @@
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/login.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/vehicleSearch.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/functions.js"></script>
-		
+
 		<style>
 /*			#footer {
 				background-color: #000;
@@ -111,7 +111,7 @@
     <body <?php if (isset($this->mainPage) && $this->mainPage): ?>class="main-body" <?php endif; ?>>
 		<?php if (isset($this->mainPage) && $this->mainPage): ?>
 			<img src="/images/bg.jpg" class="bg" />
-			<div id="wrapper">  
+			<div id="wrapper">
 				<div id="header">
 					<div id="logo">
 						<a href="/">
@@ -125,40 +125,40 @@
 					<div id="social">
 						<div class="share42init" data-url="http://www.frahts.com" data-title="Фрахты.com - Мир грузоперевозок" data-description="Сайт грузоперевозок" data-image="http://gruz2.host5841.de1.dp10.ru/images/logo.png"></div>
 						<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/share42/share42.js"></script>
-					</div>                                        
+					</div>
 				</div>
 
 				<?php echo $content; ?>
-			</div> 
+			</div>
 
-			<div id="footer"> 
+			<div id="footer">
 				<div id="block-text">
 					<div class="text">МИР<br /> ГРУЗОПЕРЕВОЗОК <span>ФРАХТЫ</span>.com</div>
 				</div>
 
 				<div id="bottom-block">
-					<div class="grey inline-block">                        
+					<div class="grey inline-block">
 						<span class="num left">1</span>
 						<span class="vertical-line left"></span>
-						<p class="white"><span class="turquoise">Вы профессиональный перевозчик</span> и хотите иметь полную информацию о грузах для Ваших машин?</p>                        
+						<p class="white"><span class="turquoise">Вы профессиональный перевозчик</span> и хотите иметь полную информацию о грузах для Ваших машин?</p>
 					</div>
 
 					<div class="grey inline-block">
 						<span class="num left">2</span>
 						<span class="vertical-line left"></span>
-						<p class="white"><span class="turquoise">Вы грузовладелец</span> и хотите быть уверенны в качественной и своевременной перевозке Вашего груза?</p>                                                            
+						<p class="white"><span class="turquoise">Вы грузовладелец</span> и хотите быть уверенны в качественной и своевременной перевозке Вашего груза?</p>
 					</div>
 
 					<div class="grey inline-block">
 						<span class="num left">3</span>
 						<span class="vertical-line left"></span>
-						<p class="white"><span class="turquoise">Вы логистический оператор,</span> представляете интересы профессиональных грузоперевозчиков и грузоотправителей?</p>                                                            
-					</div> 
+						<p class="white"><span class="turquoise">Вы логистический оператор,</span> представляете интересы профессиональных грузоперевозчиков и грузоотправителей?</p>
+					</div>
 				</div>
 				<div class="footer-text-container">
 					<p class="footer-text turquoise">Фрахты.com созданы для ВАС!</p>
 				</div>
-			</div> 
+			</div>
 		<?php else: ?>
 		<!-- Top line begins -->
 			<div id="top">

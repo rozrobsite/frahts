@@ -59,7 +59,7 @@ $this->breadcrumbs = array(
 							  </ul>
 							</li>
 						</ul>
-						
+
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -76,7 +76,7 @@ $this->breadcrumbs = array(
 						<?php if ($divider): ?>
 							<li class="divider"><span></span></li>
 						<?php endif; ?>
-						<li class="<?php echo $class_by_user ?>">
+						<li class="<?php echo $class_by_user ?> message_<?php echo $model->id ?>">
 							<a href="javascript:void(0)"
 							   title="<?php echo $model->author->profiles->fullName(); ?>">
 								<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>"
@@ -86,10 +86,11 @@ $this->breadcrumbs = array(
 								<span class="aro"></span>
 								<div class="infoRow">
 									<a href="javascript:void(0)"><span class="name"><strong><?php echo $model->author->profiles->fullName(); ?></strong> написал(а):</span></a>
+									<a href="#" style="color:#a95151;margin-left: 30px" class="tipS message-remove message_remove_open" title="Удалить" data-message-id="<?php echo $model->id ?>"><img src="/images/elements/other/fileError.png" /></a>
 									<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $model->created_at); ?></span>
 									<div class="clear"></div>
 								</div>
-								<?php echo $model->message; ?>
+								<?php echo $model->message; ?><br/>
 							</div>
 							<div class="clear"></div>
 						</li>
@@ -100,5 +101,5 @@ $this->breadcrumbs = array(
 		<?php endif; ?>
     </div>
 </div>
-
+<?php $this->renderPartial('/blocks/popups/_messageRemove'); ?>
 <!-- Content ends -->

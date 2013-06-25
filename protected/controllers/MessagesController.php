@@ -50,6 +50,25 @@ class MessagesController extends FrahtController {
 		Yii::app()->end();
 	}
 
+	public function actionDelete()
+	{
+		$message_id = isset($_POST['message_id']) ? (int)$_POST['message_id'] : 0;
+
+		if (empty($message_id))
+		{
+			echo CJavaScript::jsonEncode(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		Messages::model()->updateByPk($message_id, array('is_deleted' => 1));
+
+		echo CJavaScript::jsonEncode(array('error' => 0));
+
+		Yii::app()->end();
+
+	}
+
 	private function sendEmail($model, $object)
 	{
 		$message = new YiiMailMessage;
