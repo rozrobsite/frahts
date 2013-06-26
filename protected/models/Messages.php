@@ -109,11 +109,11 @@ class Messages extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	
+
 	public function getMessages($user, $type)
 	{
 		$criteria = new CDbCriteria();
-		
+
 		switch($type)
 		{
 			case self::TYPE_LAST:
@@ -121,27 +121,56 @@ class Messages extends CActiveRecord
 				$criteria->limit = Yii::app()->params['messages_by_page'];
 				break;
 			case self::TYPE_WEEK:
-				$criteria->condition = 'receiving_user_id = ' . $user->id . ' 
-					AND is_deleted = 0 
+				$criteria->condition = 'receiving_user_id = ' . $user->id . '
+					AND is_deleted = 0
 					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 7 DAY)
 					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
 				break;
 			case self::TYPE_MONTH:
-				$criteria->condition = 'receiving_user_id = ' . $user->id . ' 
-					AND is_deleted = 0 
+				$criteria->condition = 'receiving_user_id = ' . $user->id . '
+					AND is_deleted = 0
 					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH)
 					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
 				break;
 			case self::TYPE_3_MONTH:
-				$criteria->condition = 'receiving_user_id = ' . $user->id . ' 
-					AND is_deleted = 0 
+				$criteria->condition = 'receiving_user_id = ' . $user->id . '
+					AND is_deleted = 0
 					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 3 MONTH)
 					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
 				break;
 		}
-		
+
 		$criteria->order = 'created_at DESC';
-		
+
 		return $this->findAll($criteria);
+	}
+
+	public function getReceivingUsers($currentUser)
+	{
+		$users = array();
+		foreach ($currentUser->messagesReceiving as $message)
+		{
+			if ($currentUser->id == $message->author->id)
+			{
+				$users[] = $message->author;
+			}
+			if ($currentUser->id == $message->receivingUser->id)
+			{
+				$users[] = $message->receivingUser;
+			}
+		}
+		
+		$result = array();
+		$currentUserId = -1;
+		foreach ($users as $user)
+		{
+			if ($currentUserId != $user->id)
+			{
+				$result[] = $user;
+				$currentUserId = $user->id;
+			}
+		}
+
+		return $result;
 	}
 }

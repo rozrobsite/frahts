@@ -363,8 +363,6 @@ class UserController extends FrahtController
 
 	public function actionFaq()
 	{
-
-
 		$this->render('faq');
 	}
 
@@ -375,14 +373,27 @@ class UserController extends FrahtController
 
 	public function actionMessages()
 	{
-		$type = isset($_GET['id']) ? (int)$_GET['id']: Messages::TYPE_LAST;
-//		$models = Messages::model()->findAll('receiving_user_id = ' . $this->user->id . ' AND is_deleted = 0');
-		$models = Messages::model()->getMessages($this->user, $type);
+		$usersModel = Users::model();
+		$messagesModel = Messages::model();
 
 		if ($this->messages_count)
-			Messages::model()->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
+			$messagesModel->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
 
-		$this->render('messages', array('models' => $models));
+		$user_id = isset($_GET['user']) ? (int) $_GET['user'] : 0;
+//		$type = isset($_GET['type']) ? (int)$_GET['type']: Messages::TYPE_LAST;
+//		$models = Messages::model()->findAll('receiving_user_id = ' . $this->user->id . ' AND is_deleted = 0');
+
+
+		$receivingUser = $usersModel->findByPk($user_id);
+		$receivingUsers = $messagesModel->getReceivingUsers($this->user);
+//		$models = Messages::model()->getMessages($this->user, $type);
+
+
+//		$this->render('messages', array('models' => $models));
+		$this->render('messages', array(
+			'receivingUser' => $receivingUser,
+			'receivingUsers' => $receivingUsers,
+			));
 	}
 
 }

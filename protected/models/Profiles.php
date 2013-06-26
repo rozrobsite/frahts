@@ -151,4 +151,9 @@ class Profiles extends CActiveRecord
 		return $this->last_name . ' ' . $this->first_name . ' ' . $this->middle_name;
 	}
 
+	public function shortName()
+	{
+		return $this->first_name . ' ' . $this->last_name;
+	}
+
 }

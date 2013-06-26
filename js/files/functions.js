@@ -813,57 +813,57 @@ $(function() {
         return false;
     });
 
-	$('#messageDialog').dialog({
-        autoOpen: false,
-        width: 550,
-        buttons: {
-            "Отправить": function () {
-				$('.error').hide();
-
-				var thisDialog = $(this);
-				var messageText = $('#messageText').val();
-				var receiving_id = $('#messageText').data('receiving-id');
-				var object_type = $('#messageText').data('object-type');
-				var object_id = $('#messageText').data('object-id');
-
-				if (!messageText)
-				{
-					$('.error').show();
-
-					return;
-				}
-
-				$.post('/messages/send', {
-					message: messageText,
-					receiving_id: receiving_id,
-					object_id: object_id,
-					object_type: object_type
-				}, function(response){
-					response = $.parseJSON(response);
-
-					if (typeof response.error === 'undefined' || response.error > 0)
-					{
-						thisDialog.dialog("close");
-
-						$.jGrowl('Ваше сообщение не отправлено. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
-
-						return;
-					}
-
-					thisDialog.dialog("close");
-
-					$.jGrowl('Ваше сообщение отправлено. Спасибо.', { header: 'Сообщение', life: 15000, theme: 'default' });
-				});
-            },
-            "Закрыть": function () {
-                $(this).dialog("close");
-            }
-        }
-    });
-	$('#messageDialog_open').click(function () {
-        $('#messageDialog').dialog('open');
-        return false;
-    });
+//	$('#messageDialog').dialog({
+//        autoOpen: false,
+//        width: 550,
+//        buttons: {
+//            "Отправить": function () {
+//				$('.error').hide();
+//
+//				var thisDialog = $(this);
+//				var messageText = $('#messageText').val();
+//				var receiving_id = $('#messageText').data('receiving-id');
+//				var object_type = $('#messageText').data('object-type');
+//				var object_id = $('#messageText').data('object-id');
+//
+//				if (!messageText)
+//				{
+//					$('.error').show();
+//
+//					return;
+//				}
+//
+//				$.post('/messages/send', {
+//					message: messageText,
+//					receiving_id: receiving_id,
+//					object_id: object_id,
+//					object_type: object_type
+//				}, function(response){
+//					response = $.parseJSON(response);
+//
+//					if (typeof response.error === 'undefined' || response.error > 0)
+//					{
+//						thisDialog.dialog("close");
+//
+//						$.jGrowl('Ваше сообщение не отправлено. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+//
+//						return;
+//					}
+//
+//					thisDialog.dialog("close");
+//
+//					$.jGrowl('Ваше сообщение отправлено. Спасибо.', { header: 'Сообщение', life: 15000, theme: 'default' });
+//				});
+//            },
+//            "Закрыть": function () {
+//                $(this).dialog("close");
+//            }
+//        }
+//    });
+//	$('#messageDialog_open').click(function () {
+//        $('#messageDialog').dialog('open');
+//        return false;
+//    });
 
 	$('#message_remove_dialog').dialog({
 		autoOpen: false,

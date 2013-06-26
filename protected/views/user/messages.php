@@ -14,7 +14,7 @@ $this->breadcrumbs = array(
     <!-- Secondary nav -->
     <div class="secNav">
 		<?php
-		$this->renderPartial('_secWrapper', array('selectProfile' => false))
+		$this->renderPartial('_secWrapper', array('selectProfile' => false,'receivingUsers' => $receivingUsers))
 		?>
 	</div>
 </div>
