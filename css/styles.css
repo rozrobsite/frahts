@@ -2111,8 +2111,6 @@ transition:0.8s;
 .messagesOne .by_user .messageArea, .messagesOne .by_me .messageArea { box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; padding: 8px 12px; position: relative; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border: 1px solid; }
 .messagesOne .by_user .messageArea { background: #fafeff; border-color: #b5cdd7; margin-left: 60px; }
 .messagesOne .by_me .messageArea { background: #fefefe; border-color: #dcdcdc; margin-right: 60px; }
-.messagesOne .messageArea .message-remove { display:none }
-.messagesOne .messageArea:hover .message-remove { display: inline; }
 
 .by_user .name > strong { color: #2c596d; }
 .by_me .name > strong { color: #393939; }
@@ -2126,6 +2124,8 @@ transition:0.8s;
 .messagesTwo li > a { margin: 14px; display: block; position: absolute; left: 0; top: 0; }
 .messagesTwo li .messageArea { box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; padding: 10px 16px; position: relative; border-left: 1px solid #cdcdcd; margin-left: 65px; min-height: 64px; }
 .messagesTwo .by_user { background: #FEFEFE; }
+.messagesTwo .messageArea .message-remove { display:none }
+.messagesTwo li.by_user .messageArea:hover .message-remove { display: inline; }
 
 
 /* Enter message field  */

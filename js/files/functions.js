@@ -901,7 +901,7 @@ $(function() {
             }
         }
 	});
-	$('.message_remove_open').on('click', function () {
+	$(document).on('click', '.message_remove_open', function () {
 		$('#message_remove_dialog').attr('data-message-id', $(this).attr('data-message-id'));
 		$('#message_remove_dialog').dialog('open');
 

@@ -14,7 +14,11 @@ $this->breadcrumbs = array(
     <!-- Secondary nav -->
     <div class="secNav">
 		<?php
-		$this->renderPartial('_secWrapper', array('selectProfile' => false,'receivingUsers' => $receivingUsers))
+		$this->renderPartial('_secWrapper', array(
+			'selectProfile' => false,
+			'receivingUser' => $receivingUser,
+			'receivingUsers' => $receivingUsers,
+			));
 		?>
 	</div>
 </div>
@@ -63,38 +67,24 @@ $this->breadcrumbs = array(
 					</div>
 					<div class="clear"></div>
 				</div>
-				<ul class="messagesOne">
-					<?php $current_user_id = $models[0]->author->id; $class_by_user = 'by_user'; ?>
+				<ul class="messagesTwo">
 					<?php foreach ($models as $model): ?>
-						<?php $divider = $model->author->id == $current_user_id ? false : true; ?>
-						<?php
-							if ($divider && $class_by_user == 'by_user')
-								$class_by_user = 'by_me';
-							elseif ($divider && $class_by_user == 'by_me')
-								$class_by_user = 'by_user';
-						?>
-						<?php if ($divider): ?>
-							<li class="divider"><span></span></li>
-						<?php endif; ?>
-						<li class="<?php echo $class_by_user ?> message_<?php echo $model->id ?>">
-							<a href="javascript:void(0)"
-							   title="<?php echo $model->author->profiles->fullName(); ?>">
-								<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>"
+						<li class="<?php echo $this->user->id == $model->author->id ? 'by_user' : 'by_me'; ?> message_<?php echo $model->id; ?>">
+							<a href="javascript:void(0)" title="Перейти на страницу пользователя">
+								<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>" 
 									 alt="<?php echo $model->author->profiles->fullName(); ?>" />
 							</a>
 							<div class="messageArea">
-								<span class="aro"></span>
 								<div class="infoRow">
-									<a href="javascript:void(0)"><span class="name"><strong><?php echo $model->author->profiles->fullName(); ?></strong> написал(а):</span></a>
-									<a href="#" style="color:#a95151;margin-left: 30px" class="tipS message-remove message_remove_open" title="Удалить" data-message-id="<?php echo $model->id ?>"><img src="/images/elements/other/fileError.png" /></a>
+									<span class="name"><strong><?php echo $model->author->profiles->shortName(); ?></strong> написал(а):</span>
+									<a href="javascript:void(0);" style="margin-left: 30px" class="tipS message-remove message_remove_open" title="Удалить" data-message-id="<?php echo $model->id ?>"><img src="/images/elements/other/fileError.png" /></a>
 									<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $model->created_at); ?></span>
 									<div class="clear"></div>
 								</div>
-								<?php echo $model->message; ?><br/>
+								<?php echo $model->message; ?>
 							</div>
 							<div class="clear"></div>
 						</li>
-						<?php $current_user_id = $model->author->id; ?>
 					<?php endforeach; ?>
 				</ul>
 			</div>
