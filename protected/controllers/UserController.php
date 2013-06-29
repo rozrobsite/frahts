@@ -2,7 +2,14 @@
 
 class UserController extends FrahtController
 {
-
+	private $_receivingUsers = array();
+	
+	public function __construct($id, $module = null) {
+		parent::__construct($id, $module);
+		
+		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user, $receivingUser);
+	}
+	
 	/**
 	 * Declares class-based actions.
 	 */
@@ -42,6 +49,7 @@ class UserController extends FrahtController
 			'regions' => $listRegions,
 			'cities' => $listCities,
 			'user' => $this->user,
+			'receivingUsers' => $this->_receivingUsers,
 		));
 	}
 
@@ -191,6 +199,7 @@ class UserController extends FrahtController
 			'typeOrganizations' => $listTypeOrganizations,
 			'formOrganizations' => $listFormOrganizations,
 			'privateName' => $privateName,
+			'receivingUsers' => $this->_receivingUsers,
 		));
 	}
 
@@ -378,19 +387,38 @@ class UserController extends FrahtController
 
 		$user_id = isset($_GET['user']) ? (int) $_GET['user'] : 0;
 		$type = isset($_GET['type']) ? (int)$_GET['type']: Messages::TYPE_LAST;
-
+		
 		$receivingUser = $usersModel->findByPk($user_id);
-		$receivingUsers = $messagesModel->getReceivingUsers($this->user);
-		$models = Messages::model()->getMessages($this->user, $receivingUser);
+//		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
+		$models = Messages::model()->getMessages($this->user, $receivingUser, $type);
 
 		if ($this->messages_count)
 			$messagesModel->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
 		
 		$this->render('messages', array(
 			'receivingUser' => $receivingUser,
-			'receivingUsers' => $receivingUsers,
+			'receivingUsers' => $this->_receivingUsers,
 			'models' => $models,
 			));
+	}
+	
+	public function actionSearchUsers()
+	{
+		$searchText = isset($_POST['searchText']) ? trim($_POST['searchText']) : '';
+		
+		if (empty($searchText))
+		{
+			echo $this->respondJSON(array('error' => 1));
+		
+			Yii::app()->end();
+		}
+		
+		$users = Profiles::model()->searchUsers($this->user, $searchText);
+		$userList = $this->renderPartial('_userList', array('receivingUsers' => $users), TRUE);
+		
+		echo $this->respondJSON(array('error' => 0, 'userList' => $userList));
+		
+		Yii::app()->end();
 	}
 
 }

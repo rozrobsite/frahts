@@ -87,6 +87,7 @@
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/login.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/vehicleSearch.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/functions.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/messages.js"></script>
 
 		<style>
 /*			#footer {

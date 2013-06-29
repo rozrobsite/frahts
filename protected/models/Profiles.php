@@ -155,5 +155,26 @@ class Profiles extends CActiveRecord
 	{
 		return $this->first_name . ' ' . $this->last_name;
 	}
+	
+	public function searchUsers($currentUser, $searchText)
+	{
+		$criteria = new CDbCriteria();
+		
+		if (!empty($searchText))
+		{
+//			$searchArray = explode(' ', $searchText);
+			$criteria->condition = 'user_id <> ' . $currentUser->id . ' AND (first_name LIKE "%' . $searchText . '%" OR last_name LIKE "%' . $searchText . '%")';
+		}
+		
+		$profiles = $this->findAll($criteria);
+		
+		$result = array();
+		foreach($profiles as $profile)
+		{
+			$result[] = $profile->user;
+		}
+		
+		return $result;
+	}
 
 }

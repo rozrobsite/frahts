@@ -109,67 +109,59 @@ class Messages extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
-//	public function getMessages($user, $type)
-//	{
-//		$criteria = new CDbCriteria();
-//
-//		switch($type)
-//		{
-//			case self::TYPE_LAST:
-//				$criteria->condition = 'is_deleted = 0';
-//				$criteria->limit = Yii::app()->params['messages_by_page'];
-//				break;
-//			case self::TYPE_WEEK:
-//				$criteria->condition = 'receiving_user_id = ' . $user->id . '
-//					AND is_deleted = 0
-//					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 7 DAY)
-//					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
-//				break;
-//			case self::TYPE_MONTH:
-//				$criteria->condition = 'receiving_user_id = ' . $user->id . '
-//					AND is_deleted = 0
-//					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH)
-//					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
-//				break;
-//			case self::TYPE_3_MONTH:
-//				$criteria->condition = 'receiving_user_id = ' . $user->id . '
-//					AND is_deleted = 0
-//					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 3 MONTH)
-//					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
-//				break;
-//		}
-//
-//		$criteria->order = 'created_at DESC';
-//
-//		return $this->findAll($criteria);
-//	}
 	
-	public function getMessages($user, $receivingUser)
+	public function getMessages($user, $receivingUser, $type)
 	{
+		$condition = 'is_deleted = 0';
+		switch($type)
+		{
+			case self::TYPE_LAST:
+				break;
+			case self::TYPE_WEEK:
+				$condition .= '
+					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 7 DAY)
+					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+				break;
+			case self::TYPE_MONTH:
+				$condition .= '
+					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH)
+					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+				break;
+			case self::TYPE_3_MONTH:
+				$condition .= '
+					AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 3 MONTH)
+					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+				break;
+		}
+		
 		$criteria = new CDbCriteria();
 		
 		if (!$receivingUser)
 		{
-			$criteria->condition = 'is_deleted = 0';
+			$criteria->condition = $condition;
 			$criteria->limit = Yii::app()->params['messages_by_page'];
 			$criteria->order = 'created_at DESC';
 
 			return $this->findAll($criteria);
 		}
 		
-		$criteria->condition = 'is_deleted = 0 AND ((receiving_user_id = ' . $user->id . ' AND author_id = ' . $receivingUser->id . ') 
+		$criteria->condition = $condition . ' AND ((receiving_user_id = ' . $user->id . ' AND author_id = ' . $receivingUser->id . ') 
 			OR (author_id = ' . $user->id . ' AND receiving_user_id = ' . $receivingUser->id . '))';
 		$criteria->order = 'created_at DESC';
 		
 		return $this->findAll($criteria);
 	}
 
-	public function getReceivingUsers($currentUser)
+	public function getReceivingUsers($currentUser, $receivingUser = null)
 	{
 		$users = array();
 		
-		foreach ($currentUser->messagesReceiving as $message)
+		if ($receivingUser)
+			$users[] = $receivingUser;
+		
+		$messages = array_merge($currentUser->messagesReceiving, $currentUser->messagesAuthor);
+		
+		foreach ($messages as $message)
 		{
 			if ($currentUser->id == $message->author->id)
 			{
@@ -182,13 +174,13 @@ class Messages extends CActiveRecord
 		}
 		
 		$result = array();
-		$currentUserId = -1;
+		$currentUserIds = array();
 		foreach ($users as $user)
 		{
-			if ($currentUserId != $user->id)
+			if (!in_array($user->id, $currentUserIds))
 			{
 				$result[] = $user;
-				$currentUserId = $user->id;
+				$currentUserIds[] = $user->id;
 			}
 		}
 

@@ -57,6 +57,8 @@ return array(
 				'' => 'main/index',
 				'user/messages/*' => 'user/messages',
 				'user/messages' => 'user/messages',
+				'user/searchUsers/*' => 'user/searchUsers',
+				'user/searchUsers' => 'user/searchUsers',
 				'vehicle/update/<id:\d+>' => 'vehicle/update',
 				'vehicle/update/<slug:[a-zA-Z0-9-]+>' => 'vehicle/update',
 				'vehicle/search/location/*' => 'vehicleSearch/location',

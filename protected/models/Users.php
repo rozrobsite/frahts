@@ -260,5 +260,4 @@ class Users extends CActiveRecord
 		}
 		else return false;
 	}
-
 }

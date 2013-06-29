@@ -5,22 +5,22 @@ class MessagesController extends FrahtController {
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
 
-		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
+//		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
 
 	public function actionIndex() {
 //		$this->render('index');
 	}
 
-	public function actionSend() {
+	public function actionAdd() {
 		$params = $_POST;
 		$message = isset($params['message']) ? trim($params['message']) : '';
 		$receiving_id = isset($params['receiving_id']) ? (int) $params['receiving_id'] : 0;
-		$object_id = isset($params['object_id']) ? (int) $params['object_id'] : 0;
-		$object_type = isset($params['object_type']) ? (int) $params['object_type'] : 0;
+//		$object_id = isset($params['object_id']) ? (int) $params['object_id'] : 0;
+//		$object_type = isset($params['object_type']) ? (int) $params['object_type'] : 0;
 
-		if (!$receiving_id || !$message || !$object_id || !$object_type) {
-			echo CJavaScript::jsonEncode(array('error' => 1));
+		if (!$receiving_id || !$message) {
+			echo $this->respondJSON(array('error' => 1));
 
 			Yii::app()->end();
 		}
@@ -32,20 +32,20 @@ class MessagesController extends FrahtController {
 		$model->created_at = time();
 
 		if (!$model->save()) {
-			echo CJavaScript::jsonEncode(array('error' => 2));
+			echo $this->respondJSON(array('error' => 2));
 
 			Yii::app()->end();
 		}
 
-		$object = $object_type == Messages::GOOD ? Goods::model()->findByPk($object_id) : Vehicle::model()->findByPk($object_id);
-		if (!$this->sendEmail($model, $object))
-		{
-			echo CJavaScript::jsonEncode(array('error' => 3));
+//		$object = $object_type == Messages::GOOD ? Goods::model()->findByPk($object_id) : Vehicle::model()->findByPk($object_id);
+//		if (!$this->sendEmail($model, $object))
+//		{
+//			echo CJavaScript::jsonEncode(array('error' => 3));
+//
+//			Yii::app()->end();
+//		}
 
-			Yii::app()->end();
-		}
-
-		echo CJavaScript::jsonEncode(array('error' => 0));
+		echo $this->respondJSON(array('error' => 0));
 
 		Yii::app()->end();
 	}
