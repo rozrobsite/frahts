@@ -519,7 +519,7 @@ class Goods extends CActiveRecord
 		foreach ($goods as $good)
 		{
 			$result[] = array(
-//				'id' => $good->id,
+				'id' => $good->id,
 				'slug' => $good->slug,
 				'name' => $good->name,
 				'date_from' => Yii::app()->dateFormatter->format('dd.MM.yyyy', $good->date_from),
@@ -536,7 +536,13 @@ class Goods extends CActiveRecord
 				'capacity_exact_value' => $good->capacity_exact_value,
 				'capacity_from' => $good->capacity_from,
 				'capacity_to' => $good->capacity_to,
+				'cost' => $good->cost,
+				'currency' => $good->currency->name_ru,
+				'payment' => $good->paymentType->name_ru,
+				'fee' => $good->fee,
 				'owner_name' => $good->user->profiles->first_name,
+				'owner_type' => $good->user->profiles->userType->name_ru,
+				'is_dispatcher' => $good->user->profiles->user_type_id == UserTypes::DISPATCHER,
 				'mobile' => $good->user->profiles->mobile,
 				'lat' => $good->cityFrom->latitude,
 				'lng' => $good->cityFrom->longitude,

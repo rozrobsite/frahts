@@ -112,7 +112,10 @@ function sendCoordinates(coordinates)
 				content += '<strong>Объем:</strong> ' + good.capacity_exact_value + ' м&sup3;' + '<br/>';
 			else
 				content += '<strong>Вес:</strong> ' + good.capacity_from + ' - ' + good.capacity_to + ' м&sup3;<br/>';
-			content += '<span style="font-style:italic">' + good.owner_name + ', моб.: <strong>' + good.mobile + '</strong><span><br/><br/>';
+			content += '<strong>Оплата:</strong> ' + good.cost + ' ' + good.currency + ' (' + good.payment + ')<br/>';
+			if (good.is_dispatcher)
+				content += '<strong>Комиссия:</strong> ' + good.fee + '<br/>';
+			content += '<span style="font-style:italic">' + good.owner_name + ' (' + good.owner_type + '), моб.: <strong>' + good.mobile + '</strong><span><br/><br/>';
 			content += '<a href="/goods/view/' + good.slug + '" class="tipS" title="Перейти на страницу груза">Страница груза</a>';
 
 			var placemark = new ymaps.Placemark(
