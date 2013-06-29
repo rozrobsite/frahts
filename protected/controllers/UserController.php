@@ -7,7 +7,7 @@ class UserController extends FrahtController
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
 		
-		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user, $receivingUser);
+		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user);
 	}
 	
 	/**
@@ -389,7 +389,7 @@ class UserController extends FrahtController
 		$type = isset($_GET['type']) ? (int)$_GET['type']: Messages::TYPE_LAST;
 		
 		$receivingUser = $usersModel->findByPk($user_id);
-//		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
+		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
 		$models = Messages::model()->getMessages($this->user, $receivingUser, $type);
 
 		if ($this->messages_count)
@@ -397,7 +397,7 @@ class UserController extends FrahtController
 		
 		$this->render('messages', array(
 			'receivingUser' => $receivingUser,
-			'receivingUsers' => $this->_receivingUsers,
+			'receivingUsers' => $receivingUsers,
 			'models' => $models,
 			));
 	}
