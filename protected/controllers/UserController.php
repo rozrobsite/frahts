@@ -420,5 +420,18 @@ class UserController extends FrahtController
 		
 		Yii::app()->end();
 	}
+	
+	public function actionNotes()
+	{
+		if ($this->notes_count)
+			Notes::model()->updateAll(array('is_show' => 1), 'user_id = ' . $this->user->id);
+		
+		$models = Notes::model()->findAll();
+		
+		$this->render('notes', array(
+			'models' => $models,
+			'receivingUsers' => $this->_receivingUsers,
+		));
+	}
 
 }

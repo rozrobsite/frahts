@@ -27,6 +27,7 @@
 
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ui.datepicker-ru.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery-ui-timepicker-addon.js"></script>
 		<!--<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ez-pinned-footer.js"></script>-->
 
 <!--		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
@@ -88,6 +89,7 @@
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/vehicleSearch.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/functions.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/messages.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/notes.js"></script>
 
 		<style>
 /*			#footer {
@@ -198,12 +200,11 @@
 			<!-- Top line ends -->
 			<?php echo $content; ?>
 
-	<!--		<div id="footer">
-						Все права защищены &copy; <?php echo date('Y', time()); ?>, <?php echo $_SERVER['HTTP_HOST'] ?>: Фрахты.com - Мир грузоперевозок
+			<div id="footer" style="text-align: right">
+				Все права защищены &copy; <?php echo date('Y', time()); ?>, <?php echo $_SERVER['HTTP_HOST'] ?>: Фрахты.com - Мир грузоперевозок
 
-					<div class="clear"></div>
-				</div>
-			</div>-->
+				<div class="clear"></div>
+			</div>
 		<?php endif; ?>
     </body>
 </html>
