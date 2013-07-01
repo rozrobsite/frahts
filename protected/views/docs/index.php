@@ -37,6 +37,7 @@ $this->breadcrumbs = array(
 
     <!-- Main content -->
     <div class="wrapper">
+		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<?php if (!$docs): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">

@@ -2,7 +2,14 @@
 
 class UserController extends FrahtController
 {
-
+	private $_receivingUsers = array();
+	
+	public function __construct($id, $module = null) {
+		parent::__construct($id, $module);
+		
+		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user);
+	}
+	
 	/**
 	 * Declares class-based actions.
 	 */
@@ -42,6 +49,7 @@ class UserController extends FrahtController
 			'regions' => $listRegions,
 			'cities' => $listCities,
 			'user' => $this->user,
+			'receivingUsers' => $this->_receivingUsers,
 		));
 	}
 
@@ -94,7 +102,7 @@ class UserController extends FrahtController
 								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 					}
 				}
-				
+
 				if (isset($_POST['Photos']['avatar']) && !empty($_POST['Photos']['avatar']) && isset($this->user->profiles->id) && $this->user->profiles)
 				{
 //					$photo = $_POST['Photos']['avatar'];
@@ -106,7 +114,10 @@ class UserController extends FrahtController
 					$this->user->profiles->avatar = $this->user->id . '.jpg';
 					$image->resize(Yii::app()->params['images']['avatar']['width'], Yii::app()->params['images']['avatar']['height']);
 					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '.jpg');
-					
+
+					$image->resize(Yii::app()->params['images']['avatar']['small_width'], Yii::app()->params['images']['avatar']['small_height']);
+					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '_s.jpg');
+
 					$this->user->profiles->save();
 				}
 			}
@@ -188,6 +199,7 @@ class UserController extends FrahtController
 			'typeOrganizations' => $listTypeOrganizations,
 			'formOrganizations' => $listFormOrganizations,
 			'privateName' => $privateName,
+			'receivingUsers' => $this->_receivingUsers,
 		));
 	}
 
@@ -357,17 +369,69 @@ class UserController extends FrahtController
 
 		Yii::app()->end();
 	}
-	
+
 	public function actionFaq()
 	{
-		
-
 		$this->render('faq');
 	}
 
 	private function addPhotos($path)
 	{
 		if (empty($path)) return;
+	}
+
+	public function actionMessages()
+	{
+		$usersModel = Users::model();
+		$messagesModel = Messages::model();
+
+		$user_id = isset($_GET['user']) ? (int) $_GET['user'] : 0;
+		$type = isset($_GET['type']) ? (int)$_GET['type']: Messages::TYPE_LAST;
+		
+		$receivingUser = $usersModel->findByPk($user_id);
+		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
+		$models = Messages::model()->getMessages($this->user, $receivingUser, $type);
+
+		if ($this->messages_count)
+			$messagesModel->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
+		
+		$this->render('messages', array(
+			'receivingUser' => $receivingUser,
+			'receivingUsers' => $receivingUsers,
+			'models' => $models,
+			));
+	}
+	
+	public function actionSearchUsers()
+	{
+		$searchText = isset($_POST['searchText']) ? trim($_POST['searchText']) : '';
+		
+		if (empty($searchText))
+		{
+			echo $this->respondJSON(array('error' => 1));
+		
+			Yii::app()->end();
+		}
+		
+		$users = Profiles::model()->searchUsers($this->user, $searchText);
+		$userList = $this->renderPartial('_userList', array('receivingUsers' => $users), TRUE);
+		
+		echo $this->respondJSON(array('error' => 0, 'userList' => $userList));
+		
+		Yii::app()->end();
+	}
+	
+	public function actionNotes()
+	{
+		if ($this->notes_count)
+			Notes::model()->updateAll(array('is_show' => 1), 'user_id = ' . $this->user->id);
+		
+		$models = Notes::model()->findAll();
+		
+		$this->render('notes', array(
+			'models' => $models,
+			'receivingUsers' => $this->_receivingUsers,
+		));
 	}
 
 public function actionView()

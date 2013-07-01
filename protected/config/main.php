@@ -55,6 +55,10 @@ return array(
 			'urlFormat' => 'path',
 			'rules' => array(
 				'' => 'main/index',
+				'user/messages/*' => 'user/messages',
+				'user/messages' => 'user/messages',
+				'user/searchUsers/*' => 'user/searchUsers',
+				'user/searchUsers' => 'user/searchUsers',
 				'vehicle/update/<id:\d+>' => 'vehicle/update',
 				'vehicle/update/<slug:[a-zA-Z0-9-]+>' => 'vehicle/update',
 				'vehicle/search/location/*' => 'vehicleSearch/location',
@@ -143,6 +147,8 @@ return array(
 	'params' => array(
 		// this is used in contact page
 		'adminEmail' => 'support@frahts.com',
+		'siteName' => 'frahts.com',
+		'imagesPath' => '/images/',
 		'files' => array(
 			'files' => 'uploads/files/',
 			'photos' => 'uploads/photos/',
@@ -171,6 +177,8 @@ return array(
 			'avatar' => array(
 				'height' => 110,
 				'width' => 108,
+				'small_height' => 37,
+				'small_width' => 36,
 			),
 			'allowedExtensions' => array('jpg', 'jpeg', 'png'), // allowed file extensions
 
@@ -212,5 +220,6 @@ return array(
 			'300' => '5 минут',
 		),
 		'incidients_goods' => 30,
+		'messages_by_page' => 10,
 	),
 );

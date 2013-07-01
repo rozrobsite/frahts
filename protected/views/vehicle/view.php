@@ -52,6 +52,7 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('/blocks/_notify') ?>
+	<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<div class="widget">
             <div class="invoice">
                 <div class="inHead">
@@ -152,25 +153,14 @@ $this->breadcrumbs = array(
 					 */?>
                     <div class="clear"></div>
                 </div>
-				<?php /* ?>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 					<tr>
 						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу транспортного средства" class="sideB bSea tipS" style="width: 25%">Сообщение</a>
 						</td>
 					</tr>
 				</table>
-				<?php */ ?>
-				<?php if ($model->user->vehicles && count($model->user->vehicles) > 1): ?>
+				<?php/* if ($model->user->vehicles && count($model->user->vehicles) > 1): ?>
 					<div class="inFrom" style="width:100%">
 						<h5>Другие транспортные средства этого пользователя</h5>
 					</div>
@@ -239,7 +229,7 @@ $this->breadcrumbs = array(
 							<?php endforeach; ?>
 						</tbody>
 					</table>
-				<?php endif; ?>
+				<?php endif; */?>
             </div>
         </div>
 	</div>
@@ -247,3 +237,5 @@ $this->breadcrumbs = array(
 <!-- Content ends -->
 <input id="point_sent" type="hidden" value="Текущее положение: <?php echo $model->cities->name_ru ?>, <?php echo $model->regions->name_ru ?>, <?php echo $model->countries->name_ru ?>" />
 <input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
+
+<?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::VEHICLE)); ?>

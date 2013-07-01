@@ -109,6 +109,8 @@ class Users extends CActiveRecord
 			'profiles' => array(self::HAS_ONE, 'Profiles', 'user_id'),
 			'vehicles' => array(self::HAS_MANY, 'Vehicle', 'user_id'),
 			'goods' => array(self::HAS_MANY, 'Goods', 'user_id'),
+			'messagesAuthor' => array(self::HAS_MANY, 'Messages', 'author_id'),
+			'messagesReceiving' => array(self::HAS_MANY, 'Messages', 'receiving_user_id'),
 		);
 	}
 
@@ -258,5 +260,4 @@ class Users extends CActiveRecord
 		}
 		else return false;
 	}
-	
 }

@@ -7,8 +7,8 @@ class GoodsController extends FrahtController
 	{
 		parent::__construct($id, $module);
 
-		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
-				throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+//		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
+//				throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 
 		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
@@ -32,11 +32,24 @@ class GoodsController extends FrahtController
 		$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 		$model = Goods::model()->find('slug = "' . $slug . '" AND is_deleted = 0 AND date_to >= ' . time());
-		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
-		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
-
-		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
-		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
+		if (!is_object($model))
+				throw new CHttpException(404, 'Страница груза не найдена!');
+		
+		$vehicleTypes = '';
+		$vehicleTypesArray = array();
+		if ($model->vehicle_types)
+		{
+			$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
+			$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
+		}
+		
+		$bodyTypes = '';
+		$bodyTypesArray = array();
+		if ($model->body_types)
+		{
+			$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
+			$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
+		}
 
 		$shipments = '';
 		$shipmentsArray = array();
@@ -57,9 +70,6 @@ class GoodsController extends FrahtController
 				$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
 			}
 		}
-
-		if (!is_object($model))
-				throw new CHttpException(404, 'Страница груза не найдена!');
 
 		Yii::app()->session['good_id'] = (int) $model->id;
 
@@ -83,15 +93,14 @@ class GoodsController extends FrahtController
 		{
 			$tmpArray = explode(',', $coordinate);
 
-			if (!isset($tmpArray[0]) || !isset($tmpArray[1]))
-				continue;
+			if (!isset($tmpArray[0]) || !isset($tmpArray[1])) continue;
 
 			$coordinates[] = array((float) $tmpArray[0], (float) $tmpArray[1]);
 		}
 
 		$firstCoordinates = array_shift($coordinates);
 
-		if(!$firstCoordinates)
+		if (!$firstCoordinates)
 		{
 			echo CJavaScript::jsonEncode(array('error' => 1));
 
@@ -108,9 +117,9 @@ class GoodsController extends FrahtController
 		$countCoordinates = count($coordinates);
 		for ($index = 1; $index < $countCoordinates; $index++)
 		{
-			$distance = FHelper::distance($currentLatitude, $currentLongitude, $coordinates[$index][0], $coordinates[$index][1]);
-			if ($distance < (Yii::app()->params['defaultRadius'] * 2))
-				continue;
+			$distance = FHelper::distance($currentLatitude, $currentLongitude,
+							$coordinates[$index][0], $coordinates[$index][1]);
+			if ($distance < (Yii::app()->params['defaultRadius'] * 2)) continue;
 
 			$desiredCoordinates[] = $coordinates[$index];
 			$currentLatitude = $coordinates[$index][0];
@@ -119,10 +128,14 @@ class GoodsController extends FrahtController
 
 //		$desiredCoordinates[] = $coordinates[$countCoordinates - 1];
 
-		$good_id = isset(Yii::app()->session['good_id']) ? (int) Yii::app()->session['good_id'] : 0;
-		$vehicle_id = isset(Yii::app()->session['vehicle_id']) ? (int) Yii::app()->session['vehicle_id'] : 0;
-		$date_from = isset(Yii::app()->session['date_from']) ? Yii::app()->session['date_from'] : '';
-		$date_to = isset(Yii::app()->session['date_to']) ? Yii::app()->session['date_to'] : '';
+		$good_id = isset(Yii::app()->session['good_id']) ? (int) Yii::app()->session['good_id']
+					: 0;
+		$vehicle_id = isset(Yii::app()->session['vehicle_id']) ? (int) Yii::app()->session['vehicle_id']
+					: 0;
+		$date_from = isset(Yii::app()->session['date_from']) ? Yii::app()->session['date_from']
+					: '';
+		$date_to = isset(Yii::app()->session['date_to']) ? Yii::app()->session['date_to']
+					: '';
 
 		if (!$good_id)
 		{
@@ -134,7 +147,8 @@ class GoodsController extends FrahtController
 		}
 
 		$good = Goods::model()->findByPk($good_id);
-		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates, $date_from, $date_to);
+		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates,
+				$date_from, $date_to);
 
 		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods));
 

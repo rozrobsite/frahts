@@ -33,7 +33,8 @@ $this->breadcrumbs = array(
 	<!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_notify') ?>
-		
+		<?php $this->renderPartial('/blocks/_middleNavR') ?>
+
 		<?php if (!$activeVehicles): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">У Вас нет транспортных средств учавствующих в поиске.</label>

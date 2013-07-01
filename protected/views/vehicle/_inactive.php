@@ -19,9 +19,9 @@ $this->breadcrumbs = array(
 </div>
 <!-- Sidebar ends -->
 <div id="content">
-	
+
 	<?php $this->renderPartial('_accessMessage') ?>
-	
+
 	<?php $this->renderPartial('/blocks/contentTop') ?>
 	<!-- Breadcrumbs line -->
     <div class="breadLine">
@@ -35,6 +35,7 @@ $this->breadcrumbs = array(
     </div>
 	<!-- Main content -->
     <div class="wrapper">
+		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<?php if (!$noactiveVehicles): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">У Вас нет транспортных средств удаленных из поиска.</label>

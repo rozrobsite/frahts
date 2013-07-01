@@ -440,6 +440,7 @@ class Goods extends CActiveRecord
 
 		$where = array();
 		$where[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
+		$where[] = 't.is_deleted = 0';
 
 		if (!empty($date_from))
 		{
@@ -496,35 +497,20 @@ class Goods extends CActiveRecord
 
 		$defaultRadius = (int) Yii::app()->params['defaultRadius'];
 
-//		$city_id_from = (int)$this->city_id_from;
-//		$city = City::model()->findByPk($city_id_from);
-
-//		$inRadius = array();
-//		$inRadius[] = 't.city_id_from IN ( SELECT id
-//			FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
-//
-//		unset($city);
-
-//		$city_id_to = (int)$this->city_id_to;
-//
-//		$city = City::model()->findByPk($city_id_to);
-//		$inRadius[] = 't.city_id_to IN ( SELECT id
-//			FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
-//
-//		unset($city);
-
 		$inRadius = array();
 		foreach ($desiredCoordinates as $coord)
 		{
-			$inRadius[] = 't.city_id_from IN ( SELECT id
-				FROM city WHERE (6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
+//			$inRadius[] = 't.city_id_from IN ( SELECT id
+//				FROM city WHERE (6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
+			$inRadius[] = '6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( cityFrom.latitude ) ) * cos( radians( cityFrom.longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( cityFrom.latitude ) ) ) < ' . $defaultRadius;
 		}
 
 		$where[] = '(' . join(' OR ', $inRadius) . ')';
 
 		$criteria = new CDbCriteria();
 		$criteria->condition = join(' AND ', $where);
-		$criteria->order = "t.updated_at DESC, t.cost DESC LIMIT 0, " . Yii::app()->params['incidients_goods'];
+		$criteria->order = "t.updated_at DESC LIMIT 0, " . Yii::app()->params['incidients_goods'];
+		$criteria->with = array('cityFrom');
 
 		$goods = $this->findAll($criteria);
 		$count = $this->count($criteria);
@@ -533,11 +519,11 @@ class Goods extends CActiveRecord
 		foreach ($goods as $good)
 		{
 			$result[] = array(
-//				'id' => $good->id,
+				'id' => $good->id,
 				'slug' => $good->slug,
 				'name' => $good->name,
-				'date_from' => Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $good->date_from),
-				'date_to' => Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $good->date_to),
+				'date_from' => Yii::app()->dateFormatter->format('dd.MM.yyyy', $good->date_from),
+				'date_to' => Yii::app()->dateFormatter->format('dd.MM.yyyy', $good->date_to),
 				'country_from' => $good->countryFrom->name_ru,
 				'region_from' => $good->regionFrom->name_ru,
 				'city_from' => $good->cityFrom->name_ru,
@@ -550,8 +536,16 @@ class Goods extends CActiveRecord
 				'capacity_exact_value' => $good->capacity_exact_value,
 				'capacity_from' => $good->capacity_from,
 				'capacity_to' => $good->capacity_to,
+				'cost' => $good->cost,
+				'currency' => $good->currency->name_ru,
+				'payment' => $good->paymentType->name_ru,
+				'fee' => $good->fee,
+				'owner_name' => $good->user->profiles->first_name,
+				'owner_type' => $good->user->profiles->userType->name_ru,
+				'is_dispatcher' => $good->user->profiles->user_type_id == UserTypes::DISPATCHER,
+				'mobile' => $good->user->profiles->mobile,
 				'lat' => $good->cityFrom->latitude,
-				'lng' => $good->cityTo->longitude,
+				'lng' => $good->cityFrom->longitude,
 			);
 		}
 

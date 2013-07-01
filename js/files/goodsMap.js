@@ -96,13 +96,33 @@ function sendCoordinates(coordinates)
 
 		var goods = response.goods;
 
+		var content = '';
 		for (var index in goods)
 		{
+			var good = goods[index];
+			content += '<a href="/goods/view/' + good.slug + '" class="tipS" title="Перейти на страницу груза"><strong>' + good.name + '</strong></a><br/>';
+			content += good.date_from + ' - ' + good.date_to + '<br/>';
+			content += '<strong>Откуда:</strong> ' + good.city_from + ', ' + good.region_from + ', ' + good.country_from + '<br/>';
+			content += '<strong>Куда:</strong> ' + good.city_to + ', ' + good.region_to + ', ' + good.country_to + '<br/>';
+			if (good.weight_exact_value)
+				content += '<strong>Вес:</strong> ' + good.weight_exact_value + ' т.' + '<br/>';
+			else
+				content += '<strong>Вес:</strong> ' + 'от ' + good.weight_from + ' т. до ' + good.weight_to + ' т.<br/>';
+			if (good.capacity_exact_value)
+				content += '<strong>Объем:</strong> ' + good.capacity_exact_value + ' м&sup3;' + '<br/>';
+			else
+				content += '<strong>Вес:</strong> ' + good.capacity_from + ' - ' + good.capacity_to + ' м&sup3;<br/>';
+			content += '<strong>Оплата:</strong> ' + good.cost + ' ' + good.currency + ' (' + good.payment + ')<br/>';
+			if (good.is_dispatcher)
+				content += '<strong>Комиссия:</strong> ' + good.fee + '<br/>';
+			content += '<span style="font-style:italic">' + good.owner_name + ' (' + good.owner_type + '), моб.: <strong>' + good.mobile + '</strong><span><br/><br/>';
+			content += '<a href="/goods/view/' + good.slug + '" class="tipS" title="Перейти на страницу груза">Страница груза</a>';
+
 			var placemark = new ymaps.Placemark(
-				[goods[index].lat,goods[index].lng],
+				[good.lat,good.lng],
 				{
 					//iconContent: goods[index].city_from,
-					balloonContent: goods[index].lat + ' ' + goods[index].lng
+					balloonContent: content
 				},
 				{
 					// Опции.
@@ -115,11 +135,13 @@ function sendCoordinates(coordinates)
 //					iconImageOffset: [-3, -42]
 				}
 			);
-			placemark.name = "Москва";
-			placemark.description = "Столица Российской Федерации";
+//			placemark.name = "Москва";
+//			placemark.description = "Столица Российской Федерации";
 
 			// Добавляет метку на карту
 			myMap.geoObjects.add(placemark);
+
+			content = '';
 		}
 
 	});
