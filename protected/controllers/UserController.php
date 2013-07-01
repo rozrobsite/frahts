@@ -370,4 +370,51 @@ class UserController extends FrahtController
 		if (empty($path)) return;
 	}
 
+public function actionView()
+	{
+		$userid = isset($_GET['id']) ? trim($_GET['id']) : '';
+		
+		$model = Users::model()->find('id = "' . $userid . '"');
+		
+		/*
+		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
+		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
+
+		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
+		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
+
+		$shipments = '';
+		$shipmentsArray = array();
+		if ($model->shipments)
+		{
+			$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
+			$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
+		}
+
+		$permissions = '';
+		$permissionsArray = array();
+		if ($model->permissions)
+		{
+			$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
+			$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
+			if (array_key_exists(Permissions::ADR, $permissionsArray))
+			{
+				$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+			}
+		}
+		*/
+		if (!is_object($model))
+				throw new CHttpException(404, 'Страница пользователя не найдена!');
+
+		$this->render('view',
+				array(
+			'model' => $model
+			/*'vehicleTypes' => join(', ', $vehicleTypesArray),
+			'bodyTypes' => join(', ', $bodyTypesArray),
+			'shipments' => join(', ', $shipmentsArray),
+			'permissions' => join(', ', $permissionsArray),*/
+		));
+		
+	}	
+	
 }
