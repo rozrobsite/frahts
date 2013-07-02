@@ -1,8 +1,7 @@
 <script type="text/javascript">
 	var myMap, route;
-
-	var center = [<?php echo $model->profiles->city->latitude ?>, <?php echo $model->profiles->city->longitude ?>];
 	var cityname = "<?php echo $model->profiles->city->name_ru ?>";
+	var address = "<?php echo $model->profiles->address ?>";
 </script>
 
 <?php
@@ -10,7 +9,7 @@
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
 Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js');
 
-$this->pageTitle = Yii::app()->name . ' - Данные о пользователе "' . $model->username . '"';
+$this->pageTitle = Yii::app()->name . ' - Данные о пользователе "' . $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name . '"';
 $this->breadcrumbs = array(
 	'Данные о пользователе',
 );
@@ -38,7 +37,7 @@ $this->breadcrumbs = array(
                 <li><a href="<?php echo Yii::app()->session['redirectUrl']; ?>">Поиск груза</a></li>
                 <li class="current">
 					<a title="">
-						<?php echo 'Данные о пользователе "' . $model->username . '"'; ?>
+						<?php echo 'Данные о пользователе "' . $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name . '"'; ?>
 					</a>
 				</li>
             </ul>
@@ -49,12 +48,13 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('/blocks/_notify') ?>
+	<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<div class="widget">
             <div class="invoice">
                 <div class="inHead">
                     <!--<span class="inLogo"><a href="index.html" title="invoice"><img src="images/newLogo.png" alt="logo" /></a></span>-->
                     <div class="inInfo">
-                        <span class="invoiceNum"><?php echo $model->username ?></span>
+                        <span class="invoiceNum"><?php echo $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name; ?></span>
                      </div>
                     <div class="clear"></div>
                 </div>
