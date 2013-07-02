@@ -1,7 +1,14 @@
+<script type="text/javascript">
+	var myMap, route;
+
+	var center = [<?php echo $model->profiles->city->latitude ?>, <?php echo $model->profiles->city->longitude ?>];
+	var cityname = "<?php echo $model->profiles->city->name_ru ?>";
+</script>
 
 <?php
 
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
+Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js');
 
 $this->pageTitle = Yii::app()->name . ' - Данные о пользователе "' . $model->username . '"';
 $this->breadcrumbs = array(
@@ -68,6 +75,9 @@ $this->breadcrumbs = array(
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->profiles->created_at); ?></span>          
 					</div>
+					<div class="floatR" style="width:55%;height:430px; margin:10px;">
+						<div id="map" style="width:100%;height:430px;"></div>
+					</div>					
 								
                     <div class="clear"></div>
                 </div>

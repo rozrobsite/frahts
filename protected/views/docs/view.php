@@ -51,7 +51,7 @@ $this->breadcrumbs = array(
 							<div class="clear"></div>
 						</div>
 
-						<div class="inContainer">
+						<div class="inContainer" style="padding: 15px;">
 							<?php echo $model->text; ?>
 							<div class="clear"></div>
 						</div>

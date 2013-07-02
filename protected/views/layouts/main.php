@@ -200,7 +200,7 @@
 			<!-- Top line ends -->
 			<?php echo $content; ?>
 
-			<div id="footer" style="text-align: right">
+			<div id="footer" style="text-align: center; margin: 50px;">
 				Все права защищены &copy; <?php echo date('Y', time()); ?>, <?php echo $_SERVER['HTTP_HOST'] ?>: Фрахты.com - Мир грузоперевозок
 
 				<div class="clear"></div>
