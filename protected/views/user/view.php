@@ -42,6 +42,7 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('/blocks/_notify') ?>
+	<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<div class="widget">
             <div class="invoice">
                 <div class="inHead">
