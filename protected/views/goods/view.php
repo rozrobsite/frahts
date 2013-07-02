@@ -1,64 +1,15 @@
 <script type="text/javascript">
-	var myMap, route;
-
-	// Как только будет загружен API и готов DOM, выполняем инициализацию
-	ymaps.ready(init);
-
-	function init () {
-		myMap = new ymaps.Map("map", {
-				center: [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>],
-				zoom: 12
-			});
-
-		myMap.controls
-			// Кнопка изменения масштаба — компактный вариант
-			.add('zoomControl')
-			// Список типов карты
-			.add('typeSelector')
-			.add('mapTools')
-			.add('routeEditor')
-			.add('trafficControl');
-
-		var start = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
-		var end = [<?php echo $model->cityTo->latitude ?>, <?php echo $model->cityTo->longitude ?>];
-		ymaps.route([
-			   // Список точек, которые необходимо посетить
-			   [start], [end]], {
-			// Опции маршрутизатора
-			mapStateAutoApply: true // автоматически позиционировать карту
-		}).then(function (router) {
-			route && myMap.geoObjects.remove(route);
-			route = router;
-			route.options.set({ strokeColor: '0000ffff', opacity: 0.9 });
-			myMap.geoObjects.add(route);
-
-			$('#total_length_route').html(route.getHumanLength());
-			$('#total_time_route').html(route.getHumanTime());
-			// С помощью метода getWayPoints() получаем массив точек маршрута
-				// (массив транзитных точек маршрута можно получить с помощью метода getViaPoints)
-				var points = route.getWayPoints();
-				// Задаем стиль метки - иконки будут красного цвета, и
-				// их изображения будут растягиваться под контент
-				points.options.set('preset', 'twirl#blueStretchyIcon');
-				// Задаем контент меток в начальной и конечной точках
-				var pointBegin = points.get(0);
-				var pointEnd = points.get(1);
-
-				pointBegin.properties.set('balloonContentBody', 'Точка отправления: <?php echo $model->cityFrom->name_ru ?>, <?php echo $model->regionFrom->name_ru ?>, <?php echo $model->countryFrom->name_ru ?>');
-				pointEnd.properties.set('balloonContentBody', 'Точка прибытия: <?php echo $model->cityTo->name_ru ?>, <?php echo $model->regionTo->name_ru ?>, <?php echo $model->countryTo->name_ru ?>');
-
-//				pointBegin.options.set('draggable', true);
-//				pointEnd.options.set('draggable', true);
-		}, function (error) {
-			alert("Возникла ошибка: " + error.message);
-		});
-
-		return false;
-	 }
+var myMap, route, incidental_goods = '';
+var good_id = <?php echo isset($model->id) ? $model->id : 0 ?>;
+var vehicle_id = <?php echo $vid ? $vid : 0 ?>;
+var center = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
+var start = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
+var end = [<?php echo $model->cityTo->latitude ?>, <?php echo $model->cityTo->longitude ?>];
 </script>
 
 <?php
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
+Yii::app()->clientScript->registerScriptFile('/js/files/goodsMap.js');
 
 $this->pageTitle = Yii::app()->name . ' - Данные о грузе "' . $model->name . '"';
 $this->breadcrumbs = array(
@@ -98,6 +49,7 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('/blocks/_notify') ?>
+	<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<div class="widget">
             <div class="invoice">
                 <div class="inHead">
@@ -150,15 +102,22 @@ $this->breadcrumbs = array(
 							<label><strong>Общая длина маршрута: </strong><span id="total_length_route"></span></label>
 						</div>
 						<div style="float:right;">
-							<label><strong>Срелнее время в пути: </strong><span id="total_time_route"></span></label>
+							<label><strong>Среднее время в пути: </strong><span id="total_time_route"></span></label>
 						</div>
 					</div>
                     <div class="inFrom" style="width:30%">
 						<h5>Владелец груза</h5>
 						<span>
+							<strong>
+								<?php echo $model->user->profiles->userType->name_ru; ?>
+								<?php if ($model->user->profiles->userType->id == UserTypes::DISPATCHER): ?>
+									(Комиссия: <?php echo $model->fee ?>)
+								<?php endif; ?>
+							</strong>
+						</span>
+						<span>
 							<?php echo $model->user->profiles->last_name . ' ' . $model->user->profiles->first_name . ' ' . $model->user->profiles->middle_name; ?>
 						</span>
-						<span><?php echo $model->user->profiles->userType->name_ru; ?></span>
 						<span><?php echo $model->user->organizations->name_org; ?></span>
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
@@ -171,25 +130,14 @@ $this->breadcrumbs = array(
                     </div>
                     <div class="clear"></div>
                 </div>
-				<?php /* ?>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 					<tr>
 						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу груза" class="sideB bSea tipS" style="width: 25%">Сообщение</a>
 						</td>
 					</tr>
 				</table>
-				<?php */ ?>
-				<?php if ($model->user->goods && count($model->user->goods) > 1): ?>
+				<?php /* if ($model->user->goods && count($model->user->goods) > 1): ?>
 					<div class="inFrom" style="width:100%">
 						<h5>Еще доступные грузы этого пользователя</h5>
 					</div>
@@ -265,9 +213,13 @@ $this->breadcrumbs = array(
 							<?php endforeach; ?>
 						</tbody>
 					</table>
-				<?php endif; ?>
+				<?php endif; */ ?>
             </div>
         </div>
 	</div>
 </div>
+<input id="point_sent" type="hidden" value="Точка отправления: <?php echo $model->cityFrom->name_ru ?>, <?php echo $model->regionFrom->name_ru ?>, <?php echo $model->countryFrom->name_ru ?>" />
+<input id="point_arrival" type="hidden" value="Точка прибытия: <?php echo $model->cityTo->name_ru ?>, <?php echo $model->regionTo->name_ru ?>, <?php echo $model->countryTo->name_ru ?>" />
+
+<?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::GOOD)); ?>
 <!-- Content ends -->

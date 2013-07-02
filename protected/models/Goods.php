@@ -365,7 +365,7 @@ class Goods extends CActiveRecord
 			$date_to = strtotime($filter->date_to);
 		}
 
-		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
+		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' > t.date_to))';
 
 		$result[] = 'date_to >= ' . time();
 
@@ -432,6 +432,124 @@ class Goods extends CActiveRecord
 		}
 
 		return join(' AND ', $result);
+	}
+
+	public function searchIncidental($vehicle_id, $desiredCoordinates, $date_from, $date_to)
+	{
+		$vehicle = $vehicle_id ? Vehicle::model()->findByPk($vehicle_id) : null;
+
+		$where = array();
+		$where[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
+		$where[] = 't.is_deleted = 0';
+
+		if (!empty($date_from))
+		{
+			$date_from = strtotime($date_from);
+		}
+		else
+		{
+			$date_from = time();
+		}
+
+		if (!empty($date_to))
+		{
+			$date_to = strtotime($date_to);
+		}
+		else
+		{
+			$date_to = time();
+		}
+
+		$where[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
+		$where[] = 'date_to >= ' . time();
+
+		if ($vehicle)
+		{
+			if ($vehicle->permissions)
+			{
+				$permissions = array();
+				$permissionsArray = explode(',', $vehicle->permissions);
+				foreach ($permissionsArray as $permission)
+				{
+					$permissions[] = 'FIND_IN_SET(' . $permission . ', t.permissions) > 0';
+				}
+
+				$result[] = '(' . join(' OR ', $permissions) . ' OR t.permissions IS NULL)';
+			}
+			if ($vehicle->shipments)
+			{
+				$shipments = array();
+				$shipmentsArray = explode(',', $vehicle->shipments);
+				foreach ($shipmentsArray as $shipment)
+				{
+					$shipments[] = 'FIND_IN_SET(' . $shipment . ', t.shipments) > 0';
+				}
+
+				$result[] = '(' . join(' OR ', $shipments) . ')';
+			}
+			$result[] = '(FIND_IN_SET(' . $vehicle->vehicle_type_id . ', t.vehicle_types) > 0  OR t.vehicle_types IS NULL)';
+			$result[] = 'FIND_IN_SET(' . $vehicle->body_type_id . ', t.body_types) > 0';
+
+			$result[] = '(' . $vehicle->bearing_capacity . ' >= t.weight_exact_value OR (t.weight_exact_value = 0 AND (' . $vehicle->bearing_capacity . ' >= t.weight_from OR ' . $vehicle->bearing_capacity . ' >= t.weight_to)))';
+			$result[] = '(' . $vehicle->body_capacity . ' >= t.capacity_exact_value OR (t.capacity_exact_value = 0 AND (' . $vehicle->body_capacity . ' >= t.capacity_from OR ' . $vehicle->body_capacity . ' >= t.capacity_to)))';
+			if ($vehicle->adr) $result[] = 'adr <= ' . $vehicle->adr;
+		}
+
+		$defaultRadius = (int) Yii::app()->params['defaultRadius'];
+
+		$inRadius = array();
+		foreach ($desiredCoordinates as $coord)
+		{
+//			$inRadius[] = 't.city_id_from IN ( SELECT id
+//				FROM city WHERE (6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
+			$inRadius[] = '6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( cityFrom.latitude ) ) * cos( radians( cityFrom.longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( cityFrom.latitude ) ) ) < ' . $defaultRadius;
+		}
+
+		$where[] = '(' . join(' OR ', $inRadius) . ')';
+
+		$criteria = new CDbCriteria();
+		$criteria->condition = join(' AND ', $where);
+		$criteria->order = "t.updated_at DESC LIMIT 0, " . Yii::app()->params['incidients_goods'];
+		$criteria->with = array('cityFrom');
+
+		$goods = $this->findAll($criteria);
+		$count = $this->count($criteria);
+
+		$result = array();
+		foreach ($goods as $good)
+		{
+			$result[] = array(
+				'id' => $good->id,
+				'slug' => $good->slug,
+				'name' => $good->name,
+				'date_from' => Yii::app()->dateFormatter->format('dd.MM.yyyy', $good->date_from),
+				'date_to' => Yii::app()->dateFormatter->format('dd.MM.yyyy', $good->date_to),
+				'country_from' => $good->countryFrom->name_ru,
+				'region_from' => $good->regionFrom->name_ru,
+				'city_from' => $good->cityFrom->name_ru,
+				'country_to' => $good->countryTo->name_ru,
+				'region_to' => $good->regionTo->name_ru,
+				'city_to' => $good->cityTo->name_ru,
+				'weight_exact_value' => $good->weight_exact_value,
+				'weight_from' => $good->weight_from,
+				'weight_to' => $good->weight_to,
+				'capacity_exact_value' => $good->capacity_exact_value,
+				'capacity_from' => $good->capacity_from,
+				'capacity_to' => $good->capacity_to,
+				'cost' => $good->cost,
+				'currency' => $good->currency->name_ru,
+				'payment' => $good->paymentType->name_ru,
+				'fee' => $good->fee,
+				'owner_name' => $good->user->profiles->first_name,
+				'owner_type' => $good->user->profiles->userType->name_ru,
+				'is_dispatcher' => $good->user->profiles->user_type_id == UserTypes::DISPATCHER,
+				'mobile' => $good->user->profiles->mobile,
+				'lat' => $good->cityFrom->latitude,
+				'lng' => $good->cityFrom->longitude,
+			);
+		}
+
+		return $result;
 	}
 
 }

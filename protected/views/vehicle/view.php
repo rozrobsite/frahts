@@ -1,120 +1,16 @@
-<style type="text/css">
-div.ic_myCarousel {
-	margin: 5px auto 0 auto;
-	-moz-box-shadow: 0px 0px 10px #333;
-	-webkit-box-shadow:  0px 0px 10px #333;
-	box-shadow:  0px 0px 10px #333;
-	clear:right;
-	background: #eee;
-}
-.ic_myCarousel .ic_button {
-	background: #999;
-	width: 10px;
-	height: 10px;
-	position: relative;
-	float: left;
-	margin-right: 6px;
-	border-radius: 10px;
-	margin-top: 1px;
-	border: 1px solid #eee;
-}
-.ic_myCarousel .ic_thumbnails {
-	box-shadow: 0px 1px 4px #666;
-	position: relative;
-	overflow: auto;
-	border-radius: 10px;
-	padding: 2px 6px;
-	height: 14px;
-	margin: 0 auto;
-	display: inline-block;
-	background: rgb(238,238,238);
-	background: -moz-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(187,187,187,1) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(187,187,187,1)));
-	background: -webkit-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(187,187,187,1) 100%);
-	background: -o-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(187,187,187,1) 100%);
-	background: -ms-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(187,187,187,1) 100%);
-	background: linear-gradient(top, rgba(238,238,238,1) 0%,rgba(187,187,187,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#bbbbbb',GradientType=0 );
-}
-
-/* keep this after the ic_button code for proper border coloring */
-.ic_myCarousel2 .ic_active, .ic_myCarousel .ic_active, .ic_vidCarousel .ic_active  {
-	background: #fff;
-	border: 1px solid #faa;
-}
-.ic_caption {
-	opacity: .6;
-	background: #fff;
-	font-size: 12px;
-	font-family: arial;
-	padding: 4px 8px;
-	width: auto;
-}
-</style>
 <script type="text/javascript">
 	var myMap, route;
 
-	// Как только будет загружен API и готов DOM, выполняем инициализацию
-	ymaps.ready(init);
-
-	function init () {
-		myMap = new ymaps.Map("map", {
-				center: [<?php echo $model->cities->latitude ?>, <?php echo $model->cities->longitude ?>],
-				zoom: 12
-			});
-
-		myMap.controls
-			// Кнопка изменения масштаба — компактный вариант
-			.add('zoomControl')
-			// Список типов карты
-			.add('typeSelector')
-			.add('mapTools')
-			.add('routeEditor')
-			.add('trafficControl');
-
-		var start = [<?php echo $model->cities->latitude ?>, <?php echo $model->cities->longitude ?>];
-		<?php if ($model->citiesTo->latitude): ?>
-			var end = [<?php echo $model->citiesTo->latitude ?>, <?php echo $model->citiesTo->longitude ?>];
-		<?php endif; ?>
-		ymaps.route([
-			   // Список точек, которые необходимо посетить
-			   [start], [end]], {
-			// Опции маршрутизатора
-			mapStateAutoApply: true // автоматически позиционировать карту
-		}).then(function (router) {
-			route && myMap.geoObjects.remove(route);
-			route = router;
-			route.options.set({ strokeColor: '0000ffff', opacity: 0.9 });
-			myMap.geoObjects.add(route);
-
-			$('#total_length_route').html(route.getHumanLength());
-			$('#total_time_route').html(route.getHumanTime());
-			// С помощью метода getWayPoints() получаем массив точек маршрута
-				// (массив транзитных точек маршрута можно получить с помощью метода getViaPoints)
-				var points = route.getWayPoints();
-				// Задаем стиль метки - иконки будут красного цвета, и
-				// их изображения будут растягиваться под контент
-				points.options.set('preset', 'twirl#blueStretchyIcon');
-				// Задаем контент меток в начальной и конечной точках
-				var pointBegin = points.get(0);
-				var pointEnd = points.get(1);
-
-				pointBegin.properties.set('balloonContentBody', 'Текущее положение: <?php echo $model->cities->name_ru ?>, <?php echo $model->regions->name_ru ?>, <?php echo $model->countries->name_ru ?>');
-				pointEnd.properties.set('balloonContentBody', 'Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>');
-
-//				pointBegin.options.set('draggable', true);
-//				pointEnd.options.set('draggable', true);
-		}, function (error) {
-			alert("Возникла ошибка: " + error.message);
-		});
-
-		return false;
-	 }
+	var center = [<?php echo $model->cities->latitude ?>, <?php echo $model->cities->longitude ?>];
+	var start = [<?php echo $model->cities->latitude ?>, <?php echo $model->cities->longitude ?>];
+	<?php if ($model->citiesTo->latitude): ?>
+		var end = [<?php echo $model->citiesTo->latitude ?>, <?php echo $model->citiesTo->longitude ?>];
+	<?php endif; ?>
 </script>
 
 <?php
-Yii::app()->clientScript->registerScriptFile('/js/plugins/carousel/jquery.infinitecarousel3.min.js');
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
+Yii::app()->clientScript->registerScriptFile('/js/files/vehicleMap.js');
 
 $this->pageTitle = Yii::app()->name . ' - Данные о транспортном средстве "' . ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name
 								. ', номер: ' . $model->license_plate . '"';
@@ -156,6 +52,7 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('/blocks/_notify') ?>
+	<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<div class="widget">
             <div class="invoice">
                 <div class="inHead">
@@ -226,16 +123,20 @@ $this->breadcrumbs = array(
 							</div>
 							<div style="float:right;">
 								<?php if (!empty($model->citiesTo->id)): ?>
-									<label><strong>Срелнее время в пути: </strong><span id="total_time_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
+									<label><strong>Среднее время в пути: </strong><span id="total_time_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
 								<?php endif; ?>
 							</div>
 					</div>
                     <div class="inFrom" style="width:100%">
 						<h5>Владелец транспортного средства</h5>
 						<span>
+							<strong>
+								<?php echo $model->user->profiles->userType->name_ru; ?>
+							</strong>
+						</span>
+						<span>
 							<?php echo $model->user->profiles->last_name . ' ' . $model->user->profiles->first_name . ' ' . $model->user->profiles->middle_name; ?>
 						</span>
-						<span><?php echo $model->user->profiles->userType->name_ru; ?></span>
 						<span><?php echo $model->user->organizations->name_org; ?></span>
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
@@ -252,25 +153,14 @@ $this->breadcrumbs = array(
 					 */?>
                     <div class="clear"></div>
                 </div>
-				<?php /* ?>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 					<tr>
 						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
-						</td>
-						<td>
-							<a href="/vehicle/search" title="Поиск всех доступных грузов" class="sideB bSea tipS">Показать все грузы</a>
+							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу транспортного средства" class="sideB bSea tipS" style="width: 25%">Сообщение</a>
 						</td>
 					</tr>
 				</table>
-				<?php */ ?>
-				<?php if ($model->user->vehicles && count($model->user->vehicles) > 1): ?>
+				<?php/* if ($model->user->vehicles && count($model->user->vehicles) > 1): ?>
 					<div class="inFrom" style="width:100%">
 						<h5>Другие транспортные средства этого пользователя</h5>
 					</div>
@@ -339,9 +229,13 @@ $this->breadcrumbs = array(
 							<?php endforeach; ?>
 						</tbody>
 					</table>
-				<?php endif; ?>
+				<?php endif; */?>
             </div>
         </div>
 	</div>
 </div>
 <!-- Content ends -->
+<input id="point_sent" type="hidden" value="Текущее положение: <?php echo $model->cities->name_ru ?>, <?php echo $model->regions->name_ru ?>, <?php echo $model->countries->name_ru ?>" />
+<input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
+
+<?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::VEHICLE)); ?>

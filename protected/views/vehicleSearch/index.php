@@ -42,6 +42,7 @@ $this->breadcrumbs = array(
 
     <!-- Main content -->
     <div class="wrapper">
+		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		<?php if (!$this->user->vehicles): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">
@@ -57,7 +58,7 @@ $this->breadcrumbs = array(
 			</div>
 		<?php else: ?>
 		<?php if ($this->user->vehicles): ?>
-		<div class="widget fluid" style="margin-top: 10px;">
+		<div class="widget fluid" style="margin-top: 18px;">
 			<div class="formRow">
 				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS"
 				   title="Дополнительные условия для поиска"
@@ -223,7 +224,7 @@ $this->breadcrumbs = array(
 									<?php endif; ?>
 								</td>
 								<td class="fileInfo">
-									<a href="/user/view/<?php echo $oneGood->user->username ?>" class="tipS" title="Перейти на страницу пользователя">
+									<a href="/user/view/<?php echo $oneGood->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
 										<strong><?php echo $oneGood->user->profiles->userType->name_ru ?></strong><br/>
 										<?php echo $oneGood->user->organizations->formOrganizations->name_ru . ' ' . $oneGood->user->organizations->name_org ?><br/>
 										<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>

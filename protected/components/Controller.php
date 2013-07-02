@@ -24,6 +24,8 @@ class Controller extends CController
 	
 	public $user = null;
 	
+	public $mainPage = false;
+	
 	protected function respondJSON($data)
 	{
 		header('Content-type: application/json');

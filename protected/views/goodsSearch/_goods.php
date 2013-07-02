@@ -43,12 +43,13 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 	<?php $this->renderPartial('/blocks/_notify') ?>
+	<?php $this->renderPartial('/blocks/_middleNavR') ?>
 			<?php if ($model->id): ?>
 				<div class="widget fluid">
 					<div class="formRow">
 						<div class="grid10">
 							<label>
-								Если Ваш груз доставлен к месту назначения или Вы по какой то причине не хотите чтобы он показывался грузоперевозчикам, 
+								Если Ваш груз доставлен к месту назначения или Вы по какой то причине не хотите чтобы он показывался грузоперевозчикам,
 								удалите его из поиска.<br/>
 								Также, Ваш груз автоматически будет удален из поиска если у него истекла дата доставки.
 							</label>
@@ -116,17 +117,17 @@ $this->breadcrumbs = array(
 						<?php echo $form->error($model, 'country_id_from', array('class' => 'error')); ?>
 					</div>
 					<div class="grid3">
-						<?php echo CHtml::activeDropDownList($model, 'region_id_from', 
+						<?php echo CHtml::activeDropDownList($model, 'region_id_from',
 								$regionsFrom,
-								array('empty' => 'Выберите регион', 'class' => 'regionFrom'), 
+								array('empty' => 'Выберите регион', 'class' => 'regionFrom'),
 								array());
 						?>
 						<?php echo $form->error($model, 'region_id_from', array('class' => 'error')); ?>
 					</div>
 					<div class="grid4">
-						<?php echo CHtml::activeDropDownList($model, 'city_id_from', 
+						<?php echo CHtml::activeDropDownList($model, 'city_id_from',
 								$citiesFrom,
-								array('empty' => 'Выберите населенный пункт', 'class' => 'cityFrom'), 
+								array('empty' => 'Выберите населенный пункт', 'class' => 'cityFrom'),
 								array());
 						?>
 						<?php echo $form->error($model, 'city_id_from', array('class' => 'error')); ?>
@@ -143,17 +144,17 @@ $this->breadcrumbs = array(
 						<?php echo $form->error($model, 'country_id_to', array('class' => 'error')); ?>
 					</div>
 					<div class="grid3">
-						<?php echo CHtml::activeDropDownList($model, 'region_id_to', 
+						<?php echo CHtml::activeDropDownList($model, 'region_id_to',
 								$regionsTo,
-								array('empty' => 'Выберите регион', 'class' => 'regionTo'), 
+								array('empty' => 'Выберите регион', 'class' => 'regionTo'),
 								array());
 						?>
 						<?php echo $form->error($model, 'region_id_to', array('class' => 'error')); ?>
 					</div>
 					<div class="grid4">
-						<?php echo CHtml::activeDropDownList($model, 'city_id_to', 
+						<?php echo CHtml::activeDropDownList($model, 'city_id_to',
 								$citiesTo,
-								array('empty' => 'Выберите населенный пункт', 'class' => 'cityTo'), 
+								array('empty' => 'Выберите населенный пункт', 'class' => 'cityTo'),
 								array());
 						?>
 						<?php echo $form->error($model, 'city_id_to', array('class' => 'error')); ?>
@@ -218,7 +219,7 @@ $this->breadcrumbs = array(
 						<?php echo $form->textField($model, 'weight_exact_value', array('id' => 'weightExactValue', 'class' => 'goods')) ?>
 						<?php echo $form->error($model, 'weight_exact_value', array('class' => 'error')); ?>
 					</div>
-					
+
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
@@ -256,7 +257,7 @@ $this->breadcrumbs = array(
 								}
 							?>
 						<?php endforeach; ?>
-						
+
 						<?php echo $form->error($model, 'permissions', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>

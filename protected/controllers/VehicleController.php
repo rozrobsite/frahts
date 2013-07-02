@@ -262,7 +262,7 @@ class VehicleController extends FrahtController {
 		}
 
 		if (!is_object($model))
-			throw new CHttpException(404, 'Страница груза не найдена!');
+			throw new CHttpException(404, 'Страница не найдена!');
 
 		$this->render('view', array(
 			'model' => $model,
