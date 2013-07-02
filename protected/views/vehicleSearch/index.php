@@ -223,8 +223,7 @@ $this->breadcrumbs = array(
 									<?php endif; ?>
 								</td>
 								<td class="fileInfo">
-									<?php /*href="/user/view/<?php echo $oneVehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя"*/ ?>
-									<a href="javascript:void(0)">
+									<a href="/user/view/<?php echo $oneGood->user->username ?>" class="tipS" title="Перейти на страницу пользователя">
 										<strong><?php echo $oneGood->user->profiles->userType->name_ru ?></strong><br/>
 										<?php echo $oneGood->user->organizations->formOrganizations->name_ru . ' ' . $oneGood->user->organizations->name_org ?><br/>
 										<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
