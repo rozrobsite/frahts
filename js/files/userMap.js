@@ -7,8 +7,8 @@ function init () {
         // Выбираем первый результат геокодирования.
         var firstGeoObject = res.geoObjects.get(0);
         // Создаем карту с нужным центром.
-            var coords = firstGeoObject.geometry.getCoordinates();
-			myMap = new ymaps.Map("map", {
+        var coords = firstGeoObject.geometry.getCoordinates();
+		myMap = new ymaps.Map("map", {
                 center: coords,
                 zoom: 12
             });
