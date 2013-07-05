@@ -133,7 +133,10 @@ $this->breadcrumbs = array(
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 					<tr>
 						<td>
-							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу груза" class="sideB bSea tipS" style="width: 25%">Сообщение</a>
+							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу груза" class="sideB bSea tipS">Сообщение</a>
+						</td>
+						<td>
+							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Предложить свой транспорт грузоотправителю" class="sideB bGreen tipS">Предложить транспорт</a>
 						</td>
 					</tr>
 				</table>

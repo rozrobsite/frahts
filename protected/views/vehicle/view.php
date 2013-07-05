@@ -115,7 +115,7 @@ $this->breadcrumbs = array(
 									<?php endfor; ?>
 								</div>
 							<?php endif; ?>
-							<div id="map" style="width:100%;height:300px;margin-top: 25px;"></div>
+							<div id="map" style="width:100%;height:340px;margin-top: 25px;"></div>
 							<div style="float:left;">
 								<?php if (!empty($model->citiesTo->id)): ?>
 									<label><strong>Общая длина маршрута: </strong><span id="total_length_route"><?php if ($model->citiesTo->latitude) echo 0; ?></span></label>
