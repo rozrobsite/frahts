@@ -132,12 +132,19 @@ $this->breadcrumbs = array(
                 </div>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 					<tr>
-						<td>
+						<td style="width:25%">
 							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу груза" class="sideB bSea tipS">Сообщение</a>
 						</td>
-						<td>
-							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Предложить свой транспорт грузоотправителю" class="sideB bGreen tipS">Предложить транспорт</a>
+						<td style="width:25%">
+							<a id="offer" href="javascript:void(0)" data-receiving-user-id="<?php echo $model->user->id ?>" data-model-id="<?php echo $model->id ?>" data-model-type="<?php echo Offers::TYPE_GOOD ?>"
+							   title="Предложить одно или несколько своих транспортных средств владельцу груза" class="sideB bGreyish tipS">Предложить свой транспорт</a>
+							<span id="offer_refuse_message" style="display:none;">
+								Вы уже предложили для этого груза свое транспортное средство.<br/>
+								<a id="offer_refuse" herf="javascript:void(0)" data-id="">Отказаться</a>
+							</span>
 						</td>
+						<td style="width:25%"></td>
+						<td style="width:25%"></td>
 					</tr>
 				</table>
 				<?php /* if ($model->user->goods && count($model->user->goods) > 1): ?>

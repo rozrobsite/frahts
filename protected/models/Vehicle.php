@@ -120,6 +120,7 @@ class Vehicle extends CActiveRecord
 			'countriesTo' => array(self::BELONGS_TO, 'Country', 'country_id_to'),
 			'regionsTo' => array(self::BELONGS_TO, 'Region', 'region_id_to'),
 			'citiesTo' => array(self::BELONGS_TO, 'City', 'city_id_to'),
+			'offers' => array(self::HAS_MANY, 'Offers', 'vehicle_id'),
 		);
 	}
 
