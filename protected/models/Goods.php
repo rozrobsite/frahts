@@ -138,6 +138,7 @@ class Goods extends CActiveRecord
 			'cityTo' => array(self::BELONGS_TO, 'City', 'city_id_to'),
 			'currency' => array(self::BELONGS_TO, 'Currency', 'currency_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
+			'offers' => array(self::HAS_MANY, 'Offers', 'good_id'),
 		);
 	}
 
