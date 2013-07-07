@@ -46,7 +46,6 @@ $this->breadcrumbs = array(
 				</li>
             </ul>
         </div>
-
     </div>
 
     <!-- Main content -->
@@ -109,8 +108,8 @@ $this->breadcrumbs = array(
 							<?php if (count($model->photos)): ?>
 								<div class="body" align="center">
 									<?php for($i = 0; $i < count($model->photos); $i++): ?>
-										<a href="<?php echo '/' . Yii::app()->params['files']['photos'] . '/' . $model->photos[$i]->size_superbig; ?>" class="lightbox" rel="group">
-											<img width="80" height="80" src="<?php echo '/' . Yii::app()->params['files']['photos'] . '/' . $model->photos[$i]->size_middle; ?>" alt="<?php echo ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name ?>" />
+										<a href="<?php echo '/' . Yii::app()->params['files']['photos'] . $model->photos[$i]->size_superbig; ?>" class="lightbox" rel="group">
+											<img width="80" height="80" src="<?php echo '/' . Yii::app()->params['files']['photos'] . $model->photos[$i]->size_middle; ?>" alt="<?php echo ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name ?>" />
 										</a>
 									<?php endfor; ?>
 								</div>
@@ -135,7 +134,9 @@ $this->breadcrumbs = array(
 							</strong>
 						</span>
 						<span>
-							<?php echo $model->user->profiles->last_name . ' ' . $model->user->profiles->first_name . ' ' . $model->user->profiles->middle_name; ?>
+							<a href="/user/view/<?php echo $model->user->id; ?>">
+								<?php echo $model->user->profiles->last_name . ' ' . $model->user->profiles->first_name . ' ' . $model->user->profiles->middle_name; ?>
+							</a>
 						</span>
 						<span><?php echo $model->user->organizations->name_org; ?></span>
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
@@ -159,11 +160,15 @@ $this->breadcrumbs = array(
 							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу транспортного средства" class="sideB bSea tipS">Сообщение</a>
 						</td>
 						<td style="width:25%">
-							<a id="offer" href="javascript:void(0)" data-receiving-user-id="<?php echo $model->user->id ?>" data-model-id="<?php echo $model->id ?>" data-model-type="<?php echo Offers::TYPE_VEHICLE ?>"
-							   title="Предложить один или несколько своих грузов владельцу транспортного средства" class="sideB bGreyish tipS">Предложить свой груз</a>
-							<span id="offer_refuse_message" style="display:none;">
-								Вы уже предложили для этого транспортного средства свой груз.<br/>
-								<a id="offer_refuse" herf="javascript:void(0)" data-id="">Отказаться</a>
+							<a id="offer" href="javascript:void(0)" 
+							   data-receiving-user-id="<?php echo $model->user->id ?>" 
+							   data-model-id="<?php echo $model->id ?>" 
+							   data-model-type="<?php echo Offers::TYPE_VEHICLE ?>"
+							   title="Предложить один или несколько своих грузов владельцу транспортного средства" 
+							   class="sideB bGreyish tipS" <?php if($offer): ?>style="display:none"<?php endif; ?>>Предложить свой груз</a>
+							<span id="offer_refuse_message" <?php if(!$offer): ?>style="display:none"<?php endif; ?>>
+								Вы сделали предложение.<br/>
+								<a id="offer_refuse" herf="javascript:void(0)" data-id="<?php echo $offer ? $offer->id : ''; ?>">Отменить</a>
 							</span>
 						</td>
 						<td style="width:25%"></td>

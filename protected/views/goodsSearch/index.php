@@ -218,8 +218,7 @@ $this->breadcrumbs = array(
 										</span>
 									</td>
 									<td class="fileInfo">
-										<?php /* href="/user/view/<?php echo $vehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя"*/ ?>
-										<a href="javascript:void(0)">
+										<a href="/user/view/<?php echo $vehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
 											<strong><?php echo $vehicle->user->profiles->userType->name_ru ?></strong><br/>
 											<?php echo $vehicle->user->organizations->formOrganizations->name_ru . ' ' . $vehicle->user->organizations->name_org ?><br/>
 											<?php echo $vehicle->user->profiles->last_name . ' ' . $vehicle->user->profiles->first_name . ' ' . $vehicle->user->profiles->middle_name ?>

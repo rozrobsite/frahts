@@ -26,6 +26,8 @@ class Offers extends CActiveRecord
 	const RESULT_IN_PROCESS = 1;
 	const RESULT_IN_ACCEPT = 2;
 	const RESULT_IN_REFUSE = 3;
+	const OFFER_TYPE_USERS = 1;
+	const OFFER_TYPE_FOR_USERS = 2;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -118,4 +120,26 @@ class Offers extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function getUsersOffers($user, $offerType = self::OFFER_TYPE_USERS)
+	{
+		$condition = 'created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH) AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+		$condition .= $offerType == self::OFFER_TYPE_USERS 
+				? ' AND author_id = ' . $user->id 
+				: ' AND receiving_user_id = ' . $user->id;
+		
+		$criteria = new CDbCriteria();
+		$criteria->condition = $condition;
+		$criteria->order = 'created_at DESC';
+		
+		return $this->findAll($criteria);
+	}
+	
+//	public function getForUsersOffers($user)
+//	{
+//		$criteria = new CDbCriteria();
+//		$criteria->condition = 'receiving_user_id = ' . $user->id . ' AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH) AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
+//		
+//		return $this->findAll($criteria);
+//	}
 }

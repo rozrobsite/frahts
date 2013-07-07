@@ -72,6 +72,8 @@ class GoodsController extends FrahtController
 		}
 
 		Yii::app()->session['good_id'] = (int) $model->id;
+		
+		$offer = Offers::model()->find('author_id = ' . $this->user->id . ' AND receiving_user_id = ' . $model->user->id . ' AND good_id = ' . $model->id);
 
 		$this->render('view',
 				array(
@@ -80,6 +82,7 @@ class GoodsController extends FrahtController
 			'bodyTypes' => join(', ', $bodyTypesArray),
 			'shipments' => join(', ', $shipmentsArray),
 			'permissions' => join(', ', $permissionsArray),
+			'offer' => $offer,
 		));
 	}
 

@@ -369,5 +369,10 @@ class Vehicle extends CActiveRecord
 
 		return join(' AND ', $result);
 	}
+	
+	public function shortName()
+	{
+		return $this->bodyType->name_ru . ' ' . $this->marka->name . ' ' . $this->modeli->name;
+	}
 
 }

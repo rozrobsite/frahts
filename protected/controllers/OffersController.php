@@ -4,16 +4,23 @@ class OffersController extends FrahtController
 {
 	public function actionIndex()
 	{
-		$this->render('index');
+		$model = Offers::model();
+		$userOffers = $model->getUsersOffers($this->user, Offers::OFFER_TYPE_USERS);
+		$forUserOffers = $model->getUsersOffers($this->user, Offers::OFFER_TYPE_FOR_USERS);
+		
+		$this->render('index', array(
+			'userOffers' => $userOffers,
+			'forUserOffers' => $forUserOffers,
+		));
 	}
 
 	public function actionAdd()
 	{
-		$receiving_user_id = isset($_POST['receiving_user_id']) ? (int) $_POST['receiving_user_id'] : 0;
-		$model_id = isset($_POST['model_id']) ? (int) $_POST['model_id'] : 0;
-		$model_type = isset($_POST['model_type']) ? (int) $_POST['model_type'] : 0;
+		$receivingUserId = isset($_POST['receiving_user_id']) ? (int) $_POST['receiving_user_id'] : 0;
+		$modelId = isset($_POST['model_id']) ? (int) $_POST['model_id'] : 0;
+		$modelType = isset($_POST['model_type']) ? (int) $_POST['model_type'] : 0;
 
-		if (empty($receiving_user_id) || empty($model_id) || empty($model_type) || ($model_type != Offers::TYPE_GOOD && $model_type != Offers::TYPE_VEHICLE))
+		if (empty($receivingUserId) || empty($modelId) || empty($modelType) || ($modelType != Offers::TYPE_GOOD && $modelType != Offers::TYPE_VEHICLE))
 		{
 			echo $this->respondJSON(array('error' => 1));
 
@@ -22,12 +29,12 @@ class OffersController extends FrahtController
 
 		$offer = new Offers();
 		$offer->author_id = $this->user->id;
-		$offer->receiving_user_id = $receiving_user_id;
+		$offer->receiving_user_id = $receivingUserId;
 		$offer->created_at = time();
-		if ($model_type == Offers::TYPE_GOOD)
-			$offer->good_id = $model_id;
+		if ($modelType == Offers::TYPE_GOOD)
+			$offer->good_id = $modelId;
 		else
-			$offer->vehicle_id = $model_id;
+			$offer->vehicle_id = $modelId;
 
 		if (!$offer->save())
 		{
@@ -54,16 +61,16 @@ class OffersController extends FrahtController
 		}
 
 		$offer = Offers::model()->findByPk($id);
-		if ($offer->author->id != $this->user->id && $offer->receivingUser->id != $this->user->id)
+		if ($offer->author_id != $this->user->id)
 		{
-			echo $this->respondJSON(array('error' => 1));
+			echo $this->respondJSON(array('error' => 2));
 
 			Yii::app()->end();
 		}
 
 		if (!$offer->deleteByPk($id))
 		{
-			echo $this->respondJSON(array('error' => 1, 'message'=>$offer->getErrors()));
+			echo $this->respondJSON(array('error' => 3, 'message'=>$offer->getErrors()));
 
 			Yii::app()->end();
 		}

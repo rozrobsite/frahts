@@ -26,7 +26,7 @@ var offer = {
 	},
 	refuse: function() {
 		$('#offer_refuse').on('click', function(){
-			var id = $(this).data('id');
+			var id = $(this).attr('data-id');
 
 			$.post('/offers/refuse', {
 				id: id

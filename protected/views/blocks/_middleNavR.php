@@ -1,9 +1,14 @@
 <ul class="middleNavR">
-	
+	<li>
+		<a href="/offers" title="Предложения" class="tipN"><img src="/images/icons/middlenav/add.png" alt="" /></a>
+		<?php/* if ($this->newOffersCount): ?>
+			<strong><?php echo $this->newOffersCount ?></strong>
+		<?php endif; */?>
+	</li>
 	<li>
 		<a href="/user/notes" title="Заметки" class="tipN"><img src="/images/icons/middlenav/create.png" alt="" /></a>
-		<?php if ($this->notes_count): ?>
-			<strong><?php echo $this->notes_count ?></strong>
+		<?php if ($this->notesCount): ?>
+			<strong><?php echo $this->notesCount ?></strong>
 		<?php endif; ?>
 	</li>
 	<?php /* ?>
@@ -13,8 +18,8 @@
 	<?php */ ?>
 	<li>
 		<a href="/user/messages#users_message" title="Сообщения" class="tipN"><img src="/images/icons/middlenav/dialogs.png" alt="" /></a>
-		<?php if ($this->messages_count): ?>
-			<strong><?php echo $this->messages_count ?></strong>
+		<?php if ($this->messagesCount): ?>
+			<strong><?php echo $this->messagesCount; ?></strong>
 		<?php endif; ?>
 	</li>
 </ul>

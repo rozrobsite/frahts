@@ -5,7 +5,7 @@
 	<!-- Tabs container -->
 	<div id="tab-container" class="tab-container">
 		<ul class="iconsLine ic1 etabs">
-			<li class="user_profile_tab"><a href="#goodsSearch" class="exp subClosed">Мои грузы</a></li>
+			<li class="user_profile_tab"><a href="#goodsSearch" class="exp subClosed">Грузы</a></li>
 		</ul>
 
 		<div class="divider"><span></span></div>
