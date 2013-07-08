@@ -22,7 +22,7 @@
 				<td class="textL" style="text-align: center !important">
 					<?php if ($offer->good_id): ?>
 						<span class="label">Груз</span>
-						<a href="/good/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
+						<a href="/goods/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
 							"<?php echo $offer->good->name; ?>"
 						</a>
 					<?php else: ?>
