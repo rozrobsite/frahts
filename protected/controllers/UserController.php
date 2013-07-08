@@ -3,13 +3,13 @@
 class UserController extends FrahtController
 {
 	private $_receivingUsers = array();
-	
+
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
-		
+
 		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user);
 	}
-	
+
 	/**
 	 * Declares class-based actions.
 	 */
@@ -387,47 +387,47 @@ class UserController extends FrahtController
 
 		$user_id = isset($_GET['user']) ? (int) $_GET['user'] : 0;
 		$type = isset($_GET['type']) ? (int)$_GET['type']: Messages::TYPE_LAST;
-		
+
 		$receivingUser = $usersModel->findByPk($user_id);
 		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
 		$models = Messages::model()->getMessages($this->user, $receivingUser, $type);
 
-		if ($this->messages_count)
+		if ($this->messagesCount)
 			$messagesModel->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
-		
+
 		$this->render('messages', array(
 			'receivingUser' => $receivingUser,
 			'receivingUsers' => $receivingUsers,
 			'models' => $models,
 			));
 	}
-	
+
 	public function actionSearchUsers()
 	{
 		$searchText = isset($_POST['searchText']) ? trim($_POST['searchText']) : '';
-		
+
 		if (empty($searchText))
 		{
 			echo $this->respondJSON(array('error' => 1));
-		
+
 			Yii::app()->end();
 		}
-		
+
 		$users = Profiles::model()->searchUsers($this->user, $searchText);
 		$userList = $this->renderPartial('_userList', array('receivingUsers' => $users), TRUE);
-		
+
 		echo $this->respondJSON(array('error' => 0, 'userList' => $userList));
-		
+
 		Yii::app()->end();
 	}
-	
+
 	public function actionNotes()
 	{
 		if ($this->notes_count)
 			Notes::model()->updateAll(array('is_show' => 1), 'user_id = ' . $this->user->id);
-		
+
 		$models = Notes::model()->findAll();
-		
+
 		$this->render('notes', array(
 			'models' => $models,
 			'receivingUsers' => $this->_receivingUsers,
@@ -437,9 +437,9 @@ class UserController extends FrahtController
 public function actionView()
 	{
 		$userid = isset($_GET['id']) ? trim($_GET['id']) : '';
-		
+
 		$model = Users::model()->find('id = "' . $userid . '"');
-		
+
 		/*
 		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
 		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
@@ -478,7 +478,7 @@ public function actionView()
 			'shipments' => join(', ', $shipmentsArray),
 			'permissions' => join(', ', $permissionsArray),*/
 		));
-		
-	}	
-	
+
+	}
+
 }
