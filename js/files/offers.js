@@ -24,8 +24,51 @@ var offer = {
 			});
 		});
 	},
+	cancel: function() {
+		$('#offer_cancel').on('click', function(){
+			var id = $(this).attr('data-id');
+
+			$.post('/offers/cancel', {
+				id: id
+			}, function(response){
+				if (typeof response.error === 'undefined' || response.error > 0) {
+					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					return;
+				}
+
+				$.jGrowl('Вы отменили предложение для пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+				$('#offer').show();
+				$('#offer_refuse_message').hide();
+				$('#offer_refuse').attr('data-id', '');
+			});
+		});
+
+	},
+	accept: function() {
+		$('.offerAccept').on('click', function(){
+			var id = $(this).attr('data-id');
+
+			$.post('/offers/accept', {
+				id: id
+			}, function(response){
+				if (typeof response.error === 'undefined' || response.error > 0) {
+					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					return;
+				}
+
+				$.jGrowl('Вы приняли предложение пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+				$('.refuseOffer_' + id).hide();
+				$('.noOffer_' + id).hide();
+				$('.acceptOffer_' + id).show();
+			});
+		});
+	},
 	refuse: function() {
-		$('#offer_refuse').on('click', function(){
+		$('.offerRefuse').on('click', function(){
 			var id = $(this).attr('data-id');
 
 			$.post('/offers/refuse', {
@@ -37,17 +80,18 @@ var offer = {
 					return;
 				}
 
-				$.jGrowl('Ваше отказ отправлен пользователю.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				$.jGrowl('Вы отклонили предложение пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
 
-				$('#offer').show();
-				$('#offer_refuse_message').hide();
-				$('#offer_refuse').attr('data-id', '');
+				$('.acceptOffer_' + id).hide();
+				$('.noOffer_' + id).hide();
+				$('.refuseOffer_' + id).show();
 			});
 		});
-
 	},
 	init: function(){
 		offer.add();
+		offer.cancel();
+		offer.accept();
 		offer.refuse();
 	}
 };

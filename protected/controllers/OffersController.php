@@ -7,7 +7,7 @@ class OffersController extends FrahtController
 		$model = Offers::model();
 		$userOffers = $model->getUsersOffers($this->user, Offers::OFFER_TYPE_USERS);
 		$forUserOffers = $model->getUsersOffers($this->user, Offers::OFFER_TYPE_FOR_USERS);
-		
+
 		$this->render('index', array(
 			'userOffers' => $userOffers,
 			'forUserOffers' => $forUserOffers,
@@ -49,7 +49,7 @@ class OffersController extends FrahtController
 
 	}
 
-	public function actionRefuse()
+	public function actionCancel()
 	{
 		$id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
 
@@ -79,6 +79,74 @@ class OffersController extends FrahtController
 
 		Yii::app()->end();
 
+	}
+
+	public function actionAccept()
+	{
+		$id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+
+		if (empty($id))
+		{
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		$offer = Offers::model()->findByPk($id);
+		if ($offer->receiving_user_id != $this->user->id)
+		{
+			echo $this->respondJSON(array('error' => 2));
+
+			Yii::app()->end();
+		}
+
+		$offer->result = Offers::RESULT_IN_ACCEPT;
+		$offer->result_date_at = time();
+
+		if (!$offer->save())
+		{
+			echo $this->respondJSON(array('error' => 3, 'message'=>$offer->getErrors()));
+
+			Yii::app()->end();
+		}
+
+		echo $this->respondJSON(array('error' => 0));
+
+		Yii::app()->end();
+	}
+
+	public function actionRefuse()
+	{
+		$id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+
+		if (empty($id))
+		{
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		$offer = Offers::model()->findByPk($id);
+		if ($offer->receiving_user_id != $this->user->id)
+		{
+			echo $this->respondJSON(array('error' => 2));
+
+			Yii::app()->end();
+		}
+
+		$offer->result = Offers::RESULT_IN_REFUSE;
+		$offer->result_date_at = time();
+
+		if (!$offer->save())
+		{
+			echo $this->respondJSON(array('error' => 3, 'message'=>$offer->getErrors()));
+
+			Yii::app()->end();
+		}
+
+		echo $this->respondJSON(array('error' => 0));
+
+		Yii::app()->end();
 	}
 
 	// Uncomment the following methods and override them if needed
