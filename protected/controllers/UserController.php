@@ -2,9 +2,11 @@
 
 class UserController extends FrahtController
 {
+
 	private $_receivingUsers = array();
 
-	public function __construct($id, $module = null) {
+	public function __construct($id, $module = null)
+	{
 		parent::__construct($id, $module);
 
 		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user);
@@ -79,8 +81,7 @@ class UserController extends FrahtController
 					$this->user->profiles->updated_at = time();
 					if ($this->user->profiles->update())
 					{
-						Yii::app()->user->setFlash('_success',
-								'Ваши данные успешно сохранены.');
+						Yii::app()->user->setFlash('_success', 'Ваши данные успешно сохранены.');
 					}
 					else
 					{
@@ -93,8 +94,7 @@ class UserController extends FrahtController
 					$this->user->profiles->created_at = time();
 					if ($this->user->profiles->save())
 					{
-						Yii::app()->user->setFlash('_success',
-								'Ваши данные успешно сохранены.');
+						Yii::app()->user->setFlash('_success', 'Ваши данные успешно сохранены.');
 					}
 					else
 					{
@@ -112,10 +112,12 @@ class UserController extends FrahtController
 					if (!$image) return;
 
 					$this->user->profiles->avatar = $this->user->id . '.jpg';
-					$image->resize(Yii::app()->params['images']['avatar']['width'], Yii::app()->params['images']['avatar']['height']);
+					$image->resize(Yii::app()->params['images']['avatar']['width'],
+							Yii::app()->params['images']['avatar']['height']);
 					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '.jpg');
 
-					$image->resize(Yii::app()->params['images']['avatar']['small_width'], Yii::app()->params['images']['avatar']['small_height']);
+					$image->resize(Yii::app()->params['images']['avatar']['small_width'],
+							Yii::app()->params['images']['avatar']['small_height']);
 					$image->save(Yii::app()->params['files']['avatars'] . $this->user->id . '_s.jpg');
 
 					$this->user->profiles->save();
@@ -124,7 +126,7 @@ class UserController extends FrahtController
 			else
 			{
 				Yii::app()->user->setFlash('_error',
-								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
+						'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 			}
 		}
 
@@ -155,8 +157,7 @@ class UserController extends FrahtController
 				{
 					if ($this->user->organizations->update())
 					{
-						Yii::app()->user->setFlash('_success',
-								'Ваши данные успешно сохранены.');
+						Yii::app()->user->setFlash('_success', 'Ваши данные успешно сохранены.');
 					}
 					else
 					{
@@ -166,8 +167,7 @@ class UserController extends FrahtController
 				}
 				else if ($this->user->organizations->save())
 				{
-					Yii::app()->user->setFlash('_success',
-							'Ваши данные успешно сохранены.');
+					Yii::app()->user->setFlash('_success', 'Ваши данные успешно сохранены.');
 				}
 				else
 				{
@@ -178,7 +178,7 @@ class UserController extends FrahtController
 			else
 			{
 				Yii::app()->user->setFlash('_error',
-								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
+						'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
 			}
 		}
 
@@ -339,8 +339,7 @@ class UserController extends FrahtController
 					$message->from = Yii::app()->params['adminEmail'];
 					Yii::app()->mail->send($message);
 
-					Yii::app()->user->setFlash('_success',
-							'Ваш пароль изменен успешно.');
+					Yii::app()->user->setFlash('_success', 'Ваш пароль изменен успешно.');
 				}
 				else
 				{
@@ -386,20 +385,23 @@ class UserController extends FrahtController
 		$messagesModel = Messages::model();
 
 		$user_id = isset($_GET['user']) ? (int) $_GET['user'] : 0;
-		$type = isset($_GET['type']) ? (int)$_GET['type']: Messages::TYPE_LAST;
+		$type = isset($_GET['type']) ? (int) $_GET['type'] : Messages::TYPE_LAST;
 
 		$receivingUser = $usersModel->findByPk($user_id);
-		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
+		$receivingUsers = $messagesModel->getReceivingUsers($this->user,
+				$receivingUser);
 		$models = Messages::model()->getMessages($this->user, $receivingUser, $type);
 
 		if ($this->messagesCount)
-			$messagesModel->updateAll(array('is_view' => 1), 'receiving_user_id = ' . $this->user->id);
+				$messagesModel->updateAll(array('is_view' => 1),
+					'receiving_user_id = ' . $this->user->id);
 
-		$this->render('messages', array(
+		$this->render('messages',
+				array(
 			'receivingUser' => $receivingUser,
 			'receivingUsers' => $receivingUsers,
 			'models' => $models,
-			));
+		));
 	}
 
 	public function actionSearchUsers()
@@ -414,7 +416,8 @@ class UserController extends FrahtController
 		}
 
 		$users = Profiles::model()->searchUsers($this->user, $searchText);
-		$userList = $this->renderPartial('_userList', array('receivingUsers' => $users), TRUE);
+		$userList = $this->renderPartial('_userList',
+				array('receivingUsers' => $users), TRUE);
 
 		echo $this->respondJSON(array('error' => 0, 'userList' => $userList));
 
@@ -423,62 +426,63 @@ class UserController extends FrahtController
 
 	public function actionNotes()
 	{
-		if ($this->notes_count)
-			Notes::model()->updateAll(array('is_show' => 1), 'user_id = ' . $this->user->id);
+		if ($this->notesCount)
+				Notes::model()->updateAll(array('is_show' => 1),
+					'user_id = ' . $this->user->id);
 
 		$models = Notes::model()->findAll();
 
-		$this->render('notes', array(
+		$this->render('notes',
+				array(
 			'models' => $models,
 			'receivingUsers' => $this->_receivingUsers,
 		));
 	}
 
-public function actionView()
+	public function actionView()
 	{
 		$userid = isset($_GET['id']) ? trim($_GET['id']) : '';
 
 		$model = Users::model()->find('id = "' . $userid . '"');
 
 		/*
-		$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
-		$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
+		  $vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
+		  $vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 
-		$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
-		$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
+		  $bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
+		  $bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
 
-		$shipments = '';
-		$shipmentsArray = array();
-		if ($model->shipments)
-		{
-			$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
-			$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
-		}
+		  $shipments = '';
+		  $shipmentsArray = array();
+		  if ($model->shipments)
+		  {
+		  $shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
+		  $shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
+		  }
 
-		$permissions = '';
-		$permissionsArray = array();
-		if ($model->permissions)
-		{
-			$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
-			$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
-			if (array_key_exists(Permissions::ADR, $permissionsArray))
-			{
-				$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
-			}
-		}
-		*/
+		  $permissions = '';
+		  $permissionsArray = array();
+		  if ($model->permissions)
+		  {
+		  $permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
+		  $permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
+		  if (array_key_exists(Permissions::ADR, $permissionsArray))
+		  {
+		  $permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
+		  }
+		  }
+		 */
 		if (!is_object($model))
 				throw new CHttpException(404, 'Страница пользователя не найдена!');
 
 		$this->render('view',
 				array(
 			'model' => $model
-			/*'vehicleTypes' => join(', ', $vehicleTypesArray),
-			'bodyTypes' => join(', ', $bodyTypesArray),
-			'shipments' => join(', ', $shipmentsArray),
-			'permissions' => join(', ', $permissionsArray),*/
+				/* 'vehicleTypes' => join(', ', $vehicleTypesArray),
+				  'bodyTypes' => join(', ', $bodyTypesArray),
+				  'shipments' => join(', ', $shipmentsArray),
+				  'permissions' => join(', ', $permissionsArray), */
 		));
-
 	}
 
 }

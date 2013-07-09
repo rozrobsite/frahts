@@ -20,7 +20,7 @@ var offer = {
 
 				$('#offer').hide();
 				$('#offer_refuse_message').show();
-				$('#offer_refuse').attr('data-id', response.id);
+				$('#offer_cancel').attr('data-id', response.id);
 			});
 		});
 	},

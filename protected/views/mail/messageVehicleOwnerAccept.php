@@ -1,7 +1,7 @@
 Здравствуйте!
 
 
-Пользователь <?php echo $author->receivingUser->profiles->fullName() ?> принял Ваше предложение по перевозке груза на Вашем транспорте "<?php echo $author->vehicle->shortName(); ?>":
+Пользователь <?php echo $author->receivingUser->profiles->fullName() ?> принял(а) Ваше предложение по перевозке груза на Вашем транспорте "<?php echo $author->vehicle->shortName(); ?>":
 
 Другие предложения Вы можете посмотреть на странице <a href="/offers">"Предложения"</a>.
 
@@ -11,4 +11,4 @@
 
 С уважением,
 
-Администрация сайта <a href="frahts.com">www.frahts.com</a>
+Администрация сайта www.frahts.com
