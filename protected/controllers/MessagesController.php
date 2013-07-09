@@ -73,7 +73,6 @@ class MessagesController extends FrahtController {
 	{
 		$message = new YiiMailMessage;
 
-
 		$message->view = get_class($object) == 'Goods' ? 'messageGoodOwner' : 'messageVehicleOwner';
 		$message->setBody(array('model' => $model, 'object' => $object), 'text/plain');
 		$message->subject = Yii::app()->params['siteName'] . ': Сообщение от пользователя';

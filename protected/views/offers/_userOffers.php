@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0" width="100%" class="tDefault tMedia">
+<table id="userOffersTable" cellpadding="0" cellspacing="0" width="100%" class="tDefault tMedia">
 	<thead>
 		<tr>
 			<td width="30%">Кому</td>
@@ -23,7 +23,7 @@
 				<td class="textL" style="text-align: center !important">
 					<?php if ($offer->good_id): ?>
 						<span class="label">Груз</span>
-						<a href="/good/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
+						<a href="/goods/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
 							"<?php echo $offer->good->name; ?>"
 						</a>
 					<?php else: ?>
@@ -41,13 +41,14 @@
 					<?php if ($offer->result == Offers::RESULT_IN_REFUSE): ?>
 						Пользователь <span class="label label-important">отклонил</span> Ваше предложение
 					<?php elseif ($offer->result == Offers::RESULT_IN_ACCEPT): ?>
-						Пользователь <span class="label label-success">принял</span> Ваше предложение
+						Пользователь <span class="label label-success">принял</span> Ваше предложение<br/>
+						<a href="/user/view/<?php echo $offer->author->id; ?>">Оставить отзыв</a>
 					<?php else: ?>
 						От пользователя еще <span class="label label-info">нет ответа</span>
 					<?php endif; ?>
 				</td>
 				<td>
-					<a href="javascript:void(0)" class="buttonS bRed">Отменить</a>
+					<a href="javascript:void(0)" class="buttonS bRed cancelUsersOffer" data-id="<?php echo $offer->id ?>">Отменить</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>

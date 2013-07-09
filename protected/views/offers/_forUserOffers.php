@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0" width="100%" class="tDefault tMedia">
+<table id="forUserOffersTable" cellpadding="0" cellspacing="0" width="100%" class="tDefault tMedia">
 	<thead>
 		<tr>
 			<td width="35%">От кого</td>
@@ -22,7 +22,7 @@
 				<td class="textL" style="text-align: center !important">
 					<?php if ($offer->good_id): ?>
 						<span class="label">Груз</span>
-						<a href="/good/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
+						<a href="/goods/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
 							"<?php echo $offer->good->name; ?>"
 						</a>
 					<?php else: ?>
@@ -39,10 +39,12 @@
 				<td class="tableActs">
 					<label class="refuseOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_REFUSE): ?>style="display: none;"<?php endif; ?>>
 						Вы <span class="label label-important">отклонили</span> предложение пользователя<br/>
-						<a href="javascript:void(0)" class="buttonS bRed">Отменить</a>
+						<a class="cancelForUsersOffer" href="javascript:void(0)" style="color: #a34c4c;" data-id="<?php echo $offer->id; ?>">Отменить</a>
 					</label>
 					<label class="acceptOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_ACCEPT): ?>style="display: none;"<?php endif; ?>>
-						Вы <span class="label label-success">приняли</span> предложение пользователя
+						Вы <span class="label label-success">приняли</span> предложение пользователя<br/>
+						<a href="/user/view/<?php echo $offer->author->id; ?>">Оставить отзыв</a>
+						<a class="cancelForUsersOffer" href="javascript:void(0)" style="color: #a34c4c;margin-left: 10px;" data-id="<?php echo $offer->id; ?>">Отменить</a>
 					</label>
 					<div class="noOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_PROCESS): ?>style="display: none;"<?php endif; ?>>
 						<a href="javascript:void(0)" class="buttonS bGreen offerAccept" data-id="<?php echo $offer->id ?>">Принять</a>

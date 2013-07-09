@@ -5,8 +5,8 @@ class VehicleController extends FrahtController {
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
 
-		if (!($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
-			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
+//		if (!($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
+//			throw new CHttpException(503, 'Вам не разрешен доступ к этой странице!');
 
 		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
@@ -263,7 +263,7 @@ class VehicleController extends FrahtController {
 
 		if (!is_object($model))
 			throw new CHttpException(404, 'Страница не найдена!');
-		
+
 		$offer = Offers::model()->find('author_id = ' . $this->user->id . ' AND receiving_user_id = ' . $model->user->id . ' AND vehicle_id = ' . $model->id);
 
 		$this->render('view', array(

@@ -59,11 +59,14 @@ var offer = {
 					return;
 				}
 
-				$.jGrowl('Вы приняли предложение пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				$.get('/offers', {}, function(response){
+					$('#forUserOffersTable').html('');
+					$('#forUserOffersTable').html($(response).find('#forUserOffersTable'));
 
-				$('.refuseOffer_' + id).hide();
-				$('.noOffer_' + id).hide();
-				$('.acceptOffer_' + id).show();
+					offer.initForUser();
+
+					$.jGrowl('Вы приняли предложение пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				});
 			});
 		});
 	},
@@ -88,11 +91,65 @@ var offer = {
 			});
 		});
 	},
+	cancelForUsersOffer: function() {
+		$('.cancelForUsersOffer').on('click', function(){
+			var id = $(this).attr('data-id');
+
+			$.post('/offers/cancelForUsersOffer', {
+				id: id
+			}, function(response){
+				if (typeof response.error === 'undefined' || response.error > 0) {
+					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					return;
+				}
+
+				$.jGrowl('Вы отменили предложение пользователю.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+				$('.acceptOffer_' + id).hide();
+				$('.refuseOffer_' + id).hide();
+				$('.noOffer_' + id).show();
+			});
+		});
+	},
+	cancelUsersOffer: function() {
+		$('.cancelUsersOffer').on('click', function(){
+			var id = $(this).attr('data-id');
+
+			$.post('/offers/cancelUsersOffer', {
+				id: id
+			}, function(response){
+				if (typeof response.error === 'undefined' || response.error > 0) {
+					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					return;
+				}
+
+				$.get('/offers', {}, function(response){
+					$('#userOffersTable').html('');
+					$('#userOffersTable').html($(response).find('#userOffersTable'));
+
+					offer.initUser();
+
+					$.jGrowl('Вы отменили предложение для пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				});
+			});
+		});
+
+	},
+	initForUser: function() {
+		offer.accept();
+		offer.refuse();
+		offer.cancelForUsersOffer();
+	},
+	initUser: function() {
+		offer.cancelUsersOffer();
+	},
 	init: function(){
 		offer.add();
 		offer.cancel();
-		offer.accept();
-		offer.refuse();
+		offer.initForUser();
+		offer.initUser();
 	}
 };
 
