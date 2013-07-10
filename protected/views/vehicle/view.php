@@ -254,3 +254,4 @@ $this->breadcrumbs = array(
 <input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
 
 <?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::VEHICLE)); ?>
+<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_VEHICLE)); ?>

@@ -76,6 +76,7 @@ class Offers extends CActiveRecord
 			'author' => array(self::BELONGS_TO, 'Users', 'author_id'),
 			'receivingUser' => array(self::BELONGS_TO, 'Users', 'receiving_user_id'),
 			'good' => array(self::BELONGS_TO, 'Goods', 'good_id'),
+			'currency' => array(self::BELONGS_TO, 'Currency', 'currency_id'),
 		);
 	}
 
@@ -120,26 +121,26 @@ class Offers extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	
+
 	public function getUsersOffers($user, $offerType = self::OFFER_TYPE_USERS)
 	{
 		$condition = 'created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH) AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
-		$condition .= $offerType == self::OFFER_TYPE_USERS 
-				? ' AND author_id = ' . $user->id 
+		$condition .= $offerType == self::OFFER_TYPE_USERS
+				? ' AND author_id = ' . $user->id
 				: ' AND receiving_user_id = ' . $user->id;
-		
+
 		$criteria = new CDbCriteria();
 		$criteria->condition = $condition;
 		$criteria->order = 'created_at DESC';
-		
+
 		return $this->findAll($criteria);
 	}
-	
+
 //	public function getForUsersOffers($user)
 //	{
 //		$criteria = new CDbCriteria();
 //		$criteria->condition = 'receiving_user_id = ' . $user->id . ' AND created_at >= UNIX_TIMESTAMP(CURRENT_DATE - INTERVAL 1 MONTH) AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
-//		
+//
 //		return $this->findAll($criteria);
 //	}
 }

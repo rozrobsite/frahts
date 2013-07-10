@@ -265,12 +265,14 @@ class VehicleController extends FrahtController {
 			throw new CHttpException(404, 'Страница не найдена!');
 
 		$offer = Offers::model()->find('author_id = ' . $this->user->id . ' AND receiving_user_id = ' . $model->user->id . ' AND vehicle_id = ' . $model->id);
+		$currencies = Currency::model()->findAll();
 
 		$this->render('view', array(
 			'model' => $model,
 			'shipments' => $shipmentsArray,
 			'permissions' => $permissionsArray,
 			'offer' => $offer,
+			'currencies' => $currencies,
 		));
 	}
 

@@ -56,6 +56,7 @@ class Currency extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'goods' => array(self::HAS_MANY, 'Goods', 'currency_id'),
+			'offers' => array(self::HAS_MANY, 'Offers', 'currency_id'),
 		);
 	}
 

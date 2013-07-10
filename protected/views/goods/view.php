@@ -239,3 +239,4 @@ $this->breadcrumbs = array(
 
 <?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::GOOD)); ?>
 <!-- Content ends -->
+<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_GOOD)); ?>

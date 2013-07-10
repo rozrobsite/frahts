@@ -34,7 +34,7 @@ class GoodsController extends FrahtController
 		$model = Goods::model()->find('slug = "' . $slug . '" AND is_deleted = 0 AND date_to >= ' . time());
 		if (!is_object($model))
 				throw new CHttpException(404, 'Страница груза не найдена!');
-		
+
 		$vehicleTypes = '';
 		$vehicleTypesArray = array();
 		if ($model->vehicle_types)
@@ -42,7 +42,7 @@ class GoodsController extends FrahtController
 			$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
 			$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 		}
-		
+
 		$bodyTypes = '';
 		$bodyTypesArray = array();
 		if ($model->body_types)
@@ -72,8 +72,9 @@ class GoodsController extends FrahtController
 		}
 
 		Yii::app()->session['good_id'] = (int) $model->id;
-		
+
 		$offer = Offers::model()->find('author_id = ' . $this->user->id . ' AND receiving_user_id = ' . $model->user->id . ' AND good_id = ' . $model->id);
+		$currencies = Currency::model()->findAll();
 
 		$this->render('view',
 				array(
@@ -83,6 +84,7 @@ class GoodsController extends FrahtController
 			'shipments' => join(', ', $shipmentsArray),
 			'permissions' => join(', ', $permissionsArray),
 			'offer' => $offer,
+			'currencies' => $currencies,
 		));
 	}
 
