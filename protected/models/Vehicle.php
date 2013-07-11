@@ -121,6 +121,7 @@ class Vehicle extends CActiveRecord
 			'regionsTo' => array(self::BELONGS_TO, 'Region', 'region_id_to'),
 			'citiesTo' => array(self::BELONGS_TO, 'City', 'city_id_to'),
 			'offers' => array(self::HAS_MANY, 'Offers', 'vehicle_id'),
+			'vehicleOffer' => array(self::HAS_MANY, 'Offers', 'offer_vehicle_id'),
 		);
 	}
 
@@ -369,7 +370,7 @@ class Vehicle extends CActiveRecord
 
 		return join(' AND ', $result);
 	}
-	
+
 	public function shortName()
 	{
 		return $this->bodyType->name_ru . ' ' . $this->marka->name . ' ' . $this->modeli->name;

@@ -850,30 +850,39 @@ $(function() {
         width: 400,
         buttons: {
             "Предложить": function () {
-				var message_id = $(this).attr('data-message-id');
-				var thisDialog = $(this);
+				var receiving_user_id = $('#offer').data('receiving-user-id');
+				var model_id = $('#offer').data('model-id');
+				var model_type = $('#offer').data('model-type');
+				var offer_vehicle = $('#offerVehicle').length ? $('#offerVehicle').val() : 0;
+				var offer_cost = $('#offerCost').length ? $('#offerCost').val() : 0;
+				var offer_currency = $('#offerCurrency').length ? $('#offerCurrency').val() : 0;
+				var offer_good = $('#offerGood').length ? $('#offerGood').val() : 0;
 
-				$.post('/messages/delete', {
-					message_id: message_id
+				var dialogWindow = $(this);
+
+				$.post('/offers/add', {
+					receiving_user_id: receiving_user_id,
+					model_id: model_id,
+					model_type: model_type,
+					offer_vehicle: offer_vehicle,
+					offer_cost: offer_cost,
+					offer_currency: offer_currency,
+					offer_good: offer_good
 				}, function(response){
-					response = $.parseJSON(response);
-
-					if (typeof response.error === 'undefined' || response.error > 0)
-					{
-						thisDialog.dialog("close");
-
-						$.jGrowl('Сообщение не было удалено. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+					if (typeof response.error === 'undefined' || response.error > 0 || typeof response.id === 'undefined' || response.id == null || response.id == 0) {
+						$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
 
 						return;
 					}
 
-					$('.message_' + message_id).remove();
+					$.jGrowl('Ваше предложение отправлено пользователю.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
 
-					thisDialog.dialog("close");
+					$('#offer').hide();
+					$('#offer_refuse_message').show();
+					$('#offer_cancel').attr('data-id', response.id);
 
-					$.jGrowl('Сообщение удалено. Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+					dialogWindow.dialog("close");
 				});
-                $(this).dialog("close");
             },
             "Отмена": function () {
                 $(this).dialog("close");

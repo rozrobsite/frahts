@@ -65,3 +65,16 @@ ALTER TABLE `offers` ADD FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle`(`id`) O
 
 --09.07.2013
 ALTER TABLE offers ADD COLUMN is_view tinyint(1) DEFAULT 0;
+
+--10.07.2013
+ALTER TABLE `offers` ADD `cost` INT( 11 ) NULL DEFAULT NULL ,
+					ADD `currency_id` INT( 11 ) NULL DEFAULT NULL ,
+					ADD INDEX (`currency_id`);
+ALTER TABLE `offers` ADD FOREIGN KEY (`currency_id`) REFERENCES  `currency` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--11.07.2013
+ALTER TABLE `offers` ADD `offer_vehicle_id` BIGINT( 20 ) NULL DEFAULT NULL, ADD `offer_good_id` BIGINT( 20 ) NULL DEFAULT NULL;
+ALTER TABLE `offers` ADD INDEX (`offer_vehicle_id`);
+ALTER TABLE `offers` ADD INDEX (`offer_good_id`);
+ALTER TABLE `offers` ADD FOREIGN KEY (`offer_vehicle_id`) REFERENCES `vehicle` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `offers` ADD FOREIGN KEY (`offer_good_id`) REFERENCES `goods` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;

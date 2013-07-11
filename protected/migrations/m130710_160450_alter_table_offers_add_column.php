@@ -16,7 +16,7 @@ class m130710_160450_alter_table_offers_add_column extends CDbMigration
 		return true;
 	}
 
-	public function down()
+	public function safeDown()
 	{
 		echo "m130710_160450_alter_table_offers_add_column does not support migration down.\n";
 		return true;

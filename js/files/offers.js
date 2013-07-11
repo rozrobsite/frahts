@@ -156,7 +156,25 @@ var offer = {
 	}
 };
 
+var offerDialog = {
+	selectGood: function() {
+		$('#offerGood').on('change', function(){
+			$('#offerCost').val($(this).find(':selected').data('cost'));
+			$('#offerCurrency').val($(this).find(':selected').data('currency'));
+
+			updateSelect.update($('#offerCurrency'));
+		});
+	},
+	init: function() {
+		offerDialog.selectGood();
+	}
+};
+
 $(document).ready(function(){
 	offer.init();
+	offerDialog.init();
+
+	$("#offerCost").mask("9?9999999");
+	$('#offerGood').change();
 });
 

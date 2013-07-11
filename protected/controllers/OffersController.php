@@ -24,6 +24,10 @@ class OffersController extends FrahtController
 		$receivingUserId = isset($_POST['receiving_user_id']) ? (int) $_POST['receiving_user_id'] : 0;
 		$modelId = isset($_POST['model_id']) ? (int) $_POST['model_id'] : 0;
 		$modelType = isset($_POST['model_type']) ? (int) $_POST['model_type'] : 0;
+		$offerVehicleId = isset($_POST['offer_vehicle']) ? (int) $_POST['offer_vehicle'] : 0;
+		$offerCost = isset($_POST['offer_cost']) ? (int) $_POST['offer_cost'] : 0;
+		$offerCurrencyId = isset($_POST['offer_currency']) ? (int) $_POST['offer_currency'] : 0;
+		$offerGoodId = isset($_POST['offer_good']) ? (int) $_POST['offer_good'] : 0;
 
 		if (empty($receivingUserId) || empty($modelId) || empty($modelType) || ($modelType != Offers::TYPE_GOOD && $modelType != Offers::TYPE_VEHICLE))
 		{
@@ -32,18 +36,41 @@ class OffersController extends FrahtController
 			Yii::app()->end();
 		}
 
+		if (($modelType == Offers::TYPE_GOOD && empty($offerVehicleId)) || ($modelType == Offers::TYPE_VEHICLE && empty($offerGoodId)) || empty($offerCurrencyId))
+		{
+			echo $this->respondJSON(array('error' => 2));
+
+			Yii::app()->end();
+		}
+
+		if (empty($offerCost))
+		{
+			echo $this->respondJSON(array('error' => 3));
+
+			Yii::app()->end();
+		}
+
 		$offer = new Offers();
 		$offer->author_id = $this->user->id;
 		$offer->receiving_user_id = $receivingUserId;
 		$offer->created_at = time();
+		$offer->cost = $offerCost;
+		$offer->currency_id = $offerCurrencyId;
+
 		if ($modelType == Offers::TYPE_GOOD)
+		{
 			$offer->good_id = $modelId;
+			$offer->offer_vehicle_id = $offerVehicleId;
+		}
 		else
+		{
 			$offer->vehicle_id = $modelId;
+			$offer->offer_good_id = $offerGoodId;
+		}
 
 		if (!$offer->save())
 		{
-			echo $this->respondJSON(array('error' => 1, 'message'=>$offer->getErrors()));
+			echo $this->respondJSON(array('error' => 4, 'message'=>$offer->getErrors()));
 
 			Yii::app()->end();
 		}

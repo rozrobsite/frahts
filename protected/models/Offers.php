@@ -12,12 +12,19 @@
  * @property integer $created_at
  * @property integer $result
  * @property integer $result_date_at
+ * @property integer $cost
+ * @property integer $currency_id
+ * @property integer $offer_vehicle_id
+ * @property integer $offer_good_id
  *
  * The followings are the available model relations:
  * @property Vehicle $vehicle
  * @property Users $author
  * @property Users $receivingUser
  * @property Goods $good
+ * @property Currency $currency
+ * @property Vehicle $offerVehicle
+ * @property Goods $offerGood
  */
 class Offers extends CActiveRecord
 {
@@ -77,6 +84,8 @@ class Offers extends CActiveRecord
 			'receivingUser' => array(self::BELONGS_TO, 'Users', 'receiving_user_id'),
 			'good' => array(self::BELONGS_TO, 'Goods', 'good_id'),
 			'currency' => array(self::BELONGS_TO, 'Currency', 'currency_id'),
+			'offerVehicle' => array(self::BELONGS_TO, 'Vehicle', 'offer_vehicle_id'),
+			'offerGood' => array(self::BELONGS_TO, 'Goods', 'offer_good_id'),
 		);
 	}
 
