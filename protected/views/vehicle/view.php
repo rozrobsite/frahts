@@ -154,27 +154,29 @@ $this->breadcrumbs = array(
 					 */?>
                     <div class="clear"></div>
                 </div>
-				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
-					<tr>
-						<td style="width:25%">
-							<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу транспортного средства" class="sideB bSea tipS">Сообщение</a>
-						</td>
-						<td style="width:25%">
-							<a id="offer" href="javascript:void(0)"
-							   data-receiving-user-id="<?php echo $model->user->id ?>"
-							   data-model-id="<?php echo $model->id ?>"
-							   data-model-type="<?php echo Offers::TYPE_VEHICLE ?>"
-							   title="Предложить один или несколько своих грузов владельцу транспортного средства"
-							   class="sideB bGreyish tipS" <?php if($offer): ?>style="display:none"<?php endif; ?>>Предложить свой груз</a>
-							<span id="offer_refuse_message" <?php if(!$offer): ?>style="display:none"<?php endif; ?>>
-								Вы сделали предложение.<br/>
-								<a id="offer_cancel" herf="javascript:void(0)" data-id="<?php echo $offer ? $offer->id : ''; ?>">Отменить</a>
-							</span>
-						</td>
-						<td style="width:25%"></td>
-						<td style="width:25%"></td>
-					</tr>
-				</table>
+				<?php if (count($this->user->vehicles)): ?>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
+						<tr>
+							<td style="width:25%">
+								<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу транспортного средства" class="sideB bSea tipS">Сообщение</a>
+							</td>
+							<td style="width:25%">
+								<a id="offer" href="javascript:void(0)"
+								   data-receiving-user-id="<?php echo $model->user->id ?>"
+								   data-model-id="<?php echo $model->id ?>"
+								   data-model-type="<?php echo Offers::TYPE_VEHICLE ?>"
+								   title="Предложить один или несколько своих грузов владельцу транспортного средства"
+								   class="sideB bGreyish tipS" <?php if($offer): ?>style="display:none"<?php endif; ?>>Предложить свой груз</a>
+								<span id="offer_refuse_message" <?php if(!$offer): ?>style="display:none"<?php endif; ?>>
+									Вы сделали предложение.<br/>
+									<a id="offer_cancel" herf="javascript:void(0)" data-id="<?php echo $offer ? $offer->id : ''; ?>">Отменить</a>
+								</span>
+							</td>
+							<td style="width:25%"></td>
+							<td style="width:25%"></td>
+						</tr>
+					</table>
+				<?php endif; ?>
 				<?php/* if ($model->user->vehicles && count($model->user->vehicles) > 1): ?>
 					<div class="inFrom" style="width:100%">
 						<h5>Другие транспортные средства этого пользователя</h5>
@@ -254,4 +256,6 @@ $this->breadcrumbs = array(
 <input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
 
 <?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::VEHICLE)); ?>
-<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_VEHICLE)); ?>
+<?php if (count($this->user->vehicles)): ?>
+	<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_VEHICLE)); ?>
+<?php endif; ?>

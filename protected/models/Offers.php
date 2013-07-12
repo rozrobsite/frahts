@@ -145,6 +145,11 @@ class Offers extends CActiveRecord
 		return $this->findAll($criteria);
 	}
 
+	public function getCost()
+	{
+		return $this->cost . ' ' . $this->currency->name_ru;
+	}
+
 //	public function getForUsersOffers($user)
 //	{
 //		$criteria = new CDbCriteria();

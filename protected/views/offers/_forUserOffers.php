@@ -1,10 +1,12 @@
 <table id="forUserOffersTable" cellpadding="0" cellspacing="0" width="100%" class="tDefault tMedia">
 	<thead>
 		<tr>
-			<td width="35%">От кого</td>
-			<td width="25%">Цель</td>
-			<td width="15%"><div>Дата</div></td>
-			<td width="25%"><div>Действие</div></td>
+			<td width="20%">Кто предлагает</td>
+			<td width="20%">Что предлагает</td>
+			<td width="20%">Цель предложения</td>
+			<td width="10%">Цена</td>
+			<td width="10%"><div>Дата</div></td>
+			<td width="20%"><div>Действие</div></td>
 		</tr>
 	</thead>
 	<tfoot>
@@ -14,23 +16,39 @@
 	<tbody>
 		<?php foreach($forUserOffers as $offer): ?>
 			<tr>
-				<td class="textL">
+				<td class="textL" style="text-align: center !important">
 					<a href="/user/view/<?php echo $offer->receivingUser->id ?>" title="Перейти на страницу пользователя" class="tipS">
 						<?php echo $offer->author->profiles->fullName(); ?>
 					</a>
 				</td>
 				<td class="textL" style="text-align: center !important">
-					<?php if ($offer->good_id): ?>
+					<?php if ($offer->offer_good_id): ?>
 						<span class="label">Груз</span>
+						<a href="/goods/view/<?php echo $offer->offerGood->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
+							"<?php echo $offer->offerGood->name; ?>"
+						</a>
+					<?php else: ?>
+						<span class="label label-inverse">Транспорт</span>
+						<a href="/vehicle/view/<?php echo $offer->offerVehicle->slug; ?>" title="Перейти на страницу траспорта" class="tipS" style="margin-left: 5px;">
+							"<?php echo $offer->offerVehicle->shortName(); ?>"
+						</a>
+					<?php endif; ?>
+				</td>
+				<td class="textL" style="text-align: center !important">
+					<?php if ($offer->good_id): ?>
+						Ваш <span class="label">груз</span>
 						<a href="/goods/view/<?php echo $offer->good->slug; ?>" title="Перейти на страницу груза" class="tipS" style="margin-left: 5px;">
 							"<?php echo $offer->good->name; ?>"
 						</a>
 					<?php else: ?>
-						<span class="label label-inverse">Транспорт</span>
+						Ваш <span class="label label-inverse">транспорт</span>
 						<a href="/vehicle/view/<?php echo $offer->vehicle->slug; ?>" title="Перейти на страницу траспорта" class="tipS" style="margin-left: 5px;">
 							"<?php echo $offer->vehicle->shortName(); ?>"
 						</a>
 					<?php endif; ?>
+				</td>
+				<td class="textL" style="text-align: center !important;">
+					<span><?php echo $offer->getCost(); ?></span>
 				</td>
 				<td>
 					<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $offer->created_at); ?><br/>

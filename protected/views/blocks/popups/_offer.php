@@ -5,7 +5,9 @@
 			<div class="dialogSelect m10" style="margin-top: 0;margin-left: 10px;">
 				<select id="offerVehicle" name="offerVehicle" >
 					<?php foreach ($this->user->vehicles as $vehicle): ?>
-						<option value="<?php echo $vehicle->id; ?>"><?php echo $vehicle->shortName(); ?></option>
+						<?php if (!$vehicle->is_deleted): ?>
+							<option value="<?php echo $vehicle->id; ?>"><?php echo $vehicle->shortName(); ?></option>
+						<?php endif; ?>
 					<?php endforeach; ?>
 				</select>
 			</div>
@@ -13,8 +15,11 @@
 			<p>Укажите какой из своих грузов Вы предлагаете:</p>
 			<div class="dialogSelect m10" style="margin-top: 0;margin-left: 10px;">
 				<select id="offerGood" name="offerVehicle" >
+					<?php $current_time = time(); ?>
 					<?php foreach ($this->user->goods as $good): ?>
-						<option value="<?php echo $good->id; ?>" data-cost="<?php echo $good->cost; ?>" data-currency="<?php echo $good->currency->id ?>"><?php echo $good->name; ?></option>
+						<?php if (!$good->is_deleted && $good->date_to > $current_time ): ?>
+							<option value="<?php echo $good->id; ?>" data-cost="<?php echo $good->cost; ?>" data-currency="<?php echo $good->currency->id ?>"><?php echo $good->name; ?></option>
+						<?php endif; ?>
 					<?php endforeach; ?>
 				</select>
 			</div>

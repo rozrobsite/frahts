@@ -1,5 +1,5 @@
 ﻿<?php  if ($printVehicles): ?>
-<div id="tab_vehicles" class="tab_content" style="display: none;"> 
+<div id="tab_vehicles" class="tab_content" style="display: none;">
 
 
 	<?php if ($model->vehicles && count($model->vehicles) > 1): ?>
@@ -56,9 +56,9 @@
 								<span><strong>Тип кузова: </strong>
 									<?php echo $vehicle->bodyType->name_ru ?>
 								</span><br />
-								<span><strong>Вид загрузки: </strong>
-									<?php echo $vehicle->shipmentsNames ?>
-								</span><br />
+								<span><strong>Грузоподъемность: </strong>
+									<?php echo $vehicle->bearing_capacity ?> т.
+								</span><br/>
 								<span><strong>Объем кузова: </strong>
 									<?php echo $vehicle->body_capacity ?> м&sup3;
 								</span>
@@ -78,5 +78,5 @@
 	<?php endif; ?>
 
 
-</div>		
+</div>
 <?php endif; ?>
