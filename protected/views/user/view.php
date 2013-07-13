@@ -13,7 +13,7 @@
 <?php
 
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
-Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js'); //включить карту
+//Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js'); //включить карту
 
 $this->pageTitle = Yii::app()->name . ' - Данные о пользователе"' . $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name . '"';
 $this->breadcrumbs = array(
@@ -61,7 +61,7 @@ $this->breadcrumbs = array(
 			<div class="inHead">
                     <div class="inInfo">
                         <span class="invoiceNum">Данные о пользователе</span>
-						<i>На сайте с: <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy H:m', $model->profiles->created_at); ?></i>
+						<i>На сайте с: <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $model->profiles->created_at); ?></i>
                      </div>
                     <div class="clear"></div>
                 </div>
@@ -160,7 +160,7 @@ $this->breadcrumbs = array(
 							<?php  if ($printGoods): ?> <li class=""><a href="#tab_goods">Грузы</a></li> <?php endif; ?>
 							<?php  if ($printVehicles): ?> <li class=""><a href="#tab_vehicles">Транспорт</a></li> <?php endif; ?>
 						</ul>
-							<?php $this->renderPartial('_reviewsList', array('model'=>$model)); ?>
+							<?php $this->renderPartial('_reviewsList', array('model'=>$model, 'canWrite' => $canWrite)); ?>
 							<?php $this->renderPartial('_userGoodsList', array('printGoods' => $printGoods, 'model'=>$model)); ?>
 							<?php $this->renderPartial('_userVehiclesList', array('printVehicles' => $printVehicles, 'model'=>$model)); ?>
 						</div>
@@ -168,9 +168,8 @@ $this->breadcrumbs = array(
 					</div>
 					<div class="clear"></div>
 				</div>
-
             </div>
         </div>
-	</div>
 </div>
+<?php $this->renderPartial('/blocks/popups/_review', array('model'=>$model)); ?>
 <!-- Content ends -->

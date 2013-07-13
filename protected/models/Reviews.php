@@ -18,6 +18,8 @@
  */
 class Reviews extends CActiveRecord
 {
+	const POSITIVE = 1;
+	const NEGATIVE = -1;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -105,5 +107,12 @@ class Reviews extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function defaultScope()
+	{
+		return array(
+			'order' => 'created_at DESC',
+		);
 	}
 }

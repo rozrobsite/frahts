@@ -1,3 +1,4 @@
+<?php if (count($forUserOffers)): ?>
 <table id="forUserOffersTable" cellpadding="0" cellspacing="0" width="100%" class="tDefault tMedia">
 	<thead>
 		<tr>
@@ -17,7 +18,7 @@
 		<?php foreach($forUserOffers as $offer): ?>
 			<tr>
 				<td class="textL" style="text-align: center !important">
-					<a href="/user/view/<?php echo $offer->receivingUser->id ?>" title="Перейти на страницу пользователя" class="tipS">
+					<a href="/user/view/<?php echo $offer->author->id ?>" title="Перейти на страницу пользователя" class="tipS">
 						<?php echo $offer->author->profiles->fullName(); ?>
 					</a>
 				</td>
@@ -61,7 +62,7 @@
 					</label>
 					<label class="acceptOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_ACCEPT): ?>style="display: none;"<?php endif; ?>>
 						Вы <span class="label label-success">приняли</span> предложение пользователя<br/>
-						<a href="/user/view/<?php echo $offer->author->id; ?>">Оставить отзыв</a>
+						<a href="/user/view/<?php echo $offer->author->id; ?>#tab_comments">Оставить отзыв</a>
 						<a class="cancelForUsersOffer" href="javascript:void(0)" style="color: #a34c4c;margin-left: 10px;" data-id="<?php echo $offer->id; ?>">Отменить</a>
 					</label>
 					<div class="noOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_PROCESS): ?>style="display: none;"<?php endif; ?>>
@@ -73,3 +74,6 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<?php else: ?>
+	<strong>Вам еще не делали предложения пользователи.</strong>
+<?php endif; ?>

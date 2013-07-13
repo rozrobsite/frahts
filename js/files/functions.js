@@ -695,14 +695,53 @@ $(function() {
 
 	//===== jQuery UI dialog =====//
 
-    $('#dialog').dialog({
+    $('#review_dialog').dialog({
         autoOpen: false,
-        width: 400,
+        width: 550,
         buttons: {
-            "Gotcha": function () {
-                $(this).dialog("close");
+            "Добавить": function () {
+                $('.error').hide();
+				
+				var thisDialog = $(this);
+				var receiving_user_id = $('#review_text').data('receiving-id');
+				var review_text = $('#review_text').val();
+				var rating = $('#review_text').data('rating');
+								
+				if (!review_text)
+				{
+					$('.error').show();
+
+					return;
+				}
+				
+				$.post('/user/review', {
+					receiving_user_id: receiving_user_id,
+					review_text: review_text,
+					rating: rating
+				}, function(response){
+					if (typeof response.error === 'undefined' || response.error > 0)
+					{
+						thisDialog.dialog("close");
+						$('#review_text').val('');
+
+						$.jGrowl('Ошибка. Ваш отзыв не добавлен. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+						return;
+					}
+					
+					$.get(location.href, function(response){
+						$('.reviewsList').html($(response).find('.reviewsList').html());
+						
+						$('#review_text').val('');
+
+						thisDialog.dialog("close");
+					});
+				});
             },
-            "Cancel": function () {
+            "Отмена": function () {
+				$('.error').hide();
+				$('#review_text').val('');
+				
                 $(this).dialog("close");
             }
         }

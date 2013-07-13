@@ -1,47 +1,37 @@
 ﻿<div class="tab_container">
 	<div id="tab_comments" class="tab_content" style="display: block;">
-			<!-- Enter messages field -->
-			<div class="enterMessage">
-				<input type="text" name="enterMessage" placeholder="Enter your message..." />
-				<div class="sendBtn">
-					<a href="#" title="" class="attachPhoto"></a>
-					<a href="#" title="" class="attachLink"></a>
-					<input type="submit" name="sendMessage" class="buttonS bLightBlue" value="Send" />
+			<?php if ($canWrite): ?>
+				<div class="enterMessage" style="margin-bottom: 15px;">
+					<label style="margin-right: 5px;">Оставьте свой отзыв:</label>
+					<a id="positive_review" href="javascript:void(0)" class="buttonS bGreen" data-rating="<?php echo Reviews::POSITIVE; ?>">Положительный</a>
+					<a id="negative_review" href="javascript:void(0)" class="buttonS bRed" data-rating="<?php echo Reviews::NEGATIVE; ?>">Отрицательный</a>
 				</div>
-			</div>										
-		
-			<div class="widget">
-				<ul class="messagesTwo">
-					<li class="by_user">
-						<a href="#" title=""><img src="images/live/face1.png" alt="" /></a>
-						<!--<div class="rating" style="display:inline-block; position:relative; left:10px; top:50px;">Оценка</div>-->
-						<div class="messageArea">
-							<div class="infoRow">
-								<span class="name"><strong>Jonathan</strong> says:</span>
-								<span class="time">3 hours ago</span>
+			<?php endif; ?>
+			<?php if (count($model->reviewsReceiving)): ?>
+				<div id="reviewsList" class="widget reviewsList">
+					<ul class="messagesTwo">
+						<?php foreach ($model->reviewsReceiving as $review): ?>
+							<li class="by_user">
+								<a href="javascript:void(0)" title=""><img src="/images/<?php echo $review->rating == 1 ? 'positive.png' : 'negative.png'; ?>" /></a>
+								<!--<div class="rating" style="display:inline-block; position:relative; left:10px; top:50px;">Оценка</div>-->
+								<div class="messageArea">
+									<div class="infoRow">
+										<a href="/user/view/<?php echo $review->author->id ?>">
+											<span class="name"><strong><?php echo $review->author->profiles->shortName(); ?></strong> написал(а):</span>
+										</a>
+										<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $review->created_at); ?></span>
+										<div class="clear"></div>
+									</div>
+									<?php echo $review->text; ?>
+								</div>
 								<div class="clear"></div>
-							</div>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci. 
-							Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-						</div>
-						<div class="clear"></div>
-					</li>
-				
-					<li class="by_user">
-						<a href="#" title=""><img src="images/live/face2.png" alt="" /></a>
-						<div class="messageArea">
-							<div class="infoRow">
-								<span class="name"><strong>Eugene</strong> says:</span>
-								<span class="time">3 hours ago</span>
-								<div class="clear"></div>
-							</div>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci. 
-							Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
-						</div>
-						<div class="clear"></div>
-					</li>										
-				</ul>
-			</div>									
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php else: ?>
+				<strong class="reviewsList">Пользователи еще не оставляли отзывов.</strong>
+			<?php endif; ?>
 		</div>
 
 

@@ -79,10 +79,10 @@ $this->breadcrumbs = array(
 				</div>
 				<?php */ ?>
 				<div class="grid12" style="text-align: left;">
-					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS"
+					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
 					   title="Дополнительные условия для поиска"
 					   original-title="Дополнительные условия для поиска" >
-						Дополнительные настройки поиска
+						Расширенный поиск
 					</a>
 					<?php $this->renderPartial('/blocks/popups/_advancedVehicleFilter', array(
 						'model' => $model,

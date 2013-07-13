@@ -2,29 +2,6 @@ var offer = {
 	add: function() {
 		$('#offer').on('click', function(e){
 			$('#offer_dialog').dialog('open');
-
-
-//			var receiving_user_id = $(this).data('receiving-user-id');
-//			var model_id = $(this).data('model-id');
-//			var model_type = $(this).data('model-type');
-//
-//			$.post('/offers/add', {
-//				receiving_user_id: receiving_user_id,
-//				model_id: model_id,
-//				model_type: model_type
-//			}, function(response){
-//				if (typeof response.error === 'undefined' || response.error > 0 || typeof response.id === 'undefined' || response.id == null || response.id == 0) {
-//					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
-//
-//					return;
-//				}
-//
-//				$.jGrowl('Ваше предложение отправлено пользователю.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
-//
-//				$('#offer').hide();
-//				$('#offer_refuse_message').show();
-//				$('#offer_cancel').attr('data-id', response.id);
-//			});
 		});
 	},
 	cancel: function() {
@@ -68,7 +45,7 @@ var offer = {
 
 					offer.initForUser();
 
-					$.jGrowl('Вы приняли предложение пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+					$.jGrowl('Вы приняли предложение пользователя.<br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
 				});
 			});
 		});
@@ -86,7 +63,7 @@ var offer = {
 					return;
 				}
 
-				$.jGrowl('Вы отклонили предложение пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				$.jGrowl('Вы отклонили предложение пользователя.<br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
 
 				$('.acceptOffer_' + id).hide();
 				$('.noOffer_' + id).hide();
@@ -107,7 +84,7 @@ var offer = {
 					return;
 				}
 
-				$.jGrowl('Вы отменили предложение пользователю.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+				$.jGrowl('Вы отменили предложение пользователю.<br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
 
 				$('.acceptOffer_' + id).hide();
 				$('.refuseOffer_' + id).hide();
@@ -134,7 +111,7 @@ var offer = {
 
 					offer.initUser();
 
-					$.jGrowl('Вы отменили предложение для пользователя.<br>Просмотреть все предложения вы можете на странице <a href="/offers">"Предложения"</a><br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+					$.jGrowl('Вы отменили предложение для пользователя.<br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
 				});
 			});
 		});

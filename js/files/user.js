@@ -76,12 +76,27 @@ var region =
 	}
 };
 
+var review = {
+	init: function() {
+		$('#positive_review').on('click', function(){
+			$('#review_text').attr('data-rating', $(this).data('rating'));
+			$('#review_dialog').dialog('open');
+		});
+		
+		$('#negative_review').on('click', function(){
+			$('#review_text').attr('data-rating', $(this).data('rating'));
+			$('#review_dialog').dialog('open');
+		});
+	}
+}
+
 $(document).ready(function(){
 	user_type.init();
 	$('#Profiles_user_type_id').change();
 	$('#Profiles_country_id').change();
 	country.init();
 	region.init();
+	review.init();
 });
 
 

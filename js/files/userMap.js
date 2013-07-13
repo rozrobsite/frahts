@@ -8,7 +8,6 @@ function init () {
 	}).then(function (res) {
 		// Выбираем первый результат геокодирования.
 		var firstGeoObject = res.geoObjects.get(0);
-		console.log(res.geoObjects.get());
 		// Создаем карту с нужным центром.
 		var coords = firstGeoObject.geometry.getCoordinates();
 		myMap = new ymaps.Map("map", {
@@ -26,9 +25,15 @@ function init () {
 		//	.add('trafficControl')
 		;
 
-		var myPlacemark = new ymaps.Placemark(coords, {
-			balloonContent: address
-		});
+		var myPlacemark = new ymaps.Placemark(coords, 
+			{
+				balloonContent: address
+			},
+			{
+				iconImageHref: '/images/home_icon.png',
+				iconImageSize: [32, 37]
+			}
+		);
 		myMap.geoObjects.add(myPlacemark);
 	});
 

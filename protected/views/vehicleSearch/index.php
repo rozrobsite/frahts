@@ -60,10 +60,10 @@ $this->breadcrumbs = array(
 		<?php if ($this->user->vehicles): ?>
 		<div class="widget fluid" style="margin-top: 18px;">
 			<div class="formRow">
-				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown tipS"
+				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
 				   title="Дополнительные условия для поиска"
 				   original-title="Дополнительные условия для поиска" >
-					Дополнительные настройки поиска
+					Расширенный поиск
 				</a>
 				<?php $this->renderPartial('/blocks/popups/_advancedFilter', array(
 					'model' => $model,

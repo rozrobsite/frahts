@@ -113,6 +113,8 @@ class Users extends CActiveRecord
 			'messagesReceiving' => array(self::HAS_MANY, 'Messages', 'receiving_user_id'),
 			'offersAuthor' => array(self::HAS_MANY, 'Offers', 'author_id'),
 			'offersReceiving' => array(self::HAS_MANY, 'Offers', 'receiving_user_id'),
+			'reviewsAuthor' => array(self::HAS_MANY, 'Reviews', 'author_id'),
+			'reviewsReceiving' => array(self::HAS_MANY, 'Reviews', 'receiving_user_id'),
 		);
 	}
 

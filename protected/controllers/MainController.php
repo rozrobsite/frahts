@@ -116,7 +116,27 @@ class MainController extends Controller
 				$user->last_login = time();
 				$user->update();
 				
-				$this->redirect('/user');
+				if ($user->profiles)
+				{
+					if ($user->profiles->userType == UserTypes::FREIGHTER)
+						$this->redirect('/goods/search');
+					if ($user->profiles->userType == UserTypes::SHIPPER)
+						$this->redirect('/vehicle/search');
+					if ($user->profiles->userType == UserTypes::DISPATCHER)
+					{
+						if (count($user->vehicles) >= count($user->goods))
+							$this->redirect('/goods/search');
+						else
+							$this->redirect('/vehicle/search');
+					}
+				}
+				else
+				{
+					if (!isset($user->organizations->id))
+						$this->redirect('/user/organization');
+					else
+						$this->redirect('/user');
+				}
 			}
 		}
 		// display the login form

@@ -445,44 +445,54 @@ class UserController extends FrahtController
 
 		$model = Users::model()->find('id = "' . $userid . '"');
 
-		/*
-		  $vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
-		  $vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
-
-		  $bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
-		  $bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
-
-		  $shipments = '';
-		  $shipmentsArray = array();
-		  if ($model->shipments)
-		  {
-		  $shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
-		  $shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
-		  }
-
-		  $permissions = '';
-		  $permissionsArray = array();
-		  if ($model->permissions)
-		  {
-		  $permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
-		  $permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
-		  if (array_key_exists(Permissions::ADR, $permissionsArray))
-		  {
-		  $permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
-		  }
-		  }
-		 */
 		if (!is_object($model))
 				throw new CHttpException(404, 'Страница пользователя не найдена!');
+		
+		$canWrite = Offers::model()->madeDeal($this->user, $model);
 
-		$this->render('view',
-				array(
-			'model' => $model
-				/* 'vehicleTypes' => join(', ', $vehicleTypesArray),
-				  'bodyTypes' => join(', ', $bodyTypesArray),
-				  'shipments' => join(', ', $shipmentsArray),
-				  'permissions' => join(', ', $permissionsArray), */
+		$this->render('view', array(
+			'model' => $model,
+			'canWrite' => count($canWrite),
 		));
+	}
+	
+	public function actionReviews()
+	{
+		$this->render('reviews', array(
+			'receivingUsers' => $this->_receivingUsers,
+		));
+	}
+	
+	public function actionReview()
+	{
+		$receivingUserId = isset($_POST['receiving_user_id']) ? (int)$_POST['receiving_user_id'] : 0;
+		$reviewText = isset($_POST['review_text']) ? trim($_POST['review_text']) : '';
+		$rating = isset($_POST['rating']) ? (int) $_POST['rating'] : 0;
+		
+		if (empty($receivingUserId) || empty($reviewText) || empty($rating))
+		{
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+		
+		$review = new Reviews();
+		$review->author_id = $this->user->id;
+		$review->receiving_user_id = $receivingUserId;
+		$review->rating = $rating;
+		$review->text = nl2br($reviewText);
+		$review->created_at = time();
+		
+		if (!$review->save())
+		{
+			echo $this->respondJSON(array('error' => 2, 'errors_text' => $review->getErrors()));
+
+			Yii::app()->end();
+		}
+		
+		echo $this->respondJSON(array('error' => 0));
+
+		Yii::app()->end();
 	}
 
 }

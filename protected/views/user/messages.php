@@ -88,7 +88,9 @@ $this->breadcrumbs = array(
 								</a>
 								<div class="messageArea">
 									<div class="infoRow">
-										<span class="name"><strong><?php echo $model->author->profiles->shortName(); ?></strong> написал(а) <?php if (!$receivingUser): ?> для <strong><?php echo $model->receivingUser->profiles->shortName(); ?></strong><?php endif; ?>:</span>
+										<a href="/user/view/<?php echo $model->author->id ?>">
+											<span class="name"><strong><?php echo $model->author->profiles->shortName(); ?></strong> написал(а) <?php if (!$receivingUser): ?> для <strong><?php echo $model->receivingUser->profiles->shortName(); ?></strong><?php endif; ?>:</span>
+										</a>
 										<a href="javascript:void(0);" style="margin-left: 30px" class="tipS message-remove message_remove_open" title="Удалить" data-message-id="<?php echo $model->id ?>"><img src="/images/elements/other/fileError.png" /></a>
 										<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $model->created_at); ?></span>
 										<div class="clear"></div>
