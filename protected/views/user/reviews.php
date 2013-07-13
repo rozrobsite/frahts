@@ -34,6 +34,7 @@ $this->breadcrumbs = array(
 		<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 		
+		<?php if (count($this->user->reviewsReceiving)): ?>
 		<div class="widget">
 			<ul class="messagesTwo">
 				<?php foreach ($this->user->reviewsReceiving as $review): ?>
@@ -56,5 +57,8 @@ $this->breadcrumbs = array(
 			</ul>
 			<div class="clear"></div>
 		</div>
+		<?php else: ?>
+			<strong>Пользователи еще не оставляли о Вас отзывы.</strong>
+		<?php endif; ?>
 	</div>
 </div>
