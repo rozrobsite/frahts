@@ -78,3 +78,19 @@ ALTER TABLE `offers` ADD INDEX (`offer_vehicle_id`);
 ALTER TABLE `offers` ADD INDEX (`offer_good_id`);
 ALTER TABLE `offers` ADD FOREIGN KEY (`offer_vehicle_id`) REFERENCES `vehicle` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 ALTER TABLE `offers` ADD FOREIGN KEY (`offer_good_id`) REFERENCES `goods` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--13.07.2013
+CREATE TABLE IF NOT EXISTS `reviews` (
+					`id` bigint(20) NOT NULL AUTO_INCREMENT,
+					`author_id` int(11) unsigned DEFAULT NULL,
+					`receiving_user_id` int(11) unsigned DEFAULT NULL,
+					`rating` tinyint(2) DEFAULT 0,
+					`text` text(560) DEFAULT "",
+					`created_at` int(11) NOT NULL,
+					`is_deleted` tinyint(2) DEFAULT 0,
+					PRIMARY KEY (`id`),
+					KEY `author_id` (`author_id`),
+					KEY `receiving_user_id` (`receiving_user_id`)
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+ALTER TABLE `reviews` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
+ALTER TABLE `reviews` ADD FOREIGN KEY (`receiving_user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
