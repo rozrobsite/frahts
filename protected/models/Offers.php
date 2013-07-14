@@ -153,8 +153,8 @@ class Offers extends CActiveRecord
 	public function madeDeal($currentUser, $user)
 	{
 		return $this->findAll('((author_id = ' . $currentUser->id . ' AND receiving_user_id = ' . $user->id . ') 
-			OR (author_id = ' . $user->id . ' AND receiving_user_id = ' . $currentUser->id . ') 
-			AND (result = ' . self::RESULT_IN_ACCEPT . ' OR result = ' . self::RESULT_IN_REFUSE . '))');
+			OR (author_id = ' . $user->id . ' AND receiving_user_id = ' . $currentUser->id . ')) 
+			AND (result = ' . self::RESULT_IN_ACCEPT . ' OR result = ' . self::RESULT_IN_REFUSE . ')');
 	}
 
 //	public function getForUsersOffers($user)

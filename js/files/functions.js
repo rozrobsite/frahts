@@ -705,8 +705,8 @@ $(function() {
 				var thisDialog = $(this);
 				var receiving_user_id = $('#review_text').data('receiving-id');
 				var review_text = $('#review_text').val();
-				var rating = $('#review_text').data('rating');
-								
+				var rating = thisDialog.data('rating');
+				
 				if (!review_text)
 				{
 					$('.error').show();

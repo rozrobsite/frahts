@@ -79,13 +79,11 @@ var region =
 var review = {
 	init: function() {
 		$('#positive_review').on('click', function(){
-			$('#review_text').attr('data-rating', $(this).data('rating'));
-			$('#review_dialog').dialog('open');
+			$('#review_dialog').data('rating', $(this).data('rating')).dialog('open');
 		});
 		
 		$('#negative_review').on('click', function(){
-			$('#review_text').attr('data-rating', $(this).data('rating'));
-			$('#review_dialog').dialog('open');
+			$('#review_dialog').data('rating', $(this).data('rating')).dialog('open');
 		});
 	}
 }

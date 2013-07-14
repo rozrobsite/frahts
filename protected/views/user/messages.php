@@ -81,6 +81,7 @@ $this->breadcrumbs = array(
 					</div>
 					<ul class="messagesTwo">
 						<?php foreach ($models as $model): ?>
+							<?php if ($model->is_deleted) continue; ?>
 							<li class="<?php echo $this->user->id == $model->author->id ? 'by_user' : 'by_me'; ?> message_<?php echo $model->id; ?>">
 								<a href="javascript:void(0)" title="Перейти на страницу пользователя">
 									<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>" 
@@ -88,10 +89,29 @@ $this->breadcrumbs = array(
 								</a>
 								<div class="messageArea">
 									<div class="infoRow">
-										<a href="/user/view/<?php echo $model->author->id ?>">
-											<span class="name"><strong><?php echo $model->author->profiles->shortName(); ?></strong> написал(а) <?php if (!$receivingUser): ?> для <strong><?php echo $model->receivingUser->profiles->shortName(); ?></strong><?php endif; ?>:</span>
-										</a>
-										<a href="javascript:void(0);" style="margin-left: 30px" class="tipS message-remove message_remove_open" title="Удалить" data-message-id="<?php echo $model->id ?>"><img src="/images/elements/other/fileError.png" /></a>
+											<span class="name">
+												<a href="/user/view/<?php echo $model->author->id ?>">
+													<strong>
+														<?php echo $model->author->profiles->shortName(); ?>
+													</strong> 
+												</a>
+												написал(а) 
+												<?php if (!$receivingUser): ?> для 
+													<a href="/user/view/<?php echo $model->receivingUser->id ?>">
+														<strong>
+															<?php echo $model->receivingUser->profiles->shortName(); ?>
+														</strong>
+													</a>
+												<?php endif; ?>:
+											</span>
+										<?php if (!$receivingUser): ?>
+										<?php $userId = $this->user->id == $model->author->id ? $model->receivingUser->id : $model->author->id; ?>
+											<a href="/user/messages/user/<?php echo $userId; ?>#users_message" 
+											   style="margin-left: 20px;" 
+											   class="message-edit" 
+											   title="">Ответить</a>
+										<?php endif; ?>
+										<a href="javascript:void(0);" style="margin-left: 10px;color: #a34c4c;" class="message-remove message_remove_open" title="" data-message-id="<?php echo $model->id ?>">Удалить</a>
 										<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $model->created_at); ?></span>
 										<div class="clear"></div>
 									</div>

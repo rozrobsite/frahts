@@ -388,8 +388,7 @@ class UserController extends FrahtController
 		$type = isset($_GET['type']) ? (int) $_GET['type'] : Messages::TYPE_LAST;
 
 		$receivingUser = $usersModel->findByPk($user_id);
-		$receivingUsers = $messagesModel->getReceivingUsers($this->user,
-				$receivingUser);
+		$receivingUsers = $messagesModel->getReceivingUsers($this->user, $receivingUser);
 		$models = Messages::model()->getMessages($this->user, $receivingUser, $type);
 
 		if ($this->messagesCount)

@@ -188,6 +188,9 @@
 										<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
 									<?php endif; ?>
 								<?php endif; ?>
+								<li><a href="/user/notes" title="Заметки" class="notes tipN" original-title="Заметки"></a></li>
+								<li><a href="/user/feedback" title="Обратная связь" class="feedback tipN" original-title="Обратная связь"></a></li>
+								<li><a href="/user/faq" title="ЧаВо" class="fuk tipN" original-title="ЧаВо"></a></li>
 								<li><a href="/main/logout" title="Выход" class="logout tipN" original-title="Выход"></a></li>
 							</ul>
 						<?php endif; ?>

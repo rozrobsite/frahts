@@ -13,7 +13,7 @@
 <?php
 
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
-//Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js'); //включить карту
+Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js'); //включить карту
 
 $this->pageTitle = Yii::app()->name . ' - Данные о пользователе"' . $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name . '"';
 $this->breadcrumbs = array(
@@ -171,5 +171,4 @@ $this->breadcrumbs = array(
             </div>
         </div>
 </div>
-<?php $this->renderPartial('/blocks/popups/_review', array('model'=>$model)); ?>
 <!-- Content ends -->

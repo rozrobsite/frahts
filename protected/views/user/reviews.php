@@ -39,13 +39,18 @@ $this->breadcrumbs = array(
 			<ul class="messagesTwo">
 				<?php foreach ($this->user->reviewsReceiving as $review): ?>
 					<li class="by_user">
-						<a href="javascript:void(0)" title=""><img src="/images/<?php echo $review->rating == 1 ? 'positive.png' : 'negative.png'; ?>" /></a>
+						<a href="javascript:void(0)" title=""><img src="/images/<?php echo $review->rating == Reviews::POSITIVE ? 'positive.png' : 'negative.png'; ?>" /></a>
 						<!--<div class="rating" style="display:inline-block; position:relative; left:10px; top:50px;">Оценка</div>-->
 						<div class="messageArea">
 							<div class="infoRow">
-								<a href="/user/view/<?php echo $review->author->id ?>">
-									<span class="name"><strong><?php echo $review->author->profiles->shortName(); ?></strong> написал(а):</span>
-								</a>
+								<span class="name">
+									<a href="/user/view/<?php echo $review->author->id ?>">
+										<strong>
+											<?php echo $review->author->profiles->shortName(); ?>
+										</strong> 
+									</a>
+									написал(а):
+								</span>
 								<span class="time"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy HH:mm', $review->created_at); ?></span>
 								<div class="clear"></div>
 							</div>

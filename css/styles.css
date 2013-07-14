@@ -260,6 +260,9 @@ ul.userNav li a.messages { background: url(/images/icons/usernav/messages.png) n
 ul.userNav li a.logout { background: url(/images/icons/usernav/logout.png) no-repeat 9px 9px; }
 ul.userNav li a.search { background: url(/images/icons/usernav/search.png) no-repeat 9px 9px; }
 ul.userNav li a.sidebar { background: url(/images/icons/usernav/sidebar.png) no-repeat 9px 9px; }
+ul.userNav li a.notes { background: url(/images/icons/usernav/notes.png) no-repeat 9px 9px; }
+ul.userNav li a.feedback { background: url(/images/icons/usernav/phone.png) no-repeat 9px 9px; }
+ul.userNav li a.fuk { background: url(/images/icons/usernav/fuk3.png) no-repeat 9px 9px; }
 
 /* === Search === */
 
@@ -2126,6 +2129,8 @@ transition:0.8s;
 .messagesTwo .by_user { background: #FEFEFE; }
 .messagesTwo .messageArea .message-remove { display:none }
 .messagesTwo li.by_user .messageArea:hover .message-remove { display: inline; }
+.messagesTwo .messageArea .message-edit { display:none }
+.messagesTwo li.by_me .messageArea:hover .message-edit { display: inline; }
 
 
 /* Enter message field  */

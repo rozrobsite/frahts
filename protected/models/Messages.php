@@ -138,9 +138,11 @@ class Messages extends CActiveRecord
 		
 		if (!$receivingUser)
 		{
-			$criteria->condition = $condition . ' AND receiving_user_id = ' . $user->id . ' OR author_id = ' . $user->id;
-			$criteria->limit = Yii::app()->params['messages_by_page'];
+			$criteria->condition = $condition . ' AND (receiving_user_id = ' . $user->id . ' OR author_id = ' . $user->id . ')';
 			$criteria->order = 'created_at DESC';
+			
+			if ($type == self::TYPE_LAST)
+				$criteria->limit = Yii::app()->params['messages_by_page'];
 
 			return $this->findAll($criteria);
 		}

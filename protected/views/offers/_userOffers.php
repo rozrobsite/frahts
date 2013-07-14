@@ -61,7 +61,7 @@
 						Пользователь <span class="label label-important">отклонил</span> Ваше предложение
 					<?php elseif ($offer->result == Offers::RESULT_IN_ACCEPT): ?>
 						Пользователь <span class="label label-success">принял</span> Ваше предложение<br/>
-						<a href="/user/view/<?php echo $offer->author->id; ?>#tab_comments">Оставить отзыв</a>
+						<a href="/user/view/<?php echo $offer->receivingUser->id; ?>#tab_comments">Оставить отзыв</a>
 					<?php else: ?>
 						От пользователя еще <span class="label label-info">нет ответа</span>
 					<?php endif; ?>

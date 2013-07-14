@@ -90,6 +90,9 @@ class GoodsController extends FrahtController
 
 	public function actionIncidental()
 	{
+		if (!Yii::app()->request->isAjaxRequest)
+			throw new CHttpException(404,'');
+		
 		$coordinatesStr = isset($_POST['coordinates']) ? $_POST['coordinates'] : array();
 		$coordinatesArrayStr = explode(';', $coordinatesStr);
 
