@@ -39,7 +39,8 @@ class Feedback extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('subject, message', 'required'),
-			array('subject', 'length', 'max' => 255),
+			array('subject', 'length', 'max' => 60),
+			array('message', 'length', 'max' => 1024),
 			array('email', 'safe'),
 //			array('message', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -66,9 +67,9 @@ class Feedback extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'subject' => 'Тема сообщения',
-			'message' => 'Текст сообщения',
-			'email' => 'Электронный адрес',
+			'subject' => '"Тема сообщения"',
+			'message' => '"Текст сообщения"',
+			'email' => '"Электронный адрес"',
 		);
 	}
 

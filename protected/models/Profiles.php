@@ -60,11 +60,11 @@ class Profiles extends CActiveRecord
 			array('last_name, first_name, middle_name, mobile, country_id, region_id, city_id, address, user_type_id', 'required'),
 			array('user_type_id, country_id, region_id, city_id, created_at, updated_at', 'numerical', 'integerOnly'=>true),
 			array('user_id, country_id, region_id, city_id', 'length', 'max'=>11),
-			array('last_name, middle_name', 'length', 'max'=>64),
-			array('first_name, icq', 'length', 'max'=>32),
+			array('last_name, middle_name', 'length', 'max'=>20),
+			array('first_name, icq', 'length', 'max'=>12),
 			array('first_name, last_name, middle_name', 'match', 'pattern'=>'/^[A-Za-zА-Яа-яеЁєЄїЇіІ]+$/u', 'message'=>'Должны быть только буквы.'),
 			array('mobile', 'length', 'max'=>15),
-			array('address', 'length', 'max'=>255),
+			array('address', 'length', 'max'=>42),
 			array('phone, skype', 'length', 'max'=>25),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -155,25 +155,25 @@ class Profiles extends CActiveRecord
 	{
 		return $this->first_name . ' ' . $this->last_name;
 	}
-	
+
 	public function searchUsers($currentUser, $searchText)
 	{
 		$criteria = new CDbCriteria();
-		
+
 		if (!empty($searchText))
 		{
 //			$searchArray = explode(' ', $searchText);
 			$criteria->condition = 'user_id <> ' . $currentUser->id . ' AND (first_name LIKE "%' . $searchText . '%" OR last_name LIKE "%' . $searchText . '%")';
 		}
-		
+
 		$profiles = $this->findAll($criteria);
-		
+
 		$result = array();
 		foreach($profiles as $profile)
 		{
 			$result[] = $profile->user;
 		}
-		
+
 		return $result;
 	}
 
