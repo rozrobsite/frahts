@@ -24,7 +24,7 @@ $this->adminBreadcrumbs = array(
                             ));
                         ?>
 
-                        <?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','label'=>'Запустить парсер'))?>
+                        <?php //$this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','label'=>'Запустить парсер'))?>
 
                         <?php $this->endWidget(); ?>
                     </div>

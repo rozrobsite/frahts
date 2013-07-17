@@ -303,6 +303,25 @@
 							</li>
 						</ul>
 					</li>						
+					<li>
+						<a href="#" class='light toggle-collapsed'>
+							<div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Парсер
+							<img src="/images/admin/toggle-subnav-down.png" alt="">
+						</a>
+						<ul class='collapsed-nav closed'>
+							<li>
+								<a href="/admin/parser/emails">
+									E-mail
+								</a>
+							</li>
+							<li>
+								<a href="/admin/parser/phones">
+									Телефоны
+								</a>
+							</li>
+						</ul>
+					</li>						
                     <li>
                         <a href="#" class='light toggle-collapsed'>
                             <div class="ico"><i class="icon-th-large icon-white"></i></div>
@@ -316,6 +335,7 @@
                                 </a>
                             </li>
 						</ul>
+					</li>
 				</ul>
 			</div>
 			<?php echo $content; ?>
