@@ -2454,3 +2454,19 @@ table .dropdown-menu.pull-right { right: auto; left: 0; }
 .ui-timepicker-rtl dl { text-align: right; }
 .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
 .fc-event {cursor: pointer;}
+
+strong.attention {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 11px;
+	color: #fff;
+	padding: 3px 5px;
+	display: block;
+	line-height: 12px;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	text-shadow: 0 -1px #848484;
+	background: #c35a32;
+}

@@ -192,7 +192,6 @@ return array(
 			'pageNumbers' => 5,
 		),
 		'radius' => array(
-			'0' => 0,
 			'10' => 10,
 			'20' => 20,
 			'30' => 30,

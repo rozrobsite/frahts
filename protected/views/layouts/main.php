@@ -167,7 +167,7 @@
 		<!-- Top line begins -->
 			<div id="top">
 				<div class="wrapper">
-					<a href="/" title="" class="logo main"><img src="/images/logo_2.png" alt="frahts.com - Мир грузоперевозок!" /></a>
+					<a href="<?php echo $this->headerUrl; ?>" title="" class="logo main"><img src="/images/logo_2.png" alt="frahts.com - Мир грузоперевозок!" /></a>
 					<!-- Right top nav -->
 					<div class="topNav">
 						<?php if (Yii::app()->user->isGuest): ?>
