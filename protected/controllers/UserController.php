@@ -10,6 +10,9 @@ class UserController extends FrahtController
 		parent::__construct($id, $module);
 
 		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user);
+
+		if (!$this->user->organizations)
+			Yii::app()->user->setFlash('_default', 'Обязательно введите данные об организации.');
 	}
 
 	/**
@@ -446,7 +449,7 @@ class UserController extends FrahtController
 
 		if (!is_object($model))
 				throw new CHttpException(404, 'Страница пользователя не найдена!');
-		
+
 		$canWrite = Offers::model()->madeDeal($this->user, $model);
 
 		$this->render('view', array(
@@ -454,41 +457,41 @@ class UserController extends FrahtController
 			'canWrite' => count($canWrite),
 		));
 	}
-	
+
 	public function actionReviews()
 	{
 		$this->render('reviews', array(
 			'receivingUsers' => $this->_receivingUsers,
 		));
 	}
-	
+
 	public function actionReview()
 	{
 		$receivingUserId = isset($_POST['receiving_user_id']) ? (int)$_POST['receiving_user_id'] : 0;
 		$reviewText = isset($_POST['review_text']) ? trim($_POST['review_text']) : '';
 		$rating = isset($_POST['rating']) ? (int) $_POST['rating'] : 0;
-		
+
 		if (empty($receivingUserId) || empty($reviewText) || empty($rating))
 		{
 			echo $this->respondJSON(array('error' => 1));
 
 			Yii::app()->end();
 		}
-		
+
 		$review = new Reviews();
 		$review->author_id = $this->user->id;
 		$review->receiving_user_id = $receivingUserId;
 		$review->rating = $rating;
 		$review->text = nl2br($reviewText);
 		$review->created_at = time();
-		
+
 		if (!$review->save())
 		{
 			echo $this->respondJSON(array('error' => 2, 'errors_text' => $review->getErrors()));
 
 			Yii::app()->end();
 		}
-		
+
 		echo $this->respondJSON(array('error' => 0));
 
 		Yii::app()->end();
