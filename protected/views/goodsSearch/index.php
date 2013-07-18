@@ -121,7 +121,8 @@ $this->breadcrumbs = array(
 								<td width="20%"><div>Название</div></td>
 								<td width="20%"><div>Расположение</div></td>
 								<td width="25%"><div>Характеристики</div></td>
-								<td width="25%">Контакты</td>
+								<td width="31%">Контакты</td>
+								<td width="3%"></td>
 							</tr>
 						</thead>
 						<tfoot>
@@ -224,6 +225,21 @@ $this->breadcrumbs = array(
 											<?php echo $vehicle->user->profiles->last_name . ' ' . $vehicle->user->profiles->first_name . ' ' . $vehicle->user->profiles->middle_name ?>
 										</a><br/>
 										м. <?php echo $vehicle->user->profiles->mobile ?>
+									</td>
+									<td>
+										<?php $reviews = $vehicle->user->getReviewsAmount(); ?>
+										<a href="/user/view/<?php echo $vehicle->user->id; ?>#tab_comments" 
+										   class="tipS wHtml" 
+										   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
+										   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
+											<span class="icos-like"></span>
+										</a>
+										<a href="/user/messages/user/<?php echo $vehicle->user->id; ?>#users_message" 
+										   class="tipS"
+										   original-title="Написать сообщение"
+										   title="Написать сообщение">
+											<span class="icos-speech3" style="margin-top: 8px;"></span>
+										</a>
 									</td>
 								</tr>
 							<?php endforeach; ?>
