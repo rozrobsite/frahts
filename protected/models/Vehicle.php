@@ -232,12 +232,14 @@ class Vehicle extends CActiveRecord
 		$where = $this->createCondition($filter);
 		$criteria = new CDbCriteria();
 
-		$criteria->select = 't.*,
-			(SELECT GROUP_CONCAT(shipment.name_ru SEPARATOR ", ") FROM shipment WHERE FIND_IN_SET(shipment.id, t.shipments) > 0) as shipmentsNames';
+//		$criteria->select = 't.*,
+//			(SELECT GROUP_CONCAT(shipment.name_ru SEPARATOR ", ") FROM shipment WHERE FIND_IN_SET(shipment.id, t.shipments) > 0) as shipmentsNames';
+		$criteria->select = array('t.*', '(SELECT GROUP_CONCAT(shipment.name_ru SEPARATOR ", ") FROM shipment WHERE FIND_IN_SET(shipment.id, t.shipments) > 0) as shipmentsNames');
 
 		$criteria->condition = $where;
 		$criteria->limit = Yii::app()->params['pages']['searchCount'];
 		$criteria->offset = ($filter->page - 1) * Yii::app()->params['pages']['searchCount'];
+		$criteria->with = array('user.profiles');
 
 		$direction = isset($filter->direction) && $filter->direction ? ' ASC' : ' DESC';
 
@@ -261,6 +263,8 @@ class Vehicle extends CActiveRecord
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
+		if (!empty($filter->check_dispatcher))
+			$result[] = 'profiles.user_type_id <>' . UserTypes::DISPATCHER;
 
 		if (empty($filter->city_id))
 		{
