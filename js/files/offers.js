@@ -30,11 +30,15 @@ var offer = {
 		$('.offerAccept').on('click', function(){
 			var id = $(this).attr('data-id');
 
+			blockElement($('.row_' + id));
+
 			$.post('/offers/accept', {
 				id: id
 			}, function(response){
 				if (typeof response.error === 'undefined' || response.error > 0) {
 					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					unblockElement($('row_' + id));
 
 					return;
 				}
@@ -46,6 +50,8 @@ var offer = {
 					offer.initForUser();
 
 					$.jGrowl('Вы приняли предложение пользователя.<br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+					unblockElement($('.row_' + id));
 				});
 			});
 		});
@@ -54,11 +60,15 @@ var offer = {
 		$('.offerRefuse').on('click', function(){
 			var id = $(this).attr('data-id');
 
+			blockElement($('.row_' + id));
+
 			$.post('/offers/refuse', {
 				id: id
 			}, function(response){
 				if (typeof response.error === 'undefined' || response.error > 0) {
 					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					unblockElement($('.row_' + id));
 
 					return;
 				}
@@ -68,6 +78,8 @@ var offer = {
 				$('.acceptOffer_' + id).hide();
 				$('.noOffer_' + id).hide();
 				$('.refuseOffer_' + id).show();
+
+				unblockElement($('.row_' + id));
 			});
 		});
 	},
@@ -75,11 +87,15 @@ var offer = {
 		$('.cancelForUsersOffer').on('click', function(){
 			var id = $(this).attr('data-id');
 
+			blockElement($('.row_' + id));
+
 			$.post('/offers/cancelForUsersOffer', {
 				id: id
 			}, function(response){
 				if (typeof response.error === 'undefined' || response.error > 0) {
 					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					unblockElement($('.row_' + id));
 
 					return;
 				}
@@ -89,6 +105,8 @@ var offer = {
 				$('.acceptOffer_' + id).hide();
 				$('.refuseOffer_' + id).hide();
 				$('.noOffer_' + id).show();
+
+				unblockElement($('.row_' + id));
 			});
 		});
 	},
@@ -96,11 +114,15 @@ var offer = {
 		$('.cancelUsersOffer').on('click', function(){
 			var id = $(this).attr('data-id');
 
+			blockElement($('.row_' + id));
+
 			$.post('/offers/cancelUsersOffer', {
 				id: id
 			}, function(response){
 				if (typeof response.error === 'undefined' || response.error > 0) {
 					$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
+
+					unblockElement($('.row_' + id));
 
 					return;
 				}
@@ -112,6 +134,8 @@ var offer = {
 					offer.initUser();
 
 					$.jGrowl('Вы отменили предложение для пользователя.<br/>Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+					unblockElement($('.row_' + id));
 				});
 			});
 		});

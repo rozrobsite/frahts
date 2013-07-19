@@ -73,6 +73,7 @@ return array(
 				'goods/view/<slug:[a-zA-Z0-9-]+>' => 'goods/view',
 				'goods/new' => 'goodsSearch/new',
 				'goods' => 'goodsSearch/index',
+				'user/view/<id:\d+>/*' => 'user/view',
 				'user/view/<id:\d+>' => 'user/view',
 				'docs/view/<slug:[a-zA-Z0-9-]+>' => 'docs/view',
 				// Admin main page

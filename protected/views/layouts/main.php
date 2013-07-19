@@ -79,6 +79,8 @@
 		<script type="text/javascript" src="/js/plugins/others/jquery.elfinder.js"></script>
 
 		<script type="text/javascript" src="/js/plugins/ui/jquery.easytabs.min.js"></script>
+		<script type="text/javascript" src="/js/jquery/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/block.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/common.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/user.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/profile.js"></script>

@@ -67,7 +67,9 @@
 					<?php endif; ?>
 				</td>
 				<td>
-					<a href="javascript:void(0)" class="buttonS bRed cancelUsersOffer" data-id="<?php echo $offer->id ?>">Отменить</a>
+					<div class="row_<?php echo $offer->id; ?>">
+						<a href="javascript:void(0)" class="buttonS bRed cancelUsersOffer" data-id="<?php echo $offer->id; ?>">Отменить</a>
+					</div>
 				</td>
 			</tr>
 		<?php endforeach; ?>

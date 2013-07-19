@@ -701,19 +701,21 @@ $(function() {
         buttons: {
             "Добавить": function () {
                 $('.error').hide();
-				
+
 				var thisDialog = $(this);
 				var receiving_user_id = $('#review_text').data('receiving-id');
 				var review_text = $('#review_text').val();
 				var rating = thisDialog.data('rating');
-				
+
 				if (!review_text)
 				{
 					$('.error').show();
 
 					return;
 				}
-				
+
+				blockElement($('.ui-dialog'));
+
 				$.post('/user/review', {
 					receiving_user_id: receiving_user_id,
 					review_text: review_text,
@@ -726,22 +728,26 @@ $(function() {
 
 						$.jGrowl('Ошибка. Ваш отзыв не добавлен. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
 
+						unblockElement($('.ui-dialog'));
+
 						return;
 					}
-					
+
 					$.get(location.href, function(response){
 						$('.reviewsList').html($(response).find('.reviewsList').html());
-						
+
 						$('#review_text').val('');
 
 						thisDialog.dialog("close");
+
+						unblockElement($('.ui-dialog'));
 					});
 				});
             },
             "Отмена": function () {
 				$('.error').hide();
 				$('#review_text').val('');
-				
+
                 $(this).dialog("close");
             }
         }
@@ -849,6 +855,8 @@ $(function() {
 				var message_id = $(this).attr('data-message-id');
 				var thisDialog = $(this);
 
+				blockElement($('.ui-dialog'));
+
 				$.post('/messages/delete', {
 					message_id: message_id
 				}, function(response){
@@ -860,6 +868,8 @@ $(function() {
 
 						$.jGrowl('Сообщение не было удалено. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
 
+						unblockElement($('.ui-dialog'));
+
 						return;
 					}
 
@@ -868,6 +878,8 @@ $(function() {
 					thisDialog.dialog("close");
 
 					$.jGrowl('Сообщение удалено. Спасибо.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+					unblockElement($('.ui-dialog'));
 				});
                 $(this).dialog("close");
             },
@@ -899,6 +911,8 @@ $(function() {
 
 				var dialogWindow = $(this);
 
+				blockElement($('.ui-dialog'));
+
 				$.post('/offers/add', {
 					receiving_user_id: receiving_user_id,
 					model_id: model_id,
@@ -911,6 +925,8 @@ $(function() {
 					if (typeof response.error === 'undefined' || response.error > 0 || typeof response.id === 'undefined' || response.id == null || response.id == 0) {
 						$.jGrowl('Извините. Возникла непредвиденная ошибка. Попробуйте позже.', { header: 'Ошибка', life: 15000, theme: 'errorMessage' });
 
+						unblockElement($('.ui-dialog'));
+
 						return;
 					}
 
@@ -921,6 +937,8 @@ $(function() {
 					$('#offer_cancel').attr('data-id', response.id);
 
 					dialogWindow.dialog("close");
+
+					unblockElement($('.ui-dialog'));
 				});
             },
             "Отмена": function () {
