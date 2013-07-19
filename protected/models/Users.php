@@ -264,4 +264,21 @@ class Users extends CActiveRecord
 		}
 		else return false;
 	}
+	
+	public function getReviewsAmount()
+	{
+		$positive = $negative = 0;
+		foreach ($this->reviewsReceiving as $review)
+		{
+			if ($review->rating > 0)
+				$positive += $review->rating;
+			else
+				$negative += $review->rating;
+		}
+		
+		return array(
+			'positive' => $positive,
+			'negative' => abs($negative),
+		);
+	}
 }

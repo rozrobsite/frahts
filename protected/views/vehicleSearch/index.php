@@ -100,13 +100,14 @@ $this->breadcrumbs = array(
 								<td width="10%"><div>Дата доставки</div></td>
 								<td width="14%"><div>Груз</div></td>
 								<td width="14%">Требуемый транспорт</td>
-								<td width="13%" class="sortCol <?php if ($pageSettings['sort'] == SearchFilter::SORT_CREATED_AT): ?>header <?php echo ($pageSettings['direct'] == SearchFilter::DIRECTION_DESC ? "headerSortDown" : "headerSortUp") ?><?php endif;?>">
-									<a href="/vehicle/search<?php echo $filter->getUrl('', $pageSettings['page']); ?>&sort=<?php echo SearchFilter::SORT_CREATED_AT ?>&direct=<?php echo !$filter->direction ?>">Дата добавления<span></span></a>
+								<td width="10%" class="sortCol <?php if ($pageSettings['sort'] == SearchFilter::SORT_CREATED_AT): ?>header <?php echo ($pageSettings['direct'] == SearchFilter::DIRECTION_DESC ? "headerSortDown" : "headerSortUp") ?><?php endif;?>">
+									<a href="/vehicle/search<?php echo $filter->getUrl('', $pageSettings['page']); ?>&sort=<?php echo SearchFilter::SORT_CREATED_AT ?>&direct=<?php echo !$filter->direction ?>">Добавлен<span></span></a>
 								</td>
-								<td width="10%" class="sortCol <?php if ($pageSettings['sort'] == SearchFilter::SORT_PAYMENT_TYPE): ?>header <?php echo ($pageSettings['direct'] == SearchFilter::DIRECTION_DESC ? "headerSortDown" : "headerSortUp") ?><?php endif;?>">
-									<a href="/vehicle/search<?php echo $filter->getUrl('', $pageSettings['page']); ?>&sort=<?php echo SearchFilter::SORT_PAYMENT_TYPE ?>&direct=<?php echo !$filter->direction ?>">Вид оплаты<span></span></a>
+								<td width="10%">
+									<div>Вид оплаты</div>
 								</td>
-								<td>Контакты</td>
+								<td width="18%">Контакты</td>
+								<td width="3%"></td>
 							</tr>
 						</thead>
 						<tfoot>
@@ -221,7 +222,7 @@ $this->breadcrumbs = array(
 									</strong><br/>
 									<?php if ($oneGood->user->profiles->userType->id == UserTypes::DISPATCHER): ?>
 										(Комиссия: <?php echo $oneGood->fee ?>)
-									<?php endif; ?>
+									<?php endif; ?><br/>
 								</td>
 								<td class="fileInfo">
 									<a href="/user/view/<?php echo $oneGood->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
@@ -230,6 +231,21 @@ $this->breadcrumbs = array(
 										<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
 									</a><br/>
 									м. <?php echo $oneGood->user->profiles->mobile ?>
+								</td>
+								<td>
+									<?php $reviews = $oneGood->user->getReviewsAmount(); ?>
+									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments" 
+									   class="tipS wHtml" 
+									   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
+									   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
+										<span class="icos-like"></span>
+									</a>
+									<a href="/user/messages/user/<?php echo $oneGood->user->id; ?>#users_message" 
+									   class="tipS"
+									   original-title="Написать сообщение"
+									   title="Написать сообщение">
+										<span class="icos-speech3" style="margin-top: 8px;"></span>
+									</a>
 								</td>
 							</tr>
 							<?php endforeach; ?>
