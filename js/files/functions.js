@@ -705,7 +705,10 @@ $(function() {
 				var thisDialog = $(this);
 				var receiving_user_id = $('#review_text').data('receiving-id');
 				var review_text = $('#review_text').val();
+				var offer_id = thisDialog.data('offer-id');
 				var rating = thisDialog.data('rating');
+
+				alert(offer_id);return;
 
 				if (!review_text)
 				{

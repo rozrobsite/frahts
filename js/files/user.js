@@ -6,10 +6,10 @@
 //var thanksRegister = {
 //	show: function(){
 //		$('#thanksRegister').dialog('open');
-//	}  
+//	}
 //};
 
-var user_type = 
+var user_type =
 {
 	init: function()
 	{
@@ -36,7 +36,7 @@ var user_type =
 	}
 };
 
-var country = 
+var country =
 {
 	init: function()
 	{
@@ -50,14 +50,14 @@ var country =
 				$('select.region').html($response);
 
 				updateSelect.update($('select.region'));
-				
+
 				$('#Profiles_region_id').change();
 			});
 		});
 	}
 };
 
-var region = 
+var region =
 {
 	init: function()
 	{
@@ -81,7 +81,7 @@ var review = {
 		$('#positive_review').on('click', function(){
 			$('#review_dialog').data('rating', $(this).data('rating')).dialog('open');
 		});
-		
+
 		$('#negative_review').on('click', function(){
 			$('#review_dialog').data('rating', $(this).data('rating')).dialog('open');
 		});

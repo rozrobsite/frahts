@@ -3,8 +3,8 @@
 		<?php if ($canWrite): ?>
 			<div class="enterMessage" style="margin-bottom: 15px;">
 				<label style="margin-right: 5px;">Оставьте свой отзыв:</label>
-				<a id="positive_review" href="javascript:void(0)" class="buttonS bGreen" data-rating="<?php echo Reviews::POSITIVE; ?>">Положительный</a>
-				<a id="negative_review" href="javascript:void(0)" class="buttonS bRed" data-rating="<?php echo Reviews::NEGATIVE; ?>">Отрицательный</a>
+				<a id="positive_review" href="javascript:void(0)" class="buttonS bGreen" data-rating="<?php echo Reviews::POSITIVE; ?>" data-offer-id="<?php echo $offer->id ?>">Положительный</a>
+				<a id="negative_review" href="javascript:void(0)" class="buttonS bRed" data-rating="<?php echo Reviews::NEGATIVE; ?>" data-offer-id="<?php echo $offer->id ?>">Отрицательный</a>
 			</div>
 		<?php endif; ?>
 		<?php if (count($model->reviewsReceiving)): ?>
@@ -20,7 +20,7 @@
 										<a href="/user/view/<?php echo $review->author->id ?>">
 											<strong>
 												<?php echo $review->author->profiles->shortName(); ?>
-											</strong> 
+											</strong>
 										</a>
 										написал(а):
 									</span>
