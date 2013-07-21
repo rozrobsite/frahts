@@ -159,7 +159,7 @@ $this->breadcrumbs = array(
 							<?php  if ($printGoods): ?> <li class=""><a href="#tab_goods">Грузы</a></li> <?php endif; ?>
 							<?php  if ($printVehicles): ?> <li class=""><a href="#tab_vehicles">Транспорт</a></li> <?php endif; ?>
 						</ul>
-							<?php $this->renderPartial('_reviewsList', array('model'=>$model, 'canWrite' => $canWrite)); ?>
+							<?php $this->renderPartial('_reviewsList', array('model'=>$model, 'canWrite' => $canWrite, 'offer_id' => $offer_id)); ?>
 							<?php $this->renderPartial('_userGoodsList', array('printGoods' => $printGoods, 'model'=>$model)); ?>
 							<?php $this->renderPartial('_userVehiclesList', array('printVehicles' => $printVehicles, 'model'=>$model)); ?>
 						</div>

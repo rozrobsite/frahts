@@ -86,6 +86,7 @@ class Offers extends CActiveRecord
 			'currency' => array(self::BELONGS_TO, 'Currency', 'currency_id'),
 			'offerVehicle' => array(self::BELONGS_TO, 'Vehicle', 'offer_vehicle_id'),
 			'offerGood' => array(self::BELONGS_TO, 'Goods', 'offer_good_id'),
+			'reviews' => array(self::BELONGS_TO, 'Reviews', 'review_id'),
 		);
 	}
 
@@ -152,7 +153,7 @@ class Offers extends CActiveRecord
 
 	public function madeDeal($currentUser, $user, $offer_id)
 	{
-		return $this->findAll('((author_id = ' . $currentUser->id . ' AND receiving_user_id = ' . $user->id . ')
+		return $this->find('((author_id = ' . $currentUser->id . ' AND receiving_user_id = ' . $user->id . ')
 			OR (author_id = ' . $user->id . ' AND receiving_user_id = ' . $currentUser->id . '))
 			AND (result = ' . self::RESULT_IN_ACCEPT . ' OR result = ' . self::RESULT_IN_REFUSE . ')
 			AND id = ' . $offer_id);

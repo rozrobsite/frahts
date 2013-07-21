@@ -705,10 +705,8 @@ $(function() {
 				var thisDialog = $(this);
 				var receiving_user_id = $('#review_text').data('receiving-id');
 				var review_text = $('#review_text').val();
-				var offer_id = thisDialog.data('offer-id');
+				var offer_id = $('#review_dialog').data('offer-id');
 				var rating = thisDialog.data('rating');
-
-				alert(offer_id);return;
 
 				if (!review_text)
 				{
@@ -717,12 +715,18 @@ $(function() {
 					return;
 				}
 
+				if (!offer_id)
+				{
+					return;
+				}
+
 				blockElement($('.ui-dialog'));
 
 				$.post('/user/review', {
 					receiving_user_id: receiving_user_id,
 					review_text: review_text,
-					rating: rating
+					rating: rating,
+					offer_id: offer_id
 				}, function(response){
 					if (typeof response.error === 'undefined' || response.error > 0)
 					{
@@ -737,7 +741,7 @@ $(function() {
 					}
 
 					$.get(location.href, function(response){
-						$('.reviewsList').html($(response).find('.reviewsList').html());
+						$('#tab_comments').html($(response).find('#tab_comments').html());
 
 						$('#review_text').val('');
 

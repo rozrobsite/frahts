@@ -63,9 +63,10 @@
 						</label>
 						<label class="acceptOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_ACCEPT): ?>style="display: none;"<?php endif; ?>>
 							Вы <span class="label label-success">приняли</span> предложение пользователя<br/>
-							<?php //if ($this->user->reviewsAuthor->isReviewLeft($offer->id)) ?>
-							<a href="/user/view/<?php echo $offer->author->id; ?>/offer/<?php echo $offer->id ?>#tab_comments">Оставить отзыв</a>
-							<a class="cancelForUsersOffer" href="javascript:void(0)" style="color: #a34c4c;margin-left: 10px;" data-id="<?php echo $offer->id; ?>">Отменить</a>
+							<?php if (!$offer->review_id): ?>
+								<a href="/user/view/<?php echo $offer->author->id; ?>/offer/<?php echo $offer->id ?>#tab_comments">Оставить отзыв</a>
+								<a class="cancelForUsersOffer" href="javascript:void(0)" style="color: #a34c4c;margin-left: 10px;" data-id="<?php echo $offer->id; ?>">Отменить</a>
+							<?php endif; ?>
 						</label>
 						<div class="noOffer_<?php echo $offer->id ?>" <?php if ($offer->result != Offers::RESULT_IN_PROCESS): ?>style="display: none;"<?php endif; ?>>
 							<a href="javascript:void(0)" class="buttonS bGreen offerAccept" data-id="<?php echo $offer->id ?>">Принять</a>
