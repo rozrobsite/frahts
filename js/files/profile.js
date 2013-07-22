@@ -23,8 +23,8 @@ var formOrganization = {
 $(document).ready(function(){
 	$('#Profiles_last_name').mask('aa?aaaaaaaaaaaaaaaaaa');
 	$('#Profiles_middle_name').mask('aa?aaaaaaaaaaaaaaaaaa');
-	$('#Profiles_last_name').mask('aa?aaaaaaaaaa');
-	$('#Profiles_mobile').mask('999999999999999');
+	$('#Profiles_first_name').mask('aa?aaaaaaaaaa');
+	$('#Profiles_mobile').mask('99999999?9999999');
 	$('#Profiles_phone').mask('?999999999999999');
 	$('#Profiles_icq').mask('?99999999999');
 	$('#Organizations_form_tax').mask('*?*********');
