@@ -66,6 +66,7 @@ class Reviews extends CActiveRecord
 		return array(
 			'receivingUser' => array(self::BELONGS_TO, 'Users', 'receiving_user_id'),
 			'author' => array(self::BELONGS_TO, 'Users', 'author_id'),
+			'offer' => array(self::BELONGS_TO, 'Offers', 'review_id'),
 		);
 	}
 

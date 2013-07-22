@@ -101,3 +101,8 @@ CREATE TABLE IF NOT EXISTS `parser_emails` (
 					`email` varchar(32) DEFAULT NULL,
 					PRIMARY KEY (`id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--21.07.2013
+ALTER TABLE `offers` ADD `review_id` BIGINT( 20 ) NULL DEFAULT NULL;
+ALTER TABLE `offers` ADD INDEX (`review_id`);
+ALTER TABLE `offers` ADD FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;

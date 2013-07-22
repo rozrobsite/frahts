@@ -455,7 +455,7 @@ class UserController extends FrahtController
 
 		$this->render('view', array(
 			'model' => $model,
-			'offer' => $offer,
+			'offer_id' => $offer_id,
 			'canWrite' => !($offer && $offer->review_id),
 		));
 	}
@@ -472,6 +472,7 @@ class UserController extends FrahtController
 		$receivingUserId = isset($_POST['receiving_user_id']) ? (int)$_POST['receiving_user_id'] : 0;
 		$reviewText = isset($_POST['review_text']) ? trim($_POST['review_text']) : '';
 		$rating = isset($_POST['rating']) ? (int) $_POST['rating'] : 0;
+		$offer_id = isset($_POST['offer_id']) ? (int) $_POST['offer_id'] : 0;
 
 		if (empty($receivingUserId) || empty($reviewText) || empty($rating))
 		{
@@ -493,6 +494,9 @@ class UserController extends FrahtController
 
 			Yii::app()->end();
 		}
+		
+		if ($offer_id)
+			Offers::model()->updateByPk($offer_id, array('review_id' => $review->id));
 
 		echo $this->respondJSON(array('error' => 0));
 
