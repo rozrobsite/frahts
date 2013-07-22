@@ -302,7 +302,7 @@
 								</a>
 							</li>
 						</ul>
-					</li>						
+					</li>
 					<li>
 						<a href="#" class='light toggle-collapsed'>
 							<div class="ico"><i class="icon-th-large icon-white"></i></div>
@@ -321,7 +321,7 @@
 								</a>
 							</li>
 						</ul>
-					</li>						
+					</li>
                     <li>
                         <a href="#" class='light toggle-collapsed'>
                             <div class="ico"><i class="icon-th-large icon-white"></i></div>
@@ -332,6 +332,20 @@
                             <li>
                                 <a href="/admin/azs">
                                     Торговые марки
+                                </a>
+                            </li>
+						</ul>
+					</li>
+                    <li>
+                        <a href="#" class='light toggle-collapsed'>
+                            <div class="ico"><i class="icon-th-large icon-white"></i></div>
+							Рассылка
+                            <img src="/images/admin/toggle-subnav-down.png" alt="">
+                        </a>
+                        <ul class='collapsed-nav closed'>
+                            <li>
+                                <a href="/admin/mailing">
+                                    E-mail
                                 </a>
                             </li>
 						</ul>
@@ -364,5 +378,6 @@
 		<!--<script src="/js/admin/ui.spinner.js"></script>-->
 		<script src="/js/admin/custom.js"></script>
 		<script src="/js/admin/files/main.js"></script>
+		<script src="/js/admin/files/mailing.js"></script>
 	</body>
 </html>
