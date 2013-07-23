@@ -24,7 +24,7 @@ class UserController extends FrahtController
 		);
 	}
 
-	private function userSettings()
+	private function userSettings($profiles)
 	{
 		$userTypes = UserTypes::model()->findAll(array('order' => 'name_ru'));
 		$listUserTypes = CHtml::listData($userTypes, 'id', 'name_ru');
@@ -33,22 +33,22 @@ class UserController extends FrahtController
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
 		$listRegions = array();
-		if (isset($this->user->profiles->region_id))
+		if ($profiles->region_id)
 		{
-			$listRegions = CHtml::listData($this->user->profiles->country->regions, 'id',
+			$listRegions = CHtml::listData($profiles->country->regions, 'id',
 							'name_ru');
 		}
 
 		$listCities = array();
-		if (isset($this->user->profiles->city_id))
+		if ($profiles->city_id)
 		{
-			$listCities = CHtml::listData($this->user->profiles->region->cities, 'id',
+			$listCities = CHtml::listData($profiles->region->cities, 'id',
 							'name_ru');
 		}
 
 		$this->render('index',
 				array(
-			'model' => isset($this->user->profiles->id) ? $this->user->profiles : new Profiles(),
+			'model' => $profiles,
 			'userTypes' => $listUserTypes,
 			'countries' => $listCountries,
 			'regions' => $listRegions,
@@ -64,10 +64,11 @@ class UserController extends FrahtController
 	 */
 	public function actionIndex()
 	{
+		$this->user->profiles = isset($this->user->profiles->id) ? $this->user->profiles
+						: new Profiles();
+
 		if (isset($_POST['Profiles']))
 		{
-			$this->user->profiles = isset($this->user->profiles->id) ? $this->user->profiles
-						: new Profiles();
 			$this->user->profiles->attributes = $_POST['Profiles'];
 			$this->user->profiles->user_id = $this->user->id;
 
@@ -133,7 +134,7 @@ class UserController extends FrahtController
 			}
 		}
 
-		$this->userSettings();
+		$this->userSettings($this->user->profiles);
 	}
 
 	public function actionOrganization()
@@ -494,7 +495,7 @@ class UserController extends FrahtController
 
 			Yii::app()->end();
 		}
-		
+
 		if ($offer_id)
 			Offers::model()->updateByPk($offer_id, array('review_id' => $review->id));
 

@@ -60,11 +60,12 @@ class Profiles extends CActiveRecord
 			array('last_name, first_name, middle_name, mobile, country_id, region_id, city_id, address, user_type_id', 'required'),
 			array('user_type_id, country_id, region_id, city_id, created_at, updated_at', 'numerical', 'integerOnly'=>true),
 			array('user_id, country_id, region_id, city_id', 'length', 'max'=>11),
-			array('last_name, middle_name', 'length', 'max'=>20),
+			array('last_name', 'length', 'max'=>64),
+			array('middle_name', 'length', 'max'=>20),
 			array('first_name, icq', 'length', 'max'=>12),
 			array('first_name, last_name, middle_name', 'match', 'pattern'=>'/^[A-Za-zА-Яа-яеЁєЄїЇіІ]+$/u', 'message'=>'Должны быть только буквы.'),
 			array('mobile', 'length', 'max'=>15),
-			array('address', 'length', 'max'=>42),
+			array('address', 'length', 'max'=>128),
 			array('phone, skype', 'length', 'max'=>25),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
