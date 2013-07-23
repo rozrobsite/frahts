@@ -31,12 +31,12 @@ class MainController extends Controller
 	{
 		// renders the view file 'protected/views/main/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		
+
 		if (isset(Yii::app()->user->id))
 			$this->user = Users::model()->findByPk(Yii::app()->user->id);
-		
+
 		$this->mainPage = true;
-		
+
 		$this->render('index');
 	}
 
@@ -97,25 +97,25 @@ class MainController extends Controller
 		if (isset($_POST['Users']))
 		{
 			$model->attributes = $_POST['Users'];
-			
+
 			// validate user input and redirect to the previous page if valid
 			if ($model->validate() && $model->login())
 			{
 				$user = Users::model()->findByPk((int)Yii::app()->user->id);
-				
+
 				if(!empty($user->code))
 				{
 					Yii::app()->user->logout();
-					
-					throw new CHttpException(503,'Извините, но вы еще не подтвердили свою регистрацию.');
-					
+
+					throw new CHttpException(503,'Извините, но вы еще не подтвердили свою регистрацию. <br/>Проверьте свою электронную почту указанную при регистрации и перейдите по ссылке указаной в письме.');
+
 					Yii::app()->end();
 				}
-				
+
 				$user->logins = $user->logins + 1;
 				$user->last_login = time();
 				$user->update();
-				
+
 				if ($user->profiles)
 				{
 					if ($user->profiles->userType == UserTypes::FREIGHTER)
@@ -132,7 +132,7 @@ class MainController extends Controller
 				}
 				else
 				{
-					if (!isset($user->organizations->id))
+					if (!$user->organizations->id && $user->profiles)
 						$this->redirect('/user/organization');
 					else
 						$this->redirect('/user');
@@ -169,13 +169,13 @@ class MainController extends Controller
 //				if (!$user)
 //				{
 //					throw new CHttpException(404,'Пользователь с элетронным адресом ' . $user->email . ' не найден.');
-//					
+//
 //					Yii::app()->end();
 //				}
-				
+
 				$user->password_repeat = Locallib::generate_password(6);
 				$user->password = md5($user->password_repeat);
-				
+
 				if($user->save(false))
 				{
 					$message = new YiiMailMessage;
@@ -220,7 +220,7 @@ class MainController extends Controller
 				// Сохранить полученные данные
 				// false нужен для того, чтобы не производить повторную проверку
 				if ($model->save(false))
-				{			
+				{
 					$message = new YiiMailMessage;
 					$message->view = 'register';
 					$message->setBody(array('user' => $model), 'text/plain');
@@ -228,15 +228,15 @@ class MainController extends Controller
 					$message->addTo($model->email);
 					$message->from = Yii::app()->params['adminEmail'];
 					Yii::app()->mail->send($message);
-					
+
 					Yii::app()->user->setFlash('register',
 							'На Ваш электронный адрес ' . $model->email . ' выслано письмо с инструкциями для продолжения регистрации.');
 					$this->refresh();
 				}
 			}
 		}
-		
-		
+
+
 		// display the login form
 		$this->render('register', array('model' => $model, 'term' => Terms::model()->findByPk(1)));
 	}
@@ -249,25 +249,25 @@ class MainController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-	
+
 	public function actionCode()
 	{
 		$code = isset($_GET['code']) ? $_GET['code'] : '';
 		$user = Users::model()->findByAttributes(array('code' => $code));
-		
+
 //		if(!$user)
 //		{
 //			throw new CHttpException(404,'Указанный код не найден. Попрубуйте еще раз или зарегистрируйтесь снова.');
-//			
+//
 //			Yii::app()->end();
 //		}
-		
+
 		if (isset($user) && $user->loginByCode($code))
 		{
 			$user->code = '';
 			$user->logins = (int)$user->logins + 1;
 			$user->last_login = time();
-			
+
 			if($user->save(false))
 			{
 				$this->redirect('/user');
@@ -276,11 +276,11 @@ class MainController extends Controller
 		else
 		{
 			throw new CHttpException(404,'Указанный код не найден. Попрубуйте еще раз или зарегистрируйтесь снова.');
-			
+
 			Yii::app()->end();
 		}
 	}
-	
+
 	public function actionUseragreement()
 	{
 		$this->render('useragreement');
