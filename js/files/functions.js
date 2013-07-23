@@ -652,15 +652,15 @@ $(function() {
 	];
 
 	var opts = {
-		's1': {decimals:0, min:0},
-		'capacityFrom': {decimals:0, min:0},
-		'capacityTo': {decimals:0, min:0},
-		'capacityExactValue': {decimals:0, min:0},
-		'weightFrom': {stepping: 0.5, min:0},
-		'weightTo': {stepping: 0.5, min:0},
-		'weightExactValue': {stepping: 0.5, min:0},
+		's1': {decimals:0, min:0, max: 100},
+		'capacityFrom': {decimals:0, min:0, max: 100},
+		'capacityTo': {decimals:0, min:0, max: 100},
+		'capacityExactValue': {decimals:0, min:0, max: 100},
+		'weightFrom': {stepping: 0.5, min:0, max: 100},
+		'weightTo': {stepping: 0.5, min:0, max: 100},
+		'weightExactValue': {stepping: 0.5, min:0, max: 100},
 		's6': {decimals:0, min:0, max:9},
-		's2': {stepping: 0.5, min:0},
+		's2': {stepping: 0.5, min:0.5, max: 100},
 		's3': {currency: '$'},
 		's4': {},
 		's5': {
