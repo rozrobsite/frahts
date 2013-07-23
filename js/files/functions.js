@@ -653,14 +653,14 @@ $(function() {
 
 	var opts = {
 		's1': {decimals:0, min:0, max: 100},
-		'capacityFrom': {decimals:0, min:0, max: 100},
-		'capacityTo': {decimals:0, min:0, max: 100},
-		'capacityExactValue': {decimals:0, min:0, max: 100},
-		'weightFrom': {stepping: 0.5, min:0, max: 100},
-		'weightTo': {stepping: 0.5, min:0, max: 100},
-		'weightExactValue': {stepping: 0.5, min:0, max: 100},
+		'capacityFrom': {decimals:0, min:0, max: 150},
+		'capacityTo': {decimals:0, min:0, max: 150},
+		'capacityExactValue': {decimals:0, min:0, max: 150},
+		'weightFrom': {stepping: 0.5, min:0, max: 70},
+		'weightTo': {stepping: 0.5, min:0, max: 70},
+		'weightExactValue': {stepping: 0.5, min:0, max: 70},
 		's6': {decimals:0, min:0, max:9},
-		's2': {stepping: 0.5, min:0.5, max: 100},
+		's2': {stepping: 0.5, min:0.5, max: 150},
 		's3': {currency: '$'},
 		's4': {},
 		's5': {
@@ -682,7 +682,8 @@ $(function() {
 
 	for (var n in opts)
 		$("#"+n).spinner(opts[n]);
-
+	
+	$('#weightFrom').spinner().spinner("option", "disabled");
 	$("button").click(function(e){
 //		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
 //
