@@ -89,11 +89,11 @@ $this->breadcrumbs = array(
 					<div class="grid3">
 						<ul class="datesRange">
 							<li>
-								<?php if ($model->date_from) $model->date_from = date('d.m.Y', $model->date_from); echo $form->textField($model, 'date_from', array('id' => 'fromDate', 'placeholder' => 'С')) ?>
+								<?php if ($model->date_from) $model->date_from = date('d.m.Y', $model->date_from); echo $form->textField($model, 'date_from', array('id' => 'fromDate', 'placeholder' => 'С', 'readonly' => 'readonly')) ?>
 							</li>
 							<li class="sep" style="font-weight: bold">-</li>
 							<li>
-								<?php if ($model->date_to) $model->date_to = date('d.m.Y', $model->date_to); echo $form->textField($model, 'date_to', array('id' => 'toDate', 'placeholder' => 'По')) ?>
+								<?php if ($model->date_to) $model->date_to = date('d.m.Y', $model->date_to); echo $form->textField($model, 'date_to', array('id' => 'toDate', 'placeholder' => 'По', 'readonly' => 'readonly')) ?>
 							</li>
 						</ul>
 						<br/><br/>
