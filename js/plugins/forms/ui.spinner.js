@@ -754,8 +754,11 @@ $.widget('ui.spinner', {
 		return parseFloat(this.element.val().replace(/[^0-9\-\.]/g, ''));
 	},
 	_setValue: function(newVal) {
+//		console.log(this.options.max);
 		if (isNaN(newVal)) {
 			newVal = this.options.start;
+		} else if (newVal >= this.options.max) {
+			newVal = this.options.max;
 		}
 		this.element.val(
 			this.options.currency ? 
