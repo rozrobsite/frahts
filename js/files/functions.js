@@ -683,7 +683,6 @@ $(function() {
 	for (var n in opts)
 		$("#"+n).spinner(opts[n]);
 	
-	$('#weightFrom').spinner().spinner("option", "disabled");
 	$("button").click(function(e){
 //		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
 //
