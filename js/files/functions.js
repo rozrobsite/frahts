@@ -660,29 +660,29 @@ $(function() {
 		'weightTo': {stepping: 0.5, min:0, max: 70},
 		'weightExactValue': {stepping: 0.5, min:0, max: 70},
 		's6': {decimals:0, min:0, max:9},
-		's2': {stepping: 0.5, min:0.5, max: 150},
-		's3': {currency: '$'},
-		's4': {},
-		's5': {
-			//
-			// Two methods of adding external items to the spinner
-			//
-			// method 1: on initalisation call the add method directly and format html manually
-			init: function(e, ui) {
-				for (var i=0; i<itemList.length; i++) {
-					ui.add('<a href="'+ itemList[i].url +'" target="_blank">'+ itemList[i].title +'</a>');
-				}
-			},
-
-			// method 2: use the format and items options in combination
-			format: '<a href="%(url)" target="_blank">%(title)</a>',
-			items: itemList
-		}
+		's2': {stepping: 0.5, min:0.5, max: 150}
+//		's3': {currency: '$'},
+//		's4': {},
+//		's5': {
+//			//
+//			// Two methods of adding external items to the spinner
+//			//
+//			// method 1: on initalisation call the add method directly and format html manually
+//			init: function(e, ui) {
+//				for (var i=0; i<itemList.length; i++) {
+//					ui.add('<a href="'+ itemList[i].url +'" target="_blank">'+ itemList[i].title +'</a>');
+//				}
+//			},
+//
+//			// method 2: use the format and items options in combination
+//			format: '<a href="%(url)" target="_blank">%(title)</a>',
+//			items: itemList
+//		}
 	};
 
 	for (var n in opts)
 		$("#"+n).spinner(opts[n]);
-	
+
 	$('#weightFrom').spinner().spinner("option", "disabled");
 	$("button").click(function(e){
 //		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
