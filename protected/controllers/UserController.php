@@ -238,7 +238,7 @@ class UserController extends FrahtController
 					$message->setBody($model->message, 'text/plain');
 					$message->subject = 'frahts.com: Обратная связь';
 					$message->addTo(Yii::app()->params['adminEmail']);
-					$message->addTo('imperia1991@gmail.com');
+					$message->addTo('frahtscom@gmail.com');
 					$message->from = $this->user->email;
 					if (Yii::app()->mail->send($message))
 							Yii::app()->user->setFlash('feedback_success',
