@@ -1,6 +1,7 @@
 <?php if (count($receivingUsers)): ?>
 	<ul class="userList">
 		<?php foreach ($receivingUsers as $user): ?>
+		<?php if ($user->id == $this->user->id) continue; ?>
 		<li>
 			<a href="/user/messages/user/<?php echo $user->id ?>#users_message" title="">
 				<img src="<?php echo ($user->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $user->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>" alt="" />
