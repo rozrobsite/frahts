@@ -12,7 +12,7 @@ class VehicleController extends FrahtController {
 	}
 
 	public function actionIndex() {
-		$this->redirect('vehicle/active');
+		$this->redirect('/vehicle/active');
 	}
 
 	public function actionNew() {

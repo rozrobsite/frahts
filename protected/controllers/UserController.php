@@ -447,17 +447,20 @@ class UserController extends FrahtController
 		$userid = isset($_GET['id']) ? trim($_GET['id']) : 0;
 		$offer_id = isset($_GET['offer']) ? (int) $_GET['offer'] : 0;
 
-		$model = Users::model()->find('id = "' . $userid . '"');
+		if ($userid == $this->user->id)
+			$this->redirect('/user');
 
-		if (!is_object($model))
+		$user = Users::model()->find('id = "' . $userid . '"');
+
+		if (!is_object($user))
 				throw new CHttpException(404, 'Страница пользователя не найдена!');
 
-		$offer = Offers::model()->madeDeal($this->user, $model, $offer_id);
+		$offer = Offers::model()->madeDeal($this->user, $user, $offer_id);
 
 		$this->render('view', array(
-			'model' => $model,
+			'model' => $user,
 			'offer_id' => $offer_id,
-			'canWrite' => !($offer && $offer->review_id),
+			'canWrite' => $offer && !$offer->review_id,
 		));
 	}
 
