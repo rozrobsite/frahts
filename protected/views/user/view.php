@@ -39,7 +39,7 @@ $this->breadcrumbs = array(
     <div class="breadLine">
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="/">Главная</a></li>
+                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
                 <li class="current">
 					<a title="">
 						<?php echo 'Подробные сведения о пользователе'; ?>

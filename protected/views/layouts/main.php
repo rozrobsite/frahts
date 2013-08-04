@@ -173,11 +173,8 @@
 					<!-- Right top nav -->
 					<div class="topNav">
 						<?php if (Yii::app()->user->isGuest): ?>
-
 							<a href="/main/login" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Вход</a>
-
 							<a href="/main/register" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Регистрация</a>
-
 						<?php else: ?>
 							<ul class="userNav">
 								<!--<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>-->

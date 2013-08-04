@@ -36,7 +36,7 @@ $this->breadcrumbs = array(
     <div class="breadLine">
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="/">Главная</a></li>
+                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
                 <li><a href="<?php echo Yii::app()->session['redirectUrl']; ?>">Поиск транспорта</a></li>
                 <li class="current">
 					<a title="">
@@ -154,7 +154,7 @@ $this->breadcrumbs = array(
 					 */?>
                     <div class="clear"></div>
                 </div>
-				<?php if (count($this->user->vehicles)): ?>
+				<?php if (count($this->user->goods)): ?>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 						<tr>
 							<td style="width:25%">
@@ -256,6 +256,6 @@ $this->breadcrumbs = array(
 <input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
 
 <?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::VEHICLE)); ?>
-<?php if (count($this->user->vehicles)): ?>
+<?php if (count($this->user->goods)): ?>
 	<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_VEHICLE)); ?>
 <?php endif; ?>

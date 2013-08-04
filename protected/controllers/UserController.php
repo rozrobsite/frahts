@@ -2,7 +2,6 @@
 
 class UserController extends FrahtController
 {
-
 	private $_receivingUsers = array();
 
 	public function __construct($id, $module = null)
@@ -10,9 +9,6 @@ class UserController extends FrahtController
 		parent::__construct($id, $module);
 
 		$this->_receivingUsers = Messages::model()->getReceivingUsers($this->user);
-
-		if (!$this->user->organizations)
-			Yii::app()->user->setFlash('_default', 'Обязательно введите данные об организации.');
 	}
 
 	/**

@@ -1,7 +1,5 @@
 ﻿<?php  if ($printVehicles): ?>
 <div id="tab_vehicles" class="tab_content" style="display: none;">
-
-
 	<?php if ($model->vehicles && count($model->vehicles) > 1): ?>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 			<thead>
