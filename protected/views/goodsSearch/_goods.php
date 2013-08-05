@@ -28,7 +28,7 @@ $this->breadcrumbs = array(
     <div class="breadLine">
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="/">Главная</a></li>
+                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
                 <li><a href="/goods/search">Поиск транспорта</a></li>
                 <li class="current">
 					<a title="">
@@ -302,7 +302,7 @@ $this->breadcrumbs = array(
 
 					<div class="grid8">
 
-						<?php echo $form->textArea($model, 'description') ?>
+						<?php echo $form->textArea($model, 'description', array('style' => 'height:150px;')) ?>
 						<?php echo $form->error($model, 'description'); ?>
 					</div>
 					<div class="clear"></div>

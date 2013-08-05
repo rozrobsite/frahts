@@ -314,6 +314,8 @@ ul.userNav li a.fuk { background: url(/images/icons/usernav/fuk3.png) no-repeat 
 .leftUser li a.sTruck { background: url(/images/icons/usernav/truck.png) no-repeat 12px 12px; }
 .leftUser li a.sLogout { background: url(/images/icons/usernav/logout.png) no-repeat 12px 12px; }
 .leftUser li a.sFiles { background: url(/images/icons/usernav/files.png) no-repeat 12px 12px; }
+.leftUser li a.sFeedback { background: url(/images/icons/usernav/phone.png) no-repeat 12px 12px; }
+.leftUser li a.sFuk { background: url(/images/icons/usernav/fuk3.png) no-repeat 12px 12px; }
 
 
 /* === User === */
@@ -2471,3 +2473,5 @@ strong.attention {
 	text-shadow: 0 -1px #848484;
 	background: #c35a32;
 }
+
+textarea {resize: none;}

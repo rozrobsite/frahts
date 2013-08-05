@@ -34,7 +34,7 @@ $this->breadcrumbs = array(
     <div class="breadLine">
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="/">Главная</a></li>
+                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
                 <li><a href="<?php echo Yii::app()->session['redirectUrl']; ?>">Поиск грузов</a></li>
                 <li class="current">
 					<a title="">
@@ -132,7 +132,7 @@ $this->breadcrumbs = array(
                     </div>
                     <div class="clear"></div>
                 </div>
-				<?php if (count($this->user->goods)): ?>
+				<?php if (count($this->user->vehicles)): ?>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 						<tr>
 							<td style="width:25%">
@@ -241,6 +241,6 @@ $this->breadcrumbs = array(
 
 <?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::GOOD)); ?>
 <!-- Content ends -->
-<?php if (count($this->user->goods)): ?>
+<?php if (count($this->user->vehicles)): ?>
 	<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_GOOD)); ?>
 <?php endif; ?>
