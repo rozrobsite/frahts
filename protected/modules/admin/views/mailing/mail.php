@@ -12,12 +12,12 @@ $this->adminBreadcrumbs=array(
 			<div class="span12">
 				<div class="box">
 					<div class="box-head">
-						<h3>Рассылка на электронные адреса (E-mails)</h3>
+						<h3>Рассылка на все электронные адреса (E-mails)</h3>
 					</div>
 					<div class="box-content">
 						<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							'id'=>'mailing-add',
-							'action' => '/admin/mailing/send',
+							'action' => '/admin/mailing/sendAll',
 							'htmlOptions'=>array('class'=>'well'),
 						)); ?>
 
@@ -34,5 +34,13 @@ $this->adminBreadcrumbs=array(
 				</div>
 			</div>
 		</div>
+		<?php if (isset($count)): ?>
+		<div class="row-fluid">
+			<div class="span12">
+				Всего доступных e-mail: <?php echo count($parserEmails) ?><br/>
+				Успешно отправленных: <?php echo $count; ?>
+			</div>
+		</div>
+		<?php endif; ?>
 	</div>
 </div>
