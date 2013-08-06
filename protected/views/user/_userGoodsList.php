@@ -1,5 +1,5 @@
-﻿<?php  if ($printGoods): ?> 
-<div id="tab_goods" class="tab_content" style="display: none;"> 
+﻿<?php  if ($printGoods): ?>
+<div id="tab_goods" class="tab_content" style="display: none;">
 
 	<?php  if ($model->goods && count($model->goods) > 0): ?>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
@@ -13,7 +13,7 @@
 			</thead>
 			<tbody>
 				<?php foreach($model->goods as $oneGood): ?>
-					<?php if (!$oneGood->is_deleted && $oneGood->date_to >= time() && $oneGood->id != $model->id): ?>
+					<?php if (!$oneGood->is_deleted && $oneGood->date_to >= time()): ?>
 						<tr>
 							<td>
 								<span>
@@ -80,7 +80,7 @@
 				Нет грузов.
 			</label>
 		</div>
-	
+
 	<?php endif; ?>
 
 </div>

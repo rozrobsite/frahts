@@ -28,56 +28,23 @@
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ui.datepicker-ru.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery-ui-timepicker-addon.js"></script>
-		<!--<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery/jquery.ez-pinned-footer.js"></script>-->
-
-<!--		<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.js"></script>
-		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.orderBars.js"></script>
-		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.pie.js"></script>
-		<script type="text/javascript" src="/js/plugins/charts/jquery.flot.resize.js"></script>
-		<script type="text/javascript" src="/js/plugins/charts/jquery.sparkline.min.js"></script>-->
-
 		<script type="text/javascript" src="/js/plugins/scrollup/jquery.scrollUp.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/tables/jquery.dataTables.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/tables/jquery.sortable.js"></script>-->
-		<!--<script type="text/javascript" src="/js/plugins/tables/jquery.resizable.js"></script>-->
-
 		<script type="text/javascript" src="/js/plugins/forms/autogrowtextarea.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.uniform.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.inputlimiter.min.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/forms/jquery.tagsinput.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.maskedinput.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.autotab.js"></script>
 		<script type="text/javascript" src="/js/plugins/forms/jquery.chosen.min.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.dualListBox.js"></script>-->
-		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.cleditor.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/forms/jquery.ibutton.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine-en.js"></script>-->
-		<!--<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine.js"></script>-->
-
-<!--		<script type="text/javascript" src="/js/plugins/uploader/plupload.js"></script>
-		<script type="text/javascript" src="/js/plugins/uploader/plupload.html4.js"></script>
-		<script type="text/javascript" src="/js/plugins/uploader/plupload.html5.js"></script>
-		<script type="text/javascript" src="/js/plugins/uploader/jquery.plupload.queue.js"></script>-->
-
-<!--		<script type="text/javascript" src="/js/plugins/wizards/jquery.form.wizard.js"></script>
-		<script type="text/javascript" src="/js/plugins/wizards/jquery.validate.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/wizards/jquery.form.js"></script>
-
 		<script type="text/javascript" src="/js/plugins/ui/jquery.collapsible.min.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.breadcrumbs.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/ui/jquery.tipsy.js"></script>
 		<script type="text/javascript" src="/js/plugins/ui/jquery.progress.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.timeentry.min.js"></script>-->
-		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.colorpicker.js"></script>-->
 		<script type="text/javascript" src="/js/plugins/ui/jquery.jgrowl.js"></script>
 		<script type="text/javascript" src="/js/plugins/ui/jquery.fancybox.js"></script>
-		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.fileTree.js"></script>-->
-		<!--<script type="text/javascript" src="/js/plugins/ui/jquery.sourcerer.js"></script>-->
-
 		<script type="text/javascript" src="/js/plugins/others/jquery.fullcalendar.js"></script>
 		<script type="text/javascript" src="/js/plugins/others/jquery.elfinder.js"></script>
-
 		<script type="text/javascript" src="/js/plugins/ui/jquery.easytabs.min.js"></script>
 		<script type="text/javascript" src="/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/block.js"></script>
@@ -94,25 +61,20 @@
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/notes.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/offers.js"></script>
 
-		<style>
-/*			#footer {
-				background-color: #000;
-				color: #fff;
-				font-size: 12px;
-				z-index: 1000;
-				text-align: center;
-			}*/
-		</style>
+		<script type="text/javascript">
 
-		<script>
-//			$(window).load(function() {
-//				$("#footer").pinFooter();
-//			});
-//
-//			$(window).resize(function() {
-//				$("#footer").pinFooter();
-//			});
-		</script>
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-35733336-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+	  </script>
+
     </head>
     <body <?php if (isset($this->mainPage) && $this->mainPage): ?>class="main-body" <?php endif; ?>>
 		<?php if (isset($this->mainPage) && $this->mainPage): ?>
@@ -202,14 +164,34 @@
 			</div>
 			<!-- Top line ends -->
 			<?php echo $content; ?>
-
-			<?php /*
-			<div id="footer" style="text-align: center; margin: 50px;">
-				Все права защищены &copy; <?php echo date('Y', time()); ?>, <?php echo $_SERVER['HTTP_HOST'] ?>: Фрахты.com - Мир грузоперевозок
-
-				<div class="clear"></div>
-			</div>
-			 */?>
 		<?php endif; ?>
+
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript">
+		(function (d, w, c) {
+			(w[c] = w[c] || []).push(function() {
+				try {
+					w.yaCounter21031384 = new Ya.Metrika({id:21031384,
+							webvisor:true,
+							clickmap:true,
+							trackLinks:true,
+							accurateTrackBounce:true});
+				} catch(e) { }
+			});
+
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else { f(); }
+		})(document, window, "yandex_metrika_callbacks");
+		</script>
+		<noscript><div><img src="//mc.yandex.ru/watch/21031384" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+		<!-- /Yandex.Metrika counter -->
     </body>
 </html>

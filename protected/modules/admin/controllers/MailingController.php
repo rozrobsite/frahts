@@ -31,7 +31,7 @@ class MailingController extends AdminController
 			return;
 
 		$mailingModel = new Mailing();
-		$parserEmails = ParserEmails::model()->findAll();
+		$parserEmails = ParserEmails::model()->findAll('is_sent = 0');
 
 		$count = 0;
 		foreach ($parserEmails as $email) {

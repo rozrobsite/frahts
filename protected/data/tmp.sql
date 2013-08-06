@@ -115,3 +115,7 @@ CREATE TABLE IF NOT EXISTS `mailing` (
 					`created_at` int(11) NOT NULL,
 					PRIMARY KEY (`id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--06.08.2013
+ALTER TABLE `parser_emails` ADD `is_sent` TINYINT( 1 ) NULL DEFAULT 0;
+UPDATE `parser_emails` SET is_sent = 1 WHERE id < 495

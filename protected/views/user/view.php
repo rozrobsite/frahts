@@ -78,7 +78,7 @@ $this->breadcrumbs = array(
 						<strong class="title">Контакты</strong>
 						<span class="number"><strong>Мобильный телефон:</strong> <strong class="red"><?php echo $model->profiles->mobile ?></strong></span>
 						<?php if ($model->profiles->phone): ?>
-							<span><strong>Тедефон/Факс:</strong> <?php echo $model->profiles->skype; ?></span>
+							<span><strong>Телефон/Факс:</strong> <?php echo $model->profiles->skype; ?></span>
 						<?php endif; ?>
 						<?php if ($model->profiles->skype): ?>
 							<span><strong>Skype:</strong> <?php echo $model->profiles->skype; ?></span>

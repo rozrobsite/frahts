@@ -292,19 +292,22 @@ class Vehicle extends CActiveRecord
 			}
 		}
 
-		$date_from = $date_to = time();
-
-		if (!empty($filter->date_from))
+		if (!empty($filter->date_from) || !empty($filter->date_to))
 		{
-			$date_from = strtotime($filter->date_from);
-		}
+			$date_from = $date_to = time();
 
-		if (!empty($filter->date_to))
-		{
-			$date_to = strtotime($filter->date_to);
-		}
+			if (!empty($filter->date_from))
+			{
+				$date_from = strtotime($filter->date_from);
+			}
 
-		$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
+			if (!empty($filter->date_to))
+			{
+				$date_to = strtotime($filter->date_to);
+			}
+
+			$result[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
+		}
 
 		$result[] = 'date_to >= ' . time();
 

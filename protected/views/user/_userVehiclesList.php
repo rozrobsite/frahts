@@ -1,6 +1,6 @@
 ﻿<?php  if ($printVehicles): ?>
 <div id="tab_vehicles" class="tab_content" style="display: none;">
-	<?php if ($model->vehicles && count($model->vehicles) > 1): ?>
+	<?php if ($model->vehicles && count($model->vehicles) > 0): ?>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 			<thead>
 				<tr>
@@ -12,7 +12,7 @@
 			</thead>
 			<tbody>
 				<?php foreach($model->vehicles as $vehicle): ?>
-					<?php if (!$vehicle->is_deleted && $vehicle->id != $model->id): ?>
+					<?php if (!$vehicle->is_deleted): ?>
 						<tr>
 							<td>
 								<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства" style="display: block;">
