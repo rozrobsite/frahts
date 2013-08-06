@@ -15,26 +15,35 @@ class ParserController extends AdminController
 
 	public function actionEmails()
 	{
+		$model = new ParserEmails();
+		
 		if (isset($_POST['ParserEmails']))
 		{
-			if (!empty($_POST['ParserEmails']['email']))
+			$model->attributes = $_POST['ParserEmails'];
+			
+			if ($model->save())
 			{
-				$newParserEmails = new ParserEmails();
-				$newParserEmails->email = $_POST['ParserEmails']['email'];
-				$newParserEmails->insert();
-
-				unset($newParserEmails);
+				
 			}
+//			if (!empty($_POST['ParserEmails']['email']))
+//			{
+//				$newParserEmails = new ParserEmails();
+//				$newParserEmails->email = $_POST['ParserEmails']['email'];
+//				$newParserEmails->insert();
+//
+//				unset($newParserEmails);
+//			}
 		}
 		
-		$parserEmails = new ParserEmails();
-		if (isset($_REQUEST['ParserEmails']['email']))
-		{
-			$parserEmails->email = $_REQUEST['ParserEmails']['email'];
-		}
+//		$parserEmails = new ParserEmails();
+//		if (isset($_REQUEST['ParserEmails']['email']))
+//		{
+//			$parserEmails->email = $_REQUEST['ParserEmails']['email'];
+//		}
 
 		$this->render('emails', array(
-			'parserEmails' => $parserEmails
+//			'parserEmails' => $parserEmails
+			'parserEmails' => $model
 		));
 	}
 
