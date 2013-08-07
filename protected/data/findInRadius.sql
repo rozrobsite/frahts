@@ -9,15 +9,13 @@ AND (FIND_IN_SET(3, t.shipments) > 0)
 AND (FIND_IN_SET(t.body_type_id, "3") > 0) 
 AND (4<= t.bearing_capacity OR (4 = 0 AND (0 <= t.bearing_capacity OR 4 <= t.bearing_capacity))) 
 AND (16 <= t.body_capacity OR (16 = 0 AND (0 <= t.body_capacity OR 16 <= t.body_capacity))) 
-AND (t.city_id IN (CASE
-WHEN t.country_id IS NULL THEN (SELECT id FROM city)
-WHEN t.region_id IS NULL THEN (SELECT id FROM city WHERE t.country_id = 248)
-WHEN t.city_id IS NULL THEN (SELECT id FROM city WHERE t.country_id = 248 AND t.region_id = 349)
-ELSE ( SELECT id
-FROM city WHERE (6371 * acos( cos( radians(53.8829002380371) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(27.717399597168) ) + sin( radians(53.8829002380371) ) * sin( radians( latitude ) ) ) ) < 60) ) 
-AND t.city_id_to IN (CASE
-WHEN t.country_id_to IS NULL THEN (SELECT id FROM city)
-WHEN t.region_id_to IS NULL THEN (SELECT id FROM city WHERE t.country_id_to = 248)
-WHEN t.city_id_to IS NULL THEN (SELECT id FROM city WHERE t.country_id_to = 248 AND t.region_id_to = 349)
-ELSE ( SELECT id
-FROM city WHERE (6371 * acos( cos( radians(54.2211990356445) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(28.5128993988037) ) + sin( radians(54.2211990356445) ) * sin( radians( latitude ) ) ) ) < 60) )) AND is_deleted = 0) ORDER BY t.updated_at DESC LIMIT 10 
+AND ((CASE 
+WHEN t.country_id_to IS NULL THEN 1
+WHEN t.region_id_to IS NULL AND t.country_id_to = 248 THEN 1
+WHEN t.city_id_to IS NULL AND t.country_id_to = 248 AND t.region_id_to = 349 THEN 1 END) = 1
+OR t.city_id_to IN ( SELECT id
+FROM city WHERE (6371 * acos( cos( radians(54.2211990356445) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(28.5128993988037) ) + sin( radians(54.2211990356445) ) * sin( radians( latitude ) ) ) ) < 60))
+AND is_deleted = 0) 
+GROUP BY t.city_id_to 
+ORDER BY t.updated_at DESC  
+LIMIT 10
