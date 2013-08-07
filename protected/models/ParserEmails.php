@@ -36,6 +36,8 @@ class ParserEmails extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('email', 'length', 'max'=>32),
+			array('email', 'email'),
+			array('email', 'unique'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, email', 'safe', 'on'=>'search'),

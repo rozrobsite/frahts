@@ -22,6 +22,7 @@ $this->adminBreadcrumbs=array(
 						)); ?>
 
 						<?php echo $form->textFieldRow($parserEmails, 'email'); ?>
+						<?php //echo $form->error($parserEmails,'email', array('class' => 'error')); ?>
 						<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Добавить', 'htmlOptions' => array('style' => 'margin-top: -10px'))); ?>
 
 						<?php $this->endWidget(); ?>
