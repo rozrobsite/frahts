@@ -335,8 +335,12 @@ class Vehicle extends CActiveRecord
 
 				$result[] = '(' . join(' OR ', $shipments) . ')';
 			}
-			$result[] = '(FIND_IN_SET(t.vehicle_type_id, "' . $filter->good->vehicle_types . '") > 0)';
-			$result[] = '(FIND_IN_SET(t.body_type_id, "' . $filter->good->body_types . '") > 0)';
+
+			if ($filter->good->vehicle_types)
+				$result[] = '(FIND_IN_SET(t.vehicle_type_id, "' . $filter->good->vehicle_types . '") > 0)';
+
+			if ($filter->good->body_types)
+				$result[] = '(FIND_IN_SET(t.body_type_id, "' . $filter->good->body_types . '") > 0)';
 
 			$result[] = '(' . $filter->good->weight_exact_value . '<= t.bearing_capacity OR (' . $filter->good->weight_exact_value . ' = 0 AND (' . $filter->good->weight_from . ' <= t.bearing_capacity OR ' . $filter->good->weight_to . ' <= t.bearing_capacity)))';
 			$result[] = '(' . $filter->good->capacity_exact_value . ' <= t.body_capacity OR (' . $filter->good->capacity_exact_value . ' = 0 AND (' . $filter->good->capacity_from . ' <= t.body_capacity OR ' . $filter->good->capacity_to . ' <= t.body_capacity)))';
