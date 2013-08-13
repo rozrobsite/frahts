@@ -2,6 +2,36 @@
 
 class MainController extends Controller
 {
+	public function __construct($id, $module = null) {
+		parent::__construct($id, $module);
+		
+		if (Yii::app()->user->id && strpos(Yii::app()->request->requestUri, '/logout') === false)
+		{
+			$user = Users::model()->findByPk(Yii::app()->user->id);
+
+			if ($user->profiles)
+			{
+				if ($user->profiles->userType == UserTypes::FREIGHTER)
+					$this->redirect('/goods/search');
+				if ($user->profiles->userType == UserTypes::SHIPPER)
+					$this->redirect('/vehicle/search');
+				if ($user->profiles->userType == UserTypes::DISPATCHER)
+				{
+					if (count($user->vehicles) >= count($user->goods))
+						$this->redirect('/goods/search');
+					else
+						$this->redirect('/vehicle/search');
+				}
+			}
+			else
+			{
+				if (!$user->organizations->id && $user->profiles)
+					$this->redirect('/user/organization');
+				else
+					$this->redirect('/user');
+			}
+		}
+	}
 
 	/**
 	 * Declares class-based actions.
@@ -246,7 +276,7 @@ class MainController extends Controller
 	 */
 	public function actionLogout()
 	{
-		Yii::app()->user->logout();
+		Yii::app()->user->logout(true);
 		$this->redirect(Yii::app()->homeUrl);
 	}
 

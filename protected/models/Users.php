@@ -241,7 +241,7 @@ class Users extends CActiveRecord
 		}
 		if ($this->_identity->errorCode === UserIdentity::ERROR_NONE)
 		{
-			$duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
+			$duration = 3600 * 24 * 30; // 30 days
 			Yii::app()->user->login($this->_identity, $duration);
 			return true;
 		}
@@ -264,7 +264,7 @@ class Users extends CActiveRecord
 		}
 		else return false;
 	}
-	
+
 	public function getReviewsAmount()
 	{
 		$positive = $negative = 0;
@@ -275,7 +275,7 @@ class Users extends CActiveRecord
 			else
 				$negative += $review->rating;
 		}
-		
+
 		return array(
 			'positive' => $positive,
 			'negative' => abs($negative),
