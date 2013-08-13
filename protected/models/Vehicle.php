@@ -369,14 +369,14 @@ class Vehicle extends CActiveRecord
 				$city_id_to = (int)$filter->city_search_id;
 
 				$city = City::model()->findByPk($city_id_to);
-				
-				$inRadius[] = '((CASE 
+
+				$inRadius[] = '((CASE
 					WHEN t.country_id_to IS NULL THEN 1
 					WHEN t.region_id_to IS NULL AND t.country_id_to = ' . $city->country->id . ' THEN 1
 					WHEN t.city_id_to IS NULL AND t.country_id_to = ' . $city->country->id . ' AND t.region_id_to = ' . $city->region->id . ' THEN 1 END) = 1
 					OR t.city_id_to IN ( SELECT id
 					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . '))';
-				
+
 //				$inRadius[] = 't.city_id_to IN ( SELECT id
 //					FROM city WHERE (6371 * acos( cos( radians(' . $city->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $city->longitude . ') ) + sin( radians(' . $city->latitude . ') ) * sin( radians( latitude ) ) ) ) < ' . (int) $filter->radius . ')';
 
@@ -395,5 +395,4 @@ class Vehicle extends CActiveRecord
 	{
 		return $this->bodyType->name_ru . ' ' . $this->marka->name . ' ' . $this->modeli->name;
 	}
-
 }
