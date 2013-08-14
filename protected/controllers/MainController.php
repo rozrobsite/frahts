@@ -4,7 +4,7 @@ class MainController extends Controller
 {
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
-		
+
 		if (Yii::app()->user->id && strpos(Yii::app()->request->requestUri, '/logout') === false)
 		{
 			$user = Users::model()->findByPk(Yii::app()->user->id);
@@ -146,7 +146,9 @@ class MainController extends Controller
 				$user->last_login = time();
 				$user->update();
 
-				if ($user->profiles)
+				if (isset(Yii::app()->session['redirectUrl']))
+					$this->redirect(Yii::app()->session['redirectUrl']);
+				elseif ($user->profiles)
 				{
 					if ($user->profiles->userType == UserTypes::FREIGHTER)
 						$this->redirect('/goods/search');

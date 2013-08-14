@@ -45,6 +45,8 @@ class MessagesController extends FrahtController {
 //			Yii::app()->end();
 //		}
 
+		$this->sendEmail($model);
+
 		echo $this->respondJSON(array('error' => 0));
 
 		Yii::app()->end();
@@ -69,13 +71,13 @@ class MessagesController extends FrahtController {
 
 	}
 
-	private function sendEmail($model, $object)
+	private function sendEmail($model)
 	{
 		$message = new YiiMailMessage;
 
-		$message->view = get_class($object) == 'Goods' ? 'messageGoodOwner' : 'messageVehicleOwner';
-		$message->setBody(array('model' => $model, 'object' => $object), 'text/plain');
-		$message->subject = Yii::app()->params['siteName'] . ': Сообщение от пользователя';
+		$message->view = 'message';
+		$message->setBody(array('model' => $model), 'text/html');
+		$message->subject = 'Сообщение от пользователя';
 		$message->addTo($model->receivingUser->email);
 		$message->from = Yii::app()->params['adminEmail'];
 

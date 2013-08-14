@@ -119,11 +119,25 @@ return array(
 		),
 		'mail' => array(
 			'class' => 'ext.mail.YiiMail',
-			'transportType' => 'php',
+			'transportType' => 'smtp',
+			'transportOptions'=>array(
+					'host'=>'de1.imhoster.net',
+					'encryption'=>'tls',
+					'username'=>'support@frahts.com',
+					'password'=>'teacher1991',
+					'port'=>465,
+			  ),
 			'viewPath' => 'application.views.mail',
 			'logging' => true,
 			'dryRun' => false
 		),
+//		'mail' => array(
+//			'class' => 'ext.mail.YiiMail',
+//			'transportType' => 'php',
+//			'viewPath' => 'application.views.mail',
+//			'logging' => true,
+//			'dryRun' => false
+//		),
 		'image' => array(
 			'class' => 'application.extensions.image.CImageComponent',
 			// GD or ImageMagick
@@ -137,6 +151,9 @@ return array(
 				'timeout' => 0,
 			),
 		),
+		'swiftMailer' => array(
+			'class' => 'ext.swiftMailer.SwiftMailer',
+		),
 //		'clientScript' => array(
 //			'scriptMap' => array(
 //				'jquery.js' => '/js/'
@@ -147,8 +164,9 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params' => array(
 		// this is used in contact page
-		'adminEmail' => 'support@frahts.com',
+		'adminEmail' => array('support@frahts.com' => 'Фрахты.com - Мир грузоперевозок'),
 		'siteName' => 'frahts.com',
+		'fullSiteName' => 'http://www.frahts.com',
 		'imagesPath' => '/images/',
 		'files' => array(
 			'files' => 'uploads/files/',
