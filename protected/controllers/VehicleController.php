@@ -43,8 +43,8 @@ class VehicleController extends FrahtController {
 			$model->user_id = $this->user->id;
 			$model->shipments = isset($_POST['Vehicle']['shipments']) ? join(',', array_keys($_POST['Vehicle']['shipments'])) : null;
 			$model->permissions = isset($_POST['Vehicle']['permissions']) ? join(',', array_keys($_POST['Vehicle']['permissions'])) : null;
-			$model->date_from = isset($_POST['Vehicle']['date_from']) ? strtotime($_POST['Vehicle']['date_from']) : null;
-			$model->date_to = isset($_POST['Vehicle']['date_to']) ? strtotime($_POST['Vehicle']['date_to']) : null;
+			$model->date_from = isset($_POST['Vehicle']['date_from']) ? strtotime($_POST['Vehicle']['date_from'] . ' 00:01') : null;
+			$model->date_to = isset($_POST['Vehicle']['date_to']) ? strtotime($_POST['Vehicle']['date_to'] . ' 23:59') : null;
 			if ($model->isNewRecord)
 				$model->created_at = time();
 			$model->updated_at = time();
