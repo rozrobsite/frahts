@@ -168,8 +168,8 @@ class GoodsSearchController extends FrahtController
 			$data = $_POST['Goods'];
 			$model->attributes = $data;
 			$model->user_id = $this->user->id;
-			$model->date_from = isset($data['date_from']) ? strtotime($data['date_from']) : null;
-			$model->date_to = isset($data['date_to']) ? strtotime($data['date_to']) : null;
+			$model->date_from = isset($data['date_from']) ? strtotime($data['date_from'] . ' 00:01') : null;
+			$model->date_to = isset($data['date_to']) ? strtotime($data['date_to'] . ' 23:59') : null;
 			$model->vehicle_types = isset($data['vehicle_types']) ? join(',', array_keys($data['vehicle_types'])) : null;
 			$model->shipments = isset($data['shipments']) ? join(',', array_keys($data['shipments'])) : null;
 			$model->body_types = isset($data['body_types']) ? join(',', array_values($data['body_types'])) : null;
