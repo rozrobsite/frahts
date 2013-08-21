@@ -343,9 +343,19 @@
                             <img src="/images/admin/toggle-subnav-down.png" alt="">
                         </a>
                         <ul class='collapsed-nav closed'>
-                            <li>
+<!--                            <li>
                                 <a href="/admin/mailing">
                                     E-mail
+                                </a>
+                            </li>-->
+                            <li>
+                                <a href="/admin/mailing/addMail">
+                                    Добавление E-mail
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/mailing/inputtedMail">
+                                    По заданным E-mail
                                 </a>
                             </li>
 						</ul>

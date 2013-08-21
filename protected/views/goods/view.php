@@ -105,6 +105,7 @@ $this->breadcrumbs = array(
 							<label><strong>Среднее время в пути: </strong><span id="total_time_route"></span></label>
 						</div>
 					</div>
+					<?php if ($this->user->profiles && $this->user->vehicles): ?>
                     <div class="inFrom" style="width:30%">
 						<h5>Владелец груза</h5>
 						<span>
@@ -124,6 +125,13 @@ $this->breadcrumbs = array(
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
                     </div>
+					<?php else: ?>
+					<div class="inFrom" style="width:30%">
+						<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
+							<a href="/user">информацию о себе</a> и добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
+						</label>
+					</div>
+					<?php endif; ?>
                     <div class="inFrom" style="width:100%">
 						<h5>Дополнительное описание</h5>
 						<p>

@@ -43,7 +43,7 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
-		<?php if (!$this->user->vehicles): ?>
+		<?php /* if (!$this->user->vehicles): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
 				<label style="font-weight: bold; font-size: 16px;">
 					У Вас нет добавленных транспортных средств. Добавьте транспортное средство чтобы найти подходящий груз.
@@ -56,7 +56,7 @@ $this->breadcrumbs = array(
 					<div class="grid5">&nbsp;</div>
 				</div>
 			</div>
-		<?php else: ?>
+		<?php else: */?>
 		<?php if ($this->user->vehicles): ?>
 		<div class="widget fluid" style="margin-top: 18px;">
 			<div class="formRow">
@@ -224,23 +224,31 @@ $this->breadcrumbs = array(
 										(Комиссия: <?php echo $oneGood->fee ?>)
 									<?php endif; ?><br/>
 								</td>
-								<td class="fileInfo">
-									<a href="/user/view/<?php echo $oneGood->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
-										<strong><?php echo $oneGood->user->profiles->userType->name_ru ?></strong><br/>
-										<?php echo $oneGood->user->organizations->formOrganizations->name_ru . ' ' . $oneGood->user->organizations->name_org ?><br/>
-										<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
-									</a><br/>
-									м. <?php echo $oneGood->user->profiles->mobile ?>
-								</td>
+								<?php if ($this->user->profiles && $this->user->vehicles): ?>
+									<td class="fileInfo">
+										<a href="/user/view/<?php echo $oneGood->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
+											<strong><?php echo $oneGood->user->profiles->userType->name_ru ?></strong><br/>
+											<?php echo $oneGood->user->organizations->formOrganizations->name_ru . ' ' . $oneGood->user->organizations->name_org ?><br/>
+											<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
+										</a><br/>
+										м. <?php echo $oneGood->user->profiles->mobile ?>
+									</td>
+								<?php else: ?>
+									<td class="fileInfo">
+										<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
+											<a href="/user">информацию о себе</a> и добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
+										</label>
+									</td>
+								<?php endif; ?>
 								<td>
 									<?php $reviews = $oneGood->user->getReviewsAmount(); ?>
-									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments" 
-									   class="tipS wHtml" 
+									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments"
+									   class="tipS wHtml"
 									   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
 									   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
 										<span class="icos-like"></span>
 									</a>
-									<a href="/user/messages/user/<?php echo $oneGood->user->id; ?>#users_message" 
+									<a href="/user/messages/user/<?php echo $oneGood->user->id; ?>#users_message"
 									   class="tipS"
 									   original-title="Написать сообщение"
 									   title="Написать сообщение">
@@ -254,7 +262,7 @@ $this->breadcrumbs = array(
 				</div>
 			</div>
 			<?php endif; ?>
-		<?php endif; ?>
+		<?php //endif; ?>
 	</div>
 	<!-- Content ends -->
 <?php $this->renderPartial('/blocks/_notify') ?>

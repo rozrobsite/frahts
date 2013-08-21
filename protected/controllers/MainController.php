@@ -148,18 +148,19 @@ class MainController extends Controller
 
 				if (isset(Yii::app()->session['redirectUrl']))
 					$this->redirect(Yii::app()->session['redirectUrl']);
+
 				elseif ($user->profiles)
 				{
-					if ($user->profiles->userType == UserTypes::FREIGHTER)
-						$this->redirect('/goods/search');
-					if ($user->profiles->userType == UserTypes::SHIPPER)
+					if ($user->profiles->userType->id == UserTypes::FREIGHTER)
 						$this->redirect('/vehicle/search');
-					if ($user->profiles->userType == UserTypes::DISPATCHER)
+					if ($user->profiles->userType->id == UserTypes::SHIPPER)
+						$this->redirect('/goods/search');
+					if ($user->profiles->userType->id == UserTypes::DISPATCHER)
 					{
 						if (count($user->vehicles) >= count($user->goods))
-							$this->redirect('/goods/search');
-						else
 							$this->redirect('/vehicle/search');
+						else
+							$this->redirect('/goods/search');
 					}
 				}
 				else
