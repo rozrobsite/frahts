@@ -234,11 +234,24 @@ $this->breadcrumbs = array(
 										м. <?php echo $oneGood->user->profiles->mobile ?>
 									</td>
 								<?php else: ?>
-									<td class="fileInfo">
-										<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
-											<a href="/user">информацию о себе</a> и добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
-										</label>
-									</td>
+									<?php if (!$this->user->profiles && !$this->user->vehicles): ?>
+										<td class="fileInfo">
+											<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
+												<a href="/user">информацию о себе</a> и добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
+											</label>
+										</td>
+									<?php elseif ($this->user->vehicles && !$this->user->profiles): ?>
+										<td class="fileInfo">
+											<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
+												<a href="/user">информацию о себе</a>
+											</label>
+										</td>
+									<?php elseif ($this->user->profiles && !$this->user->vehicles): ?>
+										<td class="fileInfo">
+											<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
+											</label>
+										</td>
+									<?php endif; ?>
 								<?php endif; ?>
 								<td>
 									<?php $reviews = $oneGood->user->getReviewsAmount(); ?>

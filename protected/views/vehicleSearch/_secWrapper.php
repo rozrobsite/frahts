@@ -11,9 +11,11 @@
 		<div class="divider"><span></span></div>
 
 		<div id="goodsSearch">
-			<div class="sidePad">
-				<a href="/vehicle/new" title="" class="sideB bGreen">Добавить транспорт</a>
-			</div>
+			<?php if ($this->user->profiles): ?>
+				<div class="sidePad">
+					<a href="/vehicle/new" title="" class="sideB bGreen">Добавить транспорт</a>
+				</div>
+			<?php endif; ?>
 			<?php if ($this->user->vehicles): ?>
 				<div class="divider"><span></span></div>
 				<div class="sidePad">

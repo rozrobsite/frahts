@@ -316,8 +316,9 @@ class Goods extends CActiveRecord
 
 		$direction = isset($filter->direction) && $filter->direction ? ' ASC' : ' DESC';
 
-		$criteria->order = isset($filter->sort) && $filter->sort ? "t.cost $direction, t.updated_at DESC"
-					: "t.updated_at $direction, t.cost DESC";
+		$criteria->order = "t.updated_at $direction";
+//		$criteria->order = isset($filter->sort) && $filter->sort ? "t.cost $direction, t.updated_at DESC"
+//					: "t.updated_at $direction, t.cost DESC";
 
 		$goods = $this->findAll($criteria);
 		$count = $this->count($criteria);

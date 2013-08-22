@@ -126,11 +126,23 @@ $this->breadcrumbs = array(
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
                     </div>
 					<?php else: ?>
-					<div class="inFrom" style="width:30%">
-						<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
-							<a href="/user">информацию о себе</a> и добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
-						</label>
-					</div>
+						<?php if (!$this->user->profiles && !$this->user->vehicles): ?>
+							<div class="inFrom" style="width:30%">
+								<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
+									<a href="/user">информацию о себе</a> и добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a>
+								</label>
+							</div>
+						<?php elseif ($this->user->vehicles && !$this->user->profiles): ?>
+							<div class="inFrom" style="width:30%">
+								<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
+									<a href="/user">информацию о себе</a>
+								</label>
+							</div>
+						<?php elseif ($this->user->profiles && !$this->user->vehicles): ?>
+							<div class="inFrom" style="width:30%">
+								<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a></label>
+							</div>
+						<?php endif; ?>
 					<?php endif; ?>
                     <div class="inFrom" style="width:100%">
 						<h5>Дополнительное описание</h5>
@@ -140,7 +152,7 @@ $this->breadcrumbs = array(
                     </div>
                     <div class="clear"></div>
                 </div>
-				<?php if (count($this->user->vehicles)): ?>
+				<?php if ($this->user->profiles && count($this->user->vehicles)): ?>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 						<tr>
 							<td style="width:25%">

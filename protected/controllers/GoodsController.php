@@ -92,7 +92,7 @@ class GoodsController extends FrahtController
 	{
 		if (!Yii::app()->request->isAjaxRequest)
 			throw new CHttpException(404,'');
-		
+
 		$coordinatesStr = isset($_POST['coordinates']) ? $_POST['coordinates'] : array();
 		$coordinatesArrayStr = explode(';', $coordinatesStr);
 
@@ -158,7 +158,7 @@ class GoodsController extends FrahtController
 		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates,
 				$date_from, $date_to);
 
-		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods));
+		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods, 'access' => ($this->user->profiles && $this->user->vehicles)));
 
 		Yii::app()->end();
 	}

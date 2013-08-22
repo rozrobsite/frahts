@@ -78,6 +78,7 @@ $this->breadcrumbs = array(
 					<div id="progress1"><span class="pbar"></span><span class="percent"></span><span class="elapsed"></span></div>
 				</div>
 				<?php */ ?>
+				
 				<div class="grid12" style="text-align: left;">
 					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
 					   title="Дополнительные условия для поиска"
@@ -228,11 +229,24 @@ $this->breadcrumbs = array(
 											м. <?php echo $vehicle->user->profiles->mobile ?>
 										</td>
 									<?php else: ?>
-										<td class="fileInfo">
-											<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо заполнить
-												<a href="/user">информацию о себе</a> и добавить хотя бы один <a href="/goods/new">груз</a>
-											</label>
-										</td>
+										<?php if (!$this->user->profiles && !$this->user->goods): ?>
+											<td class="fileInfo">
+												<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо заполнить
+													<a href="/user">информацию о себе</a> и добавить хотя бы один <a href="/goods/new">груз</a>
+												</label>
+											</td>
+										<?php elseif ($this->user->goods && !$this->user->profiles): ?>
+											<td class="fileInfo">
+												<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо заполнить
+													<a href="/user">информацию о себе</a>
+												</label>
+											</td>
+										<?php elseif ($this->user->profiles && !$this->user->goods): ?>
+											<td class="fileInfo">
+												<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо добавить хотя бы один <a href="/goods/new">груз</a>
+												</label>
+											</td>
+										<?php endif; ?>
 									<?php endif; ?>
 									<td>
 										<?php $reviews = $vehicle->user->getReviewsAmount(); ?>
