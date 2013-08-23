@@ -22,7 +22,15 @@ class UserController extends FrahtController
 
 	private function userSettings($profiles)
 	{
-		$userTypes = UserTypes::model()->findAll(array('order' => 'name_ru'));
+		if ($this->user->vehicles && $this->user->goods)
+			$userTypes = UserTypes::model()->findAll(array('order' => 'name_ru'));
+		elseif ($this->user->vehicles)
+			$userTypes = UserTypes::model()->findAll('id <> ' . UserTypes::SHIPPER, array('order' => 'name_ru'));
+		elseif ($this->user->goods)
+			$userTypes = UserTypes::model()->findAll('id <> ' . UserTypes::FREIGHTER, array('order' => 'name_ru'));
+		else
+			$userTypes = UserTypes::model()->findAll(array('order' => 'name_ru'));
+
 		$listUserTypes = CHtml::listData($userTypes, 'id', 'name_ru');
 
 		$countries = Country::model()->findAll();
