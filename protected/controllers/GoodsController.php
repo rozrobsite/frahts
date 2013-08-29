@@ -158,7 +158,7 @@ class GoodsController extends FrahtController
 		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates,
 				$date_from, $date_to);
 
-		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods, 'access' => ($this->user->profiles && $this->user->vehicles)));
+		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods, 'access' => ($this->user->profiles)));
 
 		Yii::app()->end();
 	}

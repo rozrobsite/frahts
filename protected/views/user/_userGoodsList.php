@@ -37,33 +37,63 @@
 								<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $oneGood->date_to); ?>
 							</td>
 							<td>
-								<a href="/goods/view/<?php echo $oneGood->slug ?>" class="tipS" title="Перейти на страницу груза">
-									<?php echo $oneGood->name ?><br/>
-									<?php
-									$weight = 0;
-									if (isset($oneGood->weight_exact_value) && $oneGood->weight_exact_value)
-									{
-										$weight = $oneGood->weight_exact_value;
-									}
-									elseif (isset($oneGood->weight_to) && $oneGood->weight_to)
-									{
-										$weight = $oneGood->weight_to;
-									}
-									?>
-									Вес до: <?php echo $weight ?> т.<br/>
-									<?php
-									$capacity = 0;
-									if (isset($oneGood->capacity_exact_value) && $oneGood->capacity_exact_value)
-									{
-										$capacity = $oneGood->capacity_exact_value;
-									}
-									elseif (isset($oneGood->capacity_to) && $oneGood->capacity_to)
-									{
-										$capacity = $oneGood->capacity_to;
-									}
-									?>
-									Объем до: <?php echo $capacity ?> м&sup3;<br/>
-								</a>
+								<?php if ($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+									<a href="/goods/view/<?php echo $oneGood->slug ?>" class="tipS" title="Перейти на страницу груза">
+										<?php echo $oneGood->name ?><br/>
+										<?php
+										$weight = 0;
+										if (isset($oneGood->weight_exact_value) && $oneGood->weight_exact_value)
+										{
+											$weight = $oneGood->weight_exact_value;
+										}
+										elseif (isset($oneGood->weight_to) && $oneGood->weight_to)
+										{
+											$weight = $oneGood->weight_to;
+										}
+										?>
+										Вес до: <?php echo $weight ?> т.<br/>
+										<?php
+										$capacity = 0;
+										if (isset($oneGood->capacity_exact_value) && $oneGood->capacity_exact_value)
+										{
+											$capacity = $oneGood->capacity_exact_value;
+										}
+										elseif (isset($oneGood->capacity_to) && $oneGood->capacity_to)
+										{
+											$capacity = $oneGood->capacity_to;
+										}
+										?>
+										Объем до: <?php echo $capacity ?> м&sup3;<br/>
+									</a>
+								<?php else: ?>
+									<strong>
+										<?php echo $oneGood->name ?><br/>
+										<?php
+										$weight = 0;
+										if (isset($oneGood->weight_exact_value) && $oneGood->weight_exact_value)
+										{
+											$weight = $oneGood->weight_exact_value;
+										}
+										elseif (isset($oneGood->weight_to) && $oneGood->weight_to)
+										{
+											$weight = $oneGood->weight_to;
+										}
+										?>
+										Вес до: <?php echo $weight ?> т.<br/>
+										<?php
+										$capacity = 0;
+										if (isset($oneGood->capacity_exact_value) && $oneGood->capacity_exact_value)
+										{
+											$capacity = $oneGood->capacity_exact_value;
+										}
+										elseif (isset($oneGood->capacity_to) && $oneGood->capacity_to)
+										{
+											$capacity = $oneGood->capacity_to;
+										}
+										?>
+										Объем до: <?php echo $capacity ?> м&sup3;<br/>
+									</strong>
+								<?php endif; ?>
 							</td>
 							<td>
 								<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', ($oneGood->updated_at ? $oneGood->updated_at : $oneGood->created_at)); ?><br/>

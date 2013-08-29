@@ -126,7 +126,7 @@ $this->breadcrumbs = array(
 								<?php endif; ?>
 							</div>
 					</div>
-					<?php if ($this->user->profiles && $this->user->goods): ?>
+					<?php if ($this->user->profiles): ?>
                     <div class="inFrom" style="width:100%">
 						<h5>Владелец транспортного средства</h5>
 						<span>
@@ -143,7 +143,7 @@ $this->breadcrumbs = array(
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
                     </div>
-					<?php else: ?>
+					<?php /*else: ?>
 						<?php if (!$this->user->profiles && !$this->user->goods): ?>
 							<div class="inFrom" style="width:100%">
 								<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо заполнить
@@ -161,7 +161,7 @@ $this->breadcrumbs = array(
 								<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо добавить хотя бы один <a href="/goods/new">груз</a></label>
 							</div>
 						<?php endif; ?>
-					<?php endif; ?>
+					<?php */endif; ?>
 
                     <?php /*
 					<div class="inFrom" style="width:100%">

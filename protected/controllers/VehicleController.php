@@ -70,7 +70,9 @@ class VehicleController extends FrahtController {
 					$model->update();
 					unset($stringHelper);
 
-					$this->redirect((isset(Yii::app()->session['redirectUrl']) && !empty(Yii::app()->session['redirectUrl'])) ? Yii::app()->session['redirectUrl'] : '/vehicle/active');
+					$this->redirect('/vehicle/search');
+
+//					$this->redirect((isset(Yii::app()->session['redirectUrl']) && !empty(Yii::app()->session['redirectUrl'])) ? Yii::app()->session['redirectUrl'] : '/vehicle/active');
 				}
 				else {
 					if ($model->isNewRecord)

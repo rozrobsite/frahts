@@ -224,7 +224,7 @@ $this->breadcrumbs = array(
 										(Комиссия: <?php echo $oneGood->fee ?>)
 									<?php endif; ?><br/>
 								</td>
-								<?php if ($this->user->profiles && $this->user->vehicles): ?>
+								<?php if ($this->user->profiles): ?>
 									<td class="fileInfo">
 										<a href="/user/view/<?php echo $oneGood->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
 											<strong><?php echo $oneGood->user->profiles->userType->name_ru ?></strong><br/>
@@ -233,7 +233,7 @@ $this->breadcrumbs = array(
 										</a><br/>
 										м. <?php echo $oneGood->user->profiles->mobile ?>
 									</td>
-								<?php else: ?>
+								<?php /*else: ?>
 									<?php if (!$this->user->profiles && !$this->user->vehicles): ?>
 										<td class="fileInfo">
 											<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
@@ -252,7 +252,7 @@ $this->breadcrumbs = array(
 											</label>
 										</td>
 									<?php endif; ?>
-								<?php endif; ?>
+								<?php */endif; ?>
 								<td>
 									<?php $reviews = $oneGood->user->getReviewsAmount(); ?>
 									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments"
