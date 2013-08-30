@@ -12,21 +12,32 @@ return array(
 	'import'=>array(
         'application.components.*',
         'application.models.*',
+		'ext.mail.YiiMailMessage',
     ),
 
 	// application components
 	'components'=>array(
-//		'db'=>array(
-//			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-//		),
-		// uncomment the following to use a MySQL database
-
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=host5841_gruz',
 			'emulatePrepare' => true,
 			'username' => 'host5841_ckjy',
 			'password' => 'JlytCkjytyznrj2012',
 			'charset' => 'utf8',
+		),
+
+		'mail' => array(
+			'class' => 'ext.mail.YiiMail',
+			'transportType' => 'smtp',
+			'transportOptions'=>array(
+					'host'=>'de1.imhoster.net',
+					'encryption'=>'tls',
+					'username'=>'support@frahts.com',
+					'password'=>'teacher1991',
+					'port'=>465,
+			  ),
+			'viewPath' => 'application.views.mail',
+			'logging' => false,
+			'dryRun' => false
 		),
 
 		'log'=>array(
@@ -49,5 +60,11 @@ return array(
 				),
 			),
 		),
+	),
+	'params' => array(
+		'adminEmail' => array('support@frahts.com' => 'Фрахты.com - Мир грузоперевозок'),
+		'host_prod' => 'http://www.frahts.com',
+		'host_local' => 'http://frahts.local',
+		'host_test' => 'http://www.frahts.local',
 	),
 );
