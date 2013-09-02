@@ -78,7 +78,7 @@ $this->breadcrumbs = array(
 					<div id="progress1"><span class="pbar"></span><span class="percent"></span><span class="elapsed"></span></div>
 				</div>
 				<?php */ ?>
-				
+
 				<div class="grid12" style="text-align: left;">
 					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
 					   title="Дополнительные условия для поиска"
@@ -219,7 +219,7 @@ $this->breadcrumbs = array(
 											<?php echo $vehicle->body_capacity ?> м&sup3;
 										</span>
 									</td>
-									<?php if ($this->user->profiles && $this->user->goods): ?>
+									<?php if ($this->user->profiles): ?>
 										<td class="fileInfo">
 											<a href="/user/view/<?php echo $vehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
 												<strong><?php echo $vehicle->user->profiles->userType->name_ru ?></strong><br/>
@@ -228,7 +228,7 @@ $this->breadcrumbs = array(
 											</a><br/>
 											м. <?php echo $vehicle->user->profiles->mobile ?>
 										</td>
-									<?php else: ?>
+									<?php /*else: ?>
 										<?php if (!$this->user->profiles && !$this->user->goods): ?>
 											<td class="fileInfo">
 												<label>Для того чтобы просмотреть данные о владельце транспортного средства Вам необходимо заполнить
@@ -247,7 +247,7 @@ $this->breadcrumbs = array(
 												</label>
 											</td>
 										<?php endif; ?>
-									<?php endif; ?>
+									<?php */endif; ?>
 									<td>
 										<?php $reviews = $vehicle->user->getReviewsAmount(); ?>
 										<a href="/user/view/<?php echo $vehicle->user->id; ?>#tab_comments"

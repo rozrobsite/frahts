@@ -105,7 +105,7 @@ $this->breadcrumbs = array(
 							<label><strong>Среднее время в пути: </strong><span id="total_time_route"></span></label>
 						</div>
 					</div>
-					<?php if ($this->user->profiles && $this->user->vehicles): ?>
+					<?php if ($this->user->profiles): ?>
                     <div class="inFrom" style="width:30%">
 						<h5>Владелец груза</h5>
 						<span>
@@ -125,7 +125,7 @@ $this->breadcrumbs = array(
 						<span class="number">Мобильный телефон: <strong class="red"><?php echo $model->user->profiles->mobile ?></strong></span>
 						<span>На сайте с <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $model->date_from); ?></span>
                     </div>
-					<?php else: ?>
+					<?php /*else: ?>
 						<?php if (!$this->user->profiles && !$this->user->vehicles): ?>
 							<div class="inFrom" style="width:30%">
 								<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо заполнить
@@ -143,7 +143,7 @@ $this->breadcrumbs = array(
 								<label>Для того чтобы просмотреть данные о владельце груза Вам необходимо добавить хотя бы одно <a href="/vehicle/new">транспортное средство</a></label>
 							</div>
 						<?php endif; ?>
-					<?php endif; ?>
+					<?php */endif; ?>
                     <div class="inFrom" style="width:100%">
 						<h5>Дополнительное описание</h5>
 						<p>
@@ -175,83 +175,6 @@ $this->breadcrumbs = array(
 						</tr>
 					</table>
 				<?php endif; ?>
-				<?php /* if ($model->user->goods && count($model->user->goods) > 1): ?>
-					<div class="inFrom" style="width:100%">
-						<h5>Еще доступные грузы этого пользователя</h5>
-					</div>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
-						<thead>
-							<tr>
-								<td width="40%">Маршрут</td>
-								<td width="15%">Дата доставки</td>
-								<td width="25%">Груз</td>
-								<td width="20%">Дата добавления</td>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach($model->user->goods as $oneGood): ?>
-								<?php if (!$oneGood->is_deleted && $oneGood->date_to >= time() && $oneGood->id != $model->id): ?>
-									<tr>
-										<td>
-											<span>
-												<?php echo $oneGood->countryFrom->name_ru . ' - ' .  $oneGood->countryTo->name_ru?>
-											</span><br/>
-											<span>
-												<?php echo $oneGood->regionFrom->name_ru . ' - ' .  $oneGood->regionTo->name_ru?>
-											</span><br/>
-											<span>
-												<?php echo $oneGood->cityFrom->name_ru . ' - ' .  $oneGood->cityTo->name_ru?>
-											</span>
-											<br/>
-											<span>
-												<strong>&asymp;&nbsp;<?php echo ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10) ?> км</strong>
-											</span>
-										</td>
-										<td>
-											с
-											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $oneGood->date_from); ?><br/>
-											по
-											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $oneGood->date_to); ?>
-										</td>
-										<td>
-											<a href="/goods/view/<?php echo $oneGood->slug ?>" class="tipS" title="Перейти на страницу груза">
-												<?php echo $oneGood->name ?><br/>
-												<?php
-												$weight = 0;
-												if (isset($oneGood->weight_exact_value) && $oneGood->weight_exact_value)
-												{
-													$weight = $oneGood->weight_exact_value;
-												}
-												elseif (isset($oneGood->weight_to) && $oneGood->weight_to)
-												{
-													$weight = $oneGood->weight_to;
-												}
-												?>
-												Вес до: <?php echo $weight ?> т.<br/>
-												<?php
-												$capacity = 0;
-												if (isset($oneGood->capacity_exact_value) && $oneGood->capacity_exact_value)
-												{
-													$capacity = $oneGood->capacity_exact_value;
-												}
-												elseif (isset($oneGood->capacity_to) && $oneGood->capacity_to)
-												{
-													$capacity = $oneGood->capacity_to;
-												}
-												?>
-												Объем до: <?php echo $capacity ?> м&sup3;<br/>
-											</a>
-										</td>
-										<td>
-											<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', ($oneGood->updated_at ? $oneGood->updated_at : $oneGood->created_at)); ?><br/>
-											<?php echo Yii::app()->dateFormatter->format('HH:mm', ($oneGood->updated_at ? $oneGood->updated_at : $oneGood->created_at)); ?>
-										</td>
-									</tr>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-				<?php endif; */ ?>
             </div>
         </div>
 	</div>
