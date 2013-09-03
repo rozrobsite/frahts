@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Description of VehicleCommand
  *
  * @author Геннадий
  */
 class VehicleCommand extends CConsoleCommand {
+
 	public function run($args) {
 		Yii::log('Задача: рассылка e-mail-напоминания всем грузоперевозчикам у которых вышел срок "Транспорт свободен".');
 		$vehicles = Vehicle::model()->findAll('date_to < ' . time());
@@ -13,27 +15,40 @@ class VehicleCommand extends CConsoleCommand {
 		if (!count($vehicles))
 			return;
 
-		foreach ($vehicles as $vehicle)
-		{
-			$message = new YiiMailMessage;
-			$message->view = 'update_vehicle';
-			$message->setBody(array('vehicle' => $vehicle), 'text/html');
-			$message->subject = 'Закончился срок загрузки';
-			$message->from = Yii::app()->params['adminEmail'];
-			$message->addTo($vehicle->user->email);
+		$count = 1;
+		foreach ($vehicles as $vehicle) {
+//			if ($vehicle->id != 27146)
+//				continue;
 
-			Yii::log('Отправка пользователю #' . $vehicle->user->id . ' по поводу ТС #' . $vehicle->id);
+			if ($count == 280) {
+				sleep(3660);
 
-			try {
-				Yii::app()->mail->send($message);
-
-				Yii::log('Сообщение отослано');
+				$count = 0;
 			}
-			catch (CException $exc) {
-				Yii::log('Ошибка отправки. Причина: ' . $exc->getMessage(), CLogger::LEVEL_ERROR);
+			else {
+				$message = new YiiMailMessage;
+				$message->view = 'update_vehicle';
+				$message->setBody(array('vehicle' => $vehicle), 'text/html');
+				$message->subject = 'Закончился срок загрузки';
+				$message->from = Yii::app()->params['adminEmail'];
+				$message->addTo($vehicle->user->email);
+
+				Yii::log('Отправка пользователю #' . $vehicle->user->id . ' по поводу ТС #' . $vehicle->id);
+
+				try {
+					Yii::app()->mail->send($message);
+
+					Yii::log('Сообщение отослано');
+				}
+				catch (CException $exc) {
+					Yii::log('Ошибка отправки. Причина: ' . $exc->getMessage(), CLogger::LEVEL_ERROR);
+				}
 			}
 
-			break;
+//			if ($count == 4)
+//				break;
+
+			$count++;
 		}
 	}
 

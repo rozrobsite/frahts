@@ -63,8 +63,8 @@ return array(
 	),
 	'params' => array(
 		'adminEmail' => array('support@frahts.com' => 'Фрахты.com - Мир грузоперевозок'),
-		'host_prod' => 'http://www.frahts.com',
-		'host_local' => 'http://frahts.local',
-		'host_test' => 'http://www.frahts.local',
+//		'host' => 'http://www.frahts.com',
+//		'host' => 'http://frahts.local',
+		'host' => 'http://gruz2.host5841.de1.dp10.ru',
 	),
 );

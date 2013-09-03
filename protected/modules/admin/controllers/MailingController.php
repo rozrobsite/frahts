@@ -110,21 +110,30 @@ class MailingController extends AdminController {
 
 			$countSended = $countAll = count($emails);
 			if ($countAll) {
-				$message = new YiiMailMessage;
-				$message->view = 'mailing';
-				$message->setBody(array('body' => $body), 'text/html');
-				$message->subject = $subject;
-				$message->from = Yii::app()->params['adminEmail'];
-
+				$count = 1;
 				foreach ($emails as $email) {
-					$message->addTo($email);
+					if ($count == 280)
+					{
+						sleep(3660);
 
-					try {
-						Yii::app()->mail->send($message);
+						$count = 1;
+					} else {
+						$message = new YiiMailMessage;
+						$message->view = 'mailing';
+						$message->setBody(array('body' => $body), 'text/html');
+						$message->subject = $subject;
+						$message->from = Yii::app()->params['adminEmail'];
+						$message->addTo($email);
+
+						try {
+							Yii::app()->mail->send($message);
+						}
+						catch (CException $exc) {
+							$countSended--;
+						}
 					}
-					catch (CException $exc) {
-						$countSended--;
-					}
+
+					$count++;
 				}
 			}
 		}

@@ -1,7 +1,7 @@
 <p>Здравствуйте, <?php echo $vehicle->user->profiles->first_name; ?>!</p>
 
-<p>Вы разместили на сайте <a href="www.frahts.com">www.frahts.com</a> транспортное средство <a href="<?php echo Yii::app()->params['host_local'] . '/vehicle/update/' . $vehicle->id; ?>"><?php echo $vehicle->shortName(); ?></a>.
-У данного транспортного средства закончился срок загрузки. Пожалуйста, обновите его. Сделать это Вы сможете несколькими способами - перейдите по ссылке <a href="<?php echo Yii::app()->params['host_local'] . '/vehicle/update/' . $vehicle->id; ?>"><?php echo Yii::app()->params['host_local'] . '/vehicle/update/' . $vehicle->id; ?></a>
+<p>Вы разместили на сайте <a href="www.frahts.com">www.frahts.com</a> транспортное средство <a href="<?php echo Yii::app()->params['host'] . '/vehicle/update/' . $vehicle->id; ?>"><?php echo $vehicle->shortName(); ?></a>.
+У данного транспортного средства закончился срок загрузки. Пожалуйста, обновите его. Сделать это Вы сможете несколькими способами - перейдите по ссылке <a href="<?php echo Yii::app()->params['host'] . '/vehicle/update/' . $vehicle->id; ?>"><?php echo Yii::app()->params['host'] . '/vehicle/update/' . $vehicle->id; ?></a>
 (если ссылка не кликабельна скопируйте ее и вставьте в адресную строку браузера) или выбрав для редактирования данное транспортное средство на странице сайта “Мой транспорт”.</p>
 
 <p><strong>Для чего это нужно:</strong></p>
