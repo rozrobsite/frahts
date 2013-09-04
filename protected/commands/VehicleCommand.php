@@ -26,6 +26,10 @@ class VehicleCommand extends CConsoleCommand {
 				$count = 0;
 			}
 			else {
+				if ($count != 0 && $count % 20 == 0) {
+					sleep(180);
+				}
+				
 				$message = new YiiMailMessage;
 				$message->view = 'update_vehicle';
 				$message->setBody(array('vehicle' => $vehicle), 'text/html');

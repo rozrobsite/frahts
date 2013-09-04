@@ -104,14 +104,15 @@ function sendCoordinates(coordinates)
 			content += good.date_from + ' - ' + good.date_to + '<br/>';
 			content += '<strong>Откуда:</strong> ' + good.city_from + ', ' + good.region_from + ', ' + good.country_from + '<br/>';
 			content += '<strong>Куда:</strong> ' + good.city_to + ', ' + good.region_to + ', ' + good.country_to + '<br/>';
-			if (good.weight_exact_value)
+
+			if (good.weight_exact_value > 0)
 				content += '<strong>Вес:</strong> ' + good.weight_exact_value + ' т.' + '<br/>';
 			else
 				content += '<strong>Вес:</strong> ' + 'от ' + good.weight_from + ' т. до ' + good.weight_to + ' т.<br/>';
-			if (good.capacity_exact_value)
+			if (good.capacity_exact_value > 0)
 				content += '<strong>Объем:</strong> ' + good.capacity_exact_value + ' м&sup3;' + '<br/>';
 			else
-				content += '<strong>Вес:</strong> ' + good.capacity_from + ' - ' + good.capacity_to + ' м&sup3;<br/>';
+				content += '<strong>Объем:</strong> ' + good.capacity_from + ' - ' + good.capacity_to + ' м&sup3;<br/>';
 			content += '<strong>Оплата:</strong> ' + good.cost + ' ' + good.currency + ' (' + good.payment + ')<br/>';
 
 			if (response.access)
@@ -120,7 +121,7 @@ function sendCoordinates(coordinates)
 					content += '<strong>Комиссия:</strong> ' + good.fee + '<br/>';
 				content += '<span style="font-style:italic">' + good.owner_name + ' (' + good.owner_type + '), моб.: <strong>' + good.mobile + '</strong><span><br/><br/>';
 			}
-			
+
 			content += '<a href="/goods/view/' + good.slug + '" class="tipS" title="Перейти на страницу груза">Страница груза</a>';
 
 			var placemark = new ymaps.Placemark(

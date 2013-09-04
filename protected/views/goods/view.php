@@ -144,12 +144,14 @@ $this->breadcrumbs = array(
 							</div>
 						<?php endif; ?>
 					<?php */endif; ?>
+					<?php if (!empty($model->description)): ?>
                     <div class="inFrom" style="width:100%">
 						<h5>Дополнительное описание</h5>
 						<p>
 							<?php echo $model->description; ?>
 						</p>
                     </div>
+					<?php endif; ?>
                     <div class="clear"></div>
                 </div>
 				<?php if ($this->user->profiles && count($this->user->vehicles)): ?>

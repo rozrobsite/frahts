@@ -57,7 +57,7 @@ $this->breadcrumbs = array(
 				</div>
 			</div>
 		<?php else: */?>
-		<?php if ($this->user->vehicles): ?>
+		<?php if ($this->user->profiles): ?>
 		<div class="widget fluid" style="margin-top: 18px;">
 			<div class="formRow">
 				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
@@ -228,7 +228,7 @@ $this->breadcrumbs = array(
 									<td class="fileInfo">
 										<a href="/user/view/<?php echo $oneGood->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
 											<strong><?php echo $oneGood->user->profiles->userType->name_ru ?></strong><br/>
-											<?php echo $oneGood->user->organizations->formOrganizations->name_ru . ' ' . $oneGood->user->organizations->name_org ?><br/>
+											<?php if ($oneGood->user->organizations) echo $oneGood->user->organizations->formOrganizations->name_ru . ' ' . $oneGood->user->organizations->name_org . '<br/>'; ?>
 											<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
 										</a><br/>
 										м. <?php echo $oneGood->user->profiles->mobile ?>

@@ -57,7 +57,7 @@ $this->breadcrumbs = array(
 				</div>
 			</div>
 		<?php else: */?>
-		<?php if ($this->user->goods): ?>
+		<?php if ($this->user->profiles): ?>
 		<div class="widget fluid" style="margin-top: 18px;">
 			<div class="formRow">
 				<?php /* ?>
@@ -193,7 +193,7 @@ $this->breadcrumbs = array(
 											<?php echo $vehicle->countries->name_ru . ' - ' . (!empty($vehicle->countriesTo->name_ru) ? $vehicle->countriesTo->name_ru : 'Любая'); ?>
 										</span>
 										<span>
-											<?php echo $vehicle->regions->name_ru . ' - ' . (!empty($vehicle->regionsTo->name_ru) ? $vehicle->regionsTo->name_ru : 'Любая'); ?>
+											<?php echo $vehicle->regions->name_ru . ' - ' . (!empty($vehicle->regionsTo->name_ru) ? $vehicle->regionsTo->name_ru : 'Любой'); ?>
 										</span>
 										<span>
 											<?php echo $vehicle->cities->name_ru . ' - ' . (!empty($vehicle->citiesTo->name_ru) ? $vehicle->citiesTo->name_ru : 'Любой'); ?>
@@ -223,7 +223,7 @@ $this->breadcrumbs = array(
 										<td class="fileInfo">
 											<a href="/user/view/<?php echo $vehicle->user->id ?>" class="tipS" title="Перейти на страницу пользователя">
 												<strong><?php echo $vehicle->user->profiles->userType->name_ru ?></strong><br/>
-												<?php echo $vehicle->user->organizations->formOrganizations->name_ru . ' ' . $vehicle->user->organizations->name_org ?><br/>
+												<?php if ($vehicle->user->organizations) echo $vehicle->user->organizations->formOrganizations->name_ru . ' ' . $vehicle->user->organizations->name_org . '<br/>'; ?>
 												<?php echo $vehicle->user->profiles->last_name . ' ' . $vehicle->user->profiles->first_name . ' ' . $vehicle->user->profiles->middle_name ?>
 											</a><br/>
 											м. <?php echo $vehicle->user->profiles->mobile ?>

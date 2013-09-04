@@ -112,12 +112,16 @@ class MailingController extends AdminController {
 			if ($countAll) {
 				$count = 1;
 				foreach ($emails as $email) {
-					if ($count == 280)
-					{
+					if ($count == 280) {
 						sleep(3660);
 
 						$count = 1;
-					} else {
+					}
+					else {
+						if ($count != 0 && $count % 20 == 0) {
+							sleep(180);
+						}
+
 						$message = new YiiMailMessage;
 						$message->view = 'mailing';
 						$message->setBody(array('body' => $body), 'text/html');
