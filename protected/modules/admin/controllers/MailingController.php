@@ -148,6 +148,62 @@ class MailingController extends AdminController {
 		));
 	}
 
+	public function actionCronMailing() {
+		$type = isset($_POST['cron_mailing_type']) ? (int) $_POST['cron_mailing_type'] : 0;
+
+		switch ($type) {
+			case CronMailing::UPDATE_VEHICLE :
+				return $this->sendUpdateVehicle();
+		}
+
+		$this->render('cronMailing', array(
+		));
+	}
+
+	private function sendUpdateVehicle() {
+		$startId = CronMailing::model()->findByPk(CronMailing::UPDATE_VEHICLE);
+
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'date_to < ' . time() . ' AND id > ' . $startId;
+		$criteria->limit = CronMailing::MAX_EMAIL_PER_CONNECTION;
+
+		$vehicles = Vehicle::model()->findAll($criteria);
+
+		if (!count($vehicles))
+			return;
+
+		$count = 0;
+		$errorEmails = array();
+		foreach ($vehicles as $vehicle) {
+			$message = new YiiMailMessage;
+			$message->view = 'update_vehicle';
+			$message->setBody(array('vehicle' => $vehicle), 'text/html');
+			$message->subject = 'Закончился срок загрузки';
+			$message->from = Yii::app()->params['adminEmail'];
+			$message->addTo($vehicle->user->email);
+
+			Yii::log('Отправка пользователю #' . $vehicle->user->id . ' по поводу ТС #' . $vehicle->id);
+
+			try {
+				Yii::app()->mail->send($message);
+
+				$count++;
+			}
+			catch (CException $exc) {
+				$errorEmails[] = $startId;
+			}
+		}
+
+		$lastId = $vehicles[count($vehicles) - 1]->id;
+
+		CronMailing::model()->updateByPk(CronMailing::UPDATE_VEHICLE, array('last_id' => $lastId));
+
+		return $this->respondJSON(array(
+			'count' => $count,
+			'errorEmails' => $errorEmails
+			));
+	}
+
 	// Uncomment the following methods and override them if needed
 	/*
 	  public function filters()

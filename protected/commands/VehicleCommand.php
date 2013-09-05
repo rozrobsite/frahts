@@ -1,5 +1,5 @@
 <?php
-
+set_time_limit(0);
 /**
  * Description of VehicleCommand
  *
@@ -17,19 +17,20 @@ class VehicleCommand extends CConsoleCommand {
 
 		$count = 1;
 		foreach ($vehicles as $vehicle) {
+			if ($count == 40) break;
 //			if ($vehicle->id != 27146)
 //				continue;
 
-			if ($count == 280) {
-				sleep(3660);
+//			if ($count == 280) {
+//				sleep(3660);
+//
+//				$count = 0;
+//			}
+//			else {
+//				if ($count != 0 && $count % 20 == 0) {
+//					sleep(180);
+//				}
 
-				$count = 0;
-			}
-			else {
-				if ($count != 0 && $count % 20 == 0) {
-					sleep(180);
-				}
-				
 				$message = new YiiMailMessage;
 				$message->view = 'update_vehicle';
 				$message->setBody(array('vehicle' => $vehicle), 'text/html');
@@ -47,11 +48,12 @@ class VehicleCommand extends CConsoleCommand {
 				catch (CException $exc) {
 					Yii::log('Ошибка отправки. Причина: ' . $exc->getMessage(), CLogger::LEVEL_ERROR);
 				}
-			}
+//			}
 
 //			if ($count == 4)
 //				break;
 
+//			sleep(15);
 			$count++;
 		}
 	}

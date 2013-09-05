@@ -119,3 +119,9 @@ CREATE TABLE IF NOT EXISTS `mailing` (
 --06.08.2013
 ALTER TABLE `parser_emails` ADD `is_sent` TINYINT( 1 ) NULL DEFAULT 0;
 UPDATE `parser_emails` SET is_sent = 1 WHERE id < 495
+
+--05.09.2013
+CREATE TABLE  `host5841_gruz`.`cron_mailing` (
+					`id` INT NOT NULL ,
+					`last_id` INT NOT NULL
+					) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;

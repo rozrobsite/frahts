@@ -358,6 +358,11 @@
                                     По заданным E-mail
                                 </a>
                             </li>
+                            <li>
+                                <a href="/admin/mailing/cronMailing">
+                                    Разное
+                                </a>
+                            </li>
 						</ul>
 					</li>
 				</ul>
