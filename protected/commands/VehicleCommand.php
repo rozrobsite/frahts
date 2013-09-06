@@ -1,5 +1,7 @@
 <?php
+
 set_time_limit(0);
+
 /**
  * Description of VehicleCommand
  *
@@ -9,28 +11,25 @@ class VehicleCommand extends CConsoleCommand {
 
 	public function run($args) {
 		Yii::log('Задача: рассылка e-mail-напоминания всем грузоперевозчикам у которых вышел срок "Транспорт свободен".');
-		$vehicles = Vehicle::model()->findAll('date_to < ' . time());
-		Yii::log('Найденное количество грузоперевозчиков: ' . count($vehicles));
 
-		if (!count($vehicles))
-			return;
+		$start = 0;
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'date_to < ' . time();
+		$criteria->limit = 20;
+		$criteria->offset = $start;
+
+		$vehicles = Vehicle::model()->findAll($criteria);
+		unset($criteria);
+//		$vehicles = Vehicle::model()->findAll('date_to < ' . time());
+//		Yii::log('Найденное количество грузоперевозчиков: ' . count($vehicles));
 
 		$count = 1;
-		foreach ($vehicles as $vehicle) {
-			if ($count == 40) break;
-//			if ($vehicle->id != 27146)
-//				continue;
+		while (count($vehicles))
+		{
+			if ($count == 3)
+				break;
 
-//			if ($count == 280) {
-//				sleep(3660);
-//
-//				$count = 0;
-//			}
-//			else {
-//				if ($count != 0 && $count % 20 == 0) {
-//					sleep(180);
-//				}
-
+			foreach ($vehicles as $vehicle) {
 				$message = new YiiMailMessage;
 				$message->view = 'update_vehicle';
 				$message->setBody(array('vehicle' => $vehicle), 'text/html');
@@ -48,12 +47,21 @@ class VehicleCommand extends CConsoleCommand {
 				catch (CException $exc) {
 					Yii::log('Ошибка отправки. Причина: ' . $exc->getMessage(), CLogger::LEVEL_ERROR);
 				}
-//			}
+			}
 
-//			if ($count == 4)
-//				break;
+			sleep(60);
 
-//			sleep(15);
+			$start += 20;
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'date_to < ' . time();
+			$criteria->limit = 20;
+			$criteria->offset = $start;
+			echo '<pre>';
+			print_r(Yii::app()->db);
+			echo '</pre>';
+			$vehicles = Vehicle::model()->findAll($criteria);
+			unset($criteria);
+
 			$count++;
 		}
 	}

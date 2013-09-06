@@ -161,19 +161,28 @@ class MailingController extends AdminController {
 	}
 
 	private function sendUpdateVehicle() {
-		$startId = CronMailing::model()->findByPk(CronMailing::UPDATE_VEHICLE);
+		$startId = CronMailing::model()->find('id = ' . CronMailing::UPDATE_VEHICLE)->last_id;
 
 		$criteria = new CDbCriteria();
+
 		$criteria->condition = 'date_to < ' . time() . ' AND id > ' . $startId;
 		$criteria->limit = CronMailing::MAX_EMAIL_PER_CONNECTION;
 
 		$vehicles = Vehicle::model()->findAll($criteria);
 
-		if (!count($vehicles))
-			return;
-
 		$count = 0;
 		$errorEmails = array();
+
+		if (!count($vehicles))
+		{
+			CronMailing::model()->updateAll(array('last_id' => 0), 'id = ' . CronMailing::UPDATE_VEHICLE);
+
+			return $this->respondJSON(array(
+				'count' => $count,
+				'errorEmails' => $errorEmails
+			));
+		}
+
 		foreach ($vehicles as $vehicle) {
 			$message = new YiiMailMessage;
 			$message->view = 'update_vehicle';
@@ -181,8 +190,6 @@ class MailingController extends AdminController {
 			$message->subject = 'Закончился срок загрузки';
 			$message->from = Yii::app()->params['adminEmail'];
 			$message->addTo($vehicle->user->email);
-
-			Yii::log('Отправка пользователю #' . $vehicle->user->id . ' по поводу ТС #' . $vehicle->id);
 
 			try {
 				Yii::app()->mail->send($message);
@@ -196,7 +203,7 @@ class MailingController extends AdminController {
 
 		$lastId = $vehicles[count($vehicles) - 1]->id;
 
-		CronMailing::model()->updateByPk(CronMailing::UPDATE_VEHICLE, array('last_id' => $lastId));
+		CronMailing::model()->updateAll(array('last_id' => $lastId, 'id = ' . CronMailing::UPDATE_VEHICLE));
 
 		return $this->respondJSON(array(
 			'count' => $count,
