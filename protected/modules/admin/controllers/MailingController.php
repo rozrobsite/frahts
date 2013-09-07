@@ -148,6 +148,19 @@ class MailingController extends AdminController {
 		));
 	}
 
+	public function actionSetCronMailingDate()
+	{
+		$type = isset($_POST['cron_mailing_type']) ? (int) $_POST['cron_mailing_type'] : 0;
+
+		$startDate = time();
+
+		CronMailing::model()->updateAll(array('created_at' => $startDate), 'id = ' . $type);
+
+		return $this->respondJSON(array(
+				'startDate' => Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $startDate),
+			));
+	}
+
 	public function actionCronMailing() {
 		$type = isset($_POST['cron_mailing_type']) ? (int) $_POST['cron_mailing_type'] : 0;
 
@@ -156,12 +169,17 @@ class MailingController extends AdminController {
 				return $this->sendUpdateVehicle();
 		}
 
+		$cronMailing = CronMailing::model();
+		$updateVehicle = $cronMailing->find('id = ' . CronMailing::UPDATE_VEHICLE);
+
 		$this->render('cronMailing', array(
+			'updateVehicle' => $updateVehicle
 		));
 	}
 
 	private function sendUpdateVehicle() {
-		$startId = CronMailing::model()->find('id = ' . CronMailing::UPDATE_VEHICLE)->last_id;
+		$cronMailing = CronMailing::model()->find('id = ' . CronMailing::UPDATE_VEHICLE);
+		$startId = $cronMailing->last_id;
 
 		$criteria = new CDbCriteria();
 
@@ -169,6 +187,7 @@ class MailingController extends AdminController {
 		$criteria->limit = CronMailing::MAX_EMAIL_PER_CONNECTION;
 
 		$vehicles = Vehicle::model()->findAll($criteria);
+		$vehiclesCount = Vehicle::model()->count('date_to < ' . time());
 
 		$count = 0;
 		$errorEmails = array();
@@ -179,7 +198,9 @@ class MailingController extends AdminController {
 
 			return $this->respondJSON(array(
 				'count' => $count,
-				'errorEmails' => $errorEmails
+				'vehiclesCount' => $vehiclesCount,
+				'errorEmails' => $errorEmails,
+				'stop' => true,
 			));
 		}
 
@@ -197,19 +218,22 @@ class MailingController extends AdminController {
 				$count++;
 			}
 			catch (CException $exc) {
-				$errorEmails[] = $startId;
+				$errorEmails[] = $vehicle->user->email;
 			}
 		}
 
 		$lastId = $vehicles[count($vehicles) - 1]->id;
 
-		CronMailing::model()->updateAll(array('last_id' => $lastId, 'id = ' . CronMailing::UPDATE_VEHICLE));
+		CronMailing::model()->updateAll(array('last_id' => $lastId), 'id = ' . CronMailing::UPDATE_VEHICLE);
 
 		return $this->respondJSON(array(
 			'count' => $count,
-			'errorEmails' => $errorEmails
+			'vehiclesCount' => $vehiclesCount,
+			'errorEmails' => $errorEmails,
 			));
 	}
+
+
 
 	// Uncomment the following methods and override them if needed
 	/*

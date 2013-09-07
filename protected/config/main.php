@@ -239,5 +239,8 @@ return array(
 		),
 		'incidients_goods' => 30,
 		'messages_by_page' => 10,
+//		'host' => 'http://www.frahts.com',
+//		'host' => 'http://frahts.local',
+		'host' => 'http://gruz2.host5841.de1.dp10.ru',
 	),
 );

@@ -11,7 +11,7 @@ class CronMailing extends CActiveRecord
 {
 	const UPDATE_VEHICLE = 1;
 
-	const MAX_EMAIL_PER_CONNECTION = 18;
+	const MAX_EMAIL_PER_CONNECTION = 4;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

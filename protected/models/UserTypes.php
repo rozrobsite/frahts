@@ -13,8 +13,17 @@
  */
 class UserTypes extends CActiveRecord
 {
+	/**
+	 * Грузоотправитель
+	 */
 	const FREIGHTER = 1;
+	/**
+	 * Грузоперевозчик
+	 */
 	const SHIPPER = 2;
+	/**
+	 * Логистический оператор
+	 */
 	const DISPATCHER = 3;
 	/**
 	 * Returns the static model of the specified AR class.

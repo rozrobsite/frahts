@@ -7,7 +7,8 @@ class m130905_161754_create_table_cron_mailing extends CDbMigration
 		$this->execute('
 				CREATE TABLE  `cron_mailing` (
 					`id` INT NOT NULL ,
-					`last_id` INT NOT NULL
+					`last_id` INT NOT NULL,
+					created_at INT NOT NULL
 					) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 				INSERT INTO cron_mailing (id) VALUES (1);

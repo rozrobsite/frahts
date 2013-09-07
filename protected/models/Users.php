@@ -29,6 +29,30 @@ class Users extends CActiveRecord
 	const SCENARIO_CHANGE_EMAIL = 'newEmail';
 	const SCENARIO_CHANGE_PASSWORD = 'newPassword';
 
+	const ADD_ALL_USERS = 1;
+	const ADD_USERS_WITH_PROFILES = 2;
+	const ADD_USERS_WITHOUT_PROFILES = 3;
+	const ADD_USERS_WITHOUT_GOOD = 4;
+	const ADD_USERS_WITHOUT_VEHICLE = 5;
+	const ADD_USERS_WITHOUT_VEHICLE_AND_GOOD = 6;
+	const ADD_USERS_WITH_GOOD = 10;
+	const ADD_USERS_WITH_VEHICLE = 11;
+	const ADD_USERS_DISPATCHER_WITH_GOOD = 12;
+	const ADD_USERS_DISPATCHER_WITH_VEHICLE = 13;
+	const ADD_USERS_DISPATCHER_WITH_GOOD_AND_VEHICLE = 14;
+	/**
+	 * Грузоотправитель
+	 */
+	const ADD_USERS_FREIGHTER = 7;
+	/**
+	 * Грузоперевозчик
+	 */
+	const ADD_USERS_SHIPPER = 8; // Грузоперевозчик
+	/**
+	 * Логистический оператор
+	 */
+	const ADD_USERS_DISPATCHER = 9; // Грузоперевозчик
+
 	public $rememberMe = 0;
 	// для капчи
 	public $verifyCode;

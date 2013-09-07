@@ -13,7 +13,65 @@
 							<h3>Рассылка по заданным E-mail</h3>
 						</div>
 						<div class="box-content">
-							<label>Добавьте e-mail (по одному в каждой строке):</label>
+							<?php
+								$this->widget('bootstrap.widgets.TbButtonGroup', array(
+									'size'=>'small',
+									'type'=>'info', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'buttons'=>array(
+									   array('label'=>'Добавить пользователей', 'items'=>array(
+											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_ALL_USERS . ', "Все пользователи");'),
+											array('label'=>'Не добавившие личные данные', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITHOUT_PROFILES . ', "Пользователи не добавившие личные данные");'),
+											array('label'=>'Добавившие личные данные', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITH_PROFILES . ', "Пользователи добавившие личные данные");'),
+										 )),
+									),
+								));
+							?>
+							<?php
+								$this->widget('bootstrap.widgets.TbButtonGroup', array(
+									'size'=>'small',
+									'type'=>'info', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'buttons'=>array(
+									   array('label'=>'Добавить грузоотправителей', 'items'=>array(
+											array('label'=>'Без груза', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITHOUT_GOOD . ', "Грузоотправители без груза");'),
+											array('label'=>'С грузом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITH_GOOD . ', "Грузоотправители c грузом");'),
+											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_FREIGHTER . ', "Все грузоотправители");'),
+										 )),
+									),
+								));
+							?>
+							<?php
+								$this->widget('bootstrap.widgets.TbButtonGroup', array(
+									'size'=>'small',
+									'type'=>'info', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'buttons'=>array(
+									   array('label'=>'Добавить грузоперевозчиков', 'items'=>array(
+											array('label'=>'Без транспорта', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITHOUT_VEHICLE . ', "Грузоперевозчики без транспорта");'),
+											array('label'=>'С транспортом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITH_VEHICLE . ', "Грузоперевозчики с транспортом");'),
+											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_SHIPPER . ', "Все грузоперевозчики");'),
+										 )),
+									),
+								));
+							?>
+							<?php
+								$this->widget('bootstrap.widgets.TbButtonGroup', array(
+									'size'=>'small',
+									'type'=>'info', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'buttons'=>array(
+									   array('label'=>'Логистические операторы', 'items'=>array(
+											array('label'=>'Без груза и транспорта', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITHOUT_VEHICLE_AND_GOOD . ', "Логистические операторы без груза и транспорта");'),
+											array('label'=>'Только с грузом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_DISPATCHER_WITH_GOOD . ', "Логистические операторы только с грузом");'),
+											array('label'=>'Только с транспортом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_DISPATCHER_WITH_VEHICLE . ', "Логистические операторы только с транспортом");'),
+											array('label'=>'С грузом и транспортом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_DISPATCHER_WITH_GOOD_AND_VEHICLE . ', "Логистические операторы с грузом и транспортом");'),
+											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_DISPATCHER . ', "Все логистические операторы");'),
+										 )),
+									),
+								));
+							?>
+						</div>
+						<div class="box-content">
+							<label style="float: left;">Добавьте e-mail (по одному в каждой строке):</label><img id="loadingUsers" src="/images/loading.gif" style="display: none; margin-left: 10px;" />
+							<label style="float: right;">Всего <span id="searchTextUsers"></span>: <span id="countUsers">0</span></label>
+
 							<textarea id="emails" name="emails" style="width: 100%; min-height: 150px;"></textarea>
 
 							<lable>Тема рассылки:</lable>
