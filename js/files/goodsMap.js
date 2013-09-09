@@ -45,6 +45,11 @@ function init () {
 
 		myMap.geoObjects.add(route);
 
+		var humanLength = parseInt(route.getHumanLength());
+		if (typeof humanLength !== 'undefined' && humanLength && view_calc){
+			$('#calculate').html('(&asymp;' + Math.round(cost / humanLength) + ' ' + payment_type + '/км)');
+		}
+
 		$('#total_length_route').html(route.getHumanLength());
 		$('#total_time_route').html(route.getHumanTime());
 		// С помощью метода getWayPoints() получаем массив точек маршрута

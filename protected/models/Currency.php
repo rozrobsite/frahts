@@ -13,6 +13,8 @@
  */
 class Currency extends CActiveRecord
 {
+	const MAX_CALCULATE_TYPE_ID = 5;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -90,5 +92,22 @@ class Currency extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getShortName()
+	{
+		switch ($this->id)
+		{
+			case 1:
+				return 'грн.';
+			case 2:
+				return 'руб.';
+			case 3:
+				return 'дол.';
+			case 4:
+				return 'евро';
+			case 5:
+				return 'у.е.';
+		}
 	}
 }

@@ -183,12 +183,12 @@ class MailingController extends AdminController {
 
 		$criteria = new CDbCriteria();
 
-		$criteria->condition = 'date_to < ' . time() . ' AND id > ' . $startId;
+		$criteria->condition = 'date_to < ' . time() . ' AND id > ' . $startId . ' AND is_deleted = 0';
 		$criteria->limit = CronMailing::MAX_EMAIL_PER_CONNECTION;
 
 		$vehicles = Vehicle::model()->findAll($criteria);
 		$vehiclesCount = Vehicle::model()->count('date_to < ' . time());
-
+		
 		$count = 0;
 		$errorEmails = array();
 

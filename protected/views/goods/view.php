@@ -5,6 +5,9 @@ var vehicle_id = <?php echo $vid ? $vid : 0 ?>;
 var center = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var start = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var end = [<?php echo $model->cityTo->latitude ?>, <?php echo $model->cityTo->longitude ?>];
+var cost = <?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? $model->cost : 0; ?>;
+var payment_type = "<?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? $model->currency->getShortName() : ''; ?>";
+var view_calc = <?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? 1 : 0; ?>
 </script>
 
 <?php
@@ -94,7 +97,8 @@ $this->breadcrumbs = array(
 						<?php if (!empty($permissions)): ?>
 							<span><strong>Требуемые разрешения:</strong> <?php echo $permissions; ?></span>
 						<?php endif; ?>
-						<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru . ' (' . $model->paymentType->name_ru . ')'; ?></span>
+							<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru; ?> <label id="calculate"></label></span>
+						<span><strong>Вид платежа:</strong> <?php echo $model->paymentType->name_ru; ?></span>
                     </div>
 					<div class="floatR" style="width:55%;height:430px; margin:10px;">
 						<div id="map" style="width:100%;height:430px;"></div>
