@@ -26,7 +26,7 @@ function init () {
 		route = router;
 		route.options.set({
 			strokeColor: '0000ffff',
-			opacity: 0.9
+			opacity: 1
 		});
 
 		var way = route.getPaths().get(0), segments = way.getSegments();
@@ -47,7 +47,8 @@ function init () {
 
 		var humanLength = parseInt(route.getHumanLength());
 		if (typeof humanLength !== 'undefined' && humanLength && view_calc){
-			$('#calculate').html('(&asymp;' + Math.round(cost / humanLength) + ' ' + payment_type + '/км)');
+			$('#calculate').html('(&asymp; ' + Number(cost / humanLength).toFixed(2));
+			$('#shortNameCost').show();
 		}
 
 		$('#total_length_route').html(route.getHumanLength());
@@ -57,13 +58,15 @@ function init () {
 		var points = route.getWayPoints();
 		// Задаем стиль метки - иконки будут красного цвета, и
 		// их изображения будут растягиваться под контент
-		points.options.set('preset', 'twirl#blueStretchyIcon');
+//		points.options.set('preset', 'twirl#blueStretchyIcon');
 		// Задаем контент меток в начальной и конечной точках
 		var pointBegin = points.get(0);
 		var pointEnd = points.get(1);
-
-		pointBegin.properties.set('balloonContentBody', $('#point_sent').val());
-		pointEnd.properties.set('balloonContentBody', $('#point_arrival').val());
+console.log(pointBegin.properties);
+		pointBegin.options.set('preset',{iconImageHref: '/images/goods_from.png', iconImageSize: [32, 32]});
+		pointEnd.options.set({iconImageHref: '/images/goods_to.png', iconImageSize: [32, 32]});
+		pointBegin.properties.set({iconContent: null, balloonContentBody: $('#point_sent').val()});
+		pointEnd.properties.set({iconContent: null, balloonContentBody: $('#point_arrival').val()});
 
 		var goods = sendCoordinates(incidental_goods);
 
@@ -132,13 +135,13 @@ function sendCoordinates(coordinates)
 			var placemark = new ymaps.Placemark(
 				[good.lat,good.lng],
 				{
-					//iconContent: goods[index].city_from,
+//					iconContent: goods[index].city_from,
 					balloonContent: content
 				},
 				{
 					// Опции.
 					// Своё изображение иконки метки.
-					iconImageHref: '/images/truck_icon.png',
+					iconImageHref: '/images/goods_inc.png',
 					// Размеры метки.
 					iconImageSize: [32, 37]
 					// Смещение левого верхнего угла иконки относительно

@@ -6,7 +6,6 @@ var center = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityF
 var start = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var end = [<?php echo $model->cityTo->latitude ?>, <?php echo $model->cityTo->longitude ?>];
 var cost = <?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? $model->cost : 0; ?>;
-var payment_type = "<?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? $model->currency->getShortName() : ''; ?>";
 var view_calc = <?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? 1 : 0; ?>
 </script>
 
@@ -97,7 +96,7 @@ $this->breadcrumbs = array(
 						<?php if (!empty($permissions)): ?>
 							<span><strong>Требуемые разрешения:</strong> <?php echo $permissions; ?></span>
 						<?php endif; ?>
-							<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru; ?> <label id="calculate"></label></span>
+							<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru; ?> <label id="calculate"></label> <label id="shortNameCost" style="display: none;"><?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? $model->currency->getShortName() : ''; ?>/км)</label></span>
 						<span><strong>Вид платежа:</strong> <?php echo $model->paymentType->name_ru; ?></span>
                     </div>
 					<div class="floatR" style="width:55%;height:430px; margin:10px;">
@@ -159,7 +158,7 @@ $this->breadcrumbs = array(
                     <div class="clear"></div>
                 </div>
 				<?php if ($this->user->profiles && count($this->user->vehicles)): ?>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;<?php if (empty($model->description)): ?> margin-top: 20px;<?php endif; ?>">
 						<tr>
 							<td style="width:25%">
 								<a id="messageDialog_open" href="/user/messages/user/<?php echo $model->user->id ?>#users_message" title="Написать сообщение владельцу груза" class="sideB bSea tipS">Сообщение</a>
