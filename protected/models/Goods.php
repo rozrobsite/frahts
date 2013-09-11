@@ -46,35 +46,32 @@
  * @property City $cityIdTo
  * @property Currency $currency
  */
-class Goods extends CActiveRecord
-{
+class Goods extends CActiveRecord {
 
 	const ACTIVE = true;
 	const NO_ACTIVE = false;
 
 	public $bodyTypeNames;
 	public $shipmentsNames;
+	public $distance;
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Goods the static model class
 	 */
-	public static function model($className = __CLASS__)
-	{
+	public static function model($className = __CLASS__) {
 		return parent::model($className);
 	}
 
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
+	public function tableName() {
 		return 'goods';
 	}
 
-	public function behaviors()
-	{
+	public function behaviors() {
 		return array(
 			'SlugBehavior' => array(
 				'class' => 'ext.aii.behaviors.SlugBehavior',
@@ -88,8 +85,7 @@ class Goods extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
+	public function rules() {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
@@ -124,8 +120,7 @@ class Goods extends CActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
-	{
+	public function relations() {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
@@ -146,8 +141,7 @@ class Goods extends CActiveRecord
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
 			'date_from' => '"Дата "С"',
@@ -186,8 +180,7 @@ class Goods extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
-	{
+	public function search() {
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
@@ -225,78 +218,66 @@ class Goods extends CActiveRecord
 		$criteria->order = 'created_at DESC';
 
 		return new CActiveDataProvider($this, array(
-					'criteria' => $criteria,
-				));
+				'criteria' => $criteria,
+			));
 	}
 
-	public function getActive($is_active = true)
-	{
+	public function getActive($is_active = true) {
 		$currentTime = time();
 
 		$criteria = new CDbCriteria();
-		$criteria->condition = $is_active ? "user_id = " . Yii::app()->user->id . " AND date_to >= $currentTime"
-					: "user_id = " . Yii::app()->user->id . " AND date_to < $currentTime";
+		$criteria->condition = $is_active ? "user_id = " . Yii::app()->user->id . " AND date_to >= $currentTime" : "user_id = " . Yii::app()->user->id . " AND date_to < $currentTime";
 		$criteria->order = 'created_at DESC';
 
 		return new CActiveDataProvider($this,
-						array(
-							'criteria' => $criteria,
-							'pagination' => array(
-								'pageSize' => Yii::app()->params['pages']['goodsCount'],
-								'pageVar' => 'goods',
-							),
-						)
+				array(
+					'criteria' => $criteria,
+					'pagination' => array(
+						'pageSize' => Yii::app()->params['pages']['goodsCount'],
+						'pageVar' => 'goods',
+					),
+				)
 		);
 	}
 
-	public function deleteFromSearch()
-	{
+	public function deleteFromSearch() {
 		$command = Yii::app()->db->createCommand();
-		return $command->update('goods',
-						array(
-					'date_to' => strtotime('-1 day'),
-						), 'id = ' . $this->id . ' AND user_id = ' . Yii::app()->user->id);
+		return $command->update('goods', array(
+				'date_to' => strtotime('-1 day'),
+				), 'id = ' . $this->id . ' AND user_id = ' . Yii::app()->user->id);
 	}
 
-	public function checkFee($attribute, $params)
-	{
+	public function checkFee($attribute, $params) {
 		$user = Users::model()->findByPk(Yii::app()->user->id);
-		if ($user->profiles->user_type_id == UserTypes::DISPATCHER && empty($this->fee))
-		{
+		if ($user->profiles->user_type_id == UserTypes::DISPATCHER && empty($this->fee)) {
 			$this->addError('fee', 'Введите комиссию');
 		}
 	}
 
-	public function checkWeight($attribute, $params)
-	{
-		if ($this->weight_exact_value == 0 && ($this->weight_from == 0 || $this->weight_to == 0))
-		{
+	public function checkWeight($attribute, $params) {
+		if ($this->weight_exact_value == 0 && ($this->weight_from == 0 || $this->weight_to == 0)) {
 			$this->addError('weight_from', 'Заполните "Вес груза"');
 
 			return;
 		}
-		if ($this->weight_from > $this->weight_to)
-		{
+		if ($this->weight_from > $this->weight_to) {
 			$this->addError('weight_from', 'Неверно. Вес груза "От" больше чем "До"');
 		}
 	}
 
-	public function checkCapacity($attribute, $params)
-	{
+	public function checkCapacity($attribute, $params) {
 //		if ($this->capacity_exact_value == 0 && ($this->capacity_from == 0 || $this->capacity_to == 0))
 //		{
 //			$this->addError('capacity_from', 'Заполните "Объем груза"');
 //
 //			return;
 //		}
-		if ($this->capacity_from > $this->capacity_to)
-		{
+		if ($this->capacity_from > $this->capacity_to) {
 			$this->addError('capacity_from', 'Неверно. Объем груза "От" больше чем "До"');
 		}
 	}
 
-	public function getAll(SearchFilter $filter)
-	{
+	public function getAll(SearchFilter $filter) {
 		$where = $this->createCondition($filter);
 		$criteria = new CDbCriteria();
 
@@ -331,51 +312,41 @@ class Goods extends CActiveRecord
 //		return $this->findAll(array('condition' => 'date_to >= ' . time(), 'order' => 'created_at DESC'));
 	}
 
-	private function createCondition($filter)
-	{
+	private function createCondition($filter) {
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 
 		if (!empty($filter->check_dispatcher))
 			$result[] = 'profiles.user_type_id <>' . UserTypes::DISPATCHER;
 
-		if (empty($filter->city_id))
-		{
-			if (!empty($filter->country_id))
-			{
+		if (empty($filter->city_id)) {
+			if (!empty($filter->country_id)) {
 				$result[] = 't.country_id_from = ' . (int) $filter->country_id;
 			}
 
-			if (!empty($filter->region_id))
-			{
+			if (!empty($filter->region_id)) {
 				$result[] = 't.region_id_from = ' . (int) $filter->region_id;
 			}
 		}
 
-		if (empty($filter->city_search_id))
-		{
-			if (!empty($filter->country_search_id))
-			{
+		if (empty($filter->city_search_id)) {
+			if (!empty($filter->country_search_id)) {
 				$result[] = 't.country_id_to = ' . (int) $filter->country_search_id;
 			}
 
-			if (!empty($filter->region_search_id))
-			{
+			if (!empty($filter->region_search_id)) {
 				$result[] = 't.region_id_to = ' . (int) $filter->region_search_id;
 			}
 		}
 
-		if (!empty($filter->date_from) || !empty($filter->date_to))
-		{
+		if (!empty($filter->date_from) || !empty($filter->date_to)) {
 			$date_from = $date_to = time();
 
-			if (!empty($filter->date_from))
-			{
+			if (!empty($filter->date_from)) {
 				$date_from = strtotime($filter->date_from);
 			}
 
-			if (!empty($filter->date_to))
-			{
+			if (!empty($filter->date_to)) {
 				$date_to = strtotime($filter->date_to);
 			}
 
@@ -384,25 +355,20 @@ class Goods extends CActiveRecord
 
 		$result[] = 'date_to >= ' . time();
 
-		if (isset($filter->vehicle->id))
-		{
-			if ($filter->vehicle->permissions)
-			{
+		if (isset($filter->vehicle->id)) {
+			if ($filter->vehicle->permissions) {
 				$permissions = array();
 				$permissionsArray = explode(',', $filter->vehicle->permissions);
-				foreach ($permissionsArray as $permission)
-				{
+				foreach ($permissionsArray as $permission) {
 					$permissions[] = 'FIND_IN_SET(' . $permission . ', t.permissions) > 0';
 				}
 
 				$result[] = '(' . join(' OR ', $permissions) . ' OR t.permissions IS NULL)';
 			}
-			if ($filter->vehicle->shipments)
-			{
+			if ($filter->vehicle->shipments) {
 				$shipments = array();
 				$shipmentsArray = explode(',', $filter->vehicle->shipments);
-				foreach ($shipmentsArray as $shipment)
-				{
+				foreach ($shipmentsArray as $shipment) {
 					$shipments[] = 'FIND_IN_SET(' . $shipment . ', t.shipments) > 0';
 				}
 
@@ -413,16 +379,15 @@ class Goods extends CActiveRecord
 
 			$result[] = '(' . $filter->vehicle->bearing_capacity . ' >= t.weight_exact_value OR (t.weight_exact_value = 0 AND (' . $filter->vehicle->bearing_capacity . ' >= t.weight_from OR ' . $filter->vehicle->bearing_capacity . ' >= t.weight_to)))';
 			$result[] = '(' . $filter->vehicle->body_capacity . ' >= t.capacity_exact_value OR (t.capacity_exact_value = 0 AND (' . $filter->vehicle->body_capacity . ' >= t.capacity_from OR ' . $filter->vehicle->body_capacity . ' >= t.capacity_to)))';
-			if ($filter->vehicle->adr) $result[] = 'adr <= ' . $filter->vehicle->adr;
+			if ($filter->vehicle->adr)
+				$result[] = 'adr <= ' . $filter->vehicle->adr;
 		}
 
-		if (isset($filter->radius) && $filter->radius)
-		{
+		if (isset($filter->radius) && $filter->radius) {
 			$inRadius = array();
 			$city_id_from = 0;
-			if (!empty($filter->city_id))
-			{
-				$city_id_from = (int)$filter->city_id;
+			if (!empty($filter->city_id)) {
+				$city_id_from = (int) $filter->city_id;
 
 				$city = City::model()->findByPk($city_id_from);
 				$inRadius[] = 't.city_id_from IN ( SELECT id
@@ -432,9 +397,8 @@ class Goods extends CActiveRecord
 			}
 
 			$city_id_to = 0;
-			if (!empty($filter->city_search_id))
-			{
-				$city_id_to = (int)$filter->city_search_id;
+			if (!empty($filter->city_search_id)) {
+				$city_id_to = (int) $filter->city_search_id;
 
 				$city = City::model()->findByPk($city_id_to);
 				$inRadius[] = 't.city_id_to IN ( SELECT id
@@ -443,60 +407,51 @@ class Goods extends CActiveRecord
 				unset($city);
 			}
 
-			if (!empty($inRadius)) $result[] = '(' . join(' AND ', $inRadius) . ')';
+			if (!empty($inRadius))
+				$result[] = '(' . join(' AND ', $inRadius) . ')';
 		}
 
 		return join(' AND ', $result);
 	}
 
-	public function searchIncidental($vehicle_id, $desiredCoordinates, $date_from, $date_to)
-	{
+	public function searchIncidental($vehicle_id, $desiredCoordinates, $date_from, $date_to) {
 		$vehicle = $vehicle_id ? Vehicle::model()->findByPk($vehicle_id) : null;
 
 		$where = array();
 		$where[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
 		$where[] = 't.is_deleted = 0';
 
-		if (!empty($date_from))
-		{
+		if (!empty($date_from)) {
 			$date_from = strtotime($date_from);
 		}
-		else
-		{
+		else {
 			$date_from = time();
 		}
 
-		if (!empty($date_to))
-		{
+		if (!empty($date_to)) {
 			$date_to = strtotime($date_to);
 		}
-		else
-		{
+		else {
 			$date_to = time();
 		}
 
 		$where[] = 'NOT ((' . $date_from . ' < t.date_from AND ' . $date_to . ' < t.date_from) OR (' . $date_from . ' > t.date_to AND ' . $date_to . ' < t.date_to))';
 		$where[] = 'date_to >= ' . time();
 
-		if ($vehicle)
-		{
-			if ($vehicle->permissions)
-			{
+		if ($vehicle) {
+			if ($vehicle->permissions) {
 				$permissions = array();
 				$permissionsArray = explode(',', $vehicle->permissions);
-				foreach ($permissionsArray as $permission)
-				{
+				foreach ($permissionsArray as $permission) {
 					$permissions[] = 'FIND_IN_SET(' . $permission . ', t.permissions) > 0';
 				}
 
 				$result[] = '(' . join(' OR ', $permissions) . ' OR t.permissions IS NULL)';
 			}
-			if ($vehicle->shipments)
-			{
+			if ($vehicle->shipments) {
 				$shipments = array();
 				$shipmentsArray = explode(',', $vehicle->shipments);
-				foreach ($shipmentsArray as $shipment)
-				{
+				foreach ($shipmentsArray as $shipment) {
 					$shipments[] = 'FIND_IN_SET(' . $shipment . ', t.shipments) > 0';
 				}
 
@@ -507,14 +462,14 @@ class Goods extends CActiveRecord
 
 			$result[] = '(' . $vehicle->bearing_capacity . ' >= t.weight_exact_value OR (t.weight_exact_value = 0 AND (' . $vehicle->bearing_capacity . ' >= t.weight_from OR ' . $vehicle->bearing_capacity . ' >= t.weight_to)))';
 			$result[] = '(' . $vehicle->body_capacity . ' >= t.capacity_exact_value OR (t.capacity_exact_value = 0 AND (' . $vehicle->body_capacity . ' >= t.capacity_from OR ' . $vehicle->body_capacity . ' >= t.capacity_to)))';
-			if ($vehicle->adr) $result[] = 'adr <= ' . $vehicle->adr;
+			if ($vehicle->adr)
+				$result[] = 'adr <= ' . $vehicle->adr;
 		}
 
 		$defaultRadius = (int) Yii::app()->params['defaultRadius'];
 
 		$inRadius = array();
-		foreach ($desiredCoordinates as $coord)
-		{
+		foreach ($desiredCoordinates as $coord) {
 //			$inRadius[] = 't.city_id_from IN ( SELECT id
 //				FROM city WHERE (6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( latitude ) ) ) ) < ' . $defaultRadius . ')';
 			$inRadius[] = '6371 * acos( cos( radians(' . $coord[0] . ') ) * cos( radians( cityFrom.latitude ) ) * cos( radians( cityFrom.longitude ) - radians(' . $coord[1] . ') ) + sin( radians(' . $coord[0] . ') ) * sin( radians( cityFrom.latitude ) ) ) < ' . $defaultRadius;
@@ -531,8 +486,7 @@ class Goods extends CActiveRecord
 		$count = $this->count($criteria);
 
 		$result = array();
-		foreach ($goods as $good)
-		{
+		foreach ($goods as $good) {
 			$result[] = array(
 				'id' => $good->id,
 				'slug' => $good->slug,
@@ -566,5 +520,4 @@ class Goods extends CActiveRecord
 
 		return $result;
 	}
-
 }

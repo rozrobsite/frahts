@@ -130,3 +130,10 @@ CREATE TABLE  `cron_mailing` (
 INSERT INTO cron_mailing (id) VALUES (1);
 INSERT INTO cron_mailing (id) VALUES (2);
 INSERT INTO cron_mailing (id) VALUES (3);
+
+--11.09.2013
+CREATE TABLE `parser_promua` (
+						id INT NOT NULL ,
+						name VARCHAR (255) DEFAULT NULL,
+						email VARCHAR (255) DEFAULT NULL
+					) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;

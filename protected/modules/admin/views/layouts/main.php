@@ -320,6 +320,11 @@
 									Телефоны
 								</a>
 							</li>
+							<li>
+								<a href="/admin/promua">
+									Prom.ua
+								</a>
+							</li>
 						</ul>
 					</li>
                     <li>

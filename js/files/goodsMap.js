@@ -62,7 +62,7 @@ function init () {
 		// Задаем контент меток в начальной и конечной точках
 		var pointBegin = points.get(0);
 		var pointEnd = points.get(1);
-console.log(pointBegin.properties);
+
 		pointBegin.options.set('preset',{iconImageHref: '/images/goods_from.png', iconImageSize: [32, 32]});
 		pointEnd.options.set({iconImageHref: '/images/goods_to.png', iconImageSize: [32, 32]});
 		pointBegin.properties.set({iconContent: null, balloonContentBody: $('#point_sent').val()});

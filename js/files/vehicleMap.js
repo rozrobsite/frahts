@@ -41,13 +41,15 @@ function init () {
 		var points = route.getWayPoints();
 		// Задаем стиль метки - иконки будут красного цвета, и
 		// их изображения будут растягиваться под контент
-		points.options.set('preset', 'twirl#blueStretchyIcon');
+//		points.options.set('preset', 'twirl#blueStretchyIcon');
 		// Задаем контент меток в начальной и конечной точках
 		var pointBegin = points.get(0);
 		var pointEnd = points.get(1);
 
-		pointBegin.properties.set('balloonContentBody', $('#point_sent').val());
-		pointEnd.properties.set('balloonContentBody', $('#point_arrival').val());
+		pointBegin.options.set('preset',{iconImageHref: '/images/vehicle_from.png', iconImageSize: [32, 32]});
+		pointEnd.options.set({iconImageHref: '/images/vehicle_to.png', iconImageSize: [32, 32]});
+		pointBegin.properties.set({iconContent: null, balloonContentBody: $('#point_sent').val()});
+		pointEnd.properties.set({iconContent: null, balloonContentBody: $('#point_arrival').val()});
 
 	//				pointBegin.options.set('draggable', true);
 	//				pointEnd.options.set('draggable', true);

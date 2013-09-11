@@ -164,8 +164,9 @@ $this->breadcrumbs = array(
 									</span>
 									<br/>
 									<span>
-										<?php $distance = ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10); ?>
-										<strong><a href="/goods/view/<?php echo $oneGood->slug ?>">&asymp;&nbsp;<?php echo $distance ?> км</a></strong>
+										<?php //$distance = ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10); ?>
+										<?php //$geography = new Geography(); $distance = $geography->getDistance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude, 'gc'); ?>
+										<strong><a href="/goods/view/<?php echo $oneGood->slug ?>">&asymp;&nbsp;<?php $geography = new Geography(); echo Geography::getDistanceByGoogle($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?></a></strong>
 									</span>
 								</td>
 								<td class="fileInfo">
