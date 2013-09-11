@@ -242,5 +242,7 @@ return array(
 //		'host' => 'http://www.frahts.com',
 //		'host' => 'http://frahts.local',
 		'host' => 'http://gruz2.host5841.de1.dp10.ru',
+		
+		'mainPageItems' => 3,
 	),
 );

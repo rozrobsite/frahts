@@ -2,9 +2,12 @@
 
 class MainController extends Controller
 {
+	public $mainGoods = null;
+	public $mainVehicles = null;
+	
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
-
+		
 		if (Yii::app()->user->id && strpos(Yii::app()->request->requestUri, '/logout') === false)
 		{
 			$user = Users::model()->findByPk(Yii::app()->user->id);
@@ -31,6 +34,19 @@ class MainController extends Controller
 					$this->redirect('/user');
 			}
 		}
+		
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'date_to > ' . time() . ' AND is_deleted = 0';
+		$criteria->limit = Yii::app()->params['mainPageItems'];
+		$criteria->order = 'updated_at DESC, created_at DESC';
+
+		$this->mainVehicles = Vehicle::model()->findAll($criteria);
+		
+		$criteria->condition = 'date_to > ' . time() . ' AND is_deleted = 0';
+		$criteria->limit = Yii::app()->params['mainPageItems'];
+		$criteria->order = 'updated_at DESC, created_at DESC';
+
+		$this->mainGoods = Goods::model()->findAll($criteria);
 	}
 
 	/**
