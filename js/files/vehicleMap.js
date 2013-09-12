@@ -46,8 +46,8 @@ function init () {
 		var pointBegin = points.get(0);
 		var pointEnd = points.get(1);
 
-		pointBegin.options.set('preset',{iconImageHref: '/images/vehicle_from.png', iconImageSize: [32, 32]});
-		pointEnd.options.set({iconImageHref: '/images/vehicle_to.png', iconImageSize: [32, 32]});
+		pointBegin.options.set('preset',{iconImageHref: '/images/vehicle_from.png', iconImageSize: [32, 37]});
+		pointEnd.options.set({iconImageHref: '/images/vehicle_to.png', iconImageSize: [32, 37]});
 		pointBegin.properties.set({iconContent: null, balloonContentBody: $('#point_sent').val()});
 		pointEnd.properties.set({iconContent: null, balloonContentBody: $('#point_arrival').val()});
 

@@ -137,3 +137,6 @@ CREATE TABLE `parser_promua` (
 						name VARCHAR (255) DEFAULT NULL,
 						email VARCHAR (255) DEFAULT NULL
 					) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+--12.09.2013
+ALTER TABLE `goods` ADD `distance` INT(6) NULL DEFAULT 0;

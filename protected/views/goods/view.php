@@ -96,7 +96,20 @@ $this->breadcrumbs = array(
 						<?php if (!empty($permissions)): ?>
 							<span><strong>Требуемые разрешения:</strong> <?php echo $permissions; ?></span>
 						<?php endif; ?>
-							<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru; ?> <label id="calculate"></label> <label id="shortNameCost" style="display: none;"><?php echo $model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID ? $model->currency->getShortName() : ''; ?>/км)</label></span>
+							<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru; ?> <label id="calculate"></label>
+								<?php $distance = $oneGood->distance; ?>
+								<?php if ($distance): ?>
+									<?php if ($model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID): ?>
+										<label>(&asymp;&nbsp;<?php echo round($model->cost/$distance, 1); ?> <?php echo $model->currency->name_ru ?>/км)</label>
+									<?php endif; ?>
+								<?php else: ?>
+									<?php $distance = Geography::getDistanceByYandex($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?>
+									<?php if ($distance): ?>
+										<?php if ($model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID): ?>
+											<label>(&asymp;&nbsp;<?php echo round($model->cost/$distance, 1); ?> <?php echo $model->currency->name_ru ?>/км)</label>
+										<?php endif; ?>
+									<?php endif; ?>
+								<?php endif; ?>
 						<span><strong>Вид платежа:</strong> <?php echo $model->paymentType->name_ru; ?></span>
                     </div>
 					<div class="floatR" style="width:55%;height:430px; margin:10px;">

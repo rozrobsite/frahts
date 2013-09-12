@@ -166,7 +166,22 @@ $this->breadcrumbs = array(
 									<span>
 										<?php //$distance = ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10); ?>
 										<?php //$geography = new Geography(); $distance = $geography->getDistance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude, 'gc'); ?>
-										<strong><a href="/goods/view/<?php echo $oneGood->slug ?>">&asymp;&nbsp;<?php $geography = new Geography(); echo Geography::getDistanceByGoogle($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?></a></strong>
+										<strong>
+											<a href="/goods/view/<?php echo $oneGood->slug ?>">
+												<?php $distance = $oneGood->distance; ?>
+												<?php if ($distance): ?>
+													&asymp;&nbsp;<?php echo $distance; ?> км
+												<?php else: ?>
+													<?php $distance = Geography::getDistanceByYandex($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?>
+													<?php if ($distance): ?>
+														&asymp;&nbsp;<?php echo $distance; ?>
+													<?php endif; ?>
+												<?php endif; ?>
+												<?php if ($oneGood->currency->id <= Currency::MAX_CALCULATE_TYPE_ID && (int)$distance > 1): ?>
+														<br/>(<?php echo round($oneGood->cost / (int)$distance, 1); ?> <?php echo $oneGood->currency->name_ru ?>/км)
+												<?php endif; ?>
+											</a>
+										</strong>
 									</span>
 								</td>
 								<td class="fileInfo">

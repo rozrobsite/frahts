@@ -46,10 +46,10 @@ function init () {
 		myMap.geoObjects.add(route);
 
 		var humanLength = parseInt(route.getHumanLength());
-		if (typeof humanLength !== 'undefined' && humanLength && view_calc){
-			$('#calculate').html('(&asymp; ' + Number(cost / humanLength).toFixed(2));
-			$('#shortNameCost').show();
-		}
+//		if (typeof humanLength !== 'undefined' && humanLength && view_calc){
+//			$('#calculate').html('(&asymp; ' + Number(cost / humanLength).toFixed(2));
+//			$('#shortNameCost').show();
+//		}
 
 		$('#total_length_route').html(route.getHumanLength());
 		$('#total_time_route').html(route.getHumanTime());
@@ -63,8 +63,8 @@ function init () {
 		var pointBegin = points.get(0);
 		var pointEnd = points.get(1);
 
-		pointBegin.options.set('preset',{iconImageHref: '/images/goods_from.png', iconImageSize: [32, 32]});
-		pointEnd.options.set({iconImageHref: '/images/goods_to.png', iconImageSize: [32, 32]});
+		pointBegin.options.set('preset',{iconImageHref: '/images/goods_from.png', iconImageSize: [32, 37]});
+		pointEnd.options.set({iconImageHref: '/images/goods_to.png', iconImageSize: [32, 37]});
 		pointBegin.properties.set({iconContent: null, balloonContentBody: $('#point_sent').val()});
 		pointEnd.properties.set({iconContent: null, balloonContentBody: $('#point_arrival').val()});
 
@@ -143,7 +143,7 @@ function sendCoordinates(coordinates)
 					// Своё изображение иконки метки.
 					iconImageHref: '/images/goods_inc.png',
 					// Размеры метки.
-					iconImageSize: [32, 37]
+					iconImageSize: [45, 60]
 					// Смещение левого верхнего угла иконки относительно
 					// её "ножки" (точки привязки).
 //					iconImageOffset: [-3, -42]
