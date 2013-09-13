@@ -173,7 +173,8 @@ return array(
 			'photos' => 'uploads/photos/',
 			'images' => 'uploads/images/',
 			'avatars' => 'uploads/images/avatars/',
-			'tmp' => 'uploads/tmp/'
+			'tmp' => 'uploads/tmp/',
+			'tmp2' => 'uploads/tmp2/',
 		),
 		// Params for image file processing
 		'images' => array(
@@ -242,7 +243,7 @@ return array(
 //		'host' => 'http://www.frahts.com',
 //		'host' => 'http://frahts.local',
 		'host' => 'http://gruz2.host5841.de1.dp10.ru',
-		
+
 		'mainPageItems' => 3,
 	),
 );

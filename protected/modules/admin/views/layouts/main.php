@@ -325,6 +325,11 @@
 									Prom.ua
 								</a>
 							</li>
+							<li>
+								<a href="/admin/parser/wellary">
+									Wellary.com
+								</a>
+							</li>
 						</ul>
 					</li>
                     <li>
