@@ -19,6 +19,7 @@
 			<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/main-style.css" rel="stylesheet" type="text/css" />
 		<?php else: ?>
 			<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" rel="stylesheet" type="text/css" />
+			<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/hopscotch-0.1.2.min.css" rel="stylesheet" type="text/css" />
 		<?php endif; ?>
 		<!--[if IE]> <link href="/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -47,6 +48,7 @@
 		<script type="text/javascript" src="/js/plugins/others/jquery.elfinder.js"></script>
 		<script type="text/javascript" src="/js/plugins/ui/jquery.easytabs.min.js"></script>
 		<script type="text/javascript" src="/js/jquery/jquery.blockUI.js"></script>
+		<script type="text/javascript" src="/js/jquery/hopscotch-0.1.2.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/block.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/common.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/files/user.js"></script>

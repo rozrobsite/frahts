@@ -1,6 +1,5 @@
 <?php
-/* @var $this UserController */
-/* @var $model Users */
+Yii::app()->clientScript->registerScriptFile('/js/files/likbez/goodsSearch.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->name . ' - Поиск подходящего груза';
 $this->breadcrumbs = array(
