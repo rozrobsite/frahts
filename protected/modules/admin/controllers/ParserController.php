@@ -95,4 +95,53 @@ class ParserController extends AdminController {
 		fclose($file);
 		die();
 	}
+
+	public function actionGruztransport()
+	{
+		$SITE_URL = 'http://www.gruz-transport.com';
+		$pages = 367;
+
+		Yii::import('ext.SimpleHTMLDOM.SimpleHTMLDOM');
+
+		$simpleHtml = new SimpleHTMLDOM();
+
+		if (file_exists(Yii::app()->params['files']['tmp2'] . 'gruxtransport.txt'))
+			unlink (Yii::app()->params['files']['tmp2'] . 'gruztransport.txt');
+
+		$file = fopen(Yii::app()->params['files']['tmp2'] . 'gruztransport.txt', 'a');
+		foreach (range(0, $pages) as $page) {
+			$html = $simpleHtml->file_get_html('http://www.gruz-transport.com/company/find_' . $page . '.htm');
+
+			$count = 0;
+			foreach ($html->find('table.grid td a') as $element) {
+				$onclick = $element->onclick . '<br/>';
+				$onclick_array = explode('\'', $onclick);
+
+				$href = $onclick_array[1];
+
+				$companyHtml = $simpleHtml->file_get_html($SITE_URL . $href);
+
+				$tmp = array();
+				foreach ($companyHtml->find('table td table td table td') as $item) {
+					preg_match_all('/([A-Za-z0-9_\-]+\.)*[A-Za-z0-9_\-]+@([A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9]\.)+[A-Za-z]{2,4}/u', $item->innertext, $tds);
+
+					foreach ($tds as $td)
+					{
+						if (isset($td[0]) && filter_var($td[0], FILTER_VALIDATE_EMAIL))
+						{
+							fwrite($file, $td[0] . "\r\n");
+						}
+					}
+				}
+
+//				if (++$count == 5)
+//					break;
+			}
+
+//			break;
+		}
+
+		fclose($file);
+		die();
+	}
 }

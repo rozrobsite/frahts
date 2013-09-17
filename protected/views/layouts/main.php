@@ -102,30 +102,30 @@
 			<div id="footer">
 				<div id="block-text">
 	                <div id="left-block" class="left">
-	                    <div class="light-grey width140">                        
+	                    <div class="light-grey width140">
 	                        <p class="turquoise center">Мир Фрахты.com ориентирован на коммуникацию профессиональных перевозчиков и грузовладельцев.</p>
 	                    </div>
 	                </div>
 	                <div class="text">МИР<br /> ГРУЗОПЕРЕВОЗОК <span>ФРАХТЫ</span>.com</div>
-	            </div>  
+	            </div>
 	            <div id="bottom-block">
-	                <div class="grey inline-block">                        
+	                <div class="grey inline-block">
 	                    <span class="num left">1</span>
 	                    <span class="vertical-line left"></span>
-	                    <p class="white"><span class="turquoise">Вы профессиональный перевозчик</span> и хотите иметь полную информацию о грузах для Ваших машин?</p>                        
+	                    <p class="white"><span class="turquoise">Вы профессиональный перевозчик</span> и хотите иметь полную информацию о грузах для Ваших машин?</p>
 	                </div>
 
 	                <div class="grey inline-block">
 	                    <span class="num left">2</span>
 	                    <span class="vertical-line left"></span>
-	                    <p class="white"><span class="turquoise">Вы грузовладелец</span> и хотите быть уверенны в качественной и своевременной перевозке Вашего груза?</p>                                                            
+	                    <p class="white"><span class="turquoise">Вы грузовладелец</span> и хотите быть уверенны в качественной и своевременной перевозке Вашего груза?</p>
 	                </div>
 
 	                <div class="grey inline-block">
 	                    <span class="num left">3</span>
 	                    <span class="vertical-line left"></span>
-	                    <p class="white"><span class="turquoise">Вы логистический оператор,</span> представляете интересы профессиональных грузоперевозчиков и грузоотправителей?</p>                                                            
-	                </div> 
+	                    <p class="white"><span class="turquoise">Вы логистический оператор,</span> представляете интересы профессиональных грузоперевозчиков и грузоотправителей?</p>
+	                </div>
 	            </div>
 	            <div class="footer-text-container">
 	                <p class="footer-text turquoise">Фрахты.com созданы для ВАС!</p>
@@ -139,10 +139,10 @@
 					? $this->headerUrl : '/user'; ?>" title="" class="logo main"><img src="/images/logo_2.png" alt="frahts.com - Мир грузоперевозок!" /></a>
 					<!-- Right top nav -->
 					<div class="topNav">
-	<?php if (Yii::app()->user->isGuest): ?>
+						<?php if (Yii::app()->user->isGuest): ?>
 							<a href="/main/login" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Вход</a>
 							<a href="/main/register" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Регистрация</a>
-	<?php else: ?>
+						<?php else: ?>
 							<ul class="userNav">
 								<!--<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>-->
 								<li><a href="/user" title="Личный кабинет" class="profile tipN" original-title="Личный кабинет"></a></li>
@@ -153,13 +153,13 @@
 									<?php if ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3): ?>
 										<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
 									<?php endif; ?>
-		<?php endif; ?>
+						<?php endif; ?>
 								<li><a href="/user/notes" title="Заметки" class="notes tipN" original-title="Заметки"></a></li>
 								<li><a href="/user/feedback" title="Обратная связь" class="feedback tipN" original-title="Обратная связь"></a></li>
 								<li><a href="/user/faq" title="ЧаВо" class="fuk tipN" original-title="ЧаВо"></a></li>
 								<li><a href="/main/logout" title="Выход" class="logout tipN" original-title="Выход"></a></li>
 							</ul>
-	<?php endif; ?>
+						<?php endif; ?>
 					</div>
 					<div class="share42init" data-url="http://www.frahts.com" data-title="Фрахты.com - Мир грузоперевозок" data-description="Сайт грузоперевозок" data-image="http://gruz2.host5841.de1.dp10.ru/images/logo.png"></div>
 					<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/share42/share42.js"></script>
@@ -169,7 +169,9 @@
 			</div>
 			<!-- Top line ends -->
 			<?php echo $content; ?>
-<?php endif; ?>
+
+			<script type="text/javascript"> _shcp = []; _shcp.push({widget_id : 629130, widget : "Chat"}); (function() { var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true; hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://widget.siteheart.com/apps/js/sh.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hcc, s.nextSibling); })();</script>
+		<?php endif; ?>
 
 		<!-- Yandex.Metrika counter -->
 		<script type="text/javascript">

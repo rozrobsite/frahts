@@ -82,7 +82,7 @@ $(document).ready(function() {
 		};
 		var options2 = {
 			series: {
-				pie: { 
+				pie: {
 					show: true,
 					radius: 1,
 					label: {
@@ -129,8 +129,8 @@ $(document).ready(function() {
 		ds.push({
 			data:d1,
 			bars: {
-				show: true, 
-				barWidth: 0.2, 
+				show: true,
+				barWidth: 0.2,
 				order: 1,
 				lineWidth : 2
 			}
@@ -138,16 +138,16 @@ $(document).ready(function() {
 		ds.push({
 			data:d2,
 			bars: {
-				show: true, 
-				barWidth: 0.2, 
+				show: true,
+				barWidth: 0.2,
 				order: 2
 			}
 		});
 		ds.push({
 			data:d3,
 			bars: {
-				show: true, 
-				barWidth: 0.2, 
+				show: true,
+				barWidth: 0.2,
 				order: 3
 			}
 		});
@@ -219,7 +219,7 @@ $(document).ready(function() {
 		}
 		else {
 			$("#tooltip").remove();
-			previousPoint = null;            
+			previousPoint = null;
 		}
 	});
 
@@ -402,7 +402,7 @@ $(document).ready(function() {
 	}
 	// - wizard
 	if($(".wizard").length > 0){
-		$(".wizard").formwizard({ 
+		$(".wizard").formwizard({
 		 	formPluginEnabled: true,
 		 	validationEnabled: true,
 		 	focusFirstInput : false,
@@ -422,7 +422,7 @@ $(document).ready(function() {
 				},
 				dataType: 'json',
 				resetForm: true
-		 	}	
+		 	}
 		 }
 		);
 	}
@@ -545,20 +545,20 @@ $(document).ready(function() {
 	}
 	// - datepicker
 	if($('.datepick').length > 0){
-		$('.datepick').datepicker();	
+		$('.datepick').datepicker();
 	}
 	// - masked inputs
 	if($('.mask_date').length > 0){
-		$(".mask_date").inputmask("9999/99/99");	
+		$(".mask_date").inputmask("9999/99/99");
 	}
 	if($('.mask_phone').length > 0){
 		$(".mask_phone").inputmask("(999) 999-9999");
 	}
 	if($('.mask_serialNumber').length > 0){
-		$(".mask_serialNumber").inputmask("9999-9999-99");	
+		$(".mask_serialNumber").inputmask("9999-9999-99");
 	}
 	if($('.mask_productNumber').length > 0){
-		$(".mask_productNumber").inputmask("AAA-9999-A");	
+		$(".mask_productNumber").inputmask("AAA-9999-A");
 	}
 	// - slider
 	if($('.slider').length > 0){

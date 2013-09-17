@@ -131,9 +131,9 @@ class UsersController extends AdminController
 		$command = Yii::app()->db->createCommand();
 		$users = $command->selectDistinct('users.email')
 			->from('users')
-			->where('user_types.id = ' . UserTypes::FREIGHTER)
-			->leftJoin('profiles', 'profiles.user_id = users.id')
-			->leftJoin('user_types', 'user_types.id = profiles.user_type_id')
+//			->where('user_types.id = ' . UserTypes::FREIGHTER)
+			->join('profiles', 'profiles.user_id = users.id AND profiles.user_type_id = ' . UserTypes::FREIGHTER)
+//			->leftJoin('user_types', 'user_types.id = profiles.user_type_id')
 			->queryAll();
 
 
@@ -148,9 +148,9 @@ class UsersController extends AdminController
 		$command = Yii::app()->db->createCommand();
 		$users = $command->selectDistinct('users.email')
 			->from('users')
-			->where('user_types.id = ' . UserTypes::SHIPPER)
-			->leftJoin('profiles', 'profiles.user_id = users.id')
-			->leftJoin('user_types', 'user_types.id = profiles.user_type_id')
+//			->where('user_types.id = ' . UserTypes::SHIPPER)
+			->join('profiles', 'profiles.user_id = users.id AND profiles.user_type_id = ' . UserTypes::SHIPPER)
+//			->join('user_types', 'user_types.id = profiles.user_type_id AND user_types.id = ' . UserTypes::SHIPPER)
 			->queryAll();
 
 

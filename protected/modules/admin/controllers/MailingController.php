@@ -88,64 +88,43 @@ class MailingController extends AdminController {
 	}
 
 	public function actionInputtedMail() {
-		$countSended = 0;
-		$countAll = 0;
+		if (!isset($_POST['emails']))
+		{
+			$this->render('inputtedMail', array(
+			));
 
-		if (isset($_POST['emails'])) {
-			$subject = isset($_POST['subject']) ? trim($_POST['subject']) : '';
-			$body = isset($_POST['text']) ? nl2br(trim($_POST['text'])) : '';
+			return;
+		}
 
-			if (empty($subject) || empty($body))
-				return;
+		$emails = isset($_POST['emails']) ? $_POST['emails'] : array();
+		$subject = isset($_POST['subject']) ? trim($_POST['subject']) : '';
+		$text = isset($_POST['text']) ? trim($_POST['text']) : '';
 
-			$emails_arr = explode("\r\n", $_POST['emails']);
-			$countAll = count($emails_arr);
+		if (!count($emails) || !$subject || !$text) {
+			return $this->respondJSON(array(
+					'stop' => true,
+				));
+		}
 
-			$emails = array();
-			foreach ($emails_arr as $email) {
-				$email = trim($email, ' ;"\'!!@#$%^&*()-=_+}{[]:\\|?/><.,');
-				if (filter_var($email, FILTER_VALIDATE_EMAIL))
-					$emails[] = $email;
+		$errorEmails = array();
+		foreach ($emails as $email) {
+			$message = new YiiMailMessage;
+			$message->setBody($text, 'text/html');
+			$message->subject = $subject;
+			$message->from = Yii::app()->params['adminEmail'];
+			$message->addTo(trim($email));
+
+			try {
+				Yii::app()->mail->send($message);
 			}
-
-			$countSended = $countAll = count($emails);
-			if ($countAll) {
-				$count = 1;
-				foreach ($emails as $email) {
-					if ($count == 280) {
-						sleep(3660);
-
-						$count = 1;
-					}
-					else {
-						if ($count != 0 && $count % 20 == 0) {
-							sleep(180);
-						}
-
-						$message = new YiiMailMessage;
-						$message->view = 'mailing';
-						$message->setBody(array('body' => $body), 'text/html');
-						$message->subject = $subject;
-						$message->from = Yii::app()->params['adminEmail'];
-						$message->addTo($email);
-
-						try {
-							Yii::app()->mail->send($message);
-						}
-						catch (CException $exc) {
-							$countSended--;
-						}
-					}
-
-					$count++;
-				}
+			catch (CException $exc) {
+				$errorEmails[] = $email;
 			}
 		}
 
-		$this->render('inputtedMail', array(
-			'countSended' => $countSended,
-			'countAll' => $countAll,
-		));
+		return $this->respondJSON(array(
+					'errorEmails' => $errorEmails,
+				));
 	}
 
 	public function actionSetCronMailingDate()
@@ -188,7 +167,7 @@ class MailingController extends AdminController {
 
 		$vehicles = Vehicle::model()->findAll($criteria);
 		$vehiclesCount = Vehicle::model()->count('date_to < ' . time());
-		
+
 		$count = 0;
 		$errorEmails = array();
 

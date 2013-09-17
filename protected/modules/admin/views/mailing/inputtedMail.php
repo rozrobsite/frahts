@@ -1,11 +1,6 @@
 <div class="container-fluid">
 	<div class="content">
 		<?php $this->renderPartial('/blocks/_quickstats'); ?>
-		<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-							'id'=>'mailing-inputted-send',
-							'action' => '/admin/mailing/inputtedMail',
-							'htmlOptions'=>array('class'=>'well'),
-						)); ?>
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="box">
@@ -34,7 +29,7 @@
 									   array('label'=>'Добавить грузоотправителей', 'items'=>array(
 											array('label'=>'Без груза', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITHOUT_GOOD . ', "Грузоотправители без груза");'),
 											array('label'=>'С грузом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITH_GOOD . ', "Грузоотправители c грузом");'),
-											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_FREIGHTER . ', "Все грузоотправители");'),
+											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_SHIPPER . ', "Все грузоотправители");'),
 										 )),
 									),
 								));
@@ -47,7 +42,7 @@
 									   array('label'=>'Добавить грузоперевозчиков', 'items'=>array(
 											array('label'=>'Без транспорта', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITHOUT_VEHICLE . ', "Грузоперевозчики без транспорта");'),
 											array('label'=>'С транспортом', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_WITH_VEHICLE . ', "Грузоперевозчики с транспортом");'),
-											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_SHIPPER . ', "Все грузоперевозчики");'),
+											array('label'=>'Все', 'url'=>'javascript:mailing.addUsers(' . Users::ADD_USERS_FREIGHTER . ', "Все грузоперевозчики");'),
 										 )),
 									),
 								));
@@ -80,20 +75,31 @@
 							<textarea id="text" name="text" style="width: 100%; min-height: 150px;" class="ckeditor"></textarea>
 
 							<div style="width: 100%; text-align: right; margin-top: 25px;">
-								<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Начать', 'htmlOptions' => array('style' => 'margin-top: -10px'))); ?>
+								<?php $this->widget('bootstrap.widgets.TbButton', array(
+									'type' => 'primary',
+									'label'=>'Начать',
+									'htmlOptions' => array('style' => 'margin-top: -10px', 'id' => 'sendingButton'))); ?>
 							</div>
+						</div>
+						<div id="viewProgress" class="box-content" style="display: none;">
+							<label id="sendedAction">Подготовка к отправке (Может занять несколько минут)</label>
+							<?php
+							$this->widget('bootstrap.widgets.TbProgress', array(
+								'percent' => 100, // the progress
+								'striped' => true,
+								'animated' => true,
+								'htmlOptions' => array(
+									'id' => 'sendedProgress',
+									'style' => 'width:50% !important; float:left',
+								)
+							));
+							?>
+							<label style="float: left; margin-left: 25px;">
+								<span id="sendedPercent">0</span>% (<span id="sended">0</span> / <span id="sendedAll">0</span>)
+							</label>
 						</div>
 					</div>
 				</div>
 			</div>
-		<?php $this->endWidget(); ?>
-		<?php if (isset($countAll)): ?>
-		<div class="row-fluid">
-			<div class="span12">
-				Всего введенных e-mail: <?php echo $countAll; ?><br/>
-				Успешно отправленных: <?php echo $countSended; ?>
-			</div>
-		</div>
-		<?php endif; ?>
 	</div>
 </div>

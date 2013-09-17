@@ -4,21 +4,21 @@ class MainController extends Controller
 {
 	public $mainGoods = null;
 	public $mainVehicles = null;
-	
+
 	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
-		
+
 		if (Yii::app()->user->id && strpos(Yii::app()->request->requestUri, '/logout') === false)
 		{
 			$user = Users::model()->findByPk(Yii::app()->user->id);
 
 			if ($user->profiles)
 			{
-				if ($user->profiles->userType == UserTypes::FREIGHTER)
+				if ($user->profiles->userType->id == UserTypes::FREIGHTER)
 					$this->redirect('/goods/search');
-				if ($user->profiles->userType == UserTypes::SHIPPER)
+				if ($user->profiles->userType->id == UserTypes::SHIPPER)
 					$this->redirect('/vehicle/search');
-				if ($user->profiles->userType == UserTypes::DISPATCHER)
+				if ($user->profiles->userType->id == UserTypes::DISPATCHER)
 				{
 					if (count($user->vehicles) >= count($user->goods))
 						$this->redirect('/goods/search');
@@ -34,14 +34,14 @@ class MainController extends Controller
 					$this->redirect('/user');
 			}
 		}
-		
+
 		$criteria = new CDbCriteria();
 		$criteria->condition = 'date_to > ' . time() . ' AND is_deleted = 0';
 		$criteria->limit = Yii::app()->params['mainPageItems'];
 		$criteria->order = 'updated_at DESC, created_at DESC';
 
 		$this->mainVehicles = Vehicle::model()->findAll($criteria);
-		
+
 		$criteria->condition = 'date_to > ' . time() . ' AND is_deleted = 0';
 		$criteria->limit = Yii::app()->params['mainPageItems'];
 		$criteria->order = 'updated_at DESC, created_at DESC';
