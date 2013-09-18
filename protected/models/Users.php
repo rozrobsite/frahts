@@ -305,4 +305,26 @@ class Users extends CActiveRecord
 			'negative' => abs($negative),
 		);
 	}
+
+	public function getInfoForChat()
+	{
+		$avatar = isset($this->profiles) && $this->profiles ? Yii::app()->params['host'] . '/' . Yii::app()->params['files']['avatars'] . $this->id . '_s.jpg' : '';
+		$name = isset($this->profiles) && $this->profiles ? $this->profiles->fullName() : 'Без профайла';
+		$userType = isset($this->profiles) && $this->profiles ? $this->profiles->userType->name_ru : 'Неизвестно';
+
+		$user = array(
+			'nick' => $this->profiles->shortName(),
+			'avatar' => $avatar,
+			'id' => $this->id,
+			'email' => $this->email,
+			'data' => array("Username" => $name, 'Usertype' => $userType, 'Email' => $this->email)
+		);
+
+		$time = time();
+		$secret = Yii::app()->params['chat']['key']['test'];
+		$user_base64 = base64_encode(json_encode($user));
+		$sign = md5($secret . $user_base64 . $time);
+
+		return $user_base64 . "_" . $time . "_" . $sign;
+	}
 }

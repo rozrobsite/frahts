@@ -245,5 +245,11 @@ return array(
 		'host' => 'http://gruz2.host5841.de1.dp10.ru',
 
 		'mainPageItems' => 3,
+		'chat' => array(
+			'key' => array(
+				'test' => 'ihFAhX5YXs',
+				'product' => 'Q3I8bkUgCj',
+			),
+		),
 	),
 );
