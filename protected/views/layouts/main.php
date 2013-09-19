@@ -173,11 +173,11 @@
 			<?php echo $content; ?>
 
 			<script type="text/javascript">
-				_shcp = [];
+				/*_shcp = [];
 				_shcp.push({widget_id : 629422, widget : "Chat", auth : "<?php echo $this->user->getInfoForChat(); ?>"});
 				(function() { var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
 					hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://widget.siteheart.com/apps/js/sh.js";
-					var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hcc, s.nextSibling); })();
+					var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hcc, s.nextSibling); })();*/
 			</script>
 		<?php endif; ?>
 

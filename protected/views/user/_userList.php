@@ -9,7 +9,7 @@
 					<strong><?php echo $user->profiles->shortName(); ?></strong>
 					<i><?php echo $user->profiles->userType->name_ru; ?></i>
 				</span>
-				<?php $status = $receivingUser->id == $user->id ? 'status_available' : 'status_off'; ?>
+				<?php $status = $receivingUser && $receivingUser->id == $user->id ? 'status_available' : 'status_off'; ?>
 				<span class="<?php echo $status; ?>"></span>
 				<span class="clear"></span>
 			</a>

@@ -140,3 +140,16 @@ CREATE TABLE `parser_promua` (
 
 --12.09.2013
 ALTER TABLE `goods` ADD `distance` INT(6) NULL DEFAULT 0;
+
+--19.09.2013 no frahts.com
+CREATE TABLE partners (
+						id INT NOT NULL AUTO_INCREMENT,
+						user_id INT (11) UNSIGNED NOT NULL,
+						partner_id INT(11) UNSIGNED NOT NULL,
+						PRIMARY KEY (id),
+						KEY user_id (user_id),
+						KEY partner_id (partner_id)
+					) ENGINE = InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+ALTER TABLE partners ADD FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE partners ADD FOREIGN KEY (partner_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE RESTRICT;

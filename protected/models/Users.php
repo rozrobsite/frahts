@@ -139,6 +139,8 @@ class Users extends CActiveRecord
 			'offersReceiving' => array(self::HAS_MANY, 'Offers', 'receiving_user_id'),
 			'reviewsAuthor' => array(self::HAS_MANY, 'Reviews', 'author_id'),
 			'reviewsReceiving' => array(self::HAS_MANY, 'Reviews', 'receiving_user_id'),
+			'partnerUsers' => array(self::HAS_MANY, 'Partners', 'user_id'),
+			'partnerPartners' => array(self::HAS_MANY, 'Partners', 'partner_id'),
 		);
 	}
 
