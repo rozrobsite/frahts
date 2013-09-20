@@ -5,6 +5,8 @@ class PartnersController extends FrahtController
 	public function actionIndex()
 	{
 		$countries = Country::model()->findAll();
+
+		UserTags::model()->searchUsers();
 //		$listRegions = array();
 //		if (isset($model->country_id) && $model->country_id) {
 //			$listRegions = CHtml::listData($model->countries->regions, 'id', 'name_ru');
