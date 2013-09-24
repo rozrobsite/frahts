@@ -91,7 +91,7 @@ class Goods extends CActiveRecord {
 		return array(
 			array('name, cost, currency_id, payment_type_id, country_id_from, region_id_from, country_id_to, region_id_to,
 				city_id_from, city_id_to, shipments, body_types', 'required'),
-			array('fee', 'checkFee'),
+//			array('fee', 'checkFee'),
 			array('date_from, date_to', 'required'),
 			array('cost, currency_id, payment_type_id', 'numerical', 'integerOnly' => true),
 			array('country_id_from, region_id_from, country_id_to, region_id_to', 'length', 'max' => 10),

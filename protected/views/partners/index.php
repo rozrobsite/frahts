@@ -1,6 +1,5 @@
 <?php
-/* @var $this UserController */
-/* @var $model Users */
+Yii::app()->clientScript->registerScriptFile('/js/files/partners.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->name . ' - Партнеры';
 $this->breadcrumbs = array(

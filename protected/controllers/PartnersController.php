@@ -2,6 +2,9 @@
 
 class PartnersController extends FrahtController
 {
+	const ERROR_NO = 0;
+	const ERROR_NOT_AJAX = 1;
+
 	public function actionIndex()
 	{
 		$countries = Country::model()->findAll();
@@ -24,9 +27,31 @@ class PartnersController extends FrahtController
 
 	public function actionSearch()
 	{
-		$this->render('search', array(
+		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
+		{
+			echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
 
-		));
+			Yii::app()->end();
+		}
+
+		$data = array();
+		parse_str(Yii::app()->request->getPost('data'), $data);
+
+		$attributes = array(
+			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int)$data['partnerSearchCountry'] : 0,
+			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int)$data['partnerSearchRegion'] : 0,
+			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int)$data['partnerSearchCity'] : 0,
+			'partnerSearchShipper' => isset($data['partnerSearchShipper']) ? true : false,
+			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) ? true : false,
+			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) ? true : false,
+			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+		);
+
+		$users = UserTags::model()->searchUsers($attributes);
+
+		echo $this->respondJSON(array('error' => self::ERROR_NO, 'response' => $searchList));
+
+		Yii::app()->end();
 	}
 
 	// Uncomment the following methods and override them if needed

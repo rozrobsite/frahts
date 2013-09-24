@@ -41,7 +41,25 @@
 				</select>
 			</div>
 			<div class="formRow">
-				<input type="text" name="partnerSearchName" placeholder="Введите имя" />
+				<input type="checkbox" id="partnerSearchShipper" name="partnerSearchShipper" checked="checked" class="check" />
+				<label for="partnerSearchShipper"  class="nopadding">Грузоперевозчики</label>
+				<div class="clear"></div>
+			</div>
+			<div class="formRow">
+				<input type="checkbox" id="partnerSearchFreighter" name="partnerSearchFreighter" checked="checked" class="check" />
+				<label for="partnerSearchFreighter"  class="nopadding">Грузоотправители</label>
+				<div class="clear"></div>
+			</div>
+			<div class="formRow">
+				<input type="checkbox" id="partnerSearchDispatcher" name="partnerSearchDispatcher" checked="checked" class="check" />
+				<label for="partnerSearchDispatcher"  class="nopadding">Логистические операторы</label>
+				<div class="clear"></div>
+			</div>
+			<div class="formRow">
+				<input type="text" name="partnerSearchWords" placeholder="Введите имя или название" />
+			</div>
+			<div class="formRow noBorderB">
+				<input type="submit" class="buttonS bLightBlue" value="Найти">
 			</div>
 
 			<div class="divider"><span></span></div>
