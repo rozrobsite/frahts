@@ -8,20 +8,11 @@ class PartnersController extends FrahtController
 	public function actionIndex()
 	{
 		$countries = Country::model()->findAll();
-
-		UserTags::model()->searchUsers();
-//		$listRegions = array();
-//		if (isset($model->country_id) && $model->country_id) {
-//			$listRegions = CHtml::listData($model->countries->regions, 'id', 'name_ru');
-//		}
-//
-//		$listCities = array();
-//		if (isset($model->region_id) && $model->region_id) {
-//			$listCities = CHtml::listData($model->regions->cities, 'id', 'name_ru');
-//		}
-
+		$profiles = Profiles::model()->getUsers($this->user);
+		
 		$this->render('index', array(
 			'countries' => $countries,
+			'profiles' => $profiles,
 		));
 	}
 

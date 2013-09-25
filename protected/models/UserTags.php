@@ -100,16 +100,24 @@ class UserTags extends CActiveRecord {
 		if ($attributes['partnerSearchDispatcher'])
 			$userTypeIds[] = UserTypes::DISPATCHER;
 
-		$where = $attributes['partnerSearchWords'] ? 'WHERE MATCH(ut.text) AGAINST("' . $attributes['partnerSearchWords'] . '" IN BOOLEAN MODE) > 0' : '';
+		$words_arr = explode(' ', trim($attributes['partnerSearchWords']));
+		$tmpWordsArr = array();
+		foreach ($words_arr as $word)
+		{
+			$tmpWordsArr[] = trim($word, ',. !@#$%^&*()_+=-{}[]\'"\\|/?><*') . '*';
+		}
+		$wordsStr = join(' ', $tmpWordsArr);
+
+		$where = $attributes['partnerSearchWords'] ? 'WHERE MATCH(ut.text) AGAINST("' . $wordsStr . '" IN BOOLEAN MODE) > 0' : '';
 
 		$on = count($onCondition) ? ' AND ' . join(' AND ', $onCondition) : '';
 		$userTypes = count($userTypeIds) ? ' AND p.user_type_id IN (' . join(',', $userTypeIds) . ') ' : '';
 
-		$query = 'SELECT ut.id FROM `user_tags` ut
+		$query = 'SELECT ut.id, MATCH(ut.text) AGAINST("' . $wordsStr . '" IN BOOLEAN MODE) as relev FROM `user_tags` ut
 					JOIN profiles p ON p.user_id = ut.id' . $on . $userTypes . $where . '
 					GROUP BY ut.id
-					ORDER BY count(*) DESC, ut.id ASC';
-
+					ORDER BY count(*) DESC, relev DESC, ut.id ASC';
+		
 		$userIds = Yii::app()->db->createCommand($query)->queryAll();
 
 		if (count($userIds)) {

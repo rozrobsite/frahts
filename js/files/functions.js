@@ -526,6 +526,43 @@ $(function() {
 
 		});
 
+	oTableUsers = $('#searchUsersResult.dTable').dataTable({
+		"bJQueryUI": false,
+		"bAutoWidth": false,
+		"sPaginationType": "full_numbers",
+		"sDom": '<"H"fl>t<"F"ip>',
+		"aaSorting": [[ 3, "desc" ]],
+		"oLanguage": {
+			"sLengthMenu": "Показать _MENU_ шт. на страницу",
+			"sInfoFiltered": "(из _MAX_ шт.)",
+			"sInfo": "Всего: _TOTAL_ шт.",
+			"sSearch": "Поиск"
+		},
+		"aoColumns": [
+			{
+				'bSortable': false,
+				'bSearchable': false
+			},
+			{
+				'bSortable': false,
+				'bSearchable': false
+			},
+			{
+				'bSortable': false,
+				'bSearchable': false
+			},
+			{
+				'bSortable': false,
+				'bSearchable': false
+			},
+			{
+				'bSortable': false,
+				'bSearchable': false
+			}
+		]
+
+		});
+
 
 	//===== Dynamic table toolbars =====//
 
@@ -682,7 +719,7 @@ $(function() {
 
 	for (var n in opts)
 		$("#"+n).spinner(opts[n]);
-	
+
 	$("button").click(function(e){
 //		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
 //

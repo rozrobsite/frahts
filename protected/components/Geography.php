@@ -15,11 +15,8 @@ class Geography {
 		$results = file_get_contents('http://maps.yandex.ua/?rll=' . $latFrom . '%2C' . $lngFrom . '~' . $latTo . '%2C' . $lngTo . '&output=json&locale=ru');
 		$result = json_decode($results);
 
-//		echo '<pre>';
-//		print_r($result->vpage->data->response->data->features[0]->properties->RouteMetaData->Distance->text);
-//		echo '</pre>';
-
-		return round($result->vpage->data->response->data->features[0]->properties->RouteMetaData->Distance->value / 1000);
+		$distance = isset($result->vpage->data->response->data->features[0]->properties->RouteMetaData->Distance->value) ? $result->vpage->data->response->data->features[0]->properties->RouteMetaData->Distance->value / 1000 : 0;
+		return round($distance);
 	}
 }
 
