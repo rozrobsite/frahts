@@ -43,7 +43,7 @@ var partnerSearch =
 	init: function()
 	{
 		$('#searchPartnersForm').on('submit', function(e){
-			$.post('/partners/search', {
+			$.post('/partners/find', {
 				data: $(this).serialize()
 			}, function(response){
 

@@ -9,7 +9,7 @@ class PartnersController extends FrahtController
 	{
 		$countries = Country::model()->findAll();
 		$profiles = Profiles::model()->getUsers($this->user);
-		
+
 		$this->render('index', array(
 			'countries' => $countries,
 			'profiles' => $profiles,
@@ -17,6 +17,17 @@ class PartnersController extends FrahtController
 	}
 
 	public function actionSearch()
+	{
+		$countries = Country::model()->findAll();
+		$profiles = Profiles::model()->getUsers($this->user);
+
+		$this->render('search', array(
+			'countries' => $countries,
+			'profiles' => $profiles,
+		));
+	}
+
+	public function actionFind()
 	{
 		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
 		{

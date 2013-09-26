@@ -1,9 +1,9 @@
 <?php
 Yii::app()->clientScript->registerScriptFile('/js/files/partners.js', CClientScript::POS_BEGIN);
 
-$this->pageTitle = Yii::app()->name . ' - Партнеры';
+$this->pageTitle = Yii::app()->name . ' - Поиск пользователей';
 $this->breadcrumbs = array(
-	'Партнеры',
+	'Поиск пользователей',
 );
 ?>
 
@@ -39,59 +39,72 @@ $this->breadcrumbs = array(
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 
 		<div class="fluid">
-			<div class="widget grid12">
-				<div class="whead"><h6>Список пользователей</h6><div class="clear"></div></div>
-					<div id="dyn" class="hiddenpars">
-						<table cellpadding="0" cellspacing="0" border="0" class="dTable" id="searchUsersResult">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Имя</th>
-								<th style="background: #EEE;">Организация</th>
-								<th>Расположение</th>
-								<th style="background: #EEE;">Действия</th>
-							</tr>
-						</thead>
-						<tbody style="text-align: center;">
-							<?php foreach ($profiles as $profile): ?>
-							<?php
-//										echo '<pre>';
-//										print_r($profile->user->id);
-//										echo '</pre>';die();
-							?>
-							<tr class="gradeX">
-								<td>
-									<a href="/user/view/<?php echo $profile->user->id ?>" title="">
-										<img src="<?php echo ($profile->avatar ? '/' . Yii::app()->params['files']['avatars'] . $profile->user->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>" alt="" />
-									</a>
-								</td>
-								<td>
-									<a href="/user/view/<?php echo $profile->user->id ?>" title=""><?php echo $profile->shortName(); ?></a>
-								</td>
-								<td>
-									<?php echo isset($profile->user->organizations) && $profile->user->organizations ? $profile->user->organizations->name_org : 'Нет данных'; ?>
-								</td>
-								<td class="center">
-									<?php echo $profile->locationString(); ?>
-								</td>
-								<td class="center">
-									<div class="btn-group">
-                                        <a href="#" class="tablectrl_small bDefault" data-toggle="dropdown">
-                                            <span class="iconb" data-icon="&#xe1f7;"></span>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" class=""><span class="icon-plus"></span>Add</a></li>
-                                            <li><a href="#" class=""><span class="icon-remove"></span>Remove</a></li>
-                                            <li><a href="#" class=""><span class="icon-pen_alt2"></span>Edit</a></li>
-                                            <li><a href="#" class=""><span class="icon-heart"></span>Do whatever you like</a></li>
-                                        </ul>
-                                    </div>
-								</td>
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
-						</table>
-					</div>
+			<div class="widget">
+				<div class="whead"><h6>With custom toolbar</h6><div class="clear"></div></div>
+				<ul class="tToolbar">
+					<li>
+						<a href="#" title="">
+						<div class="selector">
+							<select id="partnerSearchCountry" name="partnerSearchCountry" >
+								<option value="">Выберите страну</option>
+								<?php foreach ($countries as $country): ?>
+									<option value="<?php echo $country->id; ?>"><?php echo $country->name_ru; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						</a>
+					</li>
+					<li><a href="#" title=""><span class="icos-outbox"></span>Export table content</a></li>
+					<li><a href="#" title=""><span class="icos-download"></span>Download statement</a></li>
+				</ul>
+				<table cellpadding="0" cellspacing="0" width="100%" class="tDefault">
+					<thead>
+						<tr>
+							<td>Column name</td>
+							<td>Column name</td>
+							<td>Column name</td>
+							<td>Column name</td>
+							<td>Column name</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Row 1</td>
+							<td>Row 2</td>
+							<td>Row 3</td>
+							<td>Row 4</td>
+							<td>Row 5</td>
+						</tr>
+						<tr>
+							<td>Row 1</td>
+							<td>Row 2</td>
+							<td>Row 3</td>
+							<td>Row 4</td>
+							<td>Row 5</td>
+						</tr>
+						<tr>
+							<td>Row 1</td>
+							<td>Row 2</td>
+							<td>Row 3</td>
+							<td>Row 4</td>
+							<td>Row 5</td>
+						</tr>
+						<tr>
+							<td>Row 1</td>
+							<td>Row 2</td>
+							<td>Row 3</td>
+							<td>Row 4</td>
+							<td>Row 5</td>
+						</tr>
+						<tr>
+							<td>Row 1</td>
+							<td>Row 2</td>
+							<td>Row 3</td>
+							<td>Row 4</td>
+							<td>Row 5</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 
 		</div>
