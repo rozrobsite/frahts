@@ -184,7 +184,9 @@ class Profiles extends CActiveRecord
 		$criteria->condition = 'user_id <> ' . $currentUser->id;
 		$criteria->order = 'created_at DESC, user_id DESC';
 
-		return $this->findAll($criteria);
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
 	}
 
 	public function locationString()

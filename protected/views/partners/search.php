@@ -38,10 +38,12 @@ $this->breadcrumbs = array(
 		<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 
-		<div class="fluid">
+		<div class="fluid grid12">
 			<?php
 			$form = $this->beginWidget('CActiveForm', array(
 				'id' => 'searchPartnersForm',
+				'method' => 'get',
+				'action' => '/partners/search',
 				'enableAjaxValidation' => false,
 				'clientOptions' => array(
 					'validateOnSubmit' => false,
@@ -49,103 +51,106 @@ $this->breadcrumbs = array(
 				'htmlOptions' => array('class' => 'main'),
 				));
 			?>
-			<fieldset>
-				<div class="widget" style="min-width: 566px;max-width: 566px;">
-					<div class="whead"><h6>Настройки поиска</h6><div class="clear"></div></div>
-					<div class="formRow">
-						<div class="" style="float: left; margin-right: 20px;">
-							<select id="partnerSearchCountry" name="partnerSearchCountry">
-								<option value="">Выберите страну</option>
-								<?php foreach ($countries as $country): ?>
-									<option value="<?php echo $country->id; ?>"><?php echo $country->name_ru; ?></option>
-								<?php endforeach; ?>
-							</select>
+			<style>
+				.formRow{padding-top: 12px;}
+			</style>
+			<div class="widget grid2" style="min-width: 250px;">
+                <div class="whead"><h6>Настройки поиска</h6><div class="clear"></div></div>
+                <div class="body">
+					<fieldset>
+						<div class="formRow">
+							<div>
+								<select id="partnerSearchCountry" name="partnerSearchCountry">
+									<option value="">Выберите страну</option>
+									<?php foreach ($countries as $country): ?>
+										<option value="<?php echo $country->id; ?>"><?php echo $country->name_ru; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="float: left; margin-right: 20px;">
-							<select id="partnerSearchRegion" name="partnerSearchRegion" >
-								<option value="">Выберите регион</option>
-							</select>
+						<div class="formRow">
+							<div>
+								<select id="partnerSearchRegion" name="partnerSearchRegion" >
+									<option value="">Выберите регион</option>
+								</select>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="margin-right: 20px;">
-							<select id="partnerSearchCity" name="partnerSearchCity" >
-								<option value="">Выберите населенный пункт</option>
-							</select>
+						<div class="formRow">
+							<div>
+								<select id="partnerSearchCity" name="partnerSearchCity" >
+									<option value="">Выберите населенный пункт</option>
+								</select>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="float: left; margin-right: 20px; margin-top: 20px;">
-							<input type="checkbox" id="partnerSearchShipper" name="partnerSearchShipper" checked="checked" class="check" />
-							<label for="partnerSearchShipper"  class="nopadding">Грузоперевозчики</label>
+						<div class="formRow">
+							<div>
+								<input type="checkbox" id="partnerSearchShipper" name="partnerSearchShipper" checked="checked" class="check" />
+								<label for="partnerSearchShipper"  class="nopadding">Грузоперевозчики</label>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="float: left; margin-right: 20px; margin-top: 20px;">
-							<input type="checkbox" id="partnerSearchFreighter" name="partnerSearchFreighter" checked="checked" class="check" />
-							<label for="partnerSearchFreighter"  class="nopadding">Грузоотправители</label>
+						<div class="formRow">
+							<div>
+								<input type="checkbox" id="partnerSearchFreighter" name="partnerSearchFreighter" checked="checked" class="check" />
+								<label for="partnerSearchFreighter"  class="nopadding">Грузоотправители</label>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="margin-right: 20px; margin-top: 20px;">
-							<input type="checkbox" id="partnerSearchDispatcher" name="partnerSearchDispatcher" checked="checked" class="check" />
-							<label for="partnerSearchDispatcher"  class="nopadding">Логистические операторы</label>
+						<div class="formRow">
+							<div>
+								<input type="checkbox" id="partnerSearchDispatcher" name="partnerSearchDispatcher" checked="checked" class="check" />
+								<label for="partnerSearchDispatcher"  class="nopadding">Логистические операторы</label>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="margin-right: 20px; margin-top: 20px;">
-							<input type="text" name="partnerSearchWords" placeholder="Введите имя или название" />
+						<div class="formRow">
+							<div>
+								<input type="text" name="partnerSearchWords" placeholder="Введите имя или название" />
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="" style="margin-top: 20px; text-align: right">
-							<input type="submit" class="buttonS bLightBlue" value="Найти">
+						<div class="formRow">
+							<div style="text-align: right">
+								<input type="submit" class="buttonS bLightBlue" value="Найти">
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="clear"></div>
-					</div>
+					</fieldset>
 				</div>
-			</fieldset>
-			<?php $this->endWidget(); ?>
-			<div class="widget">
-				<div class="whead"><h6>Список пользователей</h6><div class="clear"></div></div>
-				<table cellpadding="0" cellspacing="0" width="100%" class="tDefault">
-					<thead>
-						<tr>
-							<td>Column name</td>
-							<td>Column name</td>
-							<td>Column name</td>
-							<td>Column name</td>
-							<td>Column name</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Row 1</td>
-							<td>Row 2</td>
-							<td>Row 3</td>
-							<td>Row 4</td>
-							<td>Row 5</td>
-						</tr>
-						<tr>
-							<td>Row 1</td>
-							<td>Row 2</td>
-							<td>Row 3</td>
-							<td>Row 4</td>
-							<td>Row 5</td>
-						</tr>
-						<tr>
-							<td>Row 1</td>
-							<td>Row 2</td>
-							<td>Row 3</td>
-							<td>Row 4</td>
-							<td>Row 5</td>
-						</tr>
-						<tr>
-							<td>Row 1</td>
-							<td>Row 2</td>
-							<td>Row 3</td>
-							<td>Row 4</td>
-							<td>Row 5</td>
-						</tr>
-						<tr>
-							<td>Row 1</td>
-							<td>Row 2</td>
-							<td>Row 3</td>
-							<td>Row 4</td>
-							<td>Row 5</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+            </div>
 
+			<div class="widget grid9">
+				<div class="whead"><h6>Список пользователей</h6><div class="clear"></div></div>
+				<div class="body">
+					<?php
+					$this->widget('ext.widgets.EColumnListView', array(
+						'dataProvider' => $profiles,
+						'itemView' => '_item',
+						'columns' => 3,
+						'emptyText'=>'Пользователей не надено.',
+						'summaryText'=>"{start}&mdash;{end} из {count}",
+						'template' => "{items}\n{pager}",
+						'pagerCssClass' => 'pagination',
+						'pager' => array(
+							'prevPageLabel' => '<',
+							'firstPageLabel' => '<<',
+							'nextPageLabel' => '>',
+							'lastPageLabel' => '>>',
+							'header' => '',
+							'cssFile' => '/css/pager.css',
+							'class' => 'CLinkPager',
+							'htmlOptions' => array(
+								'class' => 'pages'
+							),
+						),
+					));
+					?>
+				</div>
+			</div>
+			<?php $this->endWidget(); ?>
 		</div>
 
     </div>

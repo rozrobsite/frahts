@@ -19,7 +19,22 @@ class PartnersController extends FrahtController
 	public function actionSearch()
 	{
 		$countries = Country::model()->findAll();
-		$profiles = Profiles::model()->getUsers($this->user);
+//		$profiles = Profiles::model()->getUsers($this->user);
+
+		$data = $_GET;
+//		parse_str(Yii::app()->request->getPost('data'), $data);
+
+		$attributes = array(
+			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int)$data['partnerSearchCountry'] : 0,
+			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int)$data['partnerSearchRegion'] : 0,
+			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int)$data['partnerSearchCity'] : 0,
+			'partnerSearchShipper' => isset($data['partnerSearchShipper']) ? true : false,
+			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) ? true : false,
+			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) ? true : false,
+			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+		);
+
+		$profiles = UserTags::model()->searchUsers($attributes);
 
 		$this->render('search', array(
 			'countries' => $countries,

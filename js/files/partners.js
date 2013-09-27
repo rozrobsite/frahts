@@ -57,5 +57,5 @@ var partnerSearch =
 $(document).ready(function(){
 	partnerSearchCountry.init();
 	partnerSearchRegion.init();
-	partnerSearch.init();
+//	partnerSearch.init();
 });

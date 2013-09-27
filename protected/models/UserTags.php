@@ -79,11 +79,6 @@ class UserTags extends CActiveRecord {
 	}
 
 	public function searchUsers($attributes = null) {
-//		$country_id = isset($attributes['partnerSearchCountry']) ? $attributes['partnerSearchCountry'] : 0;
-//		$region_id = isset($attributes['partnerSearchRegion']) ? $attributes['partnerSearchRegion'] : 0;
-//		$city_id = isset($attributes['city_id']) ? $attributes['city_id'] : 0;
-//		$term = isset($attributes['term']) ? trim($attributes['term']) : '';
-
 		$onCondition = array();
 		if ($attributes['partnerSearchCountry'])
 			$onCondition[] = 'p.country_id = ' . $attributes['partnerSearchCountry'];
@@ -102,8 +97,7 @@ class UserTags extends CActiveRecord {
 
 		$words_arr = explode(' ', trim($attributes['partnerSearchWords']));
 		$tmpWordsArr = array();
-		foreach ($words_arr as $word)
-		{
+		foreach ($words_arr as $word) {
 			$tmpWordsArr[] = trim($word, ',. !@#$%^&*()_+=-{}[]\'"\\|/?><*') . '*';
 		}
 		$wordsStr = join(' ', $tmpWordsArr);
@@ -117,7 +111,7 @@ class UserTags extends CActiveRecord {
 					JOIN profiles p ON p.user_id = ut.id' . $on . $userTypes . $where . '
 					GROUP BY ut.id
 					ORDER BY count(*) DESC, relev DESC, ut.id ASC';
-		
+
 		$userIds = Yii::app()->db->createCommand($query)->queryAll();
 
 		if (count($userIds)) {
@@ -130,6 +124,9 @@ class UserTags extends CActiveRecord {
 
 			return new CActiveDataProvider('Users', array(
 					'criteria' => $criteria,
+					'pagination' => array(
+						'pageSize' => 12,
+					),
 				));
 		}
 
