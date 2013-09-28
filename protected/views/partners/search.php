@@ -31,6 +31,7 @@ $this->breadcrumbs = array(
                 <li class="current"><a title="">Поиск пользователей</a></li>
             </ul>
         </div>
+		<?php $this->renderPartial('/blocks/_breadLinks') ?>
     </div>
 
     <!-- Main content -->
