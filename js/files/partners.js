@@ -11,7 +11,7 @@ var partnerSearchCountry =
 				$response = $(response).html();
 				$('#partnerSearchRegion').html($response);
 
-				updateSelect.update($('partnerSearchRegion'));
+				updateSelect.update($('#partnerSearchRegion'));
 
 				$('#partnerSearchRegion').change();
 			});
@@ -32,7 +32,7 @@ var partnerSearchRegion =
 				$response = $(response).html();
 				$('#partnerSearchCity').html($response);
 
-				updateSelect.update($('partnerSearchCity'));
+				updateSelect.update($('#partnerSearchCity'));
 			});
 		});
 	}
@@ -43,7 +43,7 @@ var partnerSearch =
 	init: function()
 	{
 		$('#searchPartnersForm').on('submit', function(e){
-			$.post('/partners/search', {
+			$.post('/partners/find', {
 				data: $(this).serialize()
 			}, function(response){
 
@@ -55,7 +55,8 @@ var partnerSearch =
 };
 
 $(document).ready(function(){
+	$('#partnerSearchCountry').change();
 	partnerSearchCountry.init();
 	partnerSearchRegion.init();
-	partnerSearch.init();
+//	partnerSearch.init();
 });

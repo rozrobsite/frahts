@@ -63,7 +63,7 @@ class Profiles extends CActiveRecord
 			array('last_name', 'length', 'max'=>64),
 			array('middle_name', 'length', 'max'=>20),
 			array('first_name, icq', 'length', 'max'=>12),
-			array('first_name, last_name, middle_name', 'match', 'pattern'=>'/^[A-Za-zА-Яа-яеЁєЄїЇіІ]+$/u', 'message'=>'Должны быть только буквы.'),
+			array('first_name, last_name, middle_name', 'match', 'pattern'=>'/^[A-Za-zА-Яа-яёЁєЄїЇіІ]+$/u', 'message'=>'Должны быть только буквы.'),
 			array('mobile', 'length', 'max'=>15),
 			array('address', 'length', 'max'=>128),
 			array('phone, skype', 'length', 'max'=>25),
@@ -178,4 +178,19 @@ class Profiles extends CActiveRecord
 		return $result;
 	}
 
+	public function getUsers($currentUser)
+	{
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'user_id <> ' . $currentUser->id;
+		$criteria->order = 'created_at DESC, user_id DESC';
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	public function locationString()
+	{
+		return $this->country->name_ru . ', ' . $this->region->name_ru . ', ' . $this->city->name_ru;
+	}
 }

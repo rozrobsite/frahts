@@ -8,24 +8,56 @@ class PartnersController extends FrahtController
 	public function actionIndex()
 	{
 		$countries = Country::model()->findAll();
-
-		UserTags::model()->searchUsers();
-//		$listRegions = array();
-//		if (isset($model->country_id) && $model->country_id) {
-//			$listRegions = CHtml::listData($model->countries->regions, 'id', 'name_ru');
-//		}
-//
-//		$listCities = array();
-//		if (isset($model->region_id) && $model->region_id) {
-//			$listCities = CHtml::listData($model->regions->cities, 'id', 'name_ru');
-//		}
+		$profiles = Profiles::model()->getUsers($this->user);
 
 		$this->render('index', array(
 			'countries' => $countries,
+			'profiles' => $profiles,
 		));
 	}
 
 	public function actionSearch()
+	{
+		$data = $_GET;
+
+		$attributes = array(
+			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int)$data['partnerSearchCountry'] : 0,
+			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int)$data['partnerSearchRegion'] : 0,
+			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int)$data['partnerSearchCity'] : 0,
+			'partnerSearchShipper' => isset($data['partnerSearchShipper']) && $data['partnerSearchShipper'] ? true : false,
+			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) && $data['partnerSearchFreighter'] ? true : false,
+			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) && $data['partnerSearchDispatcher'] ? true : false,
+			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+		);
+
+		$searchPartners = new SearchPartners($attributes);
+
+		$profiles = UserTags::model()->searchUsers($attributes);
+
+		$countries = CHtml::listData(Country::model()->findAll(), 'id', 'name_ru');
+		$regions = array();
+		if ($searchPartners->partnerSearchCountry)
+		{
+			$country = Country::model()->findByPk($searchPartners->partnerSearchCountry);
+			$regions = CHtml::listData($country->regions, 'id', 'name_ru');
+		}
+		$cities = array();
+		if ($searchPartners->partnerSearchRegion)
+		{
+			$region = Region::model()->findByPk($searchPartners->partnerSearchRegion);
+			$cities = CHtml::listData($region->cities, 'id', 'name_ru');
+		}
+
+		$this->render('search', array(
+			'countries' => $countries,
+			'regions' => $regions,
+			'cities' => $cities,
+			'profiles' => $profiles,
+			'model' => $searchPartners,
+		));
+	}
+
+	public function actionFind()
 	{
 		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
 		{

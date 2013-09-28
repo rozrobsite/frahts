@@ -5,12 +5,24 @@
 	<!-- Tabs container -->
 	<div id="tab-container" class="tab-container">
 		<ul class="iconsLine ic1 etabs">
-			<li class="user_profile_tab"><a href="#searchUsers" class="exp subClosed">Поиск партнеров</a></li>
+			<li class="user_profile_tab"><a href="#usersBlock" class="exp subClosed">Панель пользователя</a></li>
 		</ul>
 
 		<div class="divider"><span></span></div>
 
-		<?php
+		<div id="usersBlock">
+			<?php
+				$this->renderPartial('/blocks/_subnav', array(
+					'selectProfile' => false,
+					'selectOrganization' => false,
+					'selectReviews' => false,
+					'selectSearchUsers' => true,
+				));
+			?>
+			<div class="divider"><span></span></div>
+		</div>
+
+		<?php /*
 		$form = $this->beginWidget('CActiveForm',
 				array(
 			'id' => 'searchPartnersForm',
@@ -66,7 +78,7 @@
 
 
 		</div>
-		<?php $this->endWidget(); ?>
+		<?php $this->endWidget(); */?>
 
 		<div class="clear"></div>
 	</div>
