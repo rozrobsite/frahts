@@ -1,5 +1,5 @@
 <?php
-
+set_time_limit(0);
 class ParserController extends AdminController {
 
 	public function __construct($id, $module = null) {
@@ -109,7 +109,7 @@ class ParserController extends AdminController {
 			unlink (Yii::app()->params['files']['tmp2'] . 'gruztransport.txt');
 
 		$file = fopen(Yii::app()->params['files']['tmp2'] . 'gruztransport.txt', 'a');
-		foreach (range(0, $pages) as $page) {
+		foreach (range(200, $pages) as $page) {
 			$html = $simpleHtml->file_get_html('http://www.gruz-transport.com/company/find_' . $page . '.htm');
 
 			$count = 0;
