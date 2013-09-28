@@ -193,5 +193,4 @@ class Profiles extends CActiveRecord
 	{
 		return $this->country->name_ru . ', ' . $this->region->name_ru . ', ' . $this->city->name_ru;
 	}
-
 }

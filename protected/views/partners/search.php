@@ -28,7 +28,7 @@ $this->breadcrumbs = array(
         <div class="bc">
             <ul id="breadcrumbs" class="breadcrumbs">
                 <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li class="current"><a title="">Партнеры</a></li>
+                <li class="current"><a title="">Поиск пользователей</a></li>
             </ul>
         </div>
     </div>
@@ -60,61 +60,60 @@ $this->breadcrumbs = array(
 					<fieldset>
 						<div class="formRow">
 							<div>
-								<select id="partnerSearchCountry" name="partnerSearchCountry">
-									<option value="">Выберите страну</option>
-									<?php foreach ($countries as $country): ?>
-										<option value="<?php echo $country->id; ?>"><?php echo $country->name_ru; ?></option>
-									<?php endforeach; ?>
-								</select>
+								<?php
+									echo CHtml::activeDropDownList($model, 'partnerSearchCountry', $countries, array('empty' => 'Выберите страну', 'name' => 'partnerSearchCountry'));
+								?>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div>
-								<select id="partnerSearchRegion" name="partnerSearchRegion" >
-									<option value="">Выберите регион</option>
-								</select>
+								<?php
+									echo CHtml::activeDropDownList($model, 'partnerSearchRegion', $regions, array('empty' => 'Выберите регион', 'name' => 'partnerSearchRegion', 'class' => 'searchPartnerRegion'));
+								?>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div>
-								<select id="partnerSearchCity" name="partnerSearchCity" >
-									<option value="">Выберите населенный пункт</option>
-								</select>
+								<?php
+									echo CHtml::activeDropDownList($model, 'partnerSearchCity', $cities, array('empty' => 'Выберите населенный пункт', 'name' => 'partnerSearchCity', 'class' => 'searchPartnerCity'));
+								?>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div>
-								<input type="checkbox" id="partnerSearchShipper" name="partnerSearchShipper" checked="checked" class="check" />
+								<?php echo $form->checkBox($model, 'partnerSearchShipper', array('class' => 'check', 'name' => 'partnerSearchShipper')); ?>
 								<label for="partnerSearchShipper"  class="nopadding">Грузоперевозчики</label>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div>
-								<input type="checkbox" id="partnerSearchFreighter" name="partnerSearchFreighter" checked="checked" class="check" />
+								<?php echo $form->checkBox($model, 'partnerSearchFreighter', array('class' => 'check', 'name' => 'partnerSearchFreighter')); ?>
 								<label for="partnerSearchFreighter"  class="nopadding">Грузоотправители</label>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div>
-								<input type="checkbox" id="partnerSearchDispatcher" name="partnerSearchDispatcher" checked="checked" class="check" />
+								<?php echo $form->checkBox($model, 'partnerSearchDispatcher', array('class' => 'check', 'name' => 'partnerSearchDispatcher')); ?>
 								<label for="partnerSearchDispatcher"  class="nopadding">Логистические операторы</label>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div>
-								<input type="text" name="partnerSearchWords" placeholder="Введите имя или название" />
+								<?php echo $form->textField($model, 'partnerSearchWords', array('placeholder' => 'Введите имя или название', 'name' => 'partnerSearchWords')) ?>
 							</div>
 							<div class="clear"></div>
 						</div>
 						<div class="formRow">
 							<div style="text-align: right">
-								<input type="submit" class="buttonS bLightBlue" value="Найти">
+								<?php
+									echo CHtml::submitButton('Найти', array('class' => 'buttonS bLightBlue'));
+								?>
 							</div>
 							<div class="clear"></div>
 						</div>

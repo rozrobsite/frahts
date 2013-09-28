@@ -16,11 +16,11 @@ class UserTypes extends CActiveRecord
 	/**
 	 * Грузоотправитель
 	 */
-	const FREIGHTER = 1;
+	const FREIGHTER = 2;
 	/**
 	 * Грузоперевозчик
 	 */
-	const SHIPPER = 2;
+	const SHIPPER = 1;
 	/**
 	 * Логистический оператор
 	 */

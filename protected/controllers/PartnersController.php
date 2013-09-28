@@ -18,27 +18,42 @@ class PartnersController extends FrahtController
 
 	public function actionSearch()
 	{
-		$countries = Country::model()->findAll();
-//		$profiles = Profiles::model()->getUsers($this->user);
-
 		$data = $_GET;
-//		parse_str(Yii::app()->request->getPost('data'), $data);
 
 		$attributes = array(
 			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int)$data['partnerSearchCountry'] : 0,
 			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int)$data['partnerSearchRegion'] : 0,
 			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int)$data['partnerSearchCity'] : 0,
-			'partnerSearchShipper' => isset($data['partnerSearchShipper']) ? true : false,
-			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) ? true : false,
-			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) ? true : false,
+			'partnerSearchShipper' => isset($data['partnerSearchShipper']) && $data['partnerSearchShipper'] ? true : false,
+			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) && $data['partnerSearchFreighter'] ? true : false,
+			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) && $data['partnerSearchDispatcher'] ? true : false,
 			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
 		);
 
+		$searchPartners = new SearchPartners($attributes);
+
 		$profiles = UserTags::model()->searchUsers($attributes);
+
+		$countries = CHtml::listData(Country::model()->findAll(), 'id', 'name_ru');
+		$regions = array();
+		if ($searchPartners->partnerSearchCountry)
+		{
+			$country = Country::model()->findByPk($searchPartners->partnerSearchCountry);
+			$regions = CHtml::listData($country->regions, 'id', 'name_ru');
+		}
+		$cities = array();
+		if ($searchPartners->partnerSearchRegion)
+		{
+			$region = Region::model()->findByPk($searchPartners->partnerSearchRegion);
+			$cities = CHtml::listData($region->cities, 'id', 'name_ru');
+		}
 
 		$this->render('search', array(
 			'countries' => $countries,
+			'regions' => $regions,
+			'cities' => $cities,
 			'profiles' => $profiles,
+			'model' => $searchPartners,
 		));
 	}
 

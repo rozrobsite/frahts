@@ -102,7 +102,7 @@ class UserTags extends CActiveRecord {
 		}
 		$wordsStr = join(' ', $tmpWordsArr);
 
-		$where = $attributes['partnerSearchWords'] ? 'WHERE MATCH(ut.text) AGAINST("' . $wordsStr . '" IN BOOLEAN MODE) > 0' : '';
+		$where = $attributes['partnerSearchWords'] ? ' WHERE MATCH(ut.text) AGAINST("' . $wordsStr . '" IN BOOLEAN MODE) > 0' : '';
 
 		$on = count($onCondition) ? ' AND ' . join(' AND ', $onCondition) : '';
 		$userTypes = count($userTypeIds) ? ' AND p.user_type_id IN (' . join(',', $userTypeIds) . ') ' : '';
@@ -114,23 +114,20 @@ class UserTags extends CActiveRecord {
 
 		$userIds = Yii::app()->db->createCommand($query)->queryAll();
 
-		if (count($userIds)) {
-			$userIds = array_map('self::getItems', $userIds);
 
-			$criteria = new CDbCriteria();
-			$criteria->condition = 't.id IN (' . join(',', $userIds) . ')';
-			$criteria->order = 'profiles.created_at DESC';
-			$criteria->with = array('profiles');
+		$userIds = array_map('self::getItems', $userIds);
 
-			return new CActiveDataProvider('Users', array(
-					'criteria' => $criteria,
-					'pagination' => array(
-						'pageSize' => 12,
-					),
-				));
-		}
+		$criteria = new CDbCriteria();
+		$criteria->condition = count($userIds) ? 't.id IN (' . join(',', $userIds) . ')' : 't.id = 0';
+		$criteria->order = 'profiles.created_at DESC';
+		$criteria->with = array('profiles');
 
-		return array();
+		return new CActiveDataProvider('Users', array(
+				'criteria' => $criteria,
+				'pagination' => array(
+					'pageSize' => 12,
+				),
+			));
 	}
 
 	private static function getItems($item) {
