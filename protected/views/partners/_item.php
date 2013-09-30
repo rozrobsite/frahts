@@ -22,7 +22,7 @@
 		color: #808080;
 	}
 </style>
-<div class="widget" style="margin-right: 30px; width: 333px !important; min-width: 333px !important;">
+<div class="widget" style="margin-right: 30px; width: 200px !important; min-width: 333px !important;">
 	<div class="whead">
 		<h6><?php echo $data->profiles->userType->name_ru; ?></h6>
 		<div class="titleOpt">
