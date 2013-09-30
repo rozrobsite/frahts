@@ -125,7 +125,7 @@ class UserTags extends CActiveRecord {
 		return new CActiveDataProvider('Users', array(
 				'criteria' => $criteria,
 				'pagination' => array(
-					'pageSize' => 12,
+					'pageSize' => 5,
 				),
 			));
 	}
