@@ -11,22 +11,24 @@
 		<div class="divider"><span></span></div>
 
 		<div id="usersBlock">
-			<?php
+			<?php /*
 				$this->renderPartial('/blocks/_subnav', array(
 					'selectProfile' => false,
 					'selectOrganization' => false,
 					'selectReviews' => false,
 					'selectSearchUsers' => true,
-				));
+				));*/
 			?>
-			<div class="divider"><span></span></div>
+			<!--<div class="divider"><span></span></div>-->
 		</div>
 
-		<?php /*
+		<?php
 		$form = $this->beginWidget('CActiveForm',
 				array(
 			'id' => 'searchPartnersForm',
 			'enableAjaxValidation' => false,
+			'method' => 'get',
+			'action' => '/partners/search',
 			'clientOptions' => array(
 				'validateOnSubmit' => false,
 			),
@@ -35,52 +37,79 @@
 		?>
 		<div id="searchUsers" class="sideWidget">
 			<div class="formRow">
-				<select id="partnerSearchCountry" name="partnerSearchCountry" >
-					<option value="">Выберите страну</option>
-					<?php foreach ($countries as $country): ?>
-						<option value="<?php echo $country->id; ?>"><?php echo $country->name_ru; ?></option>
-					<?php endforeach; ?>
-				</select>
+				<?php
+					echo CHtml::activeDropDownList($model, 'partnerSearchCountry', $countries, array('empty' => 'Выберите страну', 'name' => 'partnerSearchCountry'));
+				?>
 			</div>
 			<div class="formRow">
-				<select id="partnerSearchRegion" name="partnerSearchRegion" >
-					<option value="">Выберите регион</option>
-				</select>
+				<?php
+					echo CHtml::activeDropDownList($model, 'partnerSearchRegion', $regions, array('empty' => 'Выберите регион', 'name' => 'partnerSearchRegion', 'class' => 'searchPartnerRegion'));
+				?>
 			</div>
 			<div class="formRow">
-				<select id="partnerSearchCity" name="partnerSearchCity" >
-					<option value="">Выберите населенный пункт</option>
-				</select>
+				<?php
+					echo CHtml::activeDropDownList($model, 'partnerSearchCity', $cities, array('empty' => 'Выберите населенный пункт', 'name' => 'partnerSearchCity', 'class' => 'searchPartnerCity'));
+				?>
 			</div>
 			<div class="formRow">
-				<input type="checkbox" id="partnerSearchShipper" name="partnerSearchShipper" checked="checked" class="check" />
+				<?php echo $form->checkBox($model, 'partnerSearchShipper', array('class' => 'check', 'name' => 'partnerSearchShipper')); ?>
 				<label for="partnerSearchShipper"  class="nopadding">Грузоперевозчики</label>
 				<div class="clear"></div>
 			</div>
 			<div class="formRow">
-				<input type="checkbox" id="partnerSearchFreighter" name="partnerSearchFreighter" checked="checked" class="check" />
+				<?php echo $form->checkBox($model, 'partnerSearchFreighter', array('class' => 'check', 'name' => 'partnerSearchFreighter')); ?>
 				<label for="partnerSearchFreighter"  class="nopadding">Грузоотправители</label>
 				<div class="clear"></div>
 			</div>
 			<div class="formRow">
-				<input type="checkbox" id="partnerSearchDispatcher" name="partnerSearchDispatcher" checked="checked" class="check" />
+				<?php echo $form->checkBox($model, 'partnerSearchDispatcher', array('class' => 'check', 'name' => 'partnerSearchDispatcher')); ?>
 				<label for="partnerSearchDispatcher"  class="nopadding">Логистические операторы</label>
 				<div class="clear"></div>
 			</div>
 			<div class="formRow">
-				<input type="text" name="partnerSearchWords" placeholder="Введите имя или название" />
+				<?php echo $form->textField($model, 'partnerSearchWords', array('placeholder' => 'Введите имя или название', 'name' => 'partnerSearchWords')) ?>
 			</div>
 			<div class="formRow noBorderB">
-				<input type="submit" class="buttonS bLightBlue" value="Найти">
+				<?php
+					echo CHtml::submitButton('Найти', array('class' => 'buttonS bLightBlue'));
+				?>
 			</div>
 
 			<div class="divider"><span></span></div>
 
 
 		</div>
-		<?php $this->endWidget(); */?>
+		<?php $this->endWidget(); ?>
 
 		<div class="clear"></div>
+
+		<div id="alt1">
+			<?php
+				$this->widget('zii.widgets.CListView', array(
+					'dataProvider' => $profiles,
+					'itemView' => '_item',
+					'itemsTagName'=>'ul',
+					'itemsCssClass'=>'userList',
+					'emptyText'=>'Пользователей не надено.',
+					'summaryText'=>"{start}&mdash;{end} из {count}",
+					'template' => "{items}\n{pager}",
+					'pagerCssClass' => 'pagination',
+					'pager' => array(
+						'maxButtonCount'=>'3',
+						'prevPageLabel' => '<',
+						'firstPageLabel' => '<<',
+						'nextPageLabel' => '>',
+						'lastPageLabel' => '>>',
+						'header' => '',
+						'cssFile' => '/css/pager.css',
+						'class' => 'CLinkPager',
+						'htmlOptions' => array(
+							'class' => 'pages'
+						),
+					),
+				));
+				?>
+		</div>
 	</div>
 
 </div>

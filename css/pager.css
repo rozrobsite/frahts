@@ -1,7 +1,7 @@
 .pagination { margin: auto; width: auto; text-align: center; margin-top: 35px; }
 .pages {  }
-.pages li.previous { margin-right: 15px; }
-.pages li.next { margin-left: 15px; }
+.pages li.previous { margin-right: 0; }
+.pages li.next { margin-left: 0 !important; }
 .pages li.previous > a span, .pages li.next > a span { margin-right: 0; }
 .pages li {  display: inline-block; /*margin: 5px 0;*/ }
 .pages li.hidden{overflow: visible; display: none}
