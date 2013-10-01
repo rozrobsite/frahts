@@ -122,12 +122,25 @@ class UserTags extends CActiveRecord {
 		$criteria->order = 'profiles.created_at DESC';
 		$criteria->with = array('profiles');
 
-		return new CActiveDataProvider('Users', array(
+		// получаем количество записей
+		$count = Users::model()->count($criteria);
+
+		// создаем модель для пагинации pagination
+		$pages = new CPagination($count);
+		$pages->setPageSize(10); // устанавливаем количество записей на странице
+		$pages->applyLimit($criteria); // привязываем Criteria
+
+		$dataProvider = new CActiveDataProvider('Users', array(
 				'criteria' => $criteria,
 				'pagination' => array(
-					'pageSize' => 5,
+					'pageSize' => 10,
 				),
 			));
+
+		return array(
+			'dataProvider' => $dataProvider,
+			'pages' => $pages,
+		);
 	}
 
 	private static function getItems($item) {

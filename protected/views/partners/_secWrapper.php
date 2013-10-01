@@ -85,29 +85,29 @@
 
 		<div id="alt1">
 			<?php
-				$this->widget('zii.widgets.CListView', array(
-					'dataProvider' => $profiles,
-					'itemView' => '_item',
-					'itemsTagName'=>'ul',
-					'itemsCssClass'=>'userList',
-					'emptyText'=>'Пользователей не надено.',
-					'summaryText'=>"{start}&mdash;{end} из {count}",
-					'template' => "{items}\n{pager}",
-					'pagerCssClass' => 'pagination',
-					'pager' => array(
-						'maxButtonCount'=>'3',
-						'prevPageLabel' => '<',
-						'firstPageLabel' => '<<',
-						'nextPageLabel' => '>',
-						'lastPageLabel' => '>>',
-						'header' => '',
-						'cssFile' => '/css/pager.css',
-						'class' => 'CLinkPager',
-						'htmlOptions' => array(
-							'class' => 'pages'
-						),
-					),
-				));
+//				$this->widget('zii.widgets.CListView', array(
+//					'dataProvider' => $profiles,
+//					'itemView' => '_item',
+//					'itemsTagName'=>'ul',
+//					'itemsCssClass'=>'userList',
+//					'emptyText'=>'Пользователей не надено.',
+//					'summaryText'=>"{start}&mdash;{end} из {count}",
+//					'template' => "{items}\n{pager}",
+//					'pagerCssClass' => 'pagination',
+//					'pager' => array(
+//						'maxButtonCount'=>'3',
+//						'prevPageLabel' => '<',
+//						'firstPageLabel' => '<<',
+//						'nextPageLabel' => '>',
+//						'lastPageLabel' => '>>',
+//						'header' => '',
+//						'cssFile' => '/css/pager.css',
+//						'class' => 'CLinkPager',
+//						'htmlOptions' => array(
+//							'class' => 'pages'
+//						),
+//					),
+//				));
 				?>
 		</div>
 	</div>
