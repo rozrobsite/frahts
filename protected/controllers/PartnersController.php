@@ -49,12 +49,12 @@ class PartnersController extends FrahtController
 			$region = Region::model()->findByPk($searchPartners->partnerSearchRegion);
 			$cities = CHtml::listData($region->cities, 'id', 'name_ru');
 		}
-		
+
 		$this->render('search', array(
 			'countries' => $countries,
 			'regions' => $regions,
 			'cities' => $cities,
-			'profiles' => $profiles['dataProvider'],
+			'profiles' => $profiles['profiles'],
 			'pages' => $profiles['pages'],
 			'model' => $searchPartners,
 		));
@@ -89,9 +89,8 @@ class PartnersController extends FrahtController
 		Yii::app()->end();
 	}
 
-	public function actionView()
+	public function actionAdd()
 	{
-
 		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
 		{
 			echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
@@ -117,17 +116,47 @@ class PartnersController extends FrahtController
 			Yii::app()->end();
 		}
 
-		$offer_id = 0;
-		$offer = Offers::model()->madeDeal($this->user, $user, $offer_id);
+		$partner = new Partners();
+		$partner->user_id = $this->user->id;
+		$partner->partner_id = $partnerId;
 
-		$partnerView = $this->render('/user/_view', array(
-			'model' => $user,
-			'offer' => $offer,
-			'offer_id' => $offer_id,
-			'canWrite' => false,
-		), true, true);
+		$isAdd = $partner->insert();
 
-		echo $this->respondJSON(array('error' => self::ERROR_NO, 'view' => $partnerView));
+		echo $this->respondJSON(array('error' => self::ERROR_NO, 'isAdd' => $isAdd));
+
+		Yii::app()->end();
+	}
+
+	public function actionRemove()
+	{
+		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
+		{
+			echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
+
+			Yii::app()->end();
+		}
+
+		$partnerId = isset($_POST['partner_id']) ? (int) $_POST['partner_id'] : 0;
+
+		if (!$partnerId)
+		{
+			echo $this->respondJSON(array('error' => self::ERROR_WRONG_ID));
+
+			Yii::app()->end();
+		}
+
+		$user = Users::model()->findByPk($partnerId);
+
+		if (!is_object($user))
+		{
+			echo $this->respondJSON(array('error' => self::ERROR_NOT_FOUND));
+
+			Yii::app()->end();
+		}
+
+		$isRemove = Partners::model()->deleteAll('user_id = ' . $this->user->id . ' AND partner_id = ' . $partnerId);
+
+		echo $this->respondJSON(array('error' => self::ERROR_NO, 'isRemove' => $isRemove));
 
 		Yii::app()->end();
 	}

@@ -329,4 +329,15 @@ class Users extends CActiveRecord
 
 		return $user_base64 . "_" . $time . "_" . $sign;
 	}
+
+	public function isPartner($partner)
+	{
+		foreach ($this->partnerUsers as $item)
+		{
+			if ($item->partner_id == $partner->id)
+				return true;
+		}
+
+		return false;
+	}
 }

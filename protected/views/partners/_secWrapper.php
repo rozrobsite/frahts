@@ -5,7 +5,7 @@
 	<!-- Tabs container -->
 	<div id="tab-container" class="tab-container">
 		<ul class="iconsLine ic1 etabs">
-			<li class="user_profile_tab"><a href="#usersBlock" class="exp subClosed">Панель пользователя</a></li>
+			<li class="user_profile_tab"><a href="#usersBlock" class="exp subClosed">Поиск пользователей</a></li>
 		</ul>
 
 		<div class="divider"><span></span></div>
@@ -77,39 +77,11 @@
 
 			<div class="divider"><span></span></div>
 
-
 		</div>
 		<?php $this->endWidget(); ?>
 
 		<div class="clear"></div>
 
-		<div id="alt1">
-			<?php
-//				$this->widget('zii.widgets.CListView', array(
-//					'dataProvider' => $profiles,
-//					'itemView' => '_item',
-//					'itemsTagName'=>'ul',
-//					'itemsCssClass'=>'userList',
-//					'emptyText'=>'Пользователей не надено.',
-//					'summaryText'=>"{start}&mdash;{end} из {count}",
-//					'template' => "{items}\n{pager}",
-//					'pagerCssClass' => 'pagination',
-//					'pager' => array(
-//						'maxButtonCount'=>'3',
-//						'prevPageLabel' => '<',
-//						'firstPageLabel' => '<<',
-//						'nextPageLabel' => '>',
-//						'lastPageLabel' => '>>',
-//						'header' => '',
-//						'cssFile' => '/css/pager.css',
-//						'class' => 'CLinkPager',
-//						'htmlOptions' => array(
-//							'class' => 'pages'
-//						),
-//					),
-//				));
-				?>
-		</div>
 	</div>
 
 </div>
