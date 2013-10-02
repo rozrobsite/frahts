@@ -1,5 +1,5 @@
 <li>
-	<a href="javascript:void(0);" title="" style="font-size: 11px;">
+	<a href="/user/view/<?php echo $data->id; ?>" class="partner-item tipW" title="Перейти на страницу пользователя" style="font-size: 11px;" data-partner-id="<?php echo $data->id; ?>">
 		<img src="<?php echo ($data->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $data->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png') ?>" alt="" />
 		<span class="contactName">
 			<strong><?php echo $data->profiles->shortName(); ?></strong>

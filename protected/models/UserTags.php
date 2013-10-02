@@ -118,16 +118,29 @@ class UserTags extends CActiveRecord {
 		$userIds = array_map('self::getItems', $userIds);
 
 		$criteria = new CDbCriteria();
-		$criteria->condition = count($userIds) ? 't.id IN (' . join(',', $userIds) . ')' : 't.id = 0';
+		$criteria->condition = count($userIds) ? 't.id IN (' . join(',', $userIds) . ') && t.id <> ' . Yii::app()->user->id : 't.id = 0';
 		$criteria->order = 'profiles.created_at DESC';
 		$criteria->with = array('profiles');
 
-		return new CActiveDataProvider('Users', array(
-				'criteria' => $criteria,
-				'pagination' => array(
-					'pageSize' => 5,
-				),
-			));
+		// получаем количество записей
+		$count = Users::model()->count($criteria);
+
+		// создаем модель для пагинации pagination
+		$pages = new CPagination($count);
+		$pages->setPageSize(10); // устанавливаем количество записей на странице
+		$pages->applyLimit($criteria); // привязываем Criteria
+
+//		$dataProvider = new CActiveDataProvider('Users', array(
+//				'criteria' => $criteria,
+//				'pagination' => array(
+//					'pageSize' => 10,
+//				),
+//			));
+
+		return array(
+			'profiles' => Users::model()->findAll($criteria),
+			'pages' => $pages,
+		);
 	}
 
 	private static function getItems($item) {

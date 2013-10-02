@@ -39,4 +39,5 @@
 		<?php endif; ?>
 	</div>
 </div>
-<?php $this->renderPartial('/blocks/popups/_review', array('model'=>$model, 'offer_id' => $offer_id)); ?>
+
+<?php if ($canWrite) $this->renderPartial('/blocks/popups/_review', array('model'=>$model, 'offer_id' => $offer_id)); ?>

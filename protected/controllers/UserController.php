@@ -463,6 +463,7 @@ class UserController extends FrahtController
 
 		$this->render('view', array(
 			'model' => $user,
+			'offer' => $offer,
 			'offer_id' => $offer_id,
 			'canWrite' => $offer && !$offer->review_id,
 		));

@@ -1,7 +1,7 @@
 <script type="text/javascript">
 var myMap, route, incidental_goods = '';
 var good_id = <?php echo isset($model->id) ? $model->id : 0 ?>;
-var vehicle_id = <?php echo $vid ? $vid : 0 ?>;
+var vehicle_id = <?php echo isset($vid) && $vid ? $vid : 0 ?>;
 var center = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var start = [<?php echo $model->cityFrom->latitude ?>, <?php echo $model->cityFrom->longitude ?>];
 var end = [<?php echo $model->cityTo->latitude ?>, <?php echo $model->cityTo->longitude ?>];
@@ -97,13 +97,13 @@ $this->breadcrumbs = array(
 							<span><strong>Требуемые разрешения:</strong> <?php echo $permissions; ?></span>
 						<?php endif; ?>
 							<span><strong>Оплата:</strong> <?php echo $model->cost . ' ' . $model->currency->name_ru; ?> <label id="calculate"></label>
-								<?php $distance = $oneGood->distance; ?>
+								<?php $distance = $model->distance; ?>
 								<?php if ($distance): ?>
 									<?php if ($model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID): ?>
 										<label>(&asymp;&nbsp;<?php echo round($model->cost/$distance, 1); ?> <?php echo $model->currency->name_ru ?>/км)</label>
 									<?php endif; ?>
 								<?php else: ?>
-									<?php $distance = Geography::getDistanceByYandex($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?>
+									<?php $distance = Geography::getDistanceByYandex($model->cityFrom->latitude, $model->cityFrom->longitude, $model->cityTo->latitude, $model->cityTo->longitude); ?>
 									<?php if ($distance): ?>
 										<?php if ($model->currency->id <= Currency::MAX_CALCULATE_TYPE_ID): ?>
 											<label>(&asymp;&nbsp;<?php echo round($model->cost/$distance, 1); ?> <?php echo $model->currency->name_ru ?>/км)</label>
