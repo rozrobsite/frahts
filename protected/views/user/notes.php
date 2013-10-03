@@ -4,7 +4,7 @@
 
 $this->pageTitle = Yii::app()->name . ' - Заметки пользователя';
 $this->breadcrumbs = array(
-	'Заметки пользователя',
+	'current' => 'Заметки пользователя',
 );
 ?>
 
@@ -26,15 +26,6 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li class="current"><a title="">Заметки пользователя</a></li>
-            </ul>
-        </div>
-    </div>
 
     <!-- Main content -->
     <div class="wrapper">

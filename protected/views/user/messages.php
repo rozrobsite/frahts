@@ -4,7 +4,7 @@
 
 $this->pageTitle = Yii::app()->name . ' - Сообщения от пользователей';
 $this->breadcrumbs = array(
-	'Сообщения от пользователей',
+	'current' => 'Сообщения от пользователей',
 );
 ?>
 
@@ -26,21 +26,12 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li class="current"><a title="">Сообщения от пользователей</a></li>
-            </ul>
-        </div>
-    </div>
-
+    
     <!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
-		
+
 		<?php if ($receivingUser): ?>
 			<div class="enterMessage">
 				<input id="enterMessage" type="text" name="enterMessage" placeholder="Напишите сообщение..." data-receiving-id="<?php echo $receivingUser->id ?>" />
@@ -84,7 +75,7 @@ $this->breadcrumbs = array(
 							<?php if ($model->is_deleted) continue; ?>
 							<li class="<?php echo $this->user->id == $model->author->id ? 'by_user' : 'by_me'; ?> message_<?php echo $model->id; ?>">
 								<a href="javascript:void(0)" title="Перейти на страницу пользователя">
-									<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>" 
+									<img src="<?php echo ($model->author->profiles->avatar ? '/' . Yii::app()->params['files']['avatars'] . $model->author->id . '_s.jpg' : Yii::app()->params['imagesPath'] . 'userLogin3.png'); ?>"
 										 alt="<?php echo $model->author->profiles->fullName(); ?>" />
 								</a>
 								<div class="messageArea">
@@ -93,10 +84,10 @@ $this->breadcrumbs = array(
 												<a href="/user/view/<?php echo $model->author->id ?>">
 													<strong>
 														<?php echo $model->author->profiles->shortName(); ?>
-													</strong> 
+													</strong>
 												</a>
-												написал(а) 
-												<?php if (!$receivingUser): ?> для 
+												написал(а)
+												<?php if (!$receivingUser): ?> для
 													<a href="/user/view/<?php echo $model->receivingUser->id ?>">
 														<strong>
 															<?php echo $model->receivingUser->profiles->shortName(); ?>
@@ -106,9 +97,9 @@ $this->breadcrumbs = array(
 											</span>
 										<?php if (!$receivingUser): ?>
 										<?php $userId = $this->user->id == $model->author->id ? $model->receivingUser->id : $model->author->id; ?>
-											<a href="/user/messages/user/<?php echo $userId; ?>#users_message" 
-											   style="margin-left: 20px;" 
-											   class="message-edit" 
+											<a href="/user/messages/user/<?php echo $userId; ?>#users_message"
+											   style="margin-left: 20px;"
+											   class="message-edit"
 											   title="">Ответить</a>
 										<?php endif; ?>
 										<a href="javascript:void(0);" style="margin-left: 10px;color: #a34c4c;" class="message-remove message_remove_open" title="" data-message-id="<?php echo $model->id ?>">Удалить</a>

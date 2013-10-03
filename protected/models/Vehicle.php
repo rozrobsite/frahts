@@ -199,8 +199,9 @@ class Vehicle extends CActiveRecord
 
 	public function findAllByDeleted($is_deleted = true)
 	{
-		$condition = $is_deleted ? 'is_deleted = 1' : 'is_deleted = 0';
-		$condition .= ' AND user_id = ' . Yii::app()->user->id;
+//		$condition = $is_deleted ? 'is_deleted = 1' : 'is_deleted = 0';
+//		$condition .= ' AND user_id = ' . Yii::app()->user->id;
+		$condition = 'user_id = ' . Yii::app()->user->id;
 
 		return $this->findAll($condition . ' ORDER BY created_at DESC');
 	}

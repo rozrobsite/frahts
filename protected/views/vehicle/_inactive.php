@@ -4,7 +4,7 @@
 
 $this->pageTitle = Yii::app()->name . ' - Мой транспорт';
 $this->breadcrumbs = array(
-	'Мой транспорт',
+	'current' => 'Мой транспорт',
 );
 ?>
 <!-- Sidebar begins -->
@@ -23,16 +23,6 @@ $this->breadcrumbs = array(
 	<?php $this->renderPartial('_accessMessage') ?>
 
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-	<!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li><a href="/vehicle">Мой транспорт</a></li>
-                <li class="current"><a title="">Удаленный из поиска</a></li>
-            </ul>
-        </div>
-    </div>
 	<!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>

@@ -1,9 +1,9 @@
 <?php
 Yii::app()->clientScript->registerScriptFile('/js/files/likbez/goodsSearch.js', CClientScript::POS_BEGIN);
 
-$this->pageTitle = Yii::app()->name . ' - Поиск подходящего груза';
+$this->pageTitle = Yii::app()->name . ' - Поиск груза';
 $this->breadcrumbs = array(
-	'Поиск подходящего груза',
+	'current' => 'Поиск грузов',
 );
 ?>
 <!-- Sidebar begins -->
@@ -24,20 +24,6 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li><a href="/vehicle/search">Поиск груза</a></li>
-                <li class="current">
-					<a title="">Найденные подходящие грузы</a>
-				</li>
-            </ul>
-        </div>
-
-    </div>
 
     <!-- Main content -->
     <div class="wrapper">
