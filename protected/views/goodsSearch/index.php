@@ -2,9 +2,9 @@
 /* @var $this UserController */
 /* @var $model Users */
 
-$this->pageTitle = Yii::app()->name . ' - Поиск подходящего транпорта';
+$this->pageTitle = Yii::app()->name . ' - Поиск транспорта';
 $this->breadcrumbs = array(
-	'Поиск подходящего транпорта',
+	'current' => 'Поиск транпорта',
 );
 ?>
 <!-- Sidebar begins -->
@@ -25,20 +25,6 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li><a href="/goods/search">Поиск транспорта</a></li>
-                <li class="current">
-					<a title="">Найденные подходящие транпортные средства</a>
-				</li>
-            </ul>
-        </div>
-
-    </div>
 
     <!-- Main content -->
     <div class="wrapper">

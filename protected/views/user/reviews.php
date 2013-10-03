@@ -1,7 +1,7 @@
 <?php
 $this->pageTitle = Yii::app()->name . ' - Отзывы, оставленные пользователями о Вас';
 $this->breadcrumbs = array(
-	'Отзывы',
+	'current' => 'Отзывы',
 );
 ?>
 <!-- Sidebar begins -->
@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
     <div class="secNav">
 		<?php
 		$this->renderPartial('_secWrapper', array(
-			'selectReviews' => true, 
+			'selectReviews' => true,
 			'receivingUser' => isset($receivingUser) ? $receivingUser : null,
 			'receivingUsers' => $receivingUsers,))
 		?>
@@ -20,20 +20,12 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li class="current"><a title="">Отзывы</a></li>
-            </ul>
-        </div>
-    </div>
+
 	<!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
-		
+
 		<?php if (count($this->user->reviewsReceiving)): ?>
 		<div class="widget">
 			<ul class="messagesTwo">
@@ -47,7 +39,7 @@ $this->breadcrumbs = array(
 									<a href="/user/view/<?php echo $review->author->id ?>">
 										<strong>
 											<?php echo $review->author->profiles->shortName(); ?>
-										</strong> 
+										</strong>
 									</a>
 									написал(а):
 								</span>
@@ -63,7 +55,7 @@ $this->breadcrumbs = array(
 			<div class="clear"></div>
 		</div>
 		<?php else: ?>
-			<strong>Пользователи еще не оставляли о Вас отзывы.</strong>
+			<strong style="margin-top: 20px;">Пользователи еще не оставляли о Вас отзывы.</strong>
 		<?php endif; ?>
 	</div>
 </div>
