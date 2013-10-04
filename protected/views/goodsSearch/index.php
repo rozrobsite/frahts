@@ -66,7 +66,7 @@ $this->breadcrumbs = array(
 				<?php */ ?>
 
 				<div class="grid12" style="text-align: left;">
-					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
+					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBlue"
 					   title="Дополнительные условия для поиска"
 					   original-title="Дополнительные условия для поиска" >
 						Расширенный поиск
@@ -88,17 +88,12 @@ $this->breadcrumbs = array(
 			</div>
 		</div>
 		<?php endif; ?>
-		<?php if (!$vehicles): ?>
-			<div class="fluid" style="text-align: center;margin-top: 50px;">
-				<label style="font-weight: bold; font-size: 16px;">
-					К сожалению для Ваших грузов не найдено ни одного транспортного средства.
-				</label>
-			</div>
-		<?php else: ?>
+
 			<div class="fluid">
 				<div class="widget check">
 					<div class="whead">
 						<h6>Все доступные транспортные средства (<?php echo $pageSettings['count'] ?>)</h6>
+						<a title="" class="buttonH bBlue" href="/goods/search">Показать все</a>
 						<div class="clear"></div>
 					</div>
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
@@ -152,6 +147,15 @@ $this->breadcrumbs = array(
 							</tr>
 						</tfoot>
 						<tbody>
+							<?php if (!$vehicles): ?>
+								<tr>
+									<td colspan="6">
+										<label style="font-weight: bold; font-size: 16px;">
+											Поиск не дал результатов. Попробуйте изменить параметры поиска воспользовавшись расширенным поиском.
+										</label>
+									</td>
+								</tr>
+							<?php else: ?>
 							<?php foreach ($vehicles as $vehicle): ?>
 								<tr>
 									<td>
@@ -251,11 +255,12 @@ $this->breadcrumbs = array(
 									</td>
 								</tr>
 							<?php endforeach; ?>
+							<?php endif; ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<?php endif; ?>
+
 		<?php //endif; ?>
 	</div>
 	<!-- Content ends -->

@@ -222,22 +222,14 @@ class Goods extends CActiveRecord {
 			));
 	}
 
-	public function getActive($is_active = true) {
+	public function getActive() {
 		$currentTime = time();
 
 		$criteria = new CDbCriteria();
-		$criteria->condition = $is_active ? "user_id = " . Yii::app()->user->id . " AND date_to >= $currentTime" : "user_id = " . Yii::app()->user->id . " AND date_to < $currentTime";
+		$criteria->condition = "user_id = " . Yii::app()->user->id . " AND date_to >= $currentTime AND is_deleted = 0";
 		$criteria->order = 'created_at DESC';
 
-		return new CActiveDataProvider($this,
-				array(
-					'criteria' => $criteria,
-					'pagination' => array(
-						'pageSize' => Yii::app()->params['pages']['goodsCount'],
-						'pageVar' => 'goods',
-					),
-				)
-		);
+		return $this->findAll($criteria);
 	}
 
 	public function deleteFromSearch() {

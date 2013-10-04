@@ -199,11 +199,20 @@ class Vehicle extends CActiveRecord
 
 	public function findAllByDeleted($is_deleted = true)
 	{
-//		$condition = $is_deleted ? 'is_deleted = 1' : 'is_deleted = 0';
-//		$condition .= ' AND user_id = ' . Yii::app()->user->id;
-		$condition = 'user_id = ' . Yii::app()->user->id;
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'user_id = ' . Yii::app()->user->id . ' AND is_deleted = 0';
+		$criteria->order = 'created_at DESC';
 
-		return $this->findAll($condition . ' ORDER BY created_at DESC');
+		return $this->findAll($criteria);
+	}
+
+	public function findActive()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'user_id = ' . Yii::app()->user->id . ' AND is_deleted = 0 AND date_to >= ' . time();
+		$criteria->order = 'created_at DESC';
+
+		return $this->findAll($criteria);
 	}
 
 	public function deleteFromSearch($is_deleted)
