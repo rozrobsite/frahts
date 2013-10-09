@@ -110,7 +110,7 @@ class VehicleSearchController extends FrahtController
 		$this->render('index',
 				array(
 			'vid' => $filter->vid,
-			'vehicleActive' => Vehicle::model()->findAllByDeleted(false),
+			'vehicleActive' => Vehicle::model()->findActive(),
 			'goods' => $goods['goods'],
 			'model' => $filter->vehicle,
 			'countries' => $listCountries,

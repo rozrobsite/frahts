@@ -45,7 +45,7 @@ $this->breadcrumbs = array(
 		<?php if ($this->user->profiles): ?>
 		<div class="widget fluid" style="margin-top: 18px;">
 			<div class="formRow">
-				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBrown"
+				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBlue"
 				   title="Дополнительные условия для поиска"
 				   original-title="Дополнительные условия для поиска" >
 					Расширенный поиск
@@ -65,17 +65,12 @@ $this->breadcrumbs = array(
 			</div>
 		</div>
 		<?php endif; ?>
-		<?php if (!$goods): ?>
-			<div class="fluid" style="text-align: center;margin-top: 50px;">
-				<label style="font-weight: bold; font-size: 16px;">
-					К сожалению для Вашего транспортного средства не найдено ни одного подходящего груза.
-				</label>
-			</div>
-		<?php else: ?>
+
 			<div class="fluid">
 				<div class="widget" style="margin-top: 10px;">
 					<div class="whead">
 						<h6>Все грузы (<?php echo $pageSettings['count'] ?>)</h6>
+						<a title="" class="buttonH bBlue" href="/vehicle/search">Показать все</a>
 						<div class="clear"></div>
 					</div>
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
@@ -135,6 +130,15 @@ $this->breadcrumbs = array(
 							</tr>
 						</tfoot>
 						<tbody>
+							<?php if (!$goods): ?>
+								<tr>
+									<td colspan="8">
+										<label style="font-weight: bold;">
+											Поиск не дал результатов. Попробуйте изменить параметры поиска воспользовавшись расширенным поиском.
+										</label>
+									</td>
+								</tr>
+							<?php else: ?>
 							<?php foreach ($goods as $oneGood): ?>
 							<tr>
 								<td style="font-size: 11px;">
@@ -271,11 +275,11 @@ $this->breadcrumbs = array(
 								</td>
 							</tr>
 							<?php endforeach; ?>
+							<?php endif; ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<?php endif; ?>
 		<?php //endif; ?>
 	</div>
 	<!-- Content ends -->
