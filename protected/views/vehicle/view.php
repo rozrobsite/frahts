@@ -15,7 +15,7 @@ Yii::app()->clientScript->registerScriptFile('/js/files/vehicleMap.js');
 $this->pageTitle = Yii::app()->name . ' - Данные о транспортном средстве "' . ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name
 								. ', номер: ' . $model->license_plate . '"';
 $this->breadcrumbs = array(
-	'Данные о транспортном средстве',
+	'current' => 'Данные о транспортном средстве',
 );
 ?>
 <!-- Sidebar begins -->
@@ -31,22 +31,6 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li><a href="<?php echo Yii::app()->session['redirectUrl']; ?>">Поиск транспорта</a></li>
-                <li class="current">
-					<a title="">
-						<?php echo 'Данные о транспорте "' . ucfirst($model->bodyType->name_ru) . " " . $model->marka->name . " " . $model->modeli->name
-								. ', номер: ' . $model->license_plate . '"'; ?>
-					</a>
-				</li>
-            </ul>
-        </div>
-    </div>
 
     <!-- Main content -->
     <div class="wrapper">
@@ -174,7 +158,7 @@ $this->breadcrumbs = array(
 					 */?>
                     <div class="clear"></div>
                 </div>
-				<?php if ($this->user->profiles && count($this->user->goods)): ?>
+				<?php if ($this->user->profiles && $this->user->getActiveGoods()): ?>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;">
 						<tr>
 							<td style="width:25%">
@@ -205,6 +189,6 @@ $this->breadcrumbs = array(
 <input id="point_sent" type="hidden" value="Текущее положение: <?php echo $model->cities->name_ru ?>, <?php echo $model->regions->name_ru ?>, <?php echo $model->countries->name_ru ?>" />
 <input id="point_arrival" type="hidden" value="Готов ехать: <?php echo $model->citiesTo->name_ru ?>, <?php echo $model->regionsTo->name_ru ?>, <?php echo $model->countriesTo->name_ru ?>" />
 
-<?php if (count($this->user->goods)): ?>
+<?php if (count($this->user->getActiveGoods())): ?>
 	<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_VEHICLE)); ?>
 <?php endif; ?>
