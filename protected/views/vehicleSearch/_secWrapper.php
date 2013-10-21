@@ -24,7 +24,14 @@
 				</div>
 			<?php else: ?>
 				<div style="text-align: center">
-					<span class="label label-important">Вы не добавили транспорт</span>
+					<span class="label label-important">Вы не добавили транспорт</span><br/>
+				</div>
+				<div style="margin: 20px 5px 5px 5px;">
+					<strong style="font-size: 14px;">Важно!</strong>
+					<p>Особенностью системы Фрахты.com является вывод только актуальных заявок от перевозчиков и грузоотправителей.</p>
+					<p>Владельцы грузов не всегда размещают свои грузы, а чаще самостоятельно просматривают базу транспорта и выбирают подходящий транспорт.</p>
+					<p>Не добавив транспортное средство Вы лишаетесь шанса, что его увидят владельцы грузов.</p>
+					<p style="font-weight: bold;">Обязательно добавте транспортное средство.</p>
 				</div>
 				<div style="text-align: center; margin-top: 20px;">
 					<a class="buttonM bBlue" href="/vehicle/new"><span class="icol-add"></span><span>Добавить транспорт</span></a>

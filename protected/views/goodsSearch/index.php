@@ -4,7 +4,7 @@
 
 $this->pageTitle = Yii::app()->name . ' - Поиск транспорта';
 $this->breadcrumbs = array(
-	'current' => 'Поиск транпорта',
+	'current' => 'Поиск транспорта',
 );
 ?>
 <!-- Sidebar begins -->

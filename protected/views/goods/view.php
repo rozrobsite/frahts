@@ -15,7 +15,7 @@ Yii::app()->clientScript->registerScriptFile('/js/files/goodsMap.js');
 
 $this->pageTitle = Yii::app()->name . ' - Данные о грузе "' . $model->name . '"';
 $this->breadcrumbs = array(
-	'Данные о грузе',
+	'current' => 'Данные о грузе',
 );
 ?>
 <!-- Sidebar begins -->
@@ -31,22 +31,6 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li><a href="<?php echo Yii::app()->session['redirectUrl']; ?>">Поиск грузов</a></li>
-                <li class="current">
-					<a title="">
-						<?php echo 'Данные о грузе "' . $model->name . '"'; ?>
-					</a>
-				</li>
-            </ul>
-        </div>
-
-    </div>
 
     <!-- Main content -->
     <div class="wrapper">
@@ -170,7 +154,7 @@ $this->breadcrumbs = array(
 					<?php endif; ?>
                     <div class="clear"></div>
                 </div>
-				<?php if ($this->user->profiles && count($this->user->vehicles)): ?>
+				<?php if ($this->user->profiles && count($this->user->getActiveVehicles())): ?>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tLight" style="text-align: center;<?php if (empty($model->description)): ?> margin-top: 20px;<?php endif; ?>">
 						<tr>
 							<td style="width:25%">
@@ -202,6 +186,6 @@ $this->breadcrumbs = array(
 
 <?php //$this->renderPartial('/blocks/popups/_message', array('model' => $model, 'objectType' => Messages::GOOD)); ?>
 <!-- Content ends -->
-<?php if (count($this->user->vehicles)): ?>
+<?php if (count($this->user->getActiveVehicles())): ?>
 	<?php $this->renderPartial('/blocks/popups/_offer', array('model' => $model, 'currencies' => $currencies, 'modelType' => Offers::TYPE_GOOD)); ?>
 <?php endif; ?>

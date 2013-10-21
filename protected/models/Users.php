@@ -340,4 +340,32 @@ class Users extends CActiveRecord
 
 		return false;
 	}
+
+	public function getActiveGoods()
+	{
+		$currentTime = time();
+
+		$result = array();
+		foreach ($this->goods as $good) {
+			if ($good->date_to >= $currentTime && $good->is_deleted == 0) {
+				$result[] = $good;
+			}
+		}
+
+		return $result;
+	}
+
+	public function getActiveVehicles()
+	{
+		$currentTime = time();
+
+		$result = array();
+		foreach ($this->vehicles as $vehicle) {
+			if ($vehicle->date_to >= $currentTime && $vehicle->is_deleted == 0) {
+				$result[] = $vehicle;
+			}
+		}
+
+		return $result;
+	}
 }
