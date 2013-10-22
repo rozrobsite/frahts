@@ -4,7 +4,7 @@
 
 $this->pageTitle = Yii::app()->name . ' - ' . ($model->isNewRecord ? 'Регистрация нового груза' : 'Редактирование груза "' . $model->name . '"');
 $this->breadcrumbs = array(
-	'/goods/search' => 'Мой груз',
+	'/goods/active' => 'Мои грузы',
 	'current' => $model->isNewRecord ? 'Регистрация нового груза' : 'Редактирование груза',
 );
 ?>

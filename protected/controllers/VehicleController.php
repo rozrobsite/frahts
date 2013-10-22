@@ -278,6 +278,31 @@ class VehicleController extends FrahtController {
 		));
 	}
 
+	public function actionRemove() {
+		if (!Yii::app()->request->isAjaxRequest)
+			throw new CHttpException(404, '');
+
+		$id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+
+		if (!$id) {
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		$rows = Vehicle::model()->updateByPk($id, array('is_deleted' => 1));
+
+		if (!$rows) {
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		echo $this->respondJSON(array('error' => 0));
+
+		Yii::app()->end();
+	}
+
 	// Uncomment the following methods and override them if needed
 	/*
 	  public function filters()

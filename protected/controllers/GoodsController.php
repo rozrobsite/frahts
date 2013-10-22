@@ -1,10 +1,8 @@
 <?php
 
-class GoodsController extends FrahtController
-{
+class GoodsController extends FrahtController {
 
-	public function __construct($id, $module = null)
-	{
+	public function __construct($id, $module = null) {
 		parent::__construct($id, $module);
 
 //		if (!($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER))
@@ -13,60 +11,51 @@ class GoodsController extends FrahtController
 		Yii::app()->session['redirectUrl'] = Yii::app()->getRequest()->requestUri;
 	}
 
-	public function actionIndex()
-	{
+	public function actionIndex() {
 		$this->render('index');
 	}
 
-	public function actionInactive()
-	{
-		$this->render('inActive',
-				array(
+	public function actionActive() {
+		$this->render('active', array(
 			'goodsActive' => Goods::model()->getActive(),
 			'goodsNoActive' => Goods::model()->getActive(Goods::NO_ACTIVE),
 		));
 	}
 
-	public function actionView()
-	{
+	public function actionView() {
 		$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 		$model = Goods::model()->find('slug = "' . $slug . '" AND is_deleted = 0 AND date_to >= ' . time());
 		if (!is_object($model))
-				throw new CHttpException(404, 'Страница груза не найдена!');
+			throw new CHttpException(404, 'Страница груза не найдена!');
 
 		$vehicleTypes = '';
 		$vehicleTypesArray = array();
-		if ($model->vehicle_types)
-		{
+		if ($model->vehicle_types) {
 			$vehicleTypes = VehicleTypes::model()->findAll('id IN (' . $model->vehicle_types . ')');
 			$vehicleTypesArray = CHtml::listData($vehicleTypes, 'id', 'name_ru');
 		}
 
 		$bodyTypes = '';
 		$bodyTypesArray = array();
-		if ($model->body_types)
-		{
+		if ($model->body_types) {
 			$bodyTypes = BodyTypes::model()->findAll('id IN (' . $model->body_types . ')');
 			$bodyTypesArray = CHtml::listData($bodyTypes, 'id', 'name_ru');
 		}
 
 		$shipments = '';
 		$shipmentsArray = array();
-		if ($model->shipments)
-		{
+		if ($model->shipments) {
 			$shipments = Shipment::model()->findAll('id IN (' . $model->shipments . ')');
 			$shipmentsArray = CHtml::listData($shipments, 'id', 'name_ru');
 		}
 
 		$permissions = '';
 		$permissionsArray = array();
-		if ($model->permissions)
-		{
+		if ($model->permissions) {
 			$permissions = Permissions::model()->findAll('id IN (' . $model->permissions . ')');
 			$permissionsArray = CHtml::listData($permissions, 'id', 'name_ru');
-			if (array_key_exists(Permissions::ADR, $permissionsArray))
-			{
+			if (array_key_exists(Permissions::ADR, $permissionsArray)) {
 				$permissionsArray[Permissions::ADR] = $permissionsArray[Permissions::ADR] . ' (' . $model->adr . ')';
 			}
 		}
@@ -76,8 +65,7 @@ class GoodsController extends FrahtController
 		$offer = Offers::model()->find('author_id = ' . $this->user->id . ' AND receiving_user_id = ' . $model->user->id . ' AND good_id = ' . $model->id);
 		$currencies = Currency::model()->findAll();
 
-		$this->render('view',
-				array(
+		$this->render('view', array(
 			'model' => $model,
 			'vehicleTypes' => join(', ', $vehicleTypesArray),
 			'bodyTypes' => join(', ', $bodyTypesArray),
@@ -88,28 +76,26 @@ class GoodsController extends FrahtController
 		));
 	}
 
-	public function actionIncidental()
-	{
+	public function actionIncidental() {
 		if (!Yii::app()->request->isAjaxRequest)
-			throw new CHttpException(404,'');
+			throw new CHttpException(404, '');
 
 		$coordinatesStr = isset($_POST['coordinates']) ? $_POST['coordinates'] : array();
 		$coordinatesArrayStr = explode(';', $coordinatesStr);
 
 		$coordinates = array();
-		foreach ($coordinatesArrayStr as $coordinate)
-		{
+		foreach ($coordinatesArrayStr as $coordinate) {
 			$tmpArray = explode(',', $coordinate);
 
-			if (!isset($tmpArray[0]) || !isset($tmpArray[1])) continue;
+			if (!isset($tmpArray[0]) || !isset($tmpArray[1]))
+				continue;
 
 			$coordinates[] = array((float) $tmpArray[0], (float) $tmpArray[1]);
 		}
 
 		$firstCoordinates = array_shift($coordinates);
 
-		if (!$firstCoordinates)
-		{
+		if (!$firstCoordinates) {
 			echo CJavaScript::jsonEncode(array('error' => 1));
 
 			Yii::app()->end();
@@ -123,11 +109,10 @@ class GoodsController extends FrahtController
 		$currentLatitude = $coordinates[0][0];
 		$currentLongitude = $coordinates[0][1];
 		$countCoordinates = count($coordinates);
-		for ($index = 1; $index < $countCoordinates; $index++)
-		{
-			$distance = FHelper::distance($currentLatitude, $currentLongitude,
-							$coordinates[$index][0], $coordinates[$index][1]);
-			if ($distance < (Yii::app()->params['defaultRadius'] * 2)) continue;
+		for ($index = 1; $index < $countCoordinates; $index++) {
+			$distance = FHelper::distance($currentLatitude, $currentLongitude, $coordinates[$index][0], $coordinates[$index][1]);
+			if ($distance < (Yii::app()->params['defaultRadius'] * 2))
+				continue;
 
 			$desiredCoordinates[] = $coordinates[$index];
 			$currentLatitude = $coordinates[$index][0];
@@ -136,17 +121,12 @@ class GoodsController extends FrahtController
 
 //		$desiredCoordinates[] = $coordinates[$countCoordinates - 1];
 
-		$good_id = isset(Yii::app()->session['good_id']) ? (int) Yii::app()->session['good_id']
-					: 0;
-		$vehicle_id = isset(Yii::app()->session['vehicle_id']) ? (int) Yii::app()->session['vehicle_id']
-					: 0;
-		$date_from = isset(Yii::app()->session['date_from']) ? Yii::app()->session['date_from']
-					: '';
-		$date_to = isset(Yii::app()->session['date_to']) ? Yii::app()->session['date_to']
-					: '';
+		$good_id = isset(Yii::app()->session['good_id']) ? (int) Yii::app()->session['good_id'] : 0;
+		$vehicle_id = isset(Yii::app()->session['vehicle_id']) ? (int) Yii::app()->session['vehicle_id'] : 0;
+		$date_from = isset(Yii::app()->session['date_from']) ? Yii::app()->session['date_from'] : '';
+		$date_to = isset(Yii::app()->session['date_to']) ? Yii::app()->session['date_to'] : '';
 
-		if (!$good_id)
-		{
+		if (!$good_id) {
 			echo CJavaScript::jsonEncode(array('error' => 1));
 
 			Yii::app()->end();
@@ -155,10 +135,34 @@ class GoodsController extends FrahtController
 		}
 
 		$good = Goods::model()->findByPk($good_id);
-		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates,
-				$date_from, $date_to);
+		$incidentalGoods = $good->searchIncidental($vehicle_id, $desiredCoordinates, $date_from, $date_to);
 
 		echo CJavaScript::jsonEncode(array('error' => 0, 'goods' => $incidentalGoods, 'access' => ($this->user->profiles)));
+
+		Yii::app()->end();
+	}
+
+	public function actionRemove() {
+		if (!Yii::app()->request->isAjaxRequest)
+			throw new CHttpException(404, '');
+
+		$id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+
+		if (!$id) {
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		$rows = Goods::model()->updateByPk($id, array('is_deleted' => 1));
+
+		if (!$rows) {
+			echo $this->respondJSON(array('error' => 1));
+
+			Yii::app()->end();
+		}
+
+		echo $this->respondJSON(array('error' => 0));
 
 		Yii::app()->end();
 	}

@@ -28,12 +28,8 @@ $this->breadcrumbs = array(
 
 		<?php if (!$activeVehicles): ?>
 			<div class="fluid" style="text-align: center;margin-top: 50px;">
-				<label style="font-weight: bold; font-size: 16px;">У Вас нет транспортных средств учавствующих в поиске.</label>
+				<label style="font-weight: bold; font-size: 16px;">Вы не добавили ни одного транспортного средства.</label>
 				<div class="formRow" style="border-top: 0">
-					<div class="grid5">&nbsp;</div>
-					<div class="grid2">
-						<a href="/vehicle/new" title="" class="sideB bGreen">Добавить</a>
-					</div>
 					<div class="grid5">&nbsp;</div>
 				</div>
 			</div>
@@ -65,6 +61,7 @@ $this->breadcrumbs = array(
 						</tfoot>
 						<tbody>
 							<?php foreach ($activeVehicles as $vehicle): ?>
+								<?php if ($vehicle->is_deleted) continue; ?>
 								<tr>
 									<td>
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" title="">
@@ -87,7 +84,7 @@ $this->breadcrumbs = array(
 									<td><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy', $vehicle->created_at); ?></td>
 									<td class="tableActs">
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать"><span class="iconb" data-icon="&#xe1db;"></span></a>
-										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Не показывать в поиске" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
+										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить транспортное средство" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
 									</td>
 								</tr>
 							<?php endforeach; ?>
