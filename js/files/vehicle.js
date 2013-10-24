@@ -46,12 +46,20 @@ var vehicle =
 	{
 		$('.vehicleDeleteSearch').each(function(e){
 			$(this).on('click', function(){
-				if (confirm('Вы действительно хотите удалить это транспортное средство из поиска?'))
+				if (confirm('Вы действительно хотите удалить это транспортное средство?'))
 				{
-					$.post('/makemodel/delete', {
+					$.post('/vehicle/remove', {
 						id: $(this).attr('rel')
 					}, function(response){
-						if(response == null) return;
+						if(typeof response.error === 'undefined' || response.error == 1){
+							$.jGrowl('Транспортное средство не было удалено. Попробуйте позже', {
+								header: 'Ошибка',
+								life: 15000,
+								theme: 'errorMessage'
+							});
+
+							return;
+						}
 
 						window.location.reload();
 
@@ -289,8 +297,8 @@ var regionVehicleTo =
 };
 
 $(document).ready(function(){
-//	$('#Vehicle_make_id').change();
-//	makes.init();
+	//	$('#Vehicle_make_id').change();
+	//	makes.init();
 	$('#Vehicle_country_id_from').change();
 	countryVehicleFrom.init();
 	regionVehicleFrom.init();

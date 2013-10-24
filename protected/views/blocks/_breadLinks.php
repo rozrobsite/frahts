@@ -1,5 +1,9 @@
+<?php
+Yii::app()->clientScript->registerScriptFile('/js/files/add_friend.js', CClientScript::POS_BEGIN);
+?>
 <div class="breadLinks">
 	<ul>
+		<li><a href="javascript:void(0);" class="tipS add-friend" title="Расскажите о сайте своим друзьям"><i class="icos-user"></i><span>Пригласить друга</span></a></li>
 		<?php if ($this->user->profiles->userType->id == UserTypes::SHIPPER || $this->user->profiles->userType->id == UserTypes::DISPATCHER): ?>
 			<li><a href="/vehicle/new" title=""><i class="icos-truck"></i><span>Добавить транспорт</span></a></li>
 		<?php endif; ?>
@@ -17,9 +21,9 @@
 				<li><a href="/user/organization" title=""><span class="icos-users"></span>Организация</a></li>
 				<?php if (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
 					<li><a href="/vehicle/active" title=""><span class="icos-truck"></span>Мой транспорт</a></li>
-					<li><a href="/goods/search" title=""><span class="icos-dropbox"></span>Мой груз</a></li>
+					<li><a href="/goods/active" title=""><span class="icos-dropbox"></span>Мои грузы</a></li>
 				<?php elseif (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == UserTypes::FREIGHTER): ?>
-					<li><a href="/goods/search" title=""><span class="icos-dropbox"></span>Мой груз</a></li>
+					<li><a href="/goods/active" title=""><span class="icos-dropbox"></span>Мои грузы</a></li>
 				<?php elseif (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == UserTypes::SHIPPER): ?>
 					<li><a href="/vehicle/active" title=""><span class="icos-truck"></span>Мой транспорт</a></li>
 				<?php endif; ?>
@@ -31,3 +35,4 @@
 	</ul>
 	<div class="clear"></div>
 </div>
+<?php $this->renderPartial('/blocks/popups/_addFriend'); ?>

@@ -512,15 +512,20 @@ $(function() {
 			"sSearch": "Поиск"
 		},
 		"aoColumns": [
-			null,
-			null,
 			{
 				'bSortable': false
 			},
-			null,
 			{
-				'bSortable': false,
-				'bSearchable': false
+				'bSortable': false
+			},
+			{
+				'bSortable': false
+			},
+			{
+				'bSortable': false
+			},
+			{
+				'bSortable': false
 			}
 		]
 
