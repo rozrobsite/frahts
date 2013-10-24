@@ -14,10 +14,11 @@
 
 Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU');
 Yii::app()->clientScript->registerScriptFile('/js/files/userMap.js'); //включить карту
+Yii::app()->clientScript->registerScriptFile('/js/files/partner.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->name . ' - Данные о пользователе"' . $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name . '"';
 $this->breadcrumbs = array(
-	'Данные о пользователе',
+	'current' => 'Данные о пользователе',
 );
 
 ?>
@@ -34,21 +35,6 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-
-    <!-- Breadcrumbs line -->
-    <div class="breadLine">
-        <div class="bc">
-            <ul id="breadcrumbs" class="breadcrumbs">
-                <li><a href="<?php echo isset($this->headerUrl) ? $this->headerUrl : '/user'; ?>">Главная</a></li>
-                <li class="current">
-					<a title="">
-						<?php echo 'Подробные сведения о пользователе'; ?>
-					</a>
-				</li>
-            </ul>
-        </div>
-
-    </div>
 
     <!-- Main content -->
     <?php

@@ -1,5 +1,9 @@
+<?php
+Yii::app()->clientScript->registerScriptFile('/js/files/add_friend.js', CClientScript::POS_BEGIN);
+?>
 <div class="breadLinks">
 	<ul>
+		<li><a href="javascript:void(0);" class="tipS add-friend" title="Расскажите о сайте своим друзьям"><i class="icos-user"></i><span>Пригласить друга</span></a></li>
 		<?php if ($this->user->profiles->userType->id == UserTypes::SHIPPER || $this->user->profiles->userType->id == UserTypes::DISPATCHER): ?>
 			<li><a href="/vehicle/new" title=""><i class="icos-truck"></i><span>Добавить транспорт</span></a></li>
 		<?php endif; ?>
@@ -31,3 +35,4 @@
 	</ul>
 	<div class="clear"></div>
 </div>
+<?php $this->renderPartial('/blocks/popups/_addFriend'); ?>

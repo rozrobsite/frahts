@@ -48,7 +48,7 @@ var vehicle =
 			$(this).on('click', function(){
 				if (confirm('Вы действительно хотите удалить это транспортное средство?'))
 				{
-					$.post('/makemodel/delete', {
+					$.post('/vehicle/remove', {
 						id: $(this).attr('rel')
 					}, function(response){
 						if(typeof response.error === 'undefined' || response.error == 1){

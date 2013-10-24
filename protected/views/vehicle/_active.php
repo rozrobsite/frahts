@@ -26,72 +26,55 @@ $this->breadcrumbs = array(
 		<?php $this->renderPartial('/blocks/_notify') ?>
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
 
-		<?php if (!$activeVehicles): ?>
-			<div class="fluid" style="text-align: center;margin-top: 50px;">
-				<label style="font-weight: bold; font-size: 16px;">Вы не добавили ни одного транспортного средства.</label>
-				<div class="formRow" style="border-top: 0">
-					<div class="grid5">&nbsp;</div>
-				</div>
-			</div>
-		<?php else: ?>
-			<div class="fluid">
-				<div class="widget check">
-					<div class="whead">
-						<h6>Ваши транспортные средства</h6>
-						<div class="clear"></div>
-					</div>
-					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
+		<div class="fluid">
+				<div class="widget">
+					<div class="whead"><h6>Мои транспорт</h6><div class="clear"></div></div>
+					<div id="dyn" class="hiddenpars">
+						<table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dynamic">
 						<thead>
 							<tr>
-								<td width="5%">Фото</td>
-								<td width="35%">
-									Название
-								</td>
-								<td width="20%">Срок загрузки</td>
-								<td width="15%">
-									Дата регистрации
-								</td>
-								<td width="15%">Действие</td>
+								<th style="background: #EEE;">Фото</th>
+								<th style="background: #EEE;">Название</th>
+								<th style="background: #EEE;">Срок загрузки</th>
+								<th style="background: #EEE;">Дата добавления</th>
+								<th style="background: #EEE;">Действия</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<td colspan="6"></td>
-							</tr>
-						</tfoot>
-						<tbody>
+						<tbody style="text-align: center;">
 							<?php foreach ($activeVehicles as $vehicle): ?>
 								<?php if ($vehicle->is_deleted) continue; ?>
 								<tr>
 									<td>
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" title="">
-											<?php $image = isset ($vehicle->photos[0]) ? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small : '/images/nophoto.jpg'?>
+											<?php $image = isset($vehicle->photos[0]) ? '/' . Yii::app()->params['files']['photos'] . '/' . $vehicle->photos[0]->size_small : '/images/nophoto.jpg' ?>
 											<img src="<?php echo $image; ?>" alt="" />
 										</a>
 									</td>
-									<td class="textL">
+									<td>
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" title="">
-											<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . (isset($vehicle->modeli->name) ?  ' ' . $vehicle->modeli->name : '')?>,
+											<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . (isset($vehicle->modeli->name) ? ' ' . $vehicle->modeli->name : '') ?>,
 											номер: <?php echo $vehicle->license_plate ?>
 										</a>
 									</td>
-									<td class="fileInfo">
+									<td class="center">
 										<span style="<?php if ($vehicle->date_to < time()): ?>color:red<?php endif; ?>">
-											c <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_from); ?> по <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_to); ?>
-											<?php if ($vehicle->date_to < time()): ?><span style="color:red">(Просрочено, обязательно обновите данные)</span><?php endif; ?>
+											c <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_from); ?> по <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $vehicle->date_to); ?><br/>
+											<?php if ($vehicle->date_to < time()): ?><span style="color:red; font-size: 11px;">(Просрочено, обязательно обновите данные)</span><?php endif; ?>
 										</span>
 									</td>
-									<td><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy', $vehicle->created_at); ?></td>
-									<td class="tableActs">
+									<td class="center"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy', $vehicle->created_at); ?></td>
+									<td>
 										<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать"><span class="iconb" data-icon="&#xe1db;"></span></a>
 										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить транспортное средство" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
 									</td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
-					</table>
+						</table>
+					</div>
 				</div>
 			</div>
-		<?php endif; ?>
+
+
 	</div>
 </div>

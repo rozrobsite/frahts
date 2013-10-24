@@ -4,7 +4,18 @@
 	<div class="widget">
 		<div class="invoice">
 
-			<div class="inHead">
+			<div class="inHead mytasks">
+				<div class="btn-group" style="display: inline-block; margin-bottom: -4px;padding: 14px;">
+					<a class="buttonM bBlue" data-toggle="dropdown" href="#"><span class="icon-cog"></span><span>Действие</span><span class="caret"></span></a>
+					<ul class="dropdown-menu" style="left: 13px; top: 76%;">
+						<li><a href="/user/messages/user/<?php echo $model->id ?>#users_message"><span class="icos-speech"></span>Написать сообщение</a></li>
+						<?php if (!$this->user->isPartner($model)): ?>
+							<li><a href="javascript:void(0);" class="add-partner" data-id="<?php echo $model->id; ?>"><span class="icos-users2"></span>Добавить в партнеры</a></li>
+						<?php else: ?>
+							<li><a href="javascript:void(0);" class="remove-partner" data-id="<?php echo $model->id; ?>"><span class="icos-users2"></span>Удалить из партнеров</a></li>
+						<?php endif; ?>
+					</ul>
+				</div>
 				<div class="inInfo">
 					<span class="invoiceNum">Данные о пользователе</span>
 					<i>На сайте с: <?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $model->profiles->created_at); ?></i>
@@ -14,7 +25,11 @@
 
 			<div class="inContainer">
 				<div class="inFrom" >
-					<h5><?php echo $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name; ?></h5>
+					<h5 class="partnerTitle"><?php echo $model->profiles->last_name . ' ' . $model->profiles->first_name . ' ' . $model->profiles->middle_name; ?>
+					<?php if ($this->user->isPartner($model)): ?>
+						<label style="margin-left: 10px;background: #468847; color: #fff;padding: 0 6px; font-size: 12px;">Ваш партнер</label>
+					<?php endif; ?>
+					</h5>
 
 					<span><strong><?php echo $model->profiles->userType->name_ru; ?></strong></span>
 

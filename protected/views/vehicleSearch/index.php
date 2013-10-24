@@ -225,7 +225,7 @@ $this->breadcrumbs = array(
 										<?php echo $oneGood->paymentType->name_ru ?><br/>
 										<?php echo $oneGood->cost . ' ' . $oneGood->currency->name_ru ?>
 									</strong><br/>
-									<?php if ($oneGood->user->profiles->userType->id == UserTypes::DISPATCHER): ?>
+									<?php if ($oneGood->user->profiles->userType->id == UserTypes::DISPATCHER && $oneGood->fee): ?>
 										(Комиссия: <?php echo $oneGood->fee ?>)
 									<?php endif; ?><br/>
 								</td>
