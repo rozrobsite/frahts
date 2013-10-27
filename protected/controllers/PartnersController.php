@@ -2,17 +2,20 @@
 
 class PartnersController extends FrahtController
 {
+
 	const ERROR_NO = 0;
 	const ERROR_NOT_AJAX = 1;
 	const ERROR_WRONG_ID = 2;
 	const ERROR_NOT_FOUND = 3;
+	const ERROR_WRONG_EMAIL = 4;
 
 	public function actionIndex()
 	{
 		$countries = Country::model()->findAll();
 		$profiles = Profiles::model()->getUsers($this->user);
 
-		$this->render('index', array(
+		$this->render('index',
+				array(
 			'countries' => $countries,
 			'profiles' => $profiles,
 		));
@@ -23,13 +26,20 @@ class PartnersController extends FrahtController
 		$data = $_GET;
 
 		$attributes = array(
-			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int)$data['partnerSearchCountry'] : 0,
-			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int)$data['partnerSearchRegion'] : 0,
-			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int)$data['partnerSearchCity'] : 0,
-			'partnerSearchShipper' => isset($data['partnerSearchShipper']) && $data['partnerSearchShipper'] ? true : false,
-			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) && $data['partnerSearchFreighter'] ? true : false,
-			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) && $data['partnerSearchDispatcher'] ? true : false,
-			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int) $data['partnerSearchCountry']
+						: 0,
+			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int) $data['partnerSearchRegion']
+						: 0,
+			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int) $data['partnerSearchCity']
+						: 0,
+			'partnerSearchShipper' => isset($data['partnerSearchShipper']) && $data['partnerSearchShipper']
+						? true : false,
+			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) && $data['partnerSearchFreighter']
+						? true : false,
+			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) && $data['partnerSearchDispatcher']
+						? true : false,
+			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords']))
+						: '',
 		);
 
 		$searchPartners = new SearchPartners($attributes);
@@ -50,7 +60,8 @@ class PartnersController extends FrahtController
 			$cities = CHtml::listData($region->cities, 'id', 'name_ru');
 		}
 
-		$this->render('search', array(
+		$this->render('search',
+				array(
 			'countries' => $countries,
 			'regions' => $regions,
 			'cities' => $cities,
@@ -73,13 +84,17 @@ class PartnersController extends FrahtController
 		parse_str(Yii::app()->request->getPost('data'), $data);
 
 		$attributes = array(
-			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int)$data['partnerSearchCountry'] : 0,
-			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int)$data['partnerSearchRegion'] : 0,
-			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int)$data['partnerSearchCity'] : 0,
+			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int) $data['partnerSearchCountry']
+						: 0,
+			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int) $data['partnerSearchRegion']
+						: 0,
+			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int) $data['partnerSearchCity']
+						: 0,
 			'partnerSearchShipper' => isset($data['partnerSearchShipper']) ? true : false,
 			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) ? true : false,
 			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) ? true : false,
-			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords']))
+						: '',
 		);
 
 		$users = UserTags::model()->searchUsers($attributes);
@@ -161,30 +176,62 @@ class PartnersController extends FrahtController
 		Yii::app()->end();
 	}
 
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
+	public function actionAddFriend()
 	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
+		$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+		$text = isset($_POST['text']) ? strip_tags(trim($_POST['text'])) : '';
+
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+		{
+			echo $this->respondJSON(array('error' => self::ERROR_WRONG_EMAIL));
+
+			Yii::app()->end();
+		}
+
+		$message = new YiiMailMessage;
+		$message->view = 'addFriend';
+		$message->setBody(array('text' => $text), 'text/html');
+		$message->subject = 'Приглашение от друга';
+		$message->from = Yii::app()->params['adminEmail'];
+		$message->addTo($email);
+
+		try
+		{
+			Yii::app()->mail->send($message);
+		}
+		catch (CException $exc)
+		{
+		}
+		
+		echo $this->respondJSON(array('error' => self::ERROR_NO));
+
+		Yii::app()->end();
 	}
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+	// Uncomment the following methods and override them if needed
+	/*
+	  public function filters()
+	  {
+	  // return the filter configuration for this controller, e.g.:
+	  return array(
+	  'inlineFilterName',
+	  array(
+	  'class'=>'path.to.FilterClass',
+	  'propertyName'=>'propertyValue',
+	  ),
+	  );
+	  }
+
+	  public function actions()
+	  {
+	  // return external action classes, e.g.:
+	  return array(
+	  'action1'=>'path.to.ActionClass',
+	  'action2'=>array(
+	  'class'=>'path.to.AnotherActionClass',
+	  'propertyName'=>'propertyValue',
+	  ),
+	  );
+	  }
+	 */
 }
