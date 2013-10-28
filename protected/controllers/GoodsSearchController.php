@@ -18,6 +18,7 @@ class GoodsSearchController extends FrahtController {
 
 		if (isset($_GET)) {
 			$filter->vid = isset($_GET['vid']) ? (int) $_GET['vid'] : null;
+			$filter->check_partners = isset($_GET['check_partners']) ? $_GET['check_partners'] : '';
 			$filter->check_dispatcher = isset($_GET['check_dispatcher']) ? $_GET['check_dispatcher'] : '';
 			$filter->date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
 			$filter->date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';

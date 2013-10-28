@@ -217,6 +217,9 @@ $this->breadcrumbs = array(
 												<?php echo $vehicle->user->profiles->last_name . ' ' . $vehicle->user->profiles->first_name . ' ' . $vehicle->user->profiles->middle_name ?>
 											</a><br/>
 											м. <?php echo $vehicle->user->profiles->mobile ?>
+											<?php if ($this->user->isPartner($vehicle->user)): ?>
+												<br/><span class="label label-success">Мой партнер</span>
+											<?php endif; ?>
 										</td>
 									<?php /*else: ?>
 										<?php if (!$this->user->profiles && !$this->user->goods): ?>
