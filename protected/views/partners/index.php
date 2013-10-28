@@ -68,7 +68,7 @@ $this->breadcrumbs = array(
 											<a href="#" class="tablectrl_small bDefault" data-toggle="dropdown">
 												<span class="iconb" data-icon="&#xe1f7;"></span>
 											</a>
-											<ul class="dropdown-menu pull-right">
+											<ul class="dropdown-menu pull-right" style="margin-right: 35%;">
 												<li><a href="/user/messages/user/<?php echo $partner->partner->id; ?>#users_message" class=""><span class="icos-speech"></span>Написать сообщение</a></li>
 												<li><a href="javascript:void(0);" class="remove-partner" data-id="<?php echo $partner->partner->id; ?>"><span class="icos-users2"></span>Удалить из партнеров</a></li>
 											</ul>
