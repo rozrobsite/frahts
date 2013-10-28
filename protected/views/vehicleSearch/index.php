@@ -237,6 +237,9 @@ $this->breadcrumbs = array(
 											<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
 										</a><br/>
 										м. <?php echo $oneGood->user->profiles->mobile ?>
+										<?php if ($this->user->isPartner($oneGood->user)): ?>
+										<br/><a href="/partners"><span class="label label-success tipS" title="Перейти на страницу партнеров">Мой партнер</span></a>
+										<?php endif; ?>
 									</td>
 								<?php /*else: ?>
 									<?php if (!$this->user->profiles && !$this->user->vehicles): ?>

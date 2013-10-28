@@ -249,6 +249,7 @@ class Vehicle extends CActiveRecord
 		$criteria->condition = $where;
 		$criteria->limit = Yii::app()->params['pages']['searchCount'];
 		$criteria->offset = ($filter->page - 1) * Yii::app()->params['pages']['searchCount'];
+		$criteria->join = 'LEFT OUTER JOIN partners partnerUsers ON (partnerUsers.user_id = ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0) . ')';
 		$criteria->with = array('user.profiles');
 
 		$direction = isset($filter->direction) && $filter->direction ? ' ASC' : ' DESC';
@@ -273,6 +274,9 @@ class Vehicle extends CActiveRecord
 	{
 		$result = array();
 		$result[] = 't.user_id <> ' . (isset(Yii::app()->user->id) ? (int) Yii::app()->user->id : 0);
+
+		if (!empty($filter->check_partners))
+			$result[] = 't.user_id = partnerUsers.partner_id';
 
 		if (!empty($filter->check_dispatcher))
 			$result[] = 'profiles.user_type_id <>' . UserTypes::DISPATCHER;
