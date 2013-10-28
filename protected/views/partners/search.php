@@ -81,7 +81,7 @@ $this->breadcrumbs = array(
 									</a>
 								</td>
 								<td style="text-align: left;">
-									<a href="/user/view/<?php echo $data->id; ?>" title=""><?php echo $data->profiles->shortName(); ?></a>
+									<a href="/user/view/<?php echo $data->id; ?>" title=""><?php echo $data->profiles->fullName(); ?></a>
 									<?php if ($this->user->isPartner($data)): ?><a href="/partners"><span class="label label-success tipS" title="Перейти на страницу партнеров" style="margin-left: 10px;">Мой партнер</span></a><?php endif; ?>
 								</td>
 								<td align="center"><?php echo $data->profiles->userType->name_ru; ?></td>
