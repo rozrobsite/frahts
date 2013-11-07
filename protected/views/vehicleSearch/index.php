@@ -28,49 +28,31 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
-		<?php /* if (!$this->user->vehicles): ?>
-			<div class="fluid" style="text-align: center;margin-top: 50px;">
-				<label style="font-weight: bold; font-size: 16px;">
-					У Вас нет добавленных транспортных средств. Добавьте транспортное средство чтобы найти подходящий груз.
-				</label>
-				<div class="formRow" style="border-top: 0">
-					<div class="grid5">&nbsp;</div>
-					<div class="grid2">
-						<a id="vehicles_modal_open" href="/vehicle/new" title="" class="sideB bGreen goods_modal_open">Добавить транспорт</a>
-					</div>
-					<div class="grid5">&nbsp;</div>
-				</div>
-			</div>
-		<?php else: */?>
-		<?php if ($this->user->profiles): ?>
-		<div class="widget fluid" style="margin-top: 18px;">
-			<div class="formRow">
-				<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBlue"
-				   title="Дополнительные условия для поиска"
-				   original-title="Дополнительные условия для поиска" >
-					Расширенный поиск
-				</a>
-				<?php $this->renderPartial('/blocks/popups/_advancedFilter', array(
-					'model' => $model,
-					'filter' => $filter,
-					'vid' => $vid,
-					'countries' => $countries,
-					'regions' => $regions,
-					'cities' => $cities,
-					'filterCountries' => $countries,
-					'filterRegions' => $filterRegions,
-					'filterCities' => $filterCities,
-					));
-				?>
-			</div>
-		</div>
-		<?php endif; ?>
 
 			<div class="fluid">
 				<div class="widget" style="margin-top: 10px;">
 					<div class="whead">
-						<h6>Все грузы (<?php echo $pageSettings['count'] ?>)</h6>
-						<a title="" class="buttonH bBlue" href="/vehicle/search">Показать все</a>
+						<?php if ($this->user->profiles): ?>
+							<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonH bBlue" style="float: left;"
+								title="Дополнительные условия для поиска"
+								original-title="Дополнительные условия для поиска" >
+								 Расширенный поиск
+							</a>
+							<?php $this->renderPartial('/blocks/popups/_advancedFilter', array(
+								'model' => $model,
+								'filter' => $filter,
+								'vid' => $vid,
+								'countries' => $countries,
+								'regions' => $regions,
+								'cities' => $cities,
+								'filterCountries' => $countries,
+								'filterRegions' => $filterRegions,
+								'filterCities' => $filterCities,
+								));
+							?>
+						<?php endif; ?>
+						<h6 style="float: right;">Все грузы (<?php echo $pageSettings['count'] ?>)</h6>
+						<a title="" class="buttonH bBlue" style="float: left;" href="/vehicle/search">Показать все</a>
 						<div class="clear"></div>
 					</div>
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
@@ -163,7 +145,7 @@ $this->breadcrumbs = array(
 												<?php else: ?>
 													<?php $distance = Geography::getDistanceByYandex($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?>
 													<?php if ($distance): ?>
-														&asymp;&nbsp;<?php echo $distance; ?>
+														&asymp;&nbsp;<?php echo $distance; ?> км
 													<?php endif; ?>
 												<?php endif; ?>
 												<?php if ($oneGood->currency->id <= Currency::MAX_CALCULATE_TYPE_ID && (int)$distance > 1): ?>

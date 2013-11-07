@@ -29,71 +29,31 @@ $this->breadcrumbs = array(
     <!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_middleNavR') ?>
-		<?php /* if (!$this->user->goods): ?>
-			<div class="fluid" style="text-align: center;margin-top: 50px;">
-				<label style="font-weight: bold; font-size: 16px;">
-					У Вас нет добавленных грузов. Добавьте груз чтобы найти подходящее транспортное средство.
-				</label>
-				<div class="formRow" style="border-top: 0">
-					<div class="grid5">&nbsp;</div>
-					<div class="grid2">
-						<a id="goods_modal_open" href="/goods/new" title="" class="sideB bGreen goods_modal_open">Добавить</a>
-					</div>
-					<div class="grid5">&nbsp;</div>
-				</div>
-			</div>
-		<?php else: */?>
-		<?php if ($this->user->profiles): ?>
-		<div class="widget fluid" style="margin-top: 18px;">
-			<div class="formRow">
-				<?php /* ?>
-				<div class="grid2">
-					<label>Обновлять каждые</label>
-				</div>
-				<div class="grid2">
-					<?php
-						echo CHtml::activeDropDownList($settings, 'autoupdate', Yii::app()->params['timer'],
-								array('id' => 'autoupdate'),
-								array());
-					?>
-				</div>
-				<div class="grid2">
-					<a id="timerButton" data-timer="<?php echo $settings->timer; ?>" href="javascript:void(0)" class="buttonS bDefault mb10 mt5">Старт</a>
-				</div>
-				<div class="grid3">
-					<div id="progress1"><span class="pbar"></span><span class="percent"></span><span class="elapsed"></span></div>
-				</div>
-				<?php */ ?>
-
-				<div class="grid12" style="text-align: left;">
-					<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonS bBlue"
-					   title="Дополнительные условия для поиска"
-					   original-title="Дополнительные условия для поиска" >
-						Расширенный поиск
-					</a>
-					<?php $this->renderPartial('/blocks/popups/_advancedVehicleFilter', array(
-						'model' => $model,
-						'filter' => $filter,
-						'vid' => $vid,
-						'countries' => $countries,
-						'regions' => $regions,
-						'cities' => $cities,
-						'filterCountries' => $countries,
-						'filterRegions' => $filterRegions,
-						'filterCities' => $filterCities,
-						));
-					?>
-				</div>
-				<div class="clear"></div>
-			</div>
-		</div>
-		<?php endif; ?>
 
 			<div class="fluid">
 				<div class="widget check">
 					<div class="whead">
-						<h6>Все доступные транспортные средства (<?php echo $pageSettings['count'] ?>)</h6>
-						<a title="" class="buttonH bBlue" href="/goods/search">Показать все</a>
+						<?php if ($this->user->profiles): ?>
+							<a id="advancedFilterDialog_open" href="javascript:void(0)" class="buttonH bBlue" style="float:left"
+								title="Дополнительные условия для поиска"
+								original-title="Дополнительные условия для поиска" >
+								 Расширенный поиск
+							</a>
+							<?php $this->renderPartial('/blocks/popups/_advancedVehicleFilter', array(
+								'model' => $model,
+								'filter' => $filter,
+								'vid' => $vid,
+								'countries' => $countries,
+								'regions' => $regions,
+								'cities' => $cities,
+								'filterCountries' => $countries,
+								'filterRegions' => $filterRegions,
+								'filterCities' => $filterCities,
+								));
+							?>
+						<?php endif; ?>
+						<h6 style="float:right">Все доступные транспортные средства (<?php echo $pageSettings['count'] ?>)</h6>
+						<a title="" class="buttonH bBlue" style="float:left" href="/goods/search">Показать все</a>
 						<div class="clear"></div>
 					</div>
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
