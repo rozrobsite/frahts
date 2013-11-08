@@ -1,5 +1,6 @@
 <?php
 Yii::app()->clientScript->registerScriptFile('/js/files/likbez/goodsSearch.js', CClientScript::POS_BEGIN);
+Yii::app()->clientScript->registerScriptFile('/js/files/partner.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->name . ' - Поиск груза';
 $this->breadcrumbs = array(
@@ -55,6 +56,7 @@ $this->breadcrumbs = array(
 						<a title="" class="buttonH bBlue" style="float: left;" href="/vehicle/search">Показать все</a>
 						<div class="clear"></div>
 					</div>
+
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
 						<thead>
 							<tr>
@@ -111,7 +113,7 @@ $this->breadcrumbs = array(
 								</td>
 							</tr>
 						</tfoot>
-						<tbody>
+						<tbody class="mytasks">
 							<?php if (!$goods): ?>
 								<tr>
 									<td colspan="8">
@@ -122,6 +124,7 @@ $this->breadcrumbs = array(
 								</tr>
 							<?php else: ?>
 							<?php foreach ($goods as $oneGood): ?>
+							<?php $isPartner = $this->user->isPartner($oneGood->user); ?>
 							<tr>
 								<td style="font-size: 11px;">
 									<span>
@@ -219,7 +222,7 @@ $this->breadcrumbs = array(
 											<?php echo $oneGood->user->profiles->last_name . ' ' . $oneGood->user->profiles->first_name . ' ' . $oneGood->user->profiles->middle_name ?>
 										</a><br/>
 										м. <?php echo $oneGood->user->profiles->mobile ?>
-										<?php if ($this->user->isPartner($oneGood->user)): ?>
+										<?php if ($isPartner): ?>
 										<br/><a href="/partners"><span class="label label-success tipS" title="Перейти на страницу партнеров">Мой партнер</span></a>
 										<?php endif; ?>
 									</td>
@@ -245,18 +248,35 @@ $this->breadcrumbs = array(
 								<?php */endif; ?>
 								<td>
 									<?php $reviews = $oneGood->user->getReviewsAmount(); ?>
-									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments"
-									   class="tipS wHtml"
-									   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
-									   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
-										<span class="icos-like"></span>
-									</a>
 									<a href="/user/messages/user/<?php echo $oneGood->user->id; ?>#users_message"
 									   class="tipS"
 									   original-title="Написать сообщение"
 									   title="Написать сообщение">
 										<span class="icos-speech3" style="margin-top: 8px;"></span>
 									</a>
+									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments"
+									   class="tipS wHtml"
+									   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
+									   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
+										<span class="icos-like"></span>
+									</a>
+									<?php if (!$isPartner): ?>
+										<a href="javascript:void(0);"
+										   class="tipS wHtml add-partner"
+										   original-title="Добавить в партнеры"
+										   title="Добавить в партнеры"
+										   data-id="<?php echo $oneGood->user->id; ?>">
+											<span class="icos-add-partner"></span>
+										</a>
+									<?php else: ?>
+										<a href="javascript:void(0);"
+										   class="tipS wHtml remove-partner"
+										   original-title="Удалить из партнеров"
+										   title="Удалить из партнеров"
+										   data-id="<?php echo $oneGood->user->id; ?>">
+											<span class="icos-delete-partner"></span>
+										</a>
+									<?php endif; ?>
 								</td>
 							</tr>
 							<?php endforeach; ?>

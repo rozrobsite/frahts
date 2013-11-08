@@ -32,12 +32,6 @@ var partner =
 					return;
 				}
 
-				$.jGrowl('Пользователь добавлен к Вам в партнеры.', {
-					header: 'Сообщение',
-					life: 15000,
-					theme: 'successMessage'
-				});
-
 				$.get(location.href, function(response){
 					$('.mytasks').html('');
 					$('.mytasks').html($(response).find('.mytasks').html());
@@ -49,6 +43,17 @@ var partner =
 					unblockElement($('.mytasks'));
 
 					partner.init();
+
+					$('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+					$('.tipS').tipsy({gravity: 's',fade: true, html:true});
+					$('.tipW').tipsy({gravity: 'w',fade: true, html:true});
+					$('.tipE').tipsy({gravity: 'e',fade: true, html:true});
+
+					$.jGrowl('Пользователь добавлен к Вам в партнеры.', {
+						header: 'Сообщение',
+						life: 15000,
+						theme: 'successMessage'
+					});
 				});
 
 
@@ -89,12 +94,6 @@ var partner =
 					return;
 				}
 
-				$.jGrowl('Пользователь удален из Ваших партнеров.', {
-					header: 'Сообщение',
-					life: 15000,
-					theme: 'successMessage'
-				});
-
 				$.get(location.href, function(response){
 					$('.mytasks').html('');
 					$('.mytasks').html($(response).find('.mytasks').html());
@@ -106,6 +105,17 @@ var partner =
 					unblockElement($('.mytasks'));
 
 					partner.init();
+
+					$('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+					$('.tipS').tipsy({gravity: 's',fade: true, html:true});
+					$('.tipW').tipsy({gravity: 'w',fade: true, html:true});
+					$('.tipE').tipsy({gravity: 'e',fade: true, html:true});
+
+					$.jGrowl('Пользователь удален из Ваших партнеров.', {
+						header: 'Сообщение',
+						life: 15000,
+						theme: 'successMessage'
+					});
 				});
 
 

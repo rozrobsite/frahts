@@ -13,7 +13,7 @@ Yii::app()->clientScript->registerScriptFile('/js/files/add_friend.js', CClientS
 		<li class="has">
 			<a title="">
 				<i class="icos-admin"></i>
-				<span>Личный кабинет</span>
+				<span>Настройки и сервисы</span>
 				<span><img src="/images/elements/control/hasddArrow.png" alt="" /></span>
 			</a>
 			<ul style="width: 200px;">

@@ -506,9 +506,9 @@ $(function() {
 		"sDom": '<"H"fl>t<"F"ip>',
 		"aaSorting": [[ 3, "desc" ]],
 		"oLanguage": {
-			"sLengthMenu": "Показать _MENU_ шт. на страницу",
-			"sInfoFiltered": "(из _MAX_ шт.)",
-			"sInfo": "Всего: _TOTAL_ шт.",
+			"sLengthMenu": "Показать _MENU_ на страницу",
+			"sInfoFiltered": "(из _MAX_)",
+			"sInfo": "Всего: _TOTAL_",
 			"sSearch": "Поиск"
 		},
 		"aoColumns": [
@@ -538,9 +538,9 @@ $(function() {
 		"sDom": '<"H"fl>t<"F"ip>',
 		"aaSorting": [[ 3, "desc" ]],
 		"oLanguage": {
-			"sLengthMenu": "Показать _MENU_ шт. на страницу",
-			"sInfoFiltered": "(из _MAX_ шт.)",
-			"sInfo": "Всего: _TOTAL_ шт.",
+			"sLengthMenu": "Показать _MENU_ на страницу",
+			"sInfoFiltered": "(из _MAX_ )",
+			"sInfo": "Всего: _TOTAL_",
 			"sSearch": "Поиск"
 		},
 		"aoColumns": [

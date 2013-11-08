@@ -26,7 +26,7 @@ $this->breadcrumbs = array(
 <!-- Sidebar ends -->
 <div id="content">
 	<?php $this->renderPartial('/blocks/contentTop') ?>
-    
+
     <!-- Main content -->
     <div class="wrapper">
 		<?php $this->renderPartial('/blocks/_notify') ?>
@@ -36,7 +36,7 @@ $this->breadcrumbs = array(
 			<div class="enterMessage">
 				<input id="enterMessage" type="text" name="enterMessage" placeholder="Напишите сообщение..." data-receiving-id="<?php echo $receivingUser->id ?>" />
 				<div class="sendBtn">
-					<input id="sendMessage" type="submit" name="sendMessage" class="buttonS bLightBlue" value="Добавить" />
+					<input id="sendMessage" type="submit" name="sendMessage" class="buttonS bLightBlue" value="Отправить" />
 				</div>
 			</div>
 		<?php endif; ?>

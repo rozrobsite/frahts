@@ -16,7 +16,7 @@
 .iconb:before, .icona:after { font-family: 'IcoMoon'; content: attr(data-icon); }
 .whead .iconb { margin: 2px 0 0 0; display: block; float:left; }
 .iconb, .iconb:hover { font-weight: normal; }
-[class*="button"]  [class*="icon-"]  { margin: 0px 0 -1px -2px;	float:left;  display: block; font-size: 14px; font-weight: normal; } 
+[class*="button"]  [class*="icon-"]  { margin: 0px 0 -1px -2px;	float:left;  display: block; font-size: 14px; font-weight: normal; }
 [class*="button"] .dropdown-menu li a [class*="icon"] { margin-left: 0; }
 
 /* Add the following CSS properties to your stylesheet if you want to have a class per icon */
@@ -584,7 +584,7 @@
 .icon-upload-4:before { content: "\e22d"; }
 .icon-download-3:before { content: "\e22e"; }
 .icon-install:before { content: "\e22f"; }
-.icon-cloud-4:before { 	content: "\e230"; } 
+.icon-cloud-4:before { 	content: "\e230"; }
 .icon-upload-5:before { content: "\e231"; }
 .icon-play-3:before { content: "\e232"; }
 .icon-pause-2:before { content: "\e233"; }
@@ -666,7 +666,7 @@
 [class^="icos-"], [class*="icos-"], [class="icos-"] { width: 14px; height: 14px; display: inline-block; margin-right: 10px; float: left; padding-top: 4px; }
 .formRow label > [class*="icos-"] { padding-top: 6px; }
 .iconsLine [class^="icos-"], .iconsLine [class*="icos-"] { margin-right: 0; padding: 7px 0; float: none; }
-[class*="button"] > [class*="icos-"]  { margin: 0; padding: 0; float:left;  display: block; } 
+[class*="button"] > [class*="icos-"]  { margin: 0; padding: 0; float:left;  display: block; }
 
 .icos-cross:before { content: url(/images/icons/usual/icon-cross.png); }
 .icos-photos:before { content: url(/images/icons/usual/icon-photos.png);  }
@@ -965,13 +965,15 @@
 .icos-fullscreen2:before { content: url(/images/icons/usual/icon-fullscreen2.png); }
 .icos-cart5:before { content: url(/images/icons/usual/icon-cart5.png); }
 .icos-notes:before { content: url(/images/icons/usual/icon-notes.png); }
+.icos-add-partner:before { content: url(/images/icons/usual/partner_add.png); }
+.icos-delete-partner:before { content: url(/images/icons/usual/partner_delete.png); }
 
 
 /* === Icons (light images) === */
 
 [class^="icol-"], [class*="icol-"], [class="icol-"] { width: 14px; height: 14px; display: inline-block; margin-right: 10px; float: left; padding-top: 4px; }
 .iconsLine [class^="icol-"], .iconsLine [class*="icol-"] { margin-right: 0; padding: 7px 0; float: none; }
-[class*="button"] > [class*="icol-"]  { margin: 0; padding: 0; float:left;  display: block; } 
+[class*="button"] > [class*="icol-"]  { margin: 0; padding: 0; float:left;  display: block; }
 
 .icol-cross:before { content: url(/images/icons/light/icon-cross.png); }
 .icol-photos:before { content: url(/images/icons/light/icon-photos.png);  }

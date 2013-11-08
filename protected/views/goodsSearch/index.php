@@ -1,6 +1,5 @@
 <?php
-/* @var $this UserController */
-/* @var $model Users */
+Yii::app()->clientScript->registerScriptFile('/js/files/partner.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->name . ' - Поиск транспорта';
 $this->breadcrumbs = array(
@@ -56,6 +55,7 @@ $this->breadcrumbs = array(
 						<a title="" class="buttonH bBlue" style="float:left" href="/goods/search">Показать все</a>
 						<div class="clear"></div>
 					</div>
+
 					<table cellpadding="0" cellspacing="0" width="100%" class="tDefault checkAll tMedia" id="checkAll">
 						<thead>
 							<tr>
@@ -106,7 +106,7 @@ $this->breadcrumbs = array(
 								</td>
 							</tr>
 						</tfoot>
-						<tbody>
+						<tbody class="mytasks">
 							<?php if (!$vehicles): ?>
 								<tr>
 									<td colspan="6">
@@ -117,6 +117,7 @@ $this->breadcrumbs = array(
 								</tr>
 							<?php else: ?>
 							<?php foreach ($vehicles as $vehicle): ?>
+								<?php $isPartner = $this->user->isPartner($vehicle->user); ?>
 								<tr>
 									<td>
 										<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства" style="display: block;">
@@ -177,7 +178,7 @@ $this->breadcrumbs = array(
 												<?php echo $vehicle->user->profiles->last_name . ' ' . $vehicle->user->profiles->first_name . ' ' . $vehicle->user->profiles->middle_name ?>
 											</a><br/>
 											м. <?php echo $vehicle->user->profiles->mobile ?>
-											<?php if ($this->user->isPartner($vehicle->user)): ?>
+											<?php if ($isPartner): ?>
 												<br/><a href="/partners"><span class="label label-success tipS" title="Перейти на страницу партнеров">Мой партнер</span></a>
 											<?php endif; ?>
 										</td>
@@ -203,18 +204,35 @@ $this->breadcrumbs = array(
 									<?php */endif; ?>
 									<td>
 										<?php $reviews = $vehicle->user->getReviewsAmount(); ?>
-										<a href="/user/view/<?php echo $vehicle->user->id; ?>#tab_comments"
-										   class="tipS wHtml"
-										   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
-										   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
-											<span class="icos-like"></span>
-										</a>
 										<a href="/user/messages/user/<?php echo $vehicle->user->id; ?>#users_message"
 										   class="tipS"
 										   original-title="Написать сообщение"
 										   title="Написать сообщение">
 											<span class="icos-speech3" style="margin-top: 8px;"></span>
 										</a>
+										<a href="/user/view/<?php echo $vehicle->user->id; ?>#tab_comments"
+										   class="tipS wHtml"
+										   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
+										   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
+											<span class="icos-like"></span>
+										</a>
+										<?php if (!$isPartner): ?>
+											<a href="javascript:void(0);"
+												class="tipS wHtml add-partner"
+												original-title="Добавить в партнеры"
+												title="Добавить в партнеры"
+												data-id="<?php echo $vehicle->user->id; ?>">
+												 <span class="icos-add-partner"></span>
+											</a>
+										<?php else: ?>
+											<a href="javascript:void(0);"
+											   class="tipS wHtml remove-partner"
+											   original-title="Удалить из партнеров"
+											   title="Удалить из партнеров"
+											   data-id="<?php echo $vehicle->user->id; ?>">
+												<span class="icos-delete-partner"></span>
+											</a>
+										<?php endif; ?>
 									</td>
 								</tr>
 							<?php endforeach; ?>
