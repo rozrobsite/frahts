@@ -50,6 +50,19 @@ class UserController extends FrahtController
 							'name_ru');
 		}
 
+		$this->user->organizations = isset($this->user->organizations->id) ? $this->user->organizations
+					: new Organizations();
+		$typeOrganizations = TypeOrganizations::model()->findAll(array('order' => 'name_ru'));
+		$listTypeOrganizations = CHtml::listData($typeOrganizations, 'id', 'name_ru');
+		$formOrganizations = FormOrganizations::model()->findAll(array('order' => 'name_ru'));
+		$listFormOrganizations = CHtml::listData($formOrganizations, 'id', 'name_ru');
+
+		$privateName = isset($this->user->profiles->id) ? $this->user->profiles->last_name
+				. " " . strtoupper(mb_substr($this->user->profiles->first_name, 0, 1,
+								'UTF-8'))
+				. ". " . strtoupper(mb_substr($this->user->profiles->middle_name, 0, 1,
+								'UTF-8')) . "." : '';
+
 		$this->render('index',
 				array(
 			'model' => $profiles,
@@ -59,6 +72,9 @@ class UserController extends FrahtController
 			'cities' => $listCities,
 			'user' => $this->user,
 			'receivingUsers' => $this->_receivingUsers,
+			'typeOrganizations' => $listTypeOrganizations,
+			'formOrganizations' => $listFormOrganizations,
+			'privateName' => $privateName,
 		));
 	}
 
@@ -146,6 +162,13 @@ class UserController extends FrahtController
 		$this->user->organizations = isset($this->user->organizations->id) ? $this->user->organizations
 					: new Organizations();
 
+		// if it is ajax validation request
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'organizations-form')
+		{
+			echo CActiveForm::validate($this->user->organizations);
+			Yii::app()->end();
+		}
+
 		if (isset($_POST['Organizations']))
 		{
 			$this->user->organizations->attributes = $_POST['Organizations'];
@@ -190,25 +213,27 @@ class UserController extends FrahtController
 			}
 		}
 
-		$typeOrganizations = TypeOrganizations::model()->findAll(array('order' => 'name_ru'));
-		$listTypeOrganizations = CHtml::listData($typeOrganizations, 'id', 'name_ru');
-		$formOrganizations = FormOrganizations::model()->findAll(array('order' => 'name_ru'));
-		$listFormOrganizations = CHtml::listData($formOrganizations, 'id', 'name_ru');
+		$this->redirect('/user');
 
-		$privateName = isset($this->user->profiles->id) ? $this->user->profiles->last_name
-				. " " . strtoupper(mb_substr($this->user->profiles->first_name, 0, 1,
-								'UTF-8'))
-				. ". " . strtoupper(mb_substr($this->user->profiles->middle_name, 0, 1,
-								'UTF-8')) . "." : '';
+//		$typeOrganizations = TypeOrganizations::model()->findAll(array('order' => 'name_ru'));
+//		$listTypeOrganizations = CHtml::listData($typeOrganizations, 'id', 'name_ru');
+//		$formOrganizations = FormOrganizations::model()->findAll(array('order' => 'name_ru'));
+//		$listFormOrganizations = CHtml::listData($formOrganizations, 'id', 'name_ru');
+//
+//		$privateName = isset($this->user->profiles->id) ? $this->user->profiles->last_name
+//				. " " . strtoupper(mb_substr($this->user->profiles->first_name, 0, 1,
+//								'UTF-8'))
+//				. ". " . strtoupper(mb_substr($this->user->profiles->middle_name, 0, 1,
+//								'UTF-8')) . "." : '';
 
-		$this->render('organization',
-				array(
-			'model' => $this->user->organizations,
-			'typeOrganizations' => $listTypeOrganizations,
-			'formOrganizations' => $listFormOrganizations,
-			'privateName' => $privateName,
-			'receivingUsers' => $this->_receivingUsers,
-		));
+//		$this->render('organization',
+//				array(
+//			'model' => $this->user->organizations,
+//			'typeOrganizations' => $listTypeOrganizations,
+//			'formOrganizations' => $listFormOrganizations,
+//			'privateName' => $privateName,
+//			'receivingUsers' => $this->_receivingUsers,
+//		));
 	}
 
 	public function actionEmployee()
@@ -287,12 +312,18 @@ class UserController extends FrahtController
 		// collect user input data
 		if (isset($_POST['Users']))
 		{
-			$this->user->email = $_POST['Users']['newEmail'];
-			$this->user->username = $_POST['Users']['newEmail'];
+			$model->email = $_POST['Users']['newEmail'];
+			$model->username = $_POST['Users']['newEmail'];
 
 			// validate user input and redirect to the previous page if valid
-			if ($this->user->validate())
+//			echo '<pre>';
+//			print_r($this->user->validate());
+//			echo '</pre>';die();
+			if ($model->validate())
 			{
+				$this->user->email = $_POST['Users']['newEmail'];
+				$this->user->username = $_POST['Users']['newEmail'];
+
 				if ($this->user->update())
 				{
 					$message = new YiiMailMessage;
@@ -408,6 +439,7 @@ class UserController extends FrahtController
 			'receivingUser' => $receivingUser,
 			'receivingUsers' => $receivingUsers,
 			'models' => $models,
+			'message' => $messagesModel
 		));
 	}
 

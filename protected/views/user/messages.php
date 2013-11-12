@@ -34,11 +34,10 @@ $this->breadcrumbs = array(
 
 		<?php if ($receivingUser): ?>
 			<div class="enterMessage">
-				<input id="enterMessage" type="text" name="enterMessage" placeholder="Напишите сообщение..." data-receiving-id="<?php echo $receivingUser->id ?>" />
-				<div class="sendBtn">
-					<input id="sendMessage" type="submit" name="sendMessage" class="buttonS bLightBlue" value="Отправить" />
-				</div>
+				<textarea id="enterMessage" style="height: 100px" name="enterMessage" placeholder="Напишите сообщение..." data-receiving-id="<?php echo $receivingUser->id ?>"></textarea>
+				<input id="sendMessage" type="submit" style="float: right; margin-top: 5px;" name="sendMessage" class="buttonS bLightBlue" value="Отправить" />
 			</div>
+			<div style="height: 30px;"></div>
 		<?php endif; ?>
 
 		<div id="usersMessages">

@@ -23,6 +23,7 @@ class Messages extends CActiveRecord
 	const TYPE_WEEK = 2;
 	const TYPE_MONTH = 3;
 	const TYPE_3_MONTH = 4;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -109,7 +110,7 @@ class Messages extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	
+
 	public function getMessages($user, $receivingUser, $type)
 	{
 		$condition = 'is_deleted = 0';
@@ -133,36 +134,36 @@ class Messages extends CActiveRecord
 					AND created_at < UNIX_TIMESTAMP(CURRENT_DATE + INTERVAL 1 DAY)';
 				break;
 		}
-		
+
 		$criteria = new CDbCriteria();
-		
+
 		if (!$receivingUser)
 		{
 			$criteria->condition = $condition . ' AND (receiving_user_id = ' . $user->id . ' OR author_id = ' . $user->id . ')';
 			$criteria->order = 'created_at DESC';
-			
+
 			if ($type == self::TYPE_LAST)
 				$criteria->limit = Yii::app()->params['messages_by_page'];
 
 			return $this->findAll($criteria);
 		}
-		
-		$criteria->condition = $condition . ' AND ((receiving_user_id = ' . $user->id . ' AND author_id = ' . $receivingUser->id . ') 
+
+		$criteria->condition = $condition . ' AND ((receiving_user_id = ' . $user->id . ' AND author_id = ' . $receivingUser->id . ')
 			OR (author_id = ' . $user->id . ' AND receiving_user_id = ' . $receivingUser->id . '))';
 		$criteria->order = 'created_at DESC';
-		
+
 		return $this->findAll($criteria);
 	}
 
 	public function getReceivingUsers($currentUser, $receivingUser = null)
 	{
 		$users = array();
-		
+
 		if ($receivingUser)
 			$users[] = $receivingUser;
-		
+
 		$messages = array_merge($currentUser->messagesReceiving, $currentUser->messagesAuthor);
-		
+
 		foreach ($messages as $message)
 		{
 			if ($currentUser->id == $message->author->id)
@@ -174,7 +175,7 @@ class Messages extends CActiveRecord
 				$users[] = $message->author;
 			}
 		}
-		
+
 		$result = array();
 		$currentUserIds = array();
 		foreach ($users as $user)
