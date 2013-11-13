@@ -18,7 +18,7 @@ Yii::app()->clientScript->registerScriptFile('/js/files/add_friend.js', CClientS
 			</a>
 			<ul style="width: 200px;">
 				<li><a href="/user" title=""><span class="icos-admin2"></span>Личная информация</a></li>
-				<li><a href="/user/organization" title=""><span class="icos-users"></span>Организация</a></li>
+				<li><a href="/user#organization" title=""><span class="icos-users"></span>Организация</a></li>
 				<?php if (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
 					<li><a href="/vehicle/active" title=""><span class="icos-truck"></span>Мой транспорт</a></li>
 					<li><a href="/goods/active" title=""><span class="icos-dropbox"></span>Мои грузы</a></li>

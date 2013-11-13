@@ -257,17 +257,20 @@ class UserController extends FrahtController
 		{
 			$model->attributes = $_POST['Feedback'];
 			$model->email = $this->user->email;
+			$model->created_at = time();
 
 			// validate user input and redirect to the previous page if valid
 			if ($model->validate())
 			{
 				if ($model->save())
 				{
+					$adminEmail = array_keys(Yii::app()->params['adminEmail']);
+
 					$message = new YiiMailMessage;
 					$message->setBody($model->message, 'text/plain');
-					$message->subject = 'frahts.com: Обратная связь';
-					$message->addTo(Yii::app()->params['adminEmail']);
-					$message->addTo('frahtscom@gmail.com');
+					$message->subject = 'frahts.com: Обратная связь (' . $model->subject . ')';
+					$message->addTo($adminEmail[0]);
+					$message->addTo('imperia1991@gmail.com');
 					$message->from = $this->user->email;
 					if (Yii::app()->mail->send($message))
 							Yii::app()->user->setFlash('feedback_success',

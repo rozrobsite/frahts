@@ -160,3 +160,6 @@ CREATE TABLE user_tags(
 					text VARCHAR(255) DEFAULT NULL,
 					FULLTEXT INDEX search_text (text)
 				  ) ENGINE = MYISAM
+
+--13.11.2011
+ALTER TABLE `feedback` ADD `created_at` INT(11) NULL DEFAULT NULL;

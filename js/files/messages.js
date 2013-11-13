@@ -23,6 +23,7 @@ var search = {
 				$('#userList').html('');
 				$('#userList').html(response.userList);
 
+			}).done(function(data){
 				unblockElement($('#users_message'));
 			});
 
@@ -62,7 +63,8 @@ var search = {
 				$.get(url, function(response){
 					$('#usersMessages').html('');
 					$('#usersMessages').html($(response).find('#usersMessages'));
-
+				}).done(function(data){
+					$('#enterMessage').val('');
 					unblockElement($('.enterMessage'));
 				});
 			});

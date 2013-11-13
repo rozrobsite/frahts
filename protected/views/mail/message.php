@@ -5,7 +5,7 @@
 		<?php echo $model->message; ?>
 	</p>
 </blockquote>
-Чтобы ответить на это сообщение перейдите по <a target="_blank" href="<?php echo Yii::app()->request->hostInfo . '/user/messages/user/' . $model->receivingUser->id; ?>">этой ссылке</a>.<br/><br/>
+Чтобы ответить на это сообщение перейдите по <a target="_blank" href="<?php echo Yii::app()->request->hostInfo . '/user/messages/user/' . $model->author->id . '#users_message'; ?>">этой ссылке</a>.<br/><br/>
 Просмотреть все сообщения которые оставили Вам пользователи можна на странице <a href="<?php echo Yii::app()->request->hostInfo; ?>/user/messages">Сообщения</a>
 <br/><br/>
 Если у Вас возникли какие-либо вопросы по нашему сервису, обратитесь к администрации сайта <a href="<?php echo Yii::app()->params['fullSiteName']; ?>">www.frahts.com</a>: <a href="mailto:support@frahts.com">support@frahts.com</a>
