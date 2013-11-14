@@ -168,9 +168,9 @@ class MainController extends Controller
 				elseif ($user->profiles)
 				{
 					if ($user->profiles->userType->id == UserTypes::FREIGHTER)
-						$this->redirect('/vehicle/search');
-					if ($user->profiles->userType->id == UserTypes::SHIPPER)
 						$this->redirect('/goods/search');
+					if ($user->profiles->userType->id == UserTypes::SHIPPER)
+						$this->redirect('/vehicle/search');
 					if ($user->profiles->userType->id == UserTypes::DISPATCHER)
 					{
 						if (count($user->vehicles) >= count($user->goods))
@@ -296,6 +296,7 @@ class MainController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout(true);
+		unset($_COOKIE);
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
