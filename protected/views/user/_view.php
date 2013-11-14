@@ -118,12 +118,12 @@
 						}
 						?>
 						<li class="activeTab" style=""><a href="#tab_comments">Отзывы</a></li>
-						<?php if ($printGoods): ?> <li class=""><a href="#tab_goods">Грузы</a></li> <?php endif; ?>
-						<?php if ($printVehicles): ?> <li class=""><a href="#tab_vehicles">Транспорт</a></li> <?php endif; ?>
+						<?php if ($printVehicles): ?> <li class=""><a href="#tab_goods">Грузы</a></li> <?php endif; ?>
+						<?php if ($printGoods): ?> <li class=""><a href="#tab_vehicles">Транспорт</a></li> <?php endif; ?>
 					</ul>
 					<?php $this->renderPartial('/user/_reviewsList', array('model' => $model, 'canWrite' => $canWrite, 'offer' => $offer, 'offer_id' => $offer_id)); ?>
-					<?php $this->renderPartial('/user/_userGoodsList', array('printGoods' => $printGoods, 'model' => $model)); ?>
-					<?php $this->renderPartial('/user/_userVehiclesList', array('printVehicles' => $printVehicles, 'model' => $model)); ?>
+					<?php $this->renderPartial('/user/_userGoodsList', array('printGoods' => $printVehicles, 'model' => $model)); ?>
+					<?php $this->renderPartial('/user/_userVehiclesList', array('printVehicles' => $printGoods, 'model' => $model)); ?>
 				</div>
 				<div class="clear"></div>
 			</div>

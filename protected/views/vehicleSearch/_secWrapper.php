@@ -36,6 +36,9 @@
 				<div style="text-align: center; margin-top: 20px;">
 					<a class="buttonM bBlue" href="/vehicle/new"><span class="icol-add"></span><span>Добавить транспорт</span></a>
 				</div>
+				<div style="text-align: center; margin-top: 20px;">
+					<a class="buttonM bBlue" href="/vehicle/active" style="width: 137px"><span>Мой транспорт</span></a>
+				</div>
 			<?php endif; ?>
 		</div>
 
