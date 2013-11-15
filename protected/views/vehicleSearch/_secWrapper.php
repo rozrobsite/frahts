@@ -1,9 +1,9 @@
 <div class="secWrapper">
 	<?php $this->renderPartial('/blocks/secTop') ?>
 	<!-- Tabs container -->
-	<div id="tab-container" class="tab-container">
-		<ul class="iconsLine ic1 etabs">
-			<li class="user_profile_tab"><a href="#goodsSearch" class="exp subClosed">Мой транспорт</a></li>
+	<div id="tab-container" class="">
+		<ul class="iconsLine ic1">
+			<li class=""><a href="/vehicle/active" class="subClosed">Мой транспорт</a></li>
 		</ul>
 		<div class="divider"><span></span></div>
 		<div id="goodsSearch">
@@ -36,10 +36,10 @@
 				<div style="text-align: center; margin-top: 20px;">
 					<a class="buttonM bBlue" href="/vehicle/new"><span class="icol-add"></span><span>Добавить транспорт</span></a>
 				</div>
-				<div style="text-align: center; margin-top: 20px;">
-					<a class="buttonM bBlue" href="/vehicle/active" style="width: 137px"><span>Мой транспорт</span></a>
-				</div>
 			<?php endif; ?>
+			<div style="text-align: center; margin-top: 20px;">
+				<a class="buttonM bBlue" href="/vehicle/active" style="width: 137px"><span>Мой транспорт</span></a>
+			</div>
 		</div>
 
 		<div class="divider"><span></span></div>

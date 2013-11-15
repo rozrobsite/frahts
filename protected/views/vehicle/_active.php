@@ -63,9 +63,13 @@ $this->breadcrumbs = array(
 										</span>
 									</td>
 									<td class="center"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy', $vehicle->created_at); ?></td>
-									<td>
-										<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="tablectrl_small bLightBlue tipS" title="Редактировать"><span class="iconb" data-icon="&#xe1db;"></span></a>
-										<a href="javascript:void(0)" class="tablectrl_small bGold tipS vehicleDeleteSearch" title="Удалить транспортное средство" rel="<?php echo $vehicle->id ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
+									<td class="center">
+										<a href="/vehicle/update/<?php echo $vehicle->id ?>" class="tablectrl_small bLightBlue tipE" title="Редактировать">
+											<span class="iconb" data-icon="&#xe1db;"></span>
+										</a>
+										<a href="javascript:void(0)" class="tablectrl_small bGold tipE vehicleDeleteSearch" title="Удалить транспортное средство" rel="<?php echo $vehicle->id ?>">
+											<span class="iconb" data-icon="&#xe136;"></span>
+										</a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

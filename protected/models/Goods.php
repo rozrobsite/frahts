@@ -236,6 +236,7 @@ class Goods extends CActiveRecord {
 		$command = Yii::app()->db->createCommand();
 		return $command->update('goods', array(
 				'date_to' => strtotime('-1 day'),
+				'is_deleted' => 1,
 				), 'id = ' . $this->id . ' AND user_id = ' . Yii::app()->user->id);
 	}
 

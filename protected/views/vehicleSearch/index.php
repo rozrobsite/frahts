@@ -249,20 +249,20 @@ $this->breadcrumbs = array(
 								<td>
 									<?php $reviews = $oneGood->user->getReviewsAmount(); ?>
 									<a href="/user/messages/user/<?php echo $oneGood->user->id; ?>#users_message"
-									   class="tipS"
+									   class="tipE"
 									   original-title="Написать сообщение"
 									   title="Написать сообщение">
 										<span class="icos-speech3" style="margin-top: 8px;"></span>
 									</a>
 									<a href="/user/view/<?php echo $oneGood->user->id; ?>#tab_comments"
-									   class="tipS wHtml"
+									   class="tipE wHtml"
 									   original-title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>"
 									   title="Отзывы<br/><span style='color: #8fae53;'><strong><?php echo $reviews['positive'] ?></strong></span> / <span style='color: #ba6d6d;'><strong><?php echo $reviews['negative'] ?></strong></span>">
 										<span class="icos-like"></span>
 									</a>
 									<?php if (!$isPartner): ?>
 										<a href="javascript:void(0);"
-										   class="tipS wHtml add-partner"
+										   class="tipE wHtml add-partner"
 										   original-title="Добавить в партнеры"
 										   title="Добавить в партнеры"
 										   data-id="<?php echo $oneGood->user->id; ?>">
@@ -270,7 +270,7 @@ $this->breadcrumbs = array(
 										</a>
 									<?php else: ?>
 										<a href="javascript:void(0);"
-										   class="tipS wHtml remove-partner"
+										   class="tipE wHtml remove-partner"
 										   original-title="Удалить из партнеров"
 										   title="Удалить из партнеров"
 										   data-id="<?php echo $oneGood->user->id; ?>">

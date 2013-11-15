@@ -470,11 +470,11 @@ $(function() {
 
 	//===== Easy tabs =====//
 
-	$('#tab-container').easytabs({
-		animationSpeed: 300,
-		collapsible: false,
-		tabActiveClass: "clicked"
-	});
+//	$('#tab-container').easytabs({
+//		animationSpeed: 300,
+//		collapsible: false,
+//		tabActiveClass: "clicked"
+//	});
 
 	//===== Tabs =====//
 
