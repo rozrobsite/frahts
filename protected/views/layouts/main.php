@@ -19,7 +19,6 @@
 			<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/main-style.css" rel="stylesheet" type="text/css" />
 		<?php else: ?>
 			<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" rel="stylesheet" type="text/css" />
-			<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/hopscotch-0.1.2.min.css" rel="stylesheet" type="text/css" />
 		<?php endif; ?>
 		<!--[if IE]> <link href="/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
