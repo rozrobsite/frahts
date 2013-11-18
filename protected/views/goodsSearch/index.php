@@ -53,8 +53,10 @@ $this->breadcrumbs = array(
 						<?php endif; ?>
 						<h6 style="float:right">Найдено: <?php echo $pageSettings['count'] ?></h6>
 						<a title="" class="buttonH bBlue" style="float:left" href="/goods/search">Показать все</a>
-						<a title="" class="buttonS bDefault mb10 mt5" style="float:left" href="/goods/search">Мой транспорт</a>
-						<a title="" class="buttonS bDefault mb10 mt5" style="float:left" href="/goods/search">Мои грузы</a>
+						<?php if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+							<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/vehicle/active">Мой транспорт</a>
+						<?php endif; ?>
+						<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/goods/active">Мои грузы</a>
 						<div class="clear"></div>
 					</div>
 

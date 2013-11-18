@@ -52,8 +52,12 @@ $this->breadcrumbs = array(
 								));
 							?>
 						<?php endif; ?>
-						<h6 style="float: right;">Все грузы (<?php echo $pageSettings['count'] ?>)</h6>
+						<h6 style="float: right;">Найдено: <?php echo $pageSettings['count'] ?></h6>
 						<a title="" class="buttonH bBlue" style="float: left;" href="/vehicle/search">Показать все</a>
+						<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/vehicle/active">Мой транспорт</a>
+						<?php if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+							<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/goods/active">Мои грузы</a>
+						<?php endif; ?>
 						<div class="clear"></div>
 					</div>
 

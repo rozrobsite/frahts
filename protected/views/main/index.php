@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
 <div id="content">
 	<div id="right-block">                    
 		<div class="light-grey width400">
-			<p class="center turquoise">Грузы ожидающие отправки:</p>
+			<p class="center turquoise">Новые грузы:</p>
 			<table class="turquoise" style="text-align: center;">
 				<colgroup>
 					<col width="115" />
@@ -66,7 +66,7 @@ $this->breadcrumbs = array(
 			</table>
 		</div> 
 		<div class="light-grey width400">
-			<p class="center turquoise">Транспорт ожидающий загрузки:</p>
+			<p class="center turquoise">Свободный транспорт:</p>
 			<table class="turquoise" style="text-align: center;">
 				<colgroup>
 					<col width="115" />

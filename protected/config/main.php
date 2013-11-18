@@ -40,6 +40,15 @@ return array(
 				),
 			),
 		),
+		'joker' => array(
+			'layout' => 'application.modules.joker.views.layouts.main',
+//			'preload' => array('bootstrap'),
+			'components' => array(
+//				'bootstrap' => array(
+//					'class' => 'ext.bootstrap.components.Bootstrap',
+//				),
+			),
+		),
 	),
 	// application components
 	'components' => array(
@@ -76,6 +85,12 @@ return array(
 				'user/view/<id:\d+>/*' => 'user/view',
 				'user/view/<id:\d+>' => 'user/view',
 				'docs/view/<slug:[a-zA-Z0-9-]+>' => 'docs/view',
+				// Joker main page
+				'<module:(joker)>' => '<module>/main/index',
+				// Remove 'index' action from url
+				// Default joker actions rules
+				'<module:(joker)>/<controller:\w+>' => '<module>/<controller>/index',
+				'<module:(joker)>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
 				// Admin main page
 				'<module:(admin)>' => '<module>/default/index',
 				// Remove 'index' action from url
