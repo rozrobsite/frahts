@@ -266,5 +266,8 @@ return array(
 				'product' => 'Q3I8bkUgCj',
 			),
 		),
+		'joker' => array(
+			'name' => 'АвтоJoker'
+		),
 	),
 );

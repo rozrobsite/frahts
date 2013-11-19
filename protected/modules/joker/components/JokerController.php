@@ -1,15 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of AdminController
- *
- * @author Gennadiy
- */
 class JokerController extends Controller
 {
 	public $jokerUser = null;
@@ -19,12 +8,17 @@ class JokerController extends Controller
 	{
 		parent::__construct($id, $module);
 		
-//		$this->users = Users::model()->count('code = ""');
-//		$this->freighter = Profiles::model()->count('user_type_id = ' . UserTypes::FREIGHTER);
-//		$this->shipper = Profiles::model()->count('user_type_id = ' . UserTypes::SHIPPER);
-//		$this->dispatcher = Profiles::model()->count('user_type_id = ' . UserTypes::DISPATCHER);
-//		$this->vehicles = Vehicle::model()->count();
-//		$this->goods = Goods::model()->count();
+		$s_code = isset(Yii::app()->request->cookies['frahts_joker_user']->value) ? Yii::app()->request->cookies['frahts_joker_user']->value : '';
+
+		if ($s_code && !$this->jokerUser)
+		{
+			Yii::app()->session['redirectUrl'] = Yii::app()->request->requestUri;
+			$this->jokerUser = JokerUsers::model()->login($s_code);
+		}
+		else
+		{
+			unset(Yii::app()->session['redirectUrl']);
+		}
 	}
 }
 ?>

@@ -10,15 +10,37 @@
  * @property string $logins
  * @property string $last_login
  * @property integer $enabled
+ * @property string $s_code
  */
 class JokerUsers extends ActiveRecord
 {
+
+	const SCENARIO_REGISTER = 'register';
+	const SCENARIO_LOGIN = 'login';
+	const SCENARIO_FORGOT = 'forgot';
+	const SCENARIO_CHANGE_EMAIL = 'newEmail';
+	const SCENARIO_CHANGE_PASSWORD = 'newPassword';
+
+	public $rememberMe = 0;
+	// для капчи
+	public $verifyCode;
+	// для поля "повтор пароля"
+	public $password_repeat;
+	// для изменения email
+	public $newEmail;
+	public $newEmailRepeat;
+	// для изменения password
+	public $oldPassword;
+	public $newPassword;
+	public $newPasswordRepeat;
+	public $agree;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return JokerUsers the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}
@@ -39,14 +61,28 @@ class JokerUsers extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, password', 'required'),
-			array('enabled', 'numerical', 'integerOnly'=>true),
-			array('email', 'length', 'max'=>254),
-			array('password', 'length', 'max'=>64),
-			array('password', 'authenticate'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, email, password, logins, last_login, enabled', 'safe', 'on'=>'search'),
+			array('email', 'required', 'on' => self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN . ', ' . self::SCENARIO_FORGOT . ', ' . self::SCENARIO_CHANGE_EMAIL),
+			array('password', 'required', 'on' => self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN),
+			array('email', 'email'),
+			array('email', 'forgot', 'on' => self::SCENARIO_FORGOT),
+			array('email', 'unique', 'on' => self::SCENARIO_REGISTER),
+			array('password', 'length', 'min' => 6, 'max' => 30, 'on' => self::SCENARIO_REGISTER . ', ' . self::SCENARIO_LOGIN),
+			array('password', 'authenticate', 'on' => self::SCENARIO_LOGIN),
+			array('password_repeat', 'compare', 'compareAttribute' => 'password', 'on' => self::SCENARIO_REGISTER),
+			array('password_repeat, email', 'required', 'on' => self::SCENARIO_REGISTER),
+			array('password_repeat', 'length', 'min' => 6, 'max' => 30),
+			array('agree', 'mustCheck', 'on' => self::SCENARIO_REGISTER),
+//			array('enabled', 'boolean'),
+			array('verifyCode', 'captcha', 'on' => self::SCENARIO_REGISTER),
+			array('email', 'forgot', 'on' => self::SCENARIO_CHANGE_EMAIL),
+			array('newEmail, newEmailRepeat', 'required', 'on' => self::SCENARIO_CHANGE_EMAIL),
+			array('newEmail, newEmailRepeat', 'email', 'on' => self::SCENARIO_CHANGE_EMAIL),
+			array('newEmailRepeat', 'compare', 'compareAttribute' => 'newEmail', 'on' => self::SCENARIO_CHANGE_EMAIL),
+			array('oldPassword, newPassword, newPasswordRepeat', 'length', 'min' => 6, 'max' => 30,
+				'on' => self::SCENARIO_CHANGE_PASSWORD),
+			array('oldPassword', 'changePassword', 'on' => self::SCENARIO_CHANGE_PASSWORD),
+			array('oldPassword, newPassword, newPasswordRepeat', 'required', 'on' => self::SCENARIO_CHANGE_PASSWORD),
+			array('newPasswordRepeat', 'compare', 'compareAttribute' => 'newPassword', 'on' => self::SCENARIO_CHANGE_PASSWORD),
 		);
 	}
 
@@ -85,52 +121,111 @@ class JokerUsers extends ActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('logins',$this->logins,true);
-		$criteria->compare('last_login',$this->last_login,true);
-		$criteria->compare('enabled',$this->enabled);
+		$criteria->compare('id', $this->id, true);
+		$criteria->compare('email', $this->email, true);
+		$criteria->compare('password', $this->password, true);
+		$criteria->compare('logins', $this->logins, true);
+		$criteria->compare('last_login', $this->last_login, true);
+		$criteria->compare('enabled', $this->enabled);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 	}
-	
+
 	public function authenticate($attribute, $params)
 	{
 		if (!$this->hasErrors())
 		{
 			$user = $this->login();
-			
+
 			if (!$user)
-					$this->addError('email', 'Неправильно введены Email или Пароль');
+			{
+				$this->addError('email', 'Неправильно введены Email или Пароль');
+			}
 		}
 	}
-	
-	public function login()
+
+	public function login($s_code = null)
 	{
-		$result = $this->find('email = "' . trim($this->email) . '" AND password = "' . md5($this->password) . '"');
-		
+		$result = $s_code 
+			? $this->findByAttributes(array('s_code' => $s_code)) 
+			: $this->find('email = "' . trim($this->email) . '" AND password = "' . md5($this->password) . '"');
+
 		if ($result && $result->enabled)
 		{
 			Yii::app()->session['joker_id'] = (int) $result->id;
 			Yii::app()->session['joker_email'] = $result->email;
-			
+
+			$cookie = new CHttpCookie('frahts_joker_user', md5(time() . $result->email));
+			$cookie->expire = time() + 60 * 60 * 24 * 7;
+			Yii::app()->request->cookies['frahts_joker_user'] = $cookie;
+
 			$result->last_login = time();
-			$result->logins = $result->logins++;
+			$result->logins = $result->logins + 1;
+			$result->s_code = $cookie->value;
 			$result->update();
 		}
 		else
 		{
-			if (!$result->enabled)
-				$this->addError('email', 'Вам заблокирован доступ на сайт. Свяжитесь с Администрацией сайта для консультирования.');
-			else
-				$this->addError('email', 'Неправильно введены Email или Пароль');
+			if ($result && !$result->enabled)
+					$this->addError('email',
+					'Вам заблокирован доступ на сайт. Свяжитесь с Администрацией сайта для консультирования.');
+			else $this->addError('email', 'Неправильно введены Email или Пароль');
 		}
-		
+
 		return $result;
+
+//		if ($this->_identity === null)
+//		{
+//			$this->_identity = new UserIdentity($this->email, $this->password);
+//			$this->_identity->authenticate();
+//		}
+//		if ($this->_identity->errorCode === UserIdentity::ERROR_NONE)
+//		{
+//			$duration = 3600 * 24 * 7; // 7 days
+//			Yii::app()->user->login($this->_identity, $duration);
+//			return true;
+//		}
+//		else return false;
 	}
+	
+	public function changeSCode()
+	{
+		$cookie = new CHttpCookie('frahts_joker_user', md5(time() . $result->email));
+		$cookie->expire = time() + 60 * 60 * 24 * 7;
+		Yii::app()->request->cookies['frahts_joker_user'] = $cookie;
+		
+		$this->s_code = $cookie->value;
+		$this->update();
+	}
+
+	public function forgot($attribute, $params)
+	{
+		if (!$this->hasErrors())
+		{
+			if (!$this->findByAttributes(array('email' => $this->email)))
+					$this->addError('email',
+					'Пользователь с таким элетронным адресом не найден.');
+		}
+	}
+
+	public function changePassword($attribute, $params)
+	{
+		if (!$this->hasErrors())
+		{
+			if (!$this->find('email = "' . Yii::app()->user->email . '" AND password = "' . md5($this->oldPassword) . '"'))
+					$this->addError('oldPassword', 'Вы неправильно ввели текущий пароль.');
+		}
+	}
+
+	public function mustCheck($attribute, $params)
+	{
+		if (!$this->agree)
+				$this->addError('agree',
+				'Вы должны согласиться с условиями пользовательского соглашения.');
+	}
+
 }

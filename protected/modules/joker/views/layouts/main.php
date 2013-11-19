@@ -69,9 +69,10 @@
 			<!-- Top line begins -->
 			<div id="top">
 				<div class="wrapper">
+					<a href="/joker" title="АвтоJoker - каталог товаров и услуг" class="logo main"><img src="/images/joker-logo.png" alt="АвтоJoker - каталог товаров и услуг" /></a>
 					<!-- Right top nav -->
 					<div class="topNav">
-						<?php if (Yii::app()->user->isGuest): ?>
+						<?php if (!$this->jokerUser): ?>
 							<a href="/joker/main/login" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Вход</a>
 							<a href="/joker/main/register" class="buttonS bDefault mb10 mt5" style="margin-top: 10px; width:70px;text-align: center;">Регистрация</a>
 						<?php else: ?>
