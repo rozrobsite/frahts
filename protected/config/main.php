@@ -188,6 +188,7 @@ return array(
 			'photos' => 'uploads/photos/',
 			'images' => 'uploads/images/',
 			'avatars' => 'uploads/images/avatars/',
+			'logo' => 'uploads/images/logo/',
 			'tmp' => 'uploads/tmp/',
 			'tmp2' => 'uploads/tmp2/',
 		),

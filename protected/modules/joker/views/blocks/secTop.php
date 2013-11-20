@@ -1,0 +1,1 @@
+<div class="secTop">	<div class="balance">		<div class="balInfo">Сегодня:</div>		<div class="balAmount">			<span style="margin-top: 6px;font-size: 14px;"><?php echo Yii::app()->dateFormatter->format('dd MMMM yyyy', time()); ?></span>		</div>	</div></div>
