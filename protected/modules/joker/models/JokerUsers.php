@@ -94,7 +94,8 @@ class JokerUsers extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'jokerProfiles' => array(self::HAS_ONE, 'JokerProfiles', 'user_id'),
+			'profiles' => array(self::HAS_ONE, 'JokerProfiles', 'user_id'),
+			'organizations' => array(self::HAS_ONE, 'JokerOrganizations', 'user_id'),
 		);
 	}
 
@@ -110,6 +111,13 @@ class JokerUsers extends ActiveRecord
 			'logins' => 'Количество заходов на сайт',
 			'last_login' => 'Последний раз заходил',
 			'enabled' => 'Доступ',
+			'verifyCode' => 'Код проверки',
+			'newEmail' => '"Новый электронный адрес"',
+			'newEmailRepeat' => '"Повторите новый электронный адрес"',
+			'oldPassword' => '"Текущий пароль"',
+			'newPassword' => '"Новый пароль"',
+			'newPasswordRepeat' => '"Повторите новый пароль"',
+			'agree' => 'Я согласен с <a id="term_modal_open">Условиями Пользовательского соглашения и Политики конфиденциальности</a>'
 		);
 	}
 
@@ -217,7 +225,7 @@ class JokerUsers extends ActiveRecord
 	{
 		if (!$this->hasErrors())
 		{
-			if (!$this->find('email = "' . Yii::app()->user->email . '" AND password = "' . md5($this->oldPassword) . '"'))
+			if (!$this->find('email = "' . $this->email . '" AND password = "' . md5($this->oldPassword) . '"'))
 					$this->addError('oldPassword', 'Вы неправильно ввели текущий пароль.');
 		}
 	}

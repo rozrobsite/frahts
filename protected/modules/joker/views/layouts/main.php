@@ -17,7 +17,7 @@
 		<link rel="shortcut icon" href="/images/favicon.ico" />
 		<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" rel="stylesheet" type="text/css" />
 		<!--[if IE]> <link href="/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
-		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+		<?php Yii::app()->getClientScript()->registerCoreScript('jquery'); ?>
         <!--<script type="text/javascript" src="/js/jquery.js"></script>-->
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/plugins/forms/ui.spinner.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/plugins/forms/jquery.mousewheel.js"></script>
@@ -81,7 +81,7 @@
 							</ul>
 						<?php endif; ?>
 					</div>
-					<div class="share42init" data-url="http://www.frahts.com" data-title="Фрахты.com - Мир грузоперевозок" data-description="Сайт грузоперевозок" data-image="http://gruz2.host5841.de1.dp10.ru/images/logo.png"></div>
+					<div class="share42init" data-url="http://www.frahts.com" data-title="Фрахты.com - Мир грузоперевозок" data-description="Сайт грузоперевозок" data-image="http://www.frahts.com/images/logo.png"></div>
 					<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/share42/share42.js"></script>
 
 					<div class="clear"></div>
@@ -92,7 +92,7 @@
 
 			<script type="text/javascript">
 				/*_shcp = [];
-				_shcp.push({widget_id : 629422, widget : "Chat", auth : "<?php echo $this->user->getInfoForChat(); ?>"});
+				_shcp.push({widget_id : 629422, widget : "Chat", auth : "<?php //echo $this->user->getInfoForChat(); ?>"});
 				(function() { var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
 					hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://widget.siteheart.com/apps/js/sh.js";
 					var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hcc, s.nextSibling); })();*/

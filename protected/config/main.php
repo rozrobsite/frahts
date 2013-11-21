@@ -42,11 +42,7 @@ return array(
 		),
 		'joker' => array(
 			'layout' => 'application.modules.joker.views.layouts.main',
-//			'preload' => array('bootstrap'),
 			'components' => array(
-//				'bootstrap' => array(
-//					'class' => 'ext.bootstrap.components.Bootstrap',
-//				),
 			),
 		),
 	),
@@ -171,7 +167,7 @@ return array(
 		),
 //		'clientScript' => array(
 //			'scriptMap' => array(
-//				'jquery.js' => '/js/'
+//				'jquery' => '/js/jquery.js'
 //			),
 //		),
 	),

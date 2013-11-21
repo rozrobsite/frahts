@@ -1,0 +1,1 @@
+<div class="formRow">	<div class="grid12">		<h6 class="pt20">Внимание! Поля, обозначенные звездочками (<span style="color: #DB6464;">*</span>) обязательны для заполнения.</h6>	</div>	<div class="clear"></div></div>

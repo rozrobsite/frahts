@@ -3,7 +3,7 @@ Yii::app()->clientScript->registerScriptFile('/js/files/add_friend.js', CClientS
 ?>
 <div class="breadLinks">
 	<ul>
-		<li><a href="/joker/advertise" class="tipS" title="Заказать рекламу. Просмотреть статистику показов рекламных банеров"><i class="icos-user"></i><span>Реклама</span></a></li>
+		<li><a href="/joker/advertise" class="tipS" title="Заказать рекламу. Посмотреть статистику показов рекламных баннеров"><i class="icos-user"></i><span>Реклама</span></a></li>
 		<li class="has">
 			<a title="">
 				<i class="icos-admin"></i>

@@ -19,7 +19,7 @@ class m131119_162126_create_table_joker_profiles extends CDbMigration
                                         KEY `user_id` (`user_id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
                                   
-                                  ALTER TABLE `joker_profiles` ADD CONSTRAINT `joker_profiles_joker_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `joker_users` (`id`) ON DELETE CASCADE;
+				ALTER TABLE `joker_profiles` ADD CONSTRAINT `joker_profiles_joker_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `joker_users` (`id`) ON DELETE CASCADE;
 			'
 		);
 		

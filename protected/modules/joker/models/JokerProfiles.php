@@ -13,6 +13,7 @@
  * @property string $phone
  * @property string $skype
  * @property string $icq
+ * @property int $created_at
  *
  * The followings are the available model relations:
  * @property JokerUsers $user
@@ -51,6 +52,8 @@ class JokerProfiles extends CActiveRecord
 			array('first_name, icq', 'length', 'max'=>32),
 			array('mobile', 'length', 'max'=>15),
 			array('phone, skype', 'length', 'max'=>25),
+			array('first_name, last_name, middle_name', 'match', 'pattern'=>'/^[A-Za-zА-Яа-яёЁєЄїЇіІ]+$/u', 'message'=>'Должны быть только буквы.'),
+			array('mobile', 'match', 'pattern'=>'/^[0-9]+$/u', 'message'=>'Должны быть только цифры.'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, user_id, last_name, first_name, middle_name, mobile, phone, skype, icq', 'safe', 'on'=>'search'),
@@ -80,10 +83,11 @@ class JokerProfiles extends CActiveRecord
 			'last_name' => 'Фамилия',
 			'first_name' => 'Имя',
 			'middle_name' => 'Отчество',
-			'mobile' => 'Мобильный',
+			'mobile' => 'Телефон мобильный',
 			'phone' => 'Телефон/Факс',
 			'skype' => 'Skype',
 			'icq' => 'Icq',
+			'created_at' => 'Дата регистрации',
 		);
 	}
 
@@ -107,9 +111,24 @@ class JokerProfiles extends CActiveRecord
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('skype',$this->skype,true);
 		$criteria->compare('icq',$this->icq,true);
+		$criteria->compare('created_at',$this->icq,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function fullName()
+	{
+		$fullName = $this->last_name . ' ' . $this->first_name;
+		
+		if ($this->middle_name)
+			$fullName .= ' ' . $this->middle_name;
+		return ;
+	}
+
+	public function shortName()
+	{
+		return $this->first_name . ' ' . $this->last_name;
 	}
 }

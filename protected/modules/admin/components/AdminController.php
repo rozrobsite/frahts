@@ -26,8 +26,8 @@ class AdminController extends Controller
 		parent::__construct($id, $module);
 		
 		$this->users = Users::model()->count('code = ""');
-		$this->freighter = Profiles::model()->count('user_type_id = ' . UserTypes::FREIGHTER);
-		$this->shipper = Profiles::model()->count('user_type_id = ' . UserTypes::SHIPPER);
+		$this->freighter = Profiles::model()->count('user_type_id = ' . UserTypes::SHIPPER);
+		$this->shipper = Profiles::model()->count('user_type_id = ' . UserTypes::FREIGHTER);
 		$this->dispatcher = Profiles::model()->count('user_type_id = ' . UserTypes::DISPATCHER);
 		$this->vehicles = Vehicle::model()->count();
 		$this->goods = Goods::model()->count();
