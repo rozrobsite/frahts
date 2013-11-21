@@ -59,7 +59,7 @@ class JokerOrganizations extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, name, description, address, mobile, latitude, longitude', 'required'),
+			array('user_id, name, description, address, mobile, country_id, region_id, city_id, business_type_id', 'required'),
 			array('business_type_id', 'numerical', 'integerOnly'=>true),
 			array('discount, latitude, longitude', 'numerical'),
 			array('user_id', 'length', 'max'=>20),
