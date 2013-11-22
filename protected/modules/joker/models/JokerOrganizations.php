@@ -8,7 +8,6 @@
  * @property string $user_id
  * @property string $name
  * @property string $description
- * @property integer $business_type_id
  * @property string $country_id
  * @property string $region_id
  * @property string $city_id
@@ -24,7 +23,7 @@
  * @property string $logo
  *
  * The followings are the available model relations:
- * @property JokerBusinessType $businessType
+ * @property JokerBusinessType[] $jokerBusinessTypes
  * @property City $city
  * @property Country $country
  * @property Region $region
@@ -59,8 +58,7 @@ class JokerOrganizations extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, name, description, address, mobile, country_id, region_id, city_id, business_type_id', 'required'),
-			array('business_type_id', 'numerical', 'integerOnly'=>true),
+			array('user_id, name, description, address, mobile, latitude, longitude', 'required'),
 			array('discount, latitude, longitude', 'numerical'),
 			array('user_id', 'length', 'max'=>20),
 			array('name, email, site', 'length', 'max'=>254),
@@ -72,7 +70,7 @@ class JokerOrganizations extends CActiveRecord
 			array('logo', 'length', 'max'=>24),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, name, description, business_type_id, country_id, region_id, city_id, address, mobile, phone, email, skype, site, discount, latitude, longitude, logo', 'safe', 'on'=>'search'),
+			array('id, user_id, name, description, country_id, region_id, city_id, address, mobile, phone, email, skype, site, discount, latitude, longitude, logo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,12 +82,12 @@ class JokerOrganizations extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'businessType' => array(self::BELONGS_TO, 'JokerBusinessType', 'business_type_id'),
+			'jokerBusinessTypes' => array(self::MANY_MANY, 'JokerBusinessType', 'joker_organization_business_type(organization_id, business_type_id)'),
 			'city' => array(self::BELONGS_TO, 'City', 'city_id'),
 			'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
 			'region' => array(self::BELONGS_TO, 'Region', 'region_id'),
 			'user' => array(self::BELONGS_TO, 'JokerUsers', 'user_id'),
-			'vendibles' => array(self::HAS_MANY, 'JokerVendibles', 'organization_id'),
+			'jokerVendibles' => array(self::HAS_MANY, 'JokerVendibles', 'organization_id'),
 		);
 	}
 
@@ -103,7 +101,6 @@ class JokerOrganizations extends CActiveRecord
 			'user_id' => 'Пользователь',
 			'name' => 'Название',
 			'description' => 'Описание',
-			'business_type_id' => 'Вид деятельности',
 			'country_id' => 'Страна',
 			'region_id' => 'Регион',
 			'city_id' => 'Населенный пункт',
@@ -135,7 +132,6 @@ class JokerOrganizations extends CActiveRecord
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('business_type_id',$this->business_type_id);
 		$criteria->compare('country_id',$this->country_id,true);
 		$criteria->compare('region_id',$this->region_id,true);
 		$criteria->compare('city_id',$this->city_id,true);
@@ -153,5 +149,19 @@ class JokerOrganizations extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function hasBusinessType($bussinessTypeId)
+	{
+		if (!$this->jokerBusinessTypes)
+			return false;
+		
+		foreach ($this->jokerBusinessTypes as $businessType)
+		{
+			if ($businessType->id == $businessType)
+				return true;
+		}
+		
+		return false;
 	}
 }

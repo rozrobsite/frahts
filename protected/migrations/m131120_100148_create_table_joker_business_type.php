@@ -19,6 +19,7 @@ class m131120_100148_create_table_joker_business_type extends CDbMigration
 				  INSERT INTO `joker_business_type`(id, name) VALUES (5, "Кафе");
 				  INSERT INTO `joker_business_type`(id, name) VALUES (6, "Гостиница");
 				  INSERT INTO `joker_business_type`(id, name) VALUES (7, "GPS слежение");
+				  INSERT INTO `joker_business_type`(id, name) VALUES (8, "Страхование");
 			'
 		);
 		

@@ -67,8 +67,8 @@ class JokerBusinessType extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Название',
-			'order' => 'Порядок сортировки',
+			'name' => 'Name',
+			'order' => 'Order',
 		);
 	}
 

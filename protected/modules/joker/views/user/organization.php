@@ -1,4 +1,10 @@
+<script type="text/javascript">
+var jokerMap;
+var jokerCenter = [0, 0];
+</script>
+
 <?php
+Yii::app()->clientScript->registerScriptFile('http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU');
 Yii::app()->clientScript->registerScriptFile('/js/files/jokerOrganizations.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->params['joker']['name'] . ' - Настройки (Организация)';
@@ -62,7 +68,14 @@ $this->breadcrumbs = array(
 						<label>Вид деятельности:<span class="req">*</span></label>
 					</div>
 					<div class="grid9">
-						<?php echo CHtml::activeDropDownList($this->jokerUser->organizations, 'business_type_id', $typeOrganizations, array('empty' => 'Выберите вид деятельности')); ?>
+						<select multiple="multiple" class="fullwidth select" data-placeholder="Выберите из списка кликнув сюда" name="JokerOrganizations[busines_types][]">
+							<option value=""></option>
+							<?php foreach ($typeOrganizations as $typeOrganization): ?>
+									<option value="<?php echo $typeOrganization->id; ?>" <?php if ($this->jokerUser->organizations->hasBusinessType($typeOrganization->id)): ?>selected="selected"<?php endif; ?>>
+										<?php echo $typeOrganization->name; ?>
+									</option>
+							<?php endforeach; ?>
+						</select>
 						<?php echo $form->error($this->jokerUser->organizations, 'business_type_id', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>
@@ -77,36 +90,59 @@ $this->breadcrumbs = array(
 					</div>
 					<div class="clear"></div>
 				</div>
-				<div class="formRow">
-					<div class="grid12"><h5>Местоположение Вашей организации</h5></div>
+			</div>
+		</div>
+		<div class="fluid">
+			<div class="widget grid6">
+				<div class="whead">
+					<h6>Местоположение Вашей организации</h6>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid3"><label>Страна:<span class="req">*</span></label></div>
-					<div class="grid9">
+					<div class="grid4"><label>Страна:<span class="req">*</span></label></div>
+					<div class="grid2">
 						<?php echo CHtml::activeDropDownList($this->jokerUser->organizations, 'country_id', $countries, array('empty' => 'Выберите страну', 'class' => 'country', 'id' => 'jokerCountry'), array());?>
 						<?php echo $form->error($this->jokerUser->organizations, 'country_id', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid3"><label>Регион:<span class="req">*</span></label></div>
-					<div class="grid9">
+					<div class="grid4"><label>Регион:<span class="req">*</span></label></div>
+					<div class="grid2">
 						<?php echo CHtml::activeDropDownList($this->jokerUser->organizations, 'region_id', $regions, array('empty' => 'Выберите регион', 'class' => 'region', 'id' => 'jokerRegion'), array());?>
 						<?php echo $form->error($this->jokerUser->organizations, 'region_id', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid3"><label>Населенный пункт:<span class="req">*</span></label></div>
-					<div class="grid9">
+					<div class="grid4"><label>Населенный пункт:<span class="req">*</span></label></div>
+					<div class="grid2">
 						<?php echo CHtml::activeDropDownList($this->jokerUser->organizations, 'city_id', $regions, array('empty' => 'Выберите населенный пункт', 'class' => 'city', 'id' => 'jokerCity'), array());?>
 						<?php echo $form->error($this->jokerUser->organizations, 'city_id', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid12"><h5>Контактные данные Вашей организации</h5></div>
+					<div class="grid12"><label>Адрес (введите или кликните на карте):<span class="req">*</span></label></div>
+					<div class="grid12" style="margin-left: 0;">
+						<?php echo $form->textField($this->jokerUser->organizations, 'address', array('id' => 'jokerAddress', 'disabled' => 'disabled')) ?>
+						<?php echo $form->error($this->jokerUser->organizations, 'address', array('class' => 'error')); ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="widget grid6">
+				<div class="whead">
+					<h6>Местоположение Вашей организации на карте</h6>
+					<div class="clear"></div>
+				</div>
+				<div id="jokerMap" style="height: 271px;"></div>
+			</div>
+		</div>
+		<div class="fluid">
+			<div class="widget grid12">
+				<div class="whead">
+					<h6>Контактные данные Вашей организации</h6>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
@@ -149,9 +185,9 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid8"><label>Скидка, которую вы предоставляете пользователям сайта:</label></div>
-					<div class="grid4">
-						<?php echo $form->textField($this->jokerUser->organizations, 'discount') ?>
+					<div class="grid5"><label>Скидка, которую вы предоставляете пользователям сайта:</label></div>
+					<div class="grid1">
+						<?php echo $form->textField($this->jokerUser->organizations, 'discount', array('class' => 'maskPct')) ?>
 						<?php echo $form->error($this->jokerUser->organizations, 'discount', array('class' => 'error')); ?>
 					</div>
 					<div class="clear"></div>

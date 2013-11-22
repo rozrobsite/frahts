@@ -182,7 +182,6 @@ class UserController extends JokerController
 		}
 
 		$businessType = JokerBusinessType::model()->findAll(array('order' => 'name'));
-		$listBusinesTypes = CHtml::listData($businessType, 'id', 'name');
 		
 		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
@@ -201,7 +200,7 @@ class UserController extends JokerController
 
 		$this->render('organization',
 				array(
-					'typeOrganizations' => $listBusinesTypes,
+					'typeOrganizations' => $businessType,
 					'countries' => $listCountries,
 					'regions' => $listRegions,
 					'cities' => $listCities,
