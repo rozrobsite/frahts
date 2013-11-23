@@ -145,55 +145,44 @@ class UserController extends JokerController
 			Yii::app()->end();
 		}
 
-		if (isset($_POST['Organizations']))
+		if (isset($_POST['JokerOrganizations']))
 		{
-			$this->jokerUser->organizations->attributes = $_POST['Organizations'];
-			$this->jokerUser->organizations->user_id = $this->user->id;
-
-			if ($this->user->organizations->validate())
+            $data = $_POST['JokerOrganizations'];
+            $data['discount'] = floatval($data['discount']);
+			$this->jokerUser->organizations->attributes = $data;
+			$this->jokerUser->organizations->user_id = $this->jokerUser->id;
+			$this->jokerUser->organizations->business_types = $data['business_types'];
+            
+			if ($this->jokerUser->organizations->save())
 			{
-				if ($this->user->organizations->id)
-				{
-					if ($this->user->organizations->update())
-					{
-						Yii::app()->user->setFlash('_success', 'Ваши данные успешно сохранены.');
-					}
-					else
-					{
-						Yii::app()->user->setFlash('_error',
-								'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
-					}
-				}
-				else if ($this->user->organizations->save())
-				{
-					Yii::app()->user->setFlash('_success', 'Ваши данные успешно сохранены.');
-				}
-				else
-				{
-					Yii::app()->user->setFlash('_error',
-							'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
-				}
+                $this->jokerUser->organizations->setRelationRecords('jokerBusinessTypes', $data['business_types']);
+                
+				Yii::app()->user->setFlash('_success', 'Ваши данные об организации успешно сохранены');
 			}
 			else
 			{
 				Yii::app()->user->setFlash('_error',
-						'Ваши данные не были сохранены. Проверьте введенные данные и попробуйте еще раз.');
+						'Ваши данные об организации не были сохранены. Проверьте введенные данные и попробуйте еще раз');
 			}
 		}
 
+//        echo "<pre>";
+//        print_r($this->jokerUser->organizations->jokerBusinessTypes);
+//        echo "</pre>";
+        
 		$businessType = JokerBusinessType::model()->findAll(array('order' => 'name'));
 		
 		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
 		$listRegions = array();
-		if ($this->jokerUser->organizations->region_id)
+		if ($this->jokerUser->organizations->country_id)
 		{
 			$listRegions = CHtml::listData($this->jokerUser->organizations->country->regions, 'id', 'name_ru');
 		}
 
 		$listCities = array();
-		if ($this->jokerUser->organizations->city_id)
+		if ($this->jokerUser->organizations->region_id)
 		{
 			$listCities = CHtml::listData($this->jokerUser->organizations->region->cities, 'id', 'name_ru');
 		}

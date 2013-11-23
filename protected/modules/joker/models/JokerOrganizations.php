@@ -30,8 +30,9 @@
  * @property JokerUsers $user
  * @property JokerVendibles[] $jokerVendibles
  */
-class JokerOrganizations extends CActiveRecord
+class JokerOrganizations extends ManyManyActiveRecord
 {
+    public $business_types;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -58,9 +59,10 @@ class JokerOrganizations extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, name, description, address, mobile, latitude, longitude', 'required'),
+			array('user_id, name, description, country_id, region_id, city_id, address, mobile', 'required'),
 			array('discount, latitude, longitude', 'numerical'),
 			array('user_id', 'length', 'max'=>20),
+			array('discount', 'length', 'max'=>2),
 			array('name, email, site', 'length', 'max'=>254),
 			array('country_id, region_id', 'length', 'max'=>10),
 			array('city_id', 'length', 'max'=>11),
@@ -68,9 +70,13 @@ class JokerOrganizations extends CActiveRecord
 			array('mobile', 'length', 'max'=>15),
 			array('phone, skype', 'length', 'max'=>25),
 			array('logo', 'length', 'max'=>24),
+            array('email', 'email'),
+            array('site', 'url'),
+            array('business_types', 'hasBusinessTypesSelected'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, user_id, name, description, country_id, region_id, city_id, address, mobile, phone, email, skype, site, discount, latitude, longitude, logo', 'safe', 'on'=>'search'),
+            array('jokerBusinessTypes', 'safe'),
 		);
 	}
 
@@ -158,10 +164,32 @@ class JokerOrganizations extends CActiveRecord
 		
 		foreach ($this->jokerBusinessTypes as $businessType)
 		{
-			if ($businessType->id == $businessType)
+			if ($businessType->id == $bussinessTypeId)
 				return true;
 		}
 		
 		return false;
 	}
+    
+    public function hasBusinessTypesSelected()
+    {
+        if (!$this->hasErrors())
+		{
+			if (!count($this->business_types))
+					$this->addError('business_types', 'Выберите Вид деятельности');
+		}
+    }
+    
+    public function getAddress()
+    {
+        $result = '';
+        if ($this->country_id)
+            $result .= $this->country->name_ru;
+        if ($this->region_id)
+            $result .= ', ' . $this->region->name_ru;
+        if ($this->city_id)
+            $result .= ', ' . $this->city->name_ru;
+        if ($this->address)
+            $result .= ', ' . $this->address;
+    }
 }
