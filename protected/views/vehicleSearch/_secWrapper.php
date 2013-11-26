@@ -8,6 +8,16 @@
 		<div class="divider"><span></span></div>
 		<div id="goodsSearch">
 			<?php if (isset($vehicleActive) && count($vehicleActive)): ?>
+                <div style="display: block; position: static; visibility: visible;" class="active">
+                    <div class="widget">
+                        <div class="whead">
+                            <h6 style="font-size: 11px;">Подберите груз для Вашего транспорта одним нажатием на него</h6>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="filetree wait"></div>
+                    </div>
+                </div>
+                <div class="divider"><span></span></div>
 				<div class="sideUpload">
 					<ul class="filesDown">
 						<?php foreach ($vehicleActive as $vehicle): ?>

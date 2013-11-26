@@ -11,7 +11,6 @@ class Geography {
 
 	public static function getDistanceByYandex($latFrom, $lngFrom, $latTo, $lngTo)
 	{
-		$results = file_get_contents('http://maps.googleapis.com/maps/api/directions/json?origin=' . $latFrom . ',' . $lngFrom . '&destination=' . $latTo . ',' . $lngTo . '&sensor=false&language=ru');
 		$results = file_get_contents('http://maps.yandex.ua/?rll=' . $latFrom . '%2C' . $lngFrom . '~' . $latTo . '%2C' . $lngTo . '&output=json&locale=ru');
 		$result = json_decode($results);
 
