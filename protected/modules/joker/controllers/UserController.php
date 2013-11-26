@@ -229,5 +229,10 @@ class UserController extends JokerController
 
 		Yii::app()->end();
 	}
+    
+    public function actionEmployee()
+    {
+        $this->render('employee');
+    }
 
 }

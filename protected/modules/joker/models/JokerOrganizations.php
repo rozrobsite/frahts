@@ -93,7 +93,8 @@ class JokerOrganizations extends ManyManyActiveRecord
 			'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
 			'region' => array(self::BELONGS_TO, 'Region', 'region_id'),
 			'user' => array(self::BELONGS_TO, 'JokerUsers', 'user_id'),
-			'jokerVendibles' => array(self::HAS_MANY, 'JokerVendibles', 'organization_id'),
+			'vendibles' => array(self::HAS_MANY, 'JokerVendibles', 'organization_id'),
+            'employees' => array(self::HAS_MANY, 'JokerEmployee', 'organization_id'),
 		);
 	}
 
