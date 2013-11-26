@@ -179,6 +179,7 @@ return array(
 		'siteName' => 'frahts.com',
 		'fullSiteName' => 'http://www.frahts.com',
 		'imagesPath' => '/images/',
+		'uploadsPath' => realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..') . '/',
 		'files' => array(
 			'files' => 'uploads/files/',
 			'photos' => 'uploads/photos/',

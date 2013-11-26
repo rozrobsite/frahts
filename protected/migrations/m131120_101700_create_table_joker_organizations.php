@@ -22,19 +22,18 @@ class m131120_101700_create_table_joker_organizations extends CDbMigration
 					`discount` float DEFAULT NULL,
 					PRIMARY KEY (`id`),
 					KEY `user_id` (`user_id`),
-					KEY `business_type_id` (`business_type_id`),
 					KEY `country_id` (`country_id`),
 					KEY `region_id` (`region_id`),
 					KEY `city_id` (`city_id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-                                  
+
 				ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `joker_users` (`id`) ON DELETE CASCADE;
 				ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_country_ibfk_3` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`) ON DELETE SET NULL;
 				ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_region_ibfk_4` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`) ON DELETE SET NULL;
 				ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_city_ibfk_5` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`) ON DELETE SET NULL;
 			'
 		);
-		
+
 		return true;
 	}
 

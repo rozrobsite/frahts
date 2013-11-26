@@ -41,7 +41,7 @@ class UserController extends JokerController
 	public function actionChangeEmail()
 	{
 		$model = new JokerUsers(JokerUsers::SCENARIO_CHANGE_EMAIL);
-		
+
 		// if it is ajax validation request
 		if (isset($_POST['ajax']) && $_POST['ajax'] === 'changeEmail-form')
 		{
@@ -55,7 +55,7 @@ class UserController extends JokerController
 			$model->email = trim($_POST['JokerUsers']['email']);
 			$model->newEmail = trim($_POST['JokerUsers']['newEmail']);
 			$model->newEmailRepeat = trim($_POST['JokerUsers']['newEmailRepeat']);
-			
+
 			if ($model->validate())
 			{
 				$this->jokerUser->email = trim($_POST['JokerUsers']['newEmail']);
@@ -132,7 +132,7 @@ class UserController extends JokerController
 
 		$this->redirect('/joker/user');
 	}
-	
+
 	public function actionOrganization()
 	{
 		if (!$this->jokerUser->organizations)
@@ -152,11 +152,11 @@ class UserController extends JokerController
 			$this->jokerUser->organizations->attributes = $data;
 			$this->jokerUser->organizations->user_id = $this->jokerUser->id;
 			$this->jokerUser->organizations->business_types = $data['business_types'];
-            
+
 			if ($this->jokerUser->organizations->save())
 			{
                 $this->jokerUser->organizations->setRelationRecords('jokerBusinessTypes', $data['business_types']);
-                
+
 				Yii::app()->user->setFlash('_success', 'Ваши данные об организации успешно сохранены');
 			}
 			else
@@ -164,14 +164,36 @@ class UserController extends JokerController
 				Yii::app()->user->setFlash('_error',
 						'Ваши данные об организации не были сохранены. Проверьте введенные данные и попробуйте еще раз');
 			}
+
+			if (isset($_POST['Photos']['logo']) && !empty($_POST['Photos']['logo']) && isset($this->jokerUser->organizations->id) && $this->jokerUser->organizations)
+			{
+				$photoPath = Yii::app()->params['files']['tmp'] . $_POST['Photos']['logo'];
+				$image = Yii::app()->image->load($photoPath);
+
+				if ($image)
+				{
+					if (file_exists(Yii::app()->params['files']['logo'] . $this->jokerUser->id . '.jpg'))
+						unlink(Yii::app()->params['uploadsPath'] . Yii::app()->params['files']['logo'] . $this->jokerUser->id . '.jpg');
+					if (file_exists(Yii::app()->params['files']['logo'] . $this->jokerUser->id . '_s.jpg'))
+						unlink(Yii::app()->params['uploadsPath'] . Yii::app()->params['files']['logo'] . $this->jokerUser->id . '_s.jpg');
+
+					$this->jokerUser->organizations->logo = $this->jokerUser->id . '.jpg';
+					$image->resize(Yii::app()->params['images']['avatar']['width'], Yii::app()->params['images']['avatar']['height']);
+					$image->save(Yii::app()->params['uploadsPath'] . Yii::app()->params['files']['logo'] . $this->jokerUser->id . '.jpg');
+
+					$image->resize(Yii::app()->params['images']['avatar']['small_width'], Yii::app()->params['images']['avatar']['small_height']);
+					$image->save(Yii::app()->params['uploadsPath'] . Yii::app()->params['files']['logo'] . $this->jokerUser->id . '_s.jpg');
+
+					$this->jokerUser->organizations->save();
+
+					if (file_exists($photoPath))
+						unlink($photoPath);
+				}
+			}
 		}
 
-//        echo "<pre>";
-//        print_r($this->jokerUser->organizations->jokerBusinessTypes);
-//        echo "</pre>";
-        
 		$businessType = JokerBusinessType::model()->findAll(array('order' => 'name'));
-		
+
 		$countries = Country::model()->findAll();
 		$listCountries = CHtml::listData($countries, 'id', 'name_ru');
 
@@ -194,6 +216,18 @@ class UserController extends JokerController
 					'regions' => $listRegions,
 					'cities' => $listCities,
 				));
+	}
+
+	public function actionUpload()
+	{
+		Yii::import("ext.EAjaxUpload.qqFileUploader");
+
+		$uploader = new qqFileUploader(Yii::app()->params['images']['allowedExtensions'], Yii::app()->params['images']['sizeAvatarLimit']);
+		$result = $uploader->handleUpload(Yii::app()->params['files']['tmp']);
+
+		$this->respondJSON($result);
+
+		Yii::app()->end();
 	}
 
 }

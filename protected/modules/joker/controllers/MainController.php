@@ -103,10 +103,10 @@ class MainController extends JokerController
 			{
 				$model->password = md5($model->password);
 
-				$cookie = new CHttpCookie('frahts_joker_user', md5(time() . $result->email));
+				$cookie = new CHttpCookie('frahts_joker_user', md5(time() . $model->email));
 				$cookie->expire = time() + 60 * 60 * 24 * 7;
 				Yii::app()->request->cookies['frahts_joker_user'] = $cookie;
-				
+
 				$model->s_code = $cookie->value;
 
 				// Сохранить полученные данные

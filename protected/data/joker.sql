@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `joker_profiles` (
 					PRIMARY KEY (`id`),
                                         KEY `user_id` (`user_id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-                                  
+
 ALTER TABLE `joker_profiles` ADD CONSTRAINT `joker_profiles_joker_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `joker_users` (`id`) ON DELETE CASCADE;
 
 CREATE TABLE IF NOT EXISTS `joker_business_type` (
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `joker_business_type` (
 					`order` tinyint(2) NOT NULL DEFAULT 0,
 					PRIMARY KEY (`id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-				  
+
 				  INSERT INTO `joker_business_type`(id, name) VALUES (1, "Автомагазин");
 				  INSERT INTO `joker_business_type`(id, name) VALUES (2, "СТО");
 				  INSERT INTO `joker_business_type`(id, name) VALUES (3, "Шиномонтаж");
@@ -62,12 +62,11 @@ CREATE TABLE IF NOT EXISTS `joker_organizations` (
 					`discount` float DEFAULT NULL,
 					PRIMARY KEY (`id`),
 					KEY `user_id` (`user_id`),
-					KEY `business_type_id` (`business_type_id`),
 					KEY `country_id` (`country_id`),
 					KEY `region_id` (`region_id`),
 					KEY `city_id` (`city_id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-                                  
+
 ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `joker_users` (`id`) ON DELETE CASCADE;
 ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_country_ibfk_3` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`) ON DELETE SET NULL;
 ALTER TABLE `joker_organizations` ADD CONSTRAINT `joker_organizations_joker_region_ibfk_4` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`) ON DELETE SET NULL;
@@ -83,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `joker_vendibles` (
 					PRIMARY KEY (`id`),
 					KEY `organization_id` (`organization_id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-                                  
+
 ALTER TABLE `joker_vendibles` ADD CONSTRAINT `joker_vendibles_joker_organizations_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `joker_organizations` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE joker_organizations ADD COLUMN latitude double NOT NULL;
@@ -102,6 +101,6 @@ CREATE TABLE IF NOT EXISTS `joker_organization_business_type` (
 					PRIMARY KEY (`organization_id`, `business_type_id`),
 					KEY `id` (`id`)
 				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-                                  
+
 ALTER TABLE `joker_organization_business_type` ADD CONSTRAINT `joker_organization_business_type_joker_organizations_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `joker_organizations` (`id`) ON DELETE CASCADE;
 ALTER TABLE `joker_organization_business_type` ADD CONSTRAINT `joker_organization_business_type_joker_business_type_ibfk_2` FOREIGN KEY (`business_type_id`) REFERENCES `joker_business_type` (`id`) ON DELETE CASCADE;
