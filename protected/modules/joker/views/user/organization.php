@@ -138,7 +138,7 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div id="jokerMap" style="height: 295px;"></div>
-                
+
                 <input type="hidden" id="jokerLatitude" name="JokerOrganizations[latitude]" value="<?php echo $this->jokerUser->organizations->latitude ?>" />
 				<input type="hidden" id="jokerLongitude" name="JokerOrganizations[longitude]" value="<?php echo $this->jokerUser->organizations->longitude ?>" />
 			</div>
@@ -194,6 +194,58 @@ $this->breadcrumbs = array(
 						<?php echo $form->textField($this->jokerUser->organizations, 'discount') ?>
 						<?php echo $form->error($this->jokerUser->organizations, 'discount', array('class' => 'error')); ?>
                     </div><span style="margin-left: 5px;">%</span>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
+					<div class="grid2">
+						<?php $logo = isset($this->jokerUser->organizations->logo) ? '/' . Yii::app()->params['files']['logo'] . $this->jokerUser->organizations->logo : '/images/' . Yii::app()->params['images']['defaultAvatar'];?>
+						<img id="userLogo" width="72" height="70" alt="" src="<?php echo $logo . '?r=' . rand(0, 10000)?>">
+						<input id="uploadInputLogo" name="Photos[logo]" type="hidden" value=""/>
+					</div>
+					<div class="grid2">
+						<?php
+						$this->widget('ext.EAjaxUpload.EAjaxUpload', array(
+							'id' => 'uploadLogo',
+							'config' => array(
+								'action' => Yii::app()->createUrl('/joker/user/upload'),
+								'allowedExtensions' => Yii::app()->params['images']['allowedExtensions'],
+								'sizeLimit' => Yii::app()->params['images']['sizeAvatarLimit'],
+								'multiple' => false,
+								'template' => '
+												<div class="qq-uploader">
+													<div class="qq-upload-drop-area"></span></div>
+													<div class="qq-upload-button btn" style="width: 170px;"><a href="javascript:void(0)" class="buttonL bGreyish">Загрузить логотип</a></div>
+													<span class="qq-drop-processing"><span class="qq-drop-processing-spinner"></span></span>
+													<ul class="qq-upload-list"></ul>
+												</div>',
+						'messages' => array(
+							'typeError' => "{file} имеет недопустимый формат. Допустимые форматы: {extensions}.",
+							'sizeError' => "{file} имеет слишком большой объём, максимальный объём файла – {sizeLimit}.",
+							'minSizeError' => "{file} имеет слишком маленький объём, минимальный объём файла – {minSizeLimit}.",
+							'emptyError' => "{file} пуст, пожалуйста, выберите другой файл.",
+							'noFilesError' => "Файлы для загрузки не выбраны.",
+							'onLeave' => "В данный момент идёт загрузка файлов, если вы покинете страницу, загрузка будет отменена."
+						),
+						'text' => array(
+							'failUpload' => 'загрузка не удалась',
+							'dragZone' => 'Перетащите файл для загрузки',
+							'cancelButton' => 'Отмена',
+							'waitingForResponse' => 'Обработка...'
+						),
+						'callbacks' => array(
+							'onComplete' => 'js:function(id, fileName, responseJSON){
+												if (responseJSON.success)
+												{
+													$("#userLogo").attr("src","/' . Yii::app()->params['files']['tmp'] . '" + responseJSON.filename + "");
+													$("#uploadInputLogo").val(responseJSON.filename);
+												}
+											}'
+								),
+							)
+							)
+						);
+						?>
+					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">

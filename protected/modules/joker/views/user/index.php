@@ -198,7 +198,7 @@ $this->breadcrumbs = array(
 							'clientOptions' => array(
 								'validateOnSubmit' => true,
 							),
-							'focus' => array($user, 'newPassword'),
+							'focus' => array($this->jokerUser, 'newPassword'),
 							));
 						?>
 
