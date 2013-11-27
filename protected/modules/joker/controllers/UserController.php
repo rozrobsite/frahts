@@ -229,10 +229,38 @@ class UserController extends JokerController
 
 		Yii::app()->end();
 	}
-    
+
     public function actionEmployee()
     {
-        $this->render('employee');
-    }
+		if (!Yii::app()->request->isAjaxRequest)
+		{
+			$this->render('employee');
 
+			Yii::app()->end();
+		}
+
+		if (isset($_POST['JokerEmployee']))
+		{
+			$model = new JokerEmployee();
+			$model->attributes = $_POST['JokerEmployee'];
+			$model->organization_id = $this->jokerUser->organizations->id;
+
+			if ($model->validate())
+			{
+
+			}
+			else
+			{
+				$this->respondJSON(array('error' => ErrorsTitle::ERROR_NO_ADD_MODEL, 'errors' => $model->getErrors()));
+
+				Yii::app()->end();
+			}
+		}
+		else
+		{
+			$this->respondJSON(array('error' => ErrorsTitle::ERROR_UNDEFINED));
+
+			Yii::app()->end();
+		}
+    }
 }

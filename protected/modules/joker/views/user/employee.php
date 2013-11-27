@@ -1,5 +1,5 @@
 <?php
-Yii::app()->clientScript->registerScriptFile('/js/files/jokerEmployee.js', CClientScript::POS_BEGIN);
+Yii::app()->clientScript->registerScriptFile('/js/joker/jokerEmployee.js', CClientScript::POS_BEGIN);
 
 $this->pageTitle = Yii::app()->params['joker']['name'] . ' - Настройки (Организация)';
 $this->breadcrumbs = array(
@@ -50,39 +50,21 @@ $this->breadcrumbs = array(
 				</div>
 				<?php $this->renderPartial('/blocks/_atention'); ?>
 				<div class="formRow">
-					<div class="grid3"><label>ФИО:<span class="req">*</span></label></div>
-					<div class="grid9">
-                        <input id="jokerFio" type="text" maxlength="254" />
-						<div id="errorFio" class="error">Введите ФИО</div>
+					<div class="grid1"><label>ФИО:<span class="req">*</span></label></div>
+					<div class="grid3">
+                        <input id="fio" name="JokerEmployee[fio]" type="text" maxlength="254" />
+						<div id="error_fio" class="error"></div>
+					</div>
+					<div class="grid2">&nbsp;</div>
+					<div class="grid2"><label>Должность(отдел):<span class="req">*</span></label></div>
+					<div class="grid3">
+                        <input id="position" name="JokerEmployee[position]" type="text" maxlength="254" />
+						<div id="error_position" class="error"></div>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
-					<div class="grid3">
-						<label>Должность (отдел):<span class="req">*</span></label>
-					</div>
-					<div class="grid9">
-						<select multiple="multiple" class="fullwidth select" data-placeholder="Выберите из списка кликнув сюда" name="JokerOrganizations[business_types][]">
-							<option value=""></option>
-							<?php foreach ($typeOrganizations as $typeOrganization): ?>
-									<option value="<?php echo $typeOrganization->id; ?>" <?php if ($this->jokerUser->organizations->hasBusinessType(
-                                        $typeOrganization->id)): ?>selected="selected"<?php endif; ?>>
-										<?php echo $typeOrganization->name; ?>
-									</option>
-							<?php endforeach; ?>
-						</select>
-						<?php echo $form->error($this->jokerUser->organizations, 'business_types', array('class' => 'error')); ?>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="formRow">
-					<div class="grid3">
-						<label>Описание деятельности:<span class="req">*</span></label>
-					</div>
-					<div class="grid9">
-						<?php echo $form->textArea($this->jokerUser->organizations, 'description', array('style' => 'height:150px;')) ?>
-						<?php echo $form->error($this->jokerUser->organizations, 'description', array('class' => 'error')); ?>
-					</div>
+					<?php echo CHtml::submitButton('Добавить', array('class' => 'buttonM bBlue formSubmit')); ?>
 					<div class="clear"></div>
 				</div>
 			</div>
