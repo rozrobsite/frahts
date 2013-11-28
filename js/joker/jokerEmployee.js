@@ -31,6 +31,10 @@ var employee =
 
 							return;
 						}
+
+						$.jGrowl('Сотрудник добавлен.', { header: 'Сообщение', life: 15000, theme: 'successMessage' });
+
+						$('input[type="text"]').val('');
 					}
 				}).done(function(response){
 					unblockElement($('#employee-form'));

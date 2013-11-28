@@ -1,5 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScriptFile('/js/joker/jokerEmployee.js', CClientScript::POS_BEGIN);
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/js/bootstrap/bootstrap.min.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap/bootstrap.min.js');
 
 $this->pageTitle = Yii::app()->params['joker']['name'] . ' - Настройки (Организация)';
 $this->breadcrumbs = array(
@@ -50,7 +52,7 @@ $this->breadcrumbs = array(
 				</div>
 				<?php $this->renderPartial('/blocks/_atention'); ?>
 				<div class="formRow">
-					<div class="grid1"><label>ФИО:<span class="req">*</span></label></div>
+					<div class="grid2"><label>ФИО:<span class="req">*</span></label></div>
 					<div class="grid3">
                         <input id="fio" name="JokerEmployee[fio]" type="text" maxlength="254" />
 						<div id="error_fio" class="error"></div>
@@ -64,11 +66,27 @@ $this->breadcrumbs = array(
 					<div class="clear"></div>
 				</div>
 				<div class="formRow">
+					<div class="grid2"><label>Телефон мобильный:<span class="req">*</span></label></div>
+					<div class="grid3 onlyNums">
+                        <input id="mobile" name="JokerEmployee[mobile]" type="text" maxlength="15" />
+						<div id="error_mobile" class="error"></div>
+					</div>
+					<div class="grid2">&nbsp;</div>
+					<div class="grid2"><label>Электронный алрес (E-mail):<span class="req">*</span></label></div>
+					<div class="grid3">
+                        <input id="email" name="JokerEmployee[email]" type="text" maxlength="254" />
+						<div id="error_email" class="error"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="formRow">
 					<?php echo CHtml::submitButton('Добавить', array('class' => 'buttonM bBlue formSubmit')); ?>
 					<div class="clear"></div>
 				</div>
 			</div>
 		</div>
+		<?php $this->renderPartial('_listEmployee'); ?>
+
         <?php $this->endWidget(); ?>
     </div>
 </div>

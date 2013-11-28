@@ -46,7 +46,9 @@ class JokerEmployee extends CActiveRecord
 			array('organization_id', 'length', 'max'=>20),
 			array('position, fio, email', 'length', 'max'=>254),
 			array('mobile', 'length', 'max'=>15),
-			array('email', 'email'),
+			array('mobile', 'length', 'min'=>10),
+			array('mobile', 'match', 'pattern'=>'/^[0-9]+$/u', 'message'=>'Должны быть только цифры'),
+			array('email', 'email', 'message' => 'Неправильный E-mail адрес'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, organization_id, position, fio, mobile, email', 'safe', 'on'=>'search'),

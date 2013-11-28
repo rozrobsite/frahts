@@ -157,21 +157,21 @@ class JokerOrganizations extends ManyManyActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	
+
 	public function hasBusinessType($bussinessTypeId)
 	{
 		if (!$this->jokerBusinessTypes)
 			return false;
-		
+
 		foreach ($this->jokerBusinessTypes as $businessType)
 		{
 			if ($businessType->id == $bussinessTypeId)
 				return true;
 		}
-		
+
 		return false;
 	}
-    
+
     public function hasBusinessTypesSelected()
     {
         if (!$this->hasErrors())
@@ -180,7 +180,7 @@ class JokerOrganizations extends ManyManyActiveRecord
 					$this->addError('business_types', 'Выберите Вид деятельности');
 		}
     }
-    
+
     public function getAddress()
     {
         $result = '';

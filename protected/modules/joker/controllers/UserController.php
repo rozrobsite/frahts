@@ -245,9 +245,11 @@ class UserController extends JokerController
 			$model->attributes = $_POST['JokerEmployee'];
 			$model->organization_id = $this->jokerUser->organizations->id;
 
-			if ($model->validate())
+			if ($model->save())
 			{
+				$this->respondJSON(array('error' => ErrorsTitle::ERROR_NO));
 
+				Yii::app()->end();
 			}
 			else
 			{
