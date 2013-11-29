@@ -247,7 +247,7 @@ class UserController extends JokerController
 
 			if ($model->save())
 			{
-				$this->respondJSON(array('error' => ErrorsTitle::ERROR_NO));
+				$this->respondJSON(array('error' => ErrorsTitle::ERROR_NO, 'employee' => $this->renderPartial('_listEmployee', array(), true)));
 
 				Yii::app()->end();
 			}

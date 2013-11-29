@@ -46,14 +46,6 @@ return array(
 		'joker' => array(
 			'layout' => 'application.modules.joker.views.layouts.main',
 			'components' => array(
-				'editable' => array(
-					'class'     => 'editable.EditableConfig',
-					'form'      => 'bootstrap',        //form style: 'bootstrap', 'jqueryui', 'plain'
-					'mode'      => 'popup',            //mode: 'popup' or 'inline'
-					'defaults'  => array(              //default settings for all editable elements
-					   'emptytext' => 'Нажмите для редактирования'
-					)
-				),
 			),
 		),
 	),

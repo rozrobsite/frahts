@@ -1,7 +1,5 @@
 <?php
 Yii::app()->clientScript->registerScriptFile('/js/joker/jokerEmployee.js', CClientScript::POS_BEGIN);
-Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/js/bootstrap/bootstrap.min.css');
-Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap/bootstrap.min.js');
 
 $this->pageTitle = Yii::app()->params['joker']['name'] . ' - Настройки (Организация)';
 $this->breadcrumbs = array(
@@ -85,9 +83,9 @@ $this->breadcrumbs = array(
 				</div>
 			</div>
 		</div>
-		<?php $this->renderPartial('_listEmployee'); ?>
-
         <?php $this->endWidget(); ?>
+
+		<?php $this->renderPartial('_listEmployee'); ?>
     </div>
 </div>
 
