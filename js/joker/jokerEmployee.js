@@ -49,6 +49,12 @@ var employee =
 						$('#employees').html(response.employee);
 
 						employee.update();
+                        employeeDialog.init();
+                        employee.remove();
+                        $('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+                        $('.tipS').tipsy({gravity: 's',fade: true, html:true});
+                        $('.tipW').tipsy({gravity: 'w',fade: true, html:true});
+                        $('.tipE').tipsy({gravity: 'e',fade: true, html:true});
 					}
 				}
 			}).done(function(response){
@@ -113,6 +119,12 @@ var employee =
 						$('#employees').html(response.employee);
 
 						employee.update();
+                        employeeDialog.init();
+						employee.remove();
+                        $('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+                        $('.tipS').tipsy({gravity: 's',fade: true, html:true});
+                        $('.tipW').tipsy({gravity: 'w',fade: true, html:true});
+                        $('.tipE').tipsy({gravity: 'e',fade: true, html:true});
 					}
 				}
 			}).done(function(response){
@@ -175,6 +187,10 @@ var employeeDialog =
 							});
 
 							$('tr.employee_' + employeeId).remove();
+                            
+                            if (!$('table.employeesTable tbody tr').length) {
+                                $('table.employeesTable').parent().remove();
+                            }
 
 							dialog.dialog('close');
 						}
