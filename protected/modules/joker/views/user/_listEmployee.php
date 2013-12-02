@@ -17,7 +17,7 @@
 			</thead>
 			<tbody>
 				<?php foreach ($this->jokerUser->organizations->employees as $employee): ?>
-					<tr>
+					<tr class="employee_<?php echo $employee->id; ?>">
 						<td align="center">
 							<?php echo $employee->id; ?>
 						</td>
@@ -39,7 +39,7 @@
 						</td>
 						<td align="center">
 							<a href="javascript:void(0);" class="tablectrl_small bDefault tipS jokerEmployeeUpdate" title="Сохранить изменения" data-id="<?php echo $employee->id; ?>"><span class="iconb" data-icon="&#xe134;"></span></a>
-							<a href="javascript:void(0);" class="tablectrl_small bDefault tipS jokerEmployeeDelete" title="Удалить"><span class="iconb" data-icon="&#xe136;"></span></a>
+							<a href="javascript:void(0);" class="tablectrl_small bDefault tipS jokerEmployeeDelete" title="Удалить" data-id="<?php echo $employee->id; ?>"><span class="iconb" data-icon="&#xe136;"></span></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

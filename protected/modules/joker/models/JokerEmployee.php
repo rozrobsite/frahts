@@ -10,6 +10,8 @@
  * @property string $fio
  * @property string $mobile
  * @property string $email
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * The followings are the available model relations:
  * @property JokerOrganizations $organization
@@ -79,6 +81,8 @@ class JokerEmployee extends CActiveRecord
 			'fio' => 'ФИО',
 			'mobile' => 'Телефон мобильный',
 			'email' => 'Электронный алрес (E-mail)',
+			'created_at' => 'Дата добавления',
+			'updated_at' => 'Дата обновления',
 		);
 	}
 
@@ -99,9 +103,26 @@ class JokerEmployee extends CActiveRecord
 		$criteria->compare('fio',$this->fio,true);
 		$criteria->compare('mobile',$this->mobile,true);
 		$criteria->compare('email',$this->email,true);
+		$criteria->compare('created_at',$this->created_at,true);
+		$criteria->compare('updated-at',$this->updated_at,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function prepare($data)
+    {
+        foreach ($data as $attribute => $item) {
+            if ($attribute == 'id') continue;
+
+            $this->{$attribute} = $item;
+
+            if ($this->created_at) {
+                $this->updated_at = time();
+            } else {
+                $this->created_at = time();
+            }
+        }
+    }
 }

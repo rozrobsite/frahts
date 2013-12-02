@@ -86,6 +86,10 @@ $this->breadcrumbs = array(
         <?php $this->endWidget(); ?>
 
 		<?php $this->renderPartial('_listEmployee'); ?>
+		<?php $this->renderPartial('/blocks/popups/_confirm', array(
+            'title' => 'Удаление сотрудника',
+            'text' => 'Вы действительно хотите удалить даного сотрудника?'
+        )); ?>
     </div>
 </div>
 
