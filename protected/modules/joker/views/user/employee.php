@@ -37,7 +37,6 @@ $this->breadcrumbs = array(
 						'clientOptions' => array(
 							'validateOnSubmit' => true,
 						),
-						'focus' => array($this->jokerUser->organizations->employees, 'position'),
 						'htmlOptions' => array('class' => 'main'),
 					));
 
@@ -55,8 +54,7 @@ $this->breadcrumbs = array(
                         <input id="fio" name="JokerEmployee[fio]" type="text" maxlength="254" />
 						<div id="error_fio" class="error"></div>
 					</div>
-					<div class="grid2">&nbsp;</div>
-					<div class="grid2"><label>Должность(отдел):<span class="req">*</span></label></div>
+					<div class="grid3"><label>Должность(отдел):<span class="req">*</span></label></div>
 					<div class="grid3">
                         <input id="position" name="JokerEmployee[position]" type="text" maxlength="254" />
 						<div id="error_position" class="error"></div>
@@ -69,8 +67,7 @@ $this->breadcrumbs = array(
                         <input id="mobile" name="JokerEmployee[mobile]" type="text" maxlength="15" />
 						<div id="error_mobile" class="error"></div>
 					</div>
-					<div class="grid2">&nbsp;</div>
-					<div class="grid2"><label>Электронный алрес (E-mail):<span class="req">*</span></label></div>
+					<div class="grid3"><label>Электронный алрес (E-mail):<span class="req">*</span></label></div>
 					<div class="grid3">
                         <input id="email" name="JokerEmployee[email]" type="text" maxlength="254" />
 						<div id="error_email" class="error"></div>
@@ -84,12 +81,9 @@ $this->breadcrumbs = array(
 			</div>
 		</div>
         <?php $this->endWidget(); ?>
-
-		<?php $this->renderPartial('_listEmployee'); ?>
-		<?php $this->renderPartial('/blocks/popups/_confirm', array(
-            'title' => 'Удаление сотрудника',
-            'text' => 'Вы действительно хотите удалить даного сотрудника?'
-        )); ?>
+        <div id="employees" class="fluid">
+            <?php $this->renderPartial('_listEmployee'); ?>
+        </div>
     </div>
 </div>
 

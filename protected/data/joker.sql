@@ -104,3 +104,7 @@ CREATE TABLE IF NOT EXISTS `joker_organization_business_type` (
 
 ALTER TABLE `joker_organization_business_type` ADD CONSTRAINT `joker_organization_business_type_joker_organizations_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `joker_organizations` (`id`) ON DELETE CASCADE;
 ALTER TABLE `joker_organization_business_type` ADD CONSTRAINT `joker_organization_business_type_joker_business_type_ibfk_2` FOREIGN KEY (`business_type_id`) REFERENCES `joker_business_type` (`id`) ON DELETE CASCADE;
+
+-- 02.12.2013
+ALTER TABLE joker_employee ADD COLUMN created_at INT DEFAULT NULL;
+ALTER TABLE joker_employee ADD COLUMN updated_at INT DEFAULT NULL;

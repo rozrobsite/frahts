@@ -13,8 +13,8 @@ Yii::app()->clientScript->registerScriptFile('/js/files/add_friend.js', CClientS
 			<ul style="width: 200px;">
 				<li><a href="/joker/user" title=""><span class="icos-admin2"></span>Профиль</a></li>
 				<li><a href="/joker/user/organization" title=""><span class="icos-users"></span>Организация</a></li>
-				<li><a href="/joker/employee" title=""><span class="icos-users2"></span>Сотрудники</a></li>
-				<li><a href="/joker/vendibles" title=""><span class="icos-search"></span>Товары для продажи</a></li>
+				<li><a href="/joker/user/employee" title=""><span class="icos-users2"></span>Сотрудники</a></li>
+				<li><a href="/joker/user/vendibles" title=""><span class="icos-search"></span>Товары для продажи</a></li>
 			</ul>
 		</li>
 	</ul>
