@@ -49,7 +49,12 @@ var vendibles =
 						$('#vendibles').html(response.vendibles);
 
 						vendibles.update();
-						vendibles.remove();
+						vendiblesDialog.init();
+                        vendibles.remove();
+                        $('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+                        $('.tipS').tipsy({gravity: 's',fade: true, html:true});
+                        $('.tipW').tipsy({gravity: 'w',fade: true, html:true});
+                        $('.tipE').tipsy({gravity: 'e',fade: true, html:true});
 					}
 				}
 			}).done(function(response){
@@ -113,6 +118,12 @@ var vendibles =
 						$('#vendibles').html(response.vendibles);
 
 						vendibles.update();
+						vendiblesDialog.init();
+                        vendibles.remove();
+                        $('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+                        $('.tipS').tipsy({gravity: 's',fade: true, html:true});
+                        $('.tipW').tipsy({gravity: 'w',fade: true, html:true});
+                        $('.tipE').tipsy({gravity: 'e',fade: true, html:true});
 					}
 				}
 			}).done(function(response){
@@ -175,6 +186,10 @@ var vendiblesDialog =
 							});
 
 							$('tr.vendible_' + vendibleId).remove();
+
+							if (!$('table.vendiblesTable tbody tr').length) {
+                                $('table.vendiblesTable').parent().remove();
+                            }
 
 							dialog.dialog('close');
 						}

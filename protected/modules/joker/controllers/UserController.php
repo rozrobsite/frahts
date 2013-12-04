@@ -306,8 +306,6 @@ class UserController extends JokerController
             $model->organization_id = $this->jokerUser->organizations->id;
             $model->created_at = time();
 
-
-
             if ($model->save()) {
                 $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO, 'vendibles' => $this->renderPartial('_listVendibles', array(), true)));
 

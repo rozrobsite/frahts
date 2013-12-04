@@ -58,7 +58,7 @@ $this->breadcrumbs = array(
 					<div class="grid2">&nbsp;</div>
                     <div class="grid2"><label>Цена:<span class="req">*</span></label></div>
 					<div class="grid3">
-                        <input id="cost" name="JokerVendibles[cost]" type="text" />
+                        <input id="cost" name="JokerVendibles[cost]" type="text" maxlength="15" />
 						<div id="error_cost" class="error"></div>
 					</div>
 					<div class="clear"></div>

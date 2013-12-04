@@ -1,10 +1,11 @@
 <div id="vendibles" class="fluid">
+    <?php if ($this->jokerUser->organizations->vendibles && count($this->jokerUser->organizations->vendibles)): ?>
 	<div class="widget">
 		<div class="whead">
 			<h6>Товары для продажи</h6>
 			<div class="clear"></div>
 		</div>
-		<table cellpadding="0" cellspacing="0" width="100%" class="tAlt wGeneral">
+		<table cellpadding="0" cellspacing="0" width="100%" class="tAlt wGeneral vendiblesTable">
 			<thead>
 				<tr>
 					<td width="5%">№</td>
@@ -15,22 +16,21 @@
 				</tr>
 			</thead>
 			<tbody>
-                <?php if ($this->jokerUser->organizations->vendibles): ?>
 				<?php foreach ($this->jokerUser->organizations->vendibles as $vendible): ?>
 					<tr class="vendible_<?php echo $vendible->id; ?>">
 						<td align="center">
 							<?php echo $vendible->id; ?>
 						</td>
 						<td>
-							<input id="vendible__name_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->name; ?>" />
-							<div id="error_vendible__name_<?php echo $vendible->id; ?>" class="error"></div>
+							<input id="vendible_name_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->name; ?>" />
+							<div id="error_vendible_name_<?php echo $vendible->id; ?>" class="error"></div>
 						</td>
 						<td>
-							<input id="vendible__description_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->description; ?>" />
+							<input id="vendible_description_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->description; ?>" />
 							<div id="error_vendible_description_<?php echo $vendible->id; ?>" class="error"></div>
 						</td>
 						<td align="center">
-							<input id="vendible_cost_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->cost; ?>" />
+                            <input id="vendible_cost_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->cost; ?>" maxlength="15" />
 							<div id="error_vendible_cost_<?php echo $vendible->id; ?>" class="error"></div>
 						</td>
 						<td align="center">
@@ -39,14 +39,8 @@
 						</td>
 					</tr>
 				<?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="4" style="text-align: center;">
-                            <strong style="color: #5F5F5F;">Не добавлено ни одного товара</strong>
-                        </td>
-                    </tr>
-                <?php endif; ?>
 			</tbody>
 		</table>
 	</div>
+    <?php endif; ?>
 </div>
