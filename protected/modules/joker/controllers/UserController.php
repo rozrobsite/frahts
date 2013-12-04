@@ -292,4 +292,97 @@ class UserController extends JokerController
         }
     }
 
+    public function actionVendibles()
+    {
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->render('vendibles');
+
+            Yii::app()->end();
+        }
+
+        if (isset($_POST['JokerVendibles'])) {
+            $model = new JokerVendibles();
+            $model->attributes = $_POST['JokerVendibles'];
+            $model->organization_id = $this->jokerUser->organizations->id;
+            $model->created_at = time();
+
+
+
+            if ($model->save()) {
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO, 'vendibles' => $this->renderPartial('_listVendibles', array(), true)));
+
+                Yii::app()->end();
+            }
+            else {
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO_ADD_MODEL, 'errors' => $model->getErrors()));
+
+                Yii::app()->end();
+            }
+        }
+        else {
+            $this->respondJSON(array('error' => ErrorsTitle::ERROR_UNDEFINED));
+
+            Yii::app()->end();
+        }
+    }
+
+    public function actionVendiblesUpdate()
+    {
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->respondJSON(array('error' => ErrorsTitle::ERROR_UNDEFINED));
+
+            Yii::app()->end();
+        }
+
+        if (isset($_POST['id']) && $_POST['id']) {
+            $model = JokerVendibles::model()->findByPk((int)$_POST['id']);
+            $model->prepare($_POST);
+
+            if ($model->save()) {
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO));
+
+                Yii::app()->end();
+            }
+            else {
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO_ADD_MODEL, 'errors' => $model->getErrors()));
+
+                Yii::app()->end();
+            }
+
+        } else {
+            $this->respondJSON(array('error' => ErrorsTitle::ERROR_UNDEFINED));
+
+            Yii::app()->end();
+        }
+    }
+
+    public function actionVendiblesDelete()
+    {
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->respondJSON(array('error' => ErrorsTitle::ERROR_UNDEFINED));
+
+            Yii::app()->end();
+        }
+
+        if (isset($_POST['id']) && $_POST['id']) {
+            $deleted = JokerVendibles::model()->deleteAllByAttributes(array('id' => (int)$_POST['id']));
+
+            if ($deleted) {
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO));
+
+                Yii::app()->end();
+            }
+            else {
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO_ADD_MODEL));
+
+                Yii::app()->end();
+            }
+
+        } else {
+            $this->respondJSON(array('error' => ErrorsTitle::ERROR_UNDEFINED));
+
+            Yii::app()->end();
+        }
+    }
+
 }

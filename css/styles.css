@@ -1650,7 +1650,7 @@ ul.ruler li:last-child { width: 34%; }
 .widget.filter .formRow { border-bottom: 1px solid #ddd; border-top: 1px solid #fff; padding: 10px 16px; }
 .formRow { border-bottom: 1px solid #ddd; border-top: 1px solid #fff; padding: 19px 16px; }
 .formRow:first-child { border-top: none; }
-.formRow input[type=text], .formRow input[type=password], /*.formRow*/ textarea, input[type=text].jokerEmployee {
+.formRow input[type=text], .formRow input[type=password], /*.formRow*/ textarea, input[type=text].jokerEmployee, input[type=text].jokerVendible {
 	width: 100%;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
