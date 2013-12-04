@@ -39,7 +39,6 @@ $this->breadcrumbs = array(
 						),
 						'htmlOptions' => array('class' => 'main'),
 					));
-
         ?>
 		<div class="fluid">
 			<div class="widget grid12">
@@ -81,9 +80,14 @@ $this->breadcrumbs = array(
 			</div>
 		</div>
         <?php $this->endWidget(); ?>
-        <div id="employees" class="fluid">
-            <?php $this->renderPartial('_listEmployee'); ?>
-        </div>
+
+        <?php $this->renderPartial('_listEmployee'); ?>
+        <?php
+            $this->renderPartial('/blocks/popups/_confirm', array(
+                'title' => 'Удаление сотрудника',
+                'text' => 'Вы действительно хотите удалить даного сотрудника?'
+            ));
+        ?>
     </div>
 </div>
 

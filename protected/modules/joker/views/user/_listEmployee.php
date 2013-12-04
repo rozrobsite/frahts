@@ -1,3 +1,4 @@
+<div id="employees" class="fluid">
 <?php if ($this->jokerUser->organizations->employees): ?>
     <div class="widget">
         <div class="whead">
@@ -46,10 +47,5 @@
             </tbody>
         </table>
     </div>
-    <?php
-    $this->renderPartial('/blocks/popups/_confirm', array(
-        'title' => 'Удаление сотрудника',
-        'text' => 'Вы действительно хотите удалить даного сотрудника?'
-    ));
-    ?>
 <?php endif; ?>
+</div>
