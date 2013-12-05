@@ -295,7 +295,9 @@ class UserController extends JokerController
     public function actionVendibles()
     {
         if (!Yii::app()->request->isAjaxRequest) {
-            $this->render('vendibles');
+            $this->render('vendibles', array(
+                'currencies' => JokerCurrency::model()->findAll(),
+            ));
 
             Yii::app()->end();
         }
@@ -307,7 +309,7 @@ class UserController extends JokerController
             $model->created_at = time();
 
             if ($model->save()) {
-                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO, 'vendibles' => $this->renderPartial('_listVendibles', array(), true)));
+                $this->respondJSON(array('error' => ErrorsTitle::ERROR_NO, 'vendibles' => $this->renderPartial('_listVendibles', array('currencies' => JokerCurrency::model()->findAll()), true, true)));
 
                 Yii::app()->end();
             }

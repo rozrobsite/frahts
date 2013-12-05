@@ -56,10 +56,17 @@ $this->breadcrumbs = array(
 						<div id="error_name" class="error"></div>
 					</div>
 					<div class="grid2">&nbsp;</div>
-                    <div class="grid2"><label>Цена:<span class="req">*</span></label></div>
-					<div class="grid3">
+                    <div class="grid1"><label>Цена:<span class="req">*</span></label></div>
+					<div class="grid2">
                         <input id="cost" name="JokerVendibles[cost]" type="text" maxlength="15" />
 						<div id="error_cost" class="error"></div>
+					</div>
+					<div class="grid1">
+                        <select name="JokerVendibles[currency_id]">
+                            <?php foreach ($currencies as $currency): ?>
+                                <option value="<?php echo $currency->id; ?>"><?php echo $currency->name; ?></option>
+                            <?php endforeach; ?>
+                        </select>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -79,7 +86,7 @@ $this->breadcrumbs = array(
 		</div>
         <?php $this->endWidget(); ?>
 
-		<?php $this->renderPartial('_listVendibles'); ?>
+		<?php $this->renderPartial('_listVendibles', array('currencies' => $currencies)); ?>
 		<?php $this->renderPartial('/blocks/popups/_confirm', array(
             'title' => 'Удаление товара',
             'text' => 'Вы действительно хотите удалить даный товар?'

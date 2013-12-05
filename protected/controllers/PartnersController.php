@@ -3,235 +3,211 @@
 class PartnersController extends FrahtController
 {
 
-	const ERROR_NO = 0;
-	const ERROR_NOT_AJAX = 1;
-	const ERROR_WRONG_ID = 2;
-	const ERROR_NOT_FOUND = 3;
-	const ERROR_WRONG_EMAIL = 4;
+    const ERROR_NO = 0;
+    const ERROR_NOT_AJAX = 1;
+    const ERROR_WRONG_ID = 2;
+    const ERROR_NOT_FOUND = 3;
+    const ERROR_WRONG_EMAIL = 4;
 
-	public function actionIndex()
-	{
-		$countries = Country::model()->findAll();
-		$profiles = Profiles::model()->getUsers($this->user);
+    public function actionIndex()
+    {
+        $countries = Country::model()->findAll();
+        $profiles = Profiles::model()->getUsers($this->user);
 
-		$this->render('index',
-				array(
-			'countries' => $countries,
-			'profiles' => $profiles,
-		));
-	}
+        $this->render('index', array(
+            'countries' => $countries,
+            'profiles' => $profiles,
+        ));
+    }
 
-	public function actionSearch()
-	{
-		$data = $_GET;
+    public function actionSearch()
+    {
+        $data = $_GET;
 
-		$attributes = array(
-			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int) $data['partnerSearchCountry']
-						: 0,
-			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int) $data['partnerSearchRegion']
-						: 0,
-			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int) $data['partnerSearchCity']
-						: 0,
-			'partnerSearchShipper' => isset($data['partnerSearchShipper']) && $data['partnerSearchShipper']
-						? true : false,
-			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) && $data['partnerSearchFreighter']
-						? true : false,
-			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) && $data['partnerSearchDispatcher']
-						? true : false,
-			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords']))
-						: '',
-		);
+        $attributes = array(
+            'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int) $data['partnerSearchCountry'] : 0,
+            'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int) $data['partnerSearchRegion'] : 0,
+            'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int) $data['partnerSearchCity'] : 0,
+            'partnerSearchShipper' => isset($data['partnerSearchShipper']) && $data['partnerSearchShipper'] ? true : false,
+            'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) && $data['partnerSearchFreighter'] ? true : false,
+            'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) && $data['partnerSearchDispatcher'] ? true : false,
+            'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+        );
 
-		$searchPartners = new SearchPartners($attributes);
+        $searchPartners = new SearchPartners($attributes);
 
-		$profiles = UserTags::model()->searchUsers($attributes);
+        $profiles = UserTags::model()->searchUsers($attributes);
 
-		$countries = CHtml::listData(Country::model()->findAll(), 'id', 'name_ru');
-		$regions = array();
-		if ($searchPartners->partnerSearchCountry)
-		{
-			$country = Country::model()->findByPk($searchPartners->partnerSearchCountry);
-			$regions = CHtml::listData($country->regions, 'id', 'name_ru');
-		}
-		$cities = array();
-		if ($searchPartners->partnerSearchRegion)
-		{
-			$region = Region::model()->findByPk($searchPartners->partnerSearchRegion);
-			$cities = CHtml::listData($region->cities, 'id', 'name_ru');
-		}
+        $countries = CHtml::listData(Country::model()->findAll(), 'id', 'name_ru');
+        $regions = array();
+        if ($searchPartners->partnerSearchCountry) {
+            $country = Country::model()->findByPk($searchPartners->partnerSearchCountry);
+            $regions = CHtml::listData($country->regions, 'id', 'name_ru');
+        }
+        $cities = array();
+        if ($searchPartners->partnerSearchRegion) {
+            $region = Region::model()->findByPk($searchPartners->partnerSearchRegion);
+            $cities = CHtml::listData($region->cities, 'id', 'name_ru');
+        }
 
-		$this->render('search',
-				array(
-			'countries' => $countries,
-			'regions' => $regions,
-			'cities' => $cities,
-			'profiles' => $profiles['profiles'],
-			'pages' => $profiles['pages'],
-			'model' => $searchPartners,
-		));
-	}
+        $this->render('search', array(
+            'countries' => $countries,
+            'regions' => $regions,
+            'cities' => $cities,
+            'profiles' => $profiles['profiles'],
+            'pages' => $profiles['pages'],
+            'model' => $searchPartners,
+        ));
+    }
 
-	public function actionFind()
-	{
-		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
+    public function actionFind()
+    {
+        if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest) {
+            echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$data = array();
-		parse_str(Yii::app()->request->getPost('data'), $data);
+        $data = array();
+        parse_str(Yii::app()->request->getPost('data'), $data);
 
-		$attributes = array(
-			'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int) $data['partnerSearchCountry']
-						: 0,
-			'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int) $data['partnerSearchRegion']
-						: 0,
-			'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int) $data['partnerSearchCity']
-						: 0,
-			'partnerSearchShipper' => isset($data['partnerSearchShipper']) ? true : false,
-			'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) ? true : false,
-			'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) ? true : false,
-			'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords']))
-						: '',
-		);
+        $attributes = array(
+            'partnerSearchCountry' => isset($data['partnerSearchCountry']) ? (int) $data['partnerSearchCountry'] : 0,
+            'partnerSearchRegion' => isset($data['partnerSearchRegion']) ? (int) $data['partnerSearchRegion'] : 0,
+            'partnerSearchCity' => isset($data['partnerSearchCity']) ? (int) $data['partnerSearchCity'] : 0,
+            'partnerSearchShipper' => isset($data['partnerSearchShipper']) ? true : false,
+            'partnerSearchFreighter' => isset($data['partnerSearchFreighter']) ? true : false,
+            'partnerSearchDispatcher' => isset($data['partnerSearchDispatcher']) ? true : false,
+            'partnerSearchWords' => isset($data['partnerSearchWords']) ? trim(strip_tags($data['partnerSearchWords'])) : '',
+        );
 
-		$users = UserTags::model()->searchUsers($attributes);
+        $users = UserTags::model()->searchUsers($attributes);
 
-		echo $this->respondJSON(array('error' => self::ERROR_NO, 'response' => $searchList));
+        echo $this->respondJSON(array('error' => self::ERROR_NO, 'response' => $searchList));
 
-		Yii::app()->end();
-	}
+        Yii::app()->end();
+    }
 
-	public function actionAdd()
-	{
-		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
+    public function actionAdd()
+    {
+        if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest) {
+            echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$partnerId = isset($_POST['partner_id']) ? (int) $_POST['partner_id'] : 0;
+        $partnerId = isset($_POST['partner_id']) ? (int) $_POST['partner_id'] : 0;
 
-		if (!$partnerId)
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_WRONG_ID));
+        if (!$partnerId) {
+            echo $this->respondJSON(array('error' => self::ERROR_WRONG_ID));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$user = Users::model()->findByPk($partnerId);
+        $user = Users::model()->findByPk($partnerId);
 
-		if (!is_object($user))
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_NOT_FOUND));
+        if (!is_object($user)) {
+            echo $this->respondJSON(array('error' => self::ERROR_NOT_FOUND));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$partner = new Partners();
-		$partner->user_id = $this->user->id;
-		$partner->partner_id = $partnerId;
+        $partner = new Partners();
+        $partner->user_id = $this->user->id;
+        $partner->partner_id = $partnerId;
 
-		$isAdd = $partner->insert();
+        $isAdd = $partner->insert();
 
-		echo $this->respondJSON(array('error' => self::ERROR_NO, 'isAdd' => $isAdd));
+        echo $this->respondJSON(array('error' => self::ERROR_NO, 'isAdd' => $isAdd));
 
-		Yii::app()->end();
-	}
+        Yii::app()->end();
+    }
 
-	public function actionRemove()
-	{
-		if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest)
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
+    public function actionRemove()
+    {
+        if (!Yii::app()->request->isAjaxRequest || !Yii::app()->request->isPostRequest) {
+            echo $this->respondJSON(array('error' => self::ERROR_NOT_AJAX));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$partnerId = isset($_POST['partner_id']) ? (int) $_POST['partner_id'] : 0;
+        $partnerId = isset($_POST['partner_id']) ? (int) $_POST['partner_id'] : 0;
 
-		if (!$partnerId)
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_WRONG_ID));
+        if (!$partnerId) {
+            echo $this->respondJSON(array('error' => self::ERROR_WRONG_ID));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$user = Users::model()->findByPk($partnerId);
+        $user = Users::model()->findByPk($partnerId);
 
-		if (!is_object($user))
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_NOT_FOUND));
+        if (!is_object($user)) {
+            echo $this->respondJSON(array('error' => self::ERROR_NOT_FOUND));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$isRemove = Partners::model()->deleteAll('user_id = ' . $this->user->id . ' AND partner_id = ' . $partnerId);
+        $isRemove = Partners::model()->deleteAll('user_id = ' . $this->user->id . ' AND partner_id = ' . $partnerId);
 
-		echo $this->respondJSON(array('error' => self::ERROR_NO, 'isRemove' => $isRemove));
+        echo $this->respondJSON(array('error' => self::ERROR_NO, 'isRemove' => $isRemove));
 
-		Yii::app()->end();
-	}
+        Yii::app()->end();
+    }
 
-	public function actionAddFriend()
-	{
-		$email = isset($_POST['email']) ? trim($_POST['email']) : '';
-		$text = isset($_POST['text']) ? strip_tags(trim($_POST['text'])) : '';
+    public function actionAddFriend()
+    {
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $text = isset($_POST['text']) ? strip_tags(trim($_POST['text'])) : '';
 
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-		{
-			echo $this->respondJSON(array('error' => self::ERROR_WRONG_EMAIL));
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo $this->respondJSON(array('error' => self::ERROR_WRONG_EMAIL));
 
-			Yii::app()->end();
-		}
+            Yii::app()->end();
+        }
 
-		$message = new YiiMailMessage;
-		$message->view = 'addFriend';
-		$message->setBody(array('text' => $text), 'text/html');
-		$message->subject = 'Приглашение от друга';
-		$message->from = Yii::app()->params['adminEmail'];
-		$message->addTo($email);
+        $message = new YiiMailMessage;
+        $message->view = 'addFriend';
+        $message->setBody(array('text' => $text), 'text/html');
+        $message->subject = 'Приглашение от друга';
+        $message->from = Yii::app()->params['adminEmail'];
+        $message->addTo($email);
 
-		try
-		{
-			Yii::app()->mail->send($message);
-		}
-		catch (CException $exc)
-		{
-		}
-		
-		echo $this->respondJSON(array('error' => self::ERROR_NO));
+        try {
+            Yii::app()->mail->send($message);
+        }
+        catch (CException $exc) {
 
-		Yii::app()->end();
-	}
+        }
 
-	// Uncomment the following methods and override them if needed
-	/*
-	  public function filters()
-	  {
-	  // return the filter configuration for this controller, e.g.:
-	  return array(
-	  'inlineFilterName',
-	  array(
-	  'class'=>'path.to.FilterClass',
-	  'propertyName'=>'propertyValue',
-	  ),
-	  );
-	  }
+        echo $this->respondJSON(array('error' => self::ERROR_NO));
 
-	  public function actions()
-	  {
-	  // return external action classes, e.g.:
-	  return array(
-	  'action1'=>'path.to.ActionClass',
-	  'action2'=>array(
-	  'class'=>'path.to.AnotherActionClass',
-	  'propertyName'=>'propertyValue',
-	  ),
-	  );
-	  }
-	 */
+        Yii::app()->end();
+    }
+
+    // Uncomment the following methods and override them if needed
+    /*
+      public function filters()
+      {
+      // return the filter configuration for this controller, e.g.:
+      return array(
+      'inlineFilterName',
+      array(
+      'class'=>'path.to.FilterClass',
+      'propertyName'=>'propertyValue',
+      ),
+      );
+      }
+
+      public function actions()
+      {
+      // return external action classes, e.g.:
+      return array(
+      'action1'=>'path.to.ActionClass',
+      'action2'=>array(
+      'class'=>'path.to.AnotherActionClass',
+      'propertyName'=>'propertyValue',
+      ),
+      );
+      }
+     */
 }

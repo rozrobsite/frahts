@@ -55,6 +55,8 @@ var vendibles =
                         $('.tipS').tipsy({gravity: 's',fade: true, html:true});
                         $('.tipW').tipsy({gravity: 'w',fade: true, html:true});
                         $('.tipE').tipsy({gravity: 'e',fade: true, html:true});
+
+						$('select.currency').uniform();
 					}
 				}
 			}).done(function(response){
@@ -76,7 +78,8 @@ var vendibles =
 					id: vendibleId,
 					name: $('#vendible_name_' + vendibleId).val(),
 					description: $('#vendible_description_' + vendibleId).val(),
-					cost: $('#vendible_cost_' + vendibleId).val()
+					cost: $('#vendible_cost_' + vendibleId).val(),
+					currency_id: $('#vendible_currency_' + vendibleId).val()
 				},
 				beforeSend: function(data){
 					blockElement($('#vendibles'));

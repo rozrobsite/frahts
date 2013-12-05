@@ -30,7 +30,12 @@
 							<div id="error_vendible_description_<?php echo $vendible->id; ?>" class="error"></div>
 						</td>
 						<td align="center">
-                            <input id="vendible_cost_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->cost; ?>" maxlength="15" />
+                            <input id="vendible_cost_<?php echo $vendible->id; ?>" type="text" class="jokerVendible" value="<?php echo $vendible->cost; ?>" maxlength="15" style="float: left;width: 60%;" />
+                            <select id="vendible_currency_<?php echo $vendible->id; ?>" class="currency">
+                                <?php foreach ($currencies as $currency): ?>
+                                    <option value="<?php echo $currency->id; ?>" <?php if ($vendible->currency_id == $currency->id): ?>selected="selected"<?php endif; ?>><?php echo $currency->name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
 							<div id="error_vendible_cost_<?php echo $vendible->id; ?>" class="error"></div>
 						</td>
 						<td align="center">

@@ -12,6 +12,7 @@
  * @property double $discount
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $currency_id
  *
  * The followings are the available model relations:
  * @property JokerOrganizations $organization
@@ -45,13 +46,13 @@ class JokerVendibles extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('organization_id, name, description, cost', 'required'),
-			array('created_at, updated_at', 'numerical', 'integerOnly'=>true),
+			array('created_at, updated_at, currency_id', 'numerical', 'integerOnly'=>true),
 			array('cost, discount', 'numerical'),
 			array('organization_id', 'length', 'max'=>20),
 			array('name, description', 'length', 'max'=>254),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, organization_id, name, description, cost, discount, created_at, updated_at', 'safe', 'on'=>'search'),
+			array('id, organization_id, name, description, cost, discount, created_at, updated_at, currency_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +65,7 @@ class JokerVendibles extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'organization' => array(self::BELONGS_TO, 'JokerOrganizations', 'organization_id'),
+			'currency' => array(self::BELONGS_TO, 'JokerCurrency', 'currency_id'),
 		);
 	}
 
@@ -81,6 +83,7 @@ class JokerVendibles extends CActiveRecord
 			'discount' => 'Скидка',
 			'created_at' => 'Добавлен',
 			'updated_at' => 'Обновлен',
+			'currency_id' => 'Валюта',
 		);
 	}
 
@@ -103,6 +106,7 @@ class JokerVendibles extends CActiveRecord
 		$criteria->compare('discount',$this->discount);
 		$criteria->compare('created_at',$this->created_at);
 		$criteria->compare('updated_at',$this->updated_at);
+		$criteria->compare('currency',$this->currency_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
