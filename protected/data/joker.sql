@@ -108,3 +108,30 @@ ALTER TABLE `joker_organization_business_type` ADD CONSTRAINT `joker_organizatio
 -- 02.12.2013
 ALTER TABLE joker_employee ADD COLUMN created_at INT DEFAULT NULL;
 ALTER TABLE joker_employee ADD COLUMN updated_at INT DEFAULT NULL;
+
+-- 09.12.2013
+ALTER TABLE joker_vendibles ADD COLUMN created_at INT DEFAULT NULL;
+ALTER TABLE joker_vendibles ADD COLUMN updated_at INT DEFAULT NULL;
+
+CREATE TABLE IF NOT EXISTS `joker_currency` (
+					`id` INT NOT NULL AUTO_INCREMENT,
+					`name` VARCHAR(32) NOT NULL,
+					PRIMARY KEY (`id`)
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+                INSERT INTO joker_currency (name) VALUES ("грн.");
+                INSERT INTO joker_currency (name) VALUES ("руб.");
+                INSERT INTO joker_currency (name) VALUES ("$");
+                INSERT INTO joker_currency (name) VALUES ("евро");
+                INSERT INTO joker_currency (name) VALUES ("у.е.");
+
+ALTER TABLE joker_vendibles ADD COLUMN currency_id INT DEFAULT NULL;
+ALTER TABLE `joker_vendibles` ADD FOREIGN KEY (`currency_id`) REFERENCES `joker_currency`(`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE joker_organizations ADD COLUMN enabled TINYINT(1) DEFAULT 1;
+
+CREATE TABLE joker_tags(
+					id INT(11) DEFAULT NULL,
+					text VARCHAR(255) DEFAULT NULL,
+					FULLTEXT INDEX search_text (text)
+				  ) ENGINE = MYISAM
