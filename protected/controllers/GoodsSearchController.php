@@ -169,7 +169,7 @@ class GoodsSearchController extends FrahtController {
 				$cityFrom = $cityModel->findByPk((int) $model->city_id_from);
 				$cityTo = $cityModel->findByPk((int) $model->city_id_to);
 
-				$distance = Geography::getDistanceByYandex($cityFrom->latitude, $cityFrom->longitude, $cityTo->latitude, $cityTo->longitude);
+				$distance = Geography::getDistanceByGoogle($cityFrom->latitude, $cityFrom->longitude, $cityTo->latitude, $cityTo->longitude);
 
 				$model->distance = $distance ? (int) $distance : 0;
 			}

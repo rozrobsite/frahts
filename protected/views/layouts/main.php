@@ -149,13 +149,15 @@
 								<!--<li><a href="#" title="Поиск" class="search tipN" original-title="Поиск"></a></li>-->
 								<li><a href="/user" title="Личный кабинет" class="profile tipN" original-title="Личный кабинет"></a></li>
 								<?php if (isset($this->user->profiles) && $this->user->profiles): ?>
-									<?php if ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3): ?>
+                                    <li><a href="/goods/active" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
+                                    <li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
+									<?php /*if ($this->user->profiles->user_type_id == 2 || $this->user->profiles->user_type_id == 3): ?>
 										<li><a href="/goods/active" title="Мои грузы" class="box tipN" original-title="Мои грузы"></a></li>
 									<?php endif; ?>
 									<?php if ($this->user->profiles->user_type_id == 1 || $this->user->profiles->user_type_id == 3): ?>
 										<li><a href="/vehicle/active" title="Мой транспорт" class="truck tipN" original-title="Мой транспорт"></a></li>
-									<?php endif; ?>
-						<?php endif; ?>
+									<?php endif;*/ ?>
+                                <?php endif; ?>
 								<li><a href="/user/notes" title="Заметки" class="notes tipN" original-title="Заметки"></a></li>
 								<li><a href="/user/feedback" title="Обратная связь" class="feedback tipN" original-title="Обратная связь"></a></li>
 								<li><a href="/user/faq" title="ЧаВо" class="fuk tipN" original-title="ЧаВо"></a></li>

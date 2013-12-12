@@ -37,7 +37,8 @@
 								<?php echo Yii::app()->dateFormatter->format('dd.MM.yyyy', $oneGood->date_to); ?>
 							</td>
 							<td>
-								<?php if ($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+								<?php //if ($this->user->profiles->user_type_id == UserTypes::FREIGHTER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+								<?php if (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id): ?>
 									<a href="/goods/view/<?php echo $oneGood->slug ?>" class="tipS" title="Перейти на страницу груза">
 										<?php echo $oneGood->name ?><br/>
 										<?php

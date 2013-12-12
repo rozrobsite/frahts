@@ -23,7 +23,8 @@
 								</a>
 							</td>
 							<td>
-								<?php if ($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+								<?php //if ($this->user->profiles->user_type_id == UserTypes::SHIPPER || $this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+								<?php if (isset($this->user->profiles->user_type_id) && $this->user->profiles->user_type_id): ?>
 									<a href="/vehicle/view/<?php echo $vehicle->slug; ?>" class="tipS" title="Перейти на страницу транспортного средства">
 										<?php echo ucfirst($vehicle->vehicleType->name_ru) . " " . $vehicle->marka->name . " " . $vehicle->modeli->name ?>
 									</a>

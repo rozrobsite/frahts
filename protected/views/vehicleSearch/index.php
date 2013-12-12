@@ -52,14 +52,14 @@ $this->breadcrumbs = array(
 								));
 							?>
 						<?php endif; ?>
-                        <?php /* 
+                        <?php /*
 						<h6 style="float: right;">Найдено: <?php echo $pageSettings['count'] ?></h6>
                          */ ?>
 						<a title="" class="buttonH bBlue" style="float: left;" href="/vehicle/search">Показать все</a>
 						<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/vehicle/active">Мой транспорт</a>
-						<?php if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
-							<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/goods/active">Мои грузы</a>
-						<?php endif; ?>
+						<a title="" class="buttonH bDefault" style="float:left;color:#636363 !important;" href="/goods/active">Мои грузы</a>
+						<?php /*if ($this->user->profiles->user_type_id == UserTypes::DISPATCHER): ?>
+						<?php endif;*/ ?>
 						<div class="clear"></div>
 					</div>
 
@@ -144,15 +144,13 @@ $this->breadcrumbs = array(
 									</span>
 									<br/>
 									<span>
-										<?php //$distance = ((int) FHelper::distance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude) + 10); ?>
-										<?php //$geography = new Geography(); $distance = $geography->getDistance($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude, 'gc'); ?>
 										<strong>
 											<a href="/goods/view/<?php echo $oneGood->slug ?>">
 												<?php $distance = $oneGood->distance; ?>
 												<?php if ($distance): ?>
 													&asymp;&nbsp;<?php echo $distance; ?> км
 												<?php else: ?>
-													<?php $distance = Geography::getDistanceByYandex($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?>
+													<?php $distance = Geography::getDistanceByGoogle($oneGood->cityFrom->latitude, $oneGood->cityFrom->longitude, $oneGood->cityTo->latitude, $oneGood->cityTo->longitude); ?>
 													<?php if ($distance): ?>
 														&asymp;&nbsp;<?php echo $distance; ?> км
 													<?php endif; ?>

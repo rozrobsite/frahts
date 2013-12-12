@@ -6,7 +6,7 @@ class Geography {
 		$results = file_get_contents('http://maps.googleapis.com/maps/api/directions/json?origin=' . $latFrom . ',' . $lngFrom . '&destination=' . $latTo . ',' . $lngTo . '&sensor=false&language=ru');
 		$result = json_decode($results);
 
-		return $result->routes[0]->legs[0]->distance->text;
+		return isset($result->routes[0]->legs[0]->distance->value) ? round($result->routes[0]->legs[0]->distance->value / 1000) : 0;
 	}
 
 	public static function getDistanceByYandex($latFrom, $lngFrom, $latTo, $lngTo)
@@ -15,6 +15,7 @@ class Geography {
 		$result = json_decode($results);
 
 		$distance = isset($result->vpage->data->response->data->features[0]->properties->RouteMetaData->Distance->value) ? $result->vpage->data->response->data->features[0]->properties->RouteMetaData->Distance->value / 1000 : 0;
+
 		return round($distance);
 	}
 }
