@@ -159,8 +159,8 @@ class JokerUsers extends ActiveRecord
 
 	public function login($s_code = null)
 	{
-		$result = $s_code 
-			? $this->findByAttributes(array('s_code' => $s_code)) 
+		$result = $s_code
+			? $this->findByAttributes(array('s_code' => $s_code))
 			: $this->find('email = "' . trim($this->email) . '" AND password = "' . md5($this->password) . '"');
 
 		if ($result && $result->enabled)
@@ -200,13 +200,13 @@ class JokerUsers extends ActiveRecord
 //		}
 //		else return false;
 	}
-	
+
 	public function changeSCode()
 	{
 		$cookie = new CHttpCookie('frahts_joker_user', md5(time() . $result->email));
 		$cookie->expire = time() + 60 * 60 * 24 * 7;
 		Yii::app()->request->cookies['frahts_joker_user'] = $cookie;
-		
+
 		$this->s_code = $cookie->value;
 		$this->update();
 	}
